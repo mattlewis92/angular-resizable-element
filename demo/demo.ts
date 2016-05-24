@@ -10,14 +10,18 @@ import {Resizable} from './../angular2-resizable';
       top: 100px;
       width: 300px;
       height: 150px;
-      background-color: red;
-      border: solid 1px black;
+      background-color: #FD4140;
+      border: solid 1px #121621;
       margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #121621;
     }
   `],
   template: `
     <div class="text-center">
-      <div class="rectangle" mwl-resizeable></div>
+      <div class="rectangle" mwl-resizeable>Resize me!</div>
     </div>
   `
 })
