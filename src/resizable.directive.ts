@@ -13,7 +13,7 @@ export class Resizable {
   constructor(private renderer: Renderer, private elm: ElementRef) {}
 
   private isNumberCloseTo(value1: number, value2: number, precision: number = 3): boolean {
-    const diff = Math.abs(value1 - value2);
+    const diff: number = Math.abs(value1 - value2);
     return diff < precision;
   }
 
