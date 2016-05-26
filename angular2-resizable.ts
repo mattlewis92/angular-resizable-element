@@ -1,8 +1,8 @@
-import {HelloWorld} from './src/helloWorld.component';
+import {Resizable} from './src/resizable.directive';
 
-export * from './src/helloWorld.component';
+export * from './src/resizable.directive';
 
 // for angular-cli
 export default {
-  directives: [HelloWorld]
+  directives: [Resizable]
 };

@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular2-resizable/master/LICENSE)
 
 ## Demo
-https://mattlewis92.github.io/angular2-resizable/
+https://mattlewis92.github.io/angular2-resizable/demo/
 
 ## Table of contents
 
