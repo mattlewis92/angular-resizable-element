@@ -47,7 +47,7 @@ export class Resizable implements OnInit {
           mouseY: moveCoords.mouseY - startCoords.mouseY
         };
       });
-    }).takeUntil(this.mouseup);
+    });
 
     mousedrag.subscribe(({mouseX, mouseY}) => {
       if (currentResize) {
@@ -74,8 +74,13 @@ export class Resizable implements OnInit {
         newBoundingRect.height = newBoundingRect.bottom - newBoundingRect.top;
         newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
 
-        const translateY = (newBoundingRect.top - currentResize.startingRect.top);
+        let translateY = (newBoundingRect.top - currentResize.startingRect.top);
         let translateX = (newBoundingRect.left - currentResize.startingRect.left);
+
+        if (currentResize.previousTranslate) {
+          translateX += +currentResize.previousTranslate.translateX;
+          translateY += +currentResize.previousTranslate.translateY;
+        }
 
         if (currentResize.edges.right) {
           translateX += (mouseX / 2);
@@ -86,7 +91,7 @@ export class Resizable implements OnInit {
         if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
           this.renderer.setElementStyle(this.elm.nativeElement, 'height', newBoundingRect.height + 'px');
           this.renderer.setElementStyle(this.elm.nativeElement, 'width', newBoundingRect.width + 'px');
-          this.renderer.setElementStyle(this.elm.nativeElement, 'transform', `translate(${translateX}px,${translateY}px)`);
+          this.renderer.setElementStyle(this.elm.nativeElement, 'transform', `translate(${translateX}px, ${translateY}px)`);
         }
 
       }
@@ -95,9 +100,18 @@ export class Resizable implements OnInit {
     this.mousedown.subscribe(({mouseX, mouseY}) => {
       const resizeEdges = this.getResizeEdges({mouseX, mouseY});
       if (Object.keys(resizeEdges).length > 0) {
+        let previousTranslate;
+        if (this.elm.nativeElement.style.transform) {
+          const [, translateX, translateY] = this.elm.nativeElement.style.transform.match(/translate\((.+)px, (.+)px\)/);
+          previousTranslate = {
+            translateX,
+            translateY
+          };
+        }
         currentResize = {
           edges: resizeEdges,
-          startingRect: this.elm.nativeElement.getBoundingClientRect()
+          startingRect: this.elm.nativeElement.getBoundingClientRect(),
+          previousTranslate
         };
         console.log('resize started', currentResize);
       }
