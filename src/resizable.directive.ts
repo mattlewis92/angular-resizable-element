@@ -6,11 +6,28 @@ import {
   OnInit
 } from '@angular/core';
 import {Subject} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 
 const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
   const diff: number = Math.abs(value1 - value2);
   return diff < precision;
 };
+
+interface Edges {
+  top?: boolean;
+  bottom?: boolean;
+  left?: boolean;
+  right?: boolean;
+}
+
+interface BoundingRectangle {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+  height?: number;
+  width?: number;
+}
 
 @Directive({
   selector: '[mwl-resizeable]'
@@ -25,11 +42,11 @@ export class Resizable implements OnInit {
 
   ngOnInit(): void {
 
-    let currentResize;
+    let currentResize: any;
 
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
-      const resizeEdges = this.getResizeEdges({mouseX, mouseY});
+      const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
       if (resizeEdges.left || resizeEdges.right) {
         this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', 'ew-resize');
       } else if (resizeEdges.top || resizeEdges.bottom) {
@@ -40,7 +57,7 @@ export class Resizable implements OnInit {
 
     });
 
-    const mousedrag = this.mousedown.flatMap(startCoords => {
+    const mousedrag: Observable<any> = this.mousedown.flatMap(startCoords => {
       return this.mousemove.map(moveCoords => {
         return {
           mouseX: moveCoords.mouseX - startCoords.mouseX,
@@ -52,7 +69,7 @@ export class Resizable implements OnInit {
     mousedrag.subscribe(({mouseX, mouseY}) => {
       if (currentResize) {
 
-        const newBoundingRect = {
+        const newBoundingRect: BoundingRectangle = {
           top: currentResize.startingRect.top,
           bottom: currentResize.startingRect.bottom,
           left: currentResize.startingRect.left,
@@ -74,8 +91,8 @@ export class Resizable implements OnInit {
         newBoundingRect.height = newBoundingRect.bottom - newBoundingRect.top;
         newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
 
-        let translateY = (newBoundingRect.top - currentResize.startingRect.top);
-        let translateX = (newBoundingRect.left - currentResize.startingRect.left);
+        let translateY: number = (newBoundingRect.top - currentResize.startingRect.top);
+        let translateX: number = (newBoundingRect.left - currentResize.startingRect.left);
 
         if (currentResize.previousTranslate) {
           translateX += +currentResize.previousTranslate.translateX;
@@ -98,11 +115,12 @@ export class Resizable implements OnInit {
     });
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
-      const resizeEdges = this.getResizeEdges({mouseX, mouseY});
+      const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
       if (Object.keys(resizeEdges).length > 0) {
-        let previousTranslate;
-        if (this.elm.nativeElement.style.transform) {
-          const [, translateX, translateY] = this.elm.nativeElement.style.transform.match(/translate\((.+)px, (.+)px\)/);
+        let previousTranslate: any;
+        const transform: string = this.elm.nativeElement.style.transform;
+        if (transform) {
+          const [, translateX, translateY]: any = transform.match(/translate\((.+)px, (.+)px\)/);
           previousTranslate = {
             translateX,
             translateY
@@ -141,7 +159,7 @@ export class Resizable implements OnInit {
     this.mousemove.next({mouseX, mouseY});
   }
 
-  private getResizeEdges({mouseX, mouseY}) {
+  private getResizeEdges({mouseX, mouseY}: any): Edges {
 
     const elmPosition: ClientRect = this.elm.nativeElement.getBoundingClientRect();
     if (isNumberCloseTo(mouseX, elmPosition.left)) {
