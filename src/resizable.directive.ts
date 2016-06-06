@@ -140,12 +140,14 @@ export class Resizable implements OnInit {
             top: this.elm.nativeElement.style.top,
             transform: this.elm.nativeElement.style.transform,
             width: `${startingRect.width}px`,
-            height: `${startingRect.height}px`
+            height: `${startingRect.height}px`,
+            'user-drag': this.elm.nativeElement.style['user-drag']
           }
         };
         this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
         this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
         this.onResizeStart.emit({
           edges: resizeEdges,
           rectangle: startingRect
