@@ -123,9 +123,21 @@ export class Resizable implements OnInit {
       }
     });
 
+    const resetElementStyles = () => {
+      for (let key in currentResize.originalStyles) {
+        const value: string = currentResize.originalStyles[key];
+        if (typeof value !== 'undefined') {
+          this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
+        }
+      }
+    };
+
     this.mousedown.subscribe(({mouseX, mouseY}) => {
       const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
       if (Object.keys(resizeEdges).length > 0) {
+        if (currentResize) {
+          resetElementStyles();
+        }
         const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
         currentResize = {
           startCoords: {
@@ -166,12 +178,7 @@ export class Resizable implements OnInit {
             mouseY - currentResize.startCoords.mouseY
           )
         });
-        for (let key in currentResize.originalStyles) {
-          const value: string = currentResize.originalStyles[key];
-          if (typeof value !== 'undefined') {
-            this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
-          }
-        }
+        resetElementStyles();
         currentResize = null;
       }
     });
