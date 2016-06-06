@@ -3,15 +3,12 @@ import {
   HostListener,
   Renderer,
   ElementRef,
-  OnInit
+  OnInit,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
-
-const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
-  const diff: number = Math.abs(value1 - value2);
-  return diff < precision;
-};
 
 interface Edges {
   top?: boolean;
@@ -29,10 +26,48 @@ interface BoundingRectangle {
   width?: number;
 }
 
+const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
+  const diff: number = Math.abs(value1 - value2);
+  return diff < precision;
+};
+
+const getNewBoundingRectangle: Function =
+  (startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle => {
+
+  const newBoundingRect: BoundingRectangle = {
+    top: startingRect.top,
+    bottom: startingRect.bottom,
+    left: startingRect.left,
+    right: startingRect.right
+  };
+
+  if (edges.top) {
+    newBoundingRect.top += mouseY;
+  }
+  if (edges.bottom) {
+    newBoundingRect.bottom += mouseY;
+  }
+  if (edges.left) {
+    newBoundingRect.left += mouseX;
+  }
+  if (edges.right) {
+    newBoundingRect.right += mouseX;
+  }
+  newBoundingRect.height = newBoundingRect.bottom - newBoundingRect.top;
+  newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
+
+  return newBoundingRect;
+
+};
+
 @Directive({
   selector: '[mwl-resizeable]'
 })
 export class Resizable implements OnInit {
+
+  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
+  @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
+  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
 
   private mouseup: Subject<any> = new Subject();
   private mousedown: Subject<any> = new Subject();
@@ -69,75 +104,81 @@ export class Resizable implements OnInit {
     mousedrag.subscribe(({mouseX, mouseY}) => {
       if (currentResize) {
 
-        const newBoundingRect: BoundingRectangle = {
-          top: currentResize.startingRect.top,
-          bottom: currentResize.startingRect.bottom,
-          left: currentResize.startingRect.left,
-          right: currentResize.startingRect.right
-        };
-
-        if (currentResize.edges.top) {
-          newBoundingRect.top += mouseY;
-        }
-        if (currentResize.edges.bottom) {
-          newBoundingRect.bottom += mouseY;
-        }
-        if (currentResize.edges.left) {
-          newBoundingRect.left += mouseX;
-        }
-        if (currentResize.edges.right) {
-          newBoundingRect.right += mouseX;
-        }
-        newBoundingRect.height = newBoundingRect.bottom - newBoundingRect.top;
-        newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
+        const newBoundingRect: BoundingRectangle = getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
 
         let translateY: number = (newBoundingRect.top - currentResize.startingRect.top);
         let translateX: number = (newBoundingRect.left - currentResize.startingRect.left);
 
-        if (currentResize.previousTranslate) {
-          translateX += +currentResize.previousTranslate.translateX;
-          translateY += +currentResize.previousTranslate.translateY;
-        }
-
-        if (currentResize.edges.right) {
-          translateX += (mouseX / 2);
-        } else if (currentResize.edges.left) {
-          translateX -= (mouseX / 2);
-        }
-
         if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
-          this.renderer.setElementStyle(this.elm.nativeElement, 'height', newBoundingRect.height + 'px');
-          this.renderer.setElementStyle(this.elm.nativeElement, 'width', newBoundingRect.width + 'px');
+          this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
+          this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
           this.renderer.setElementStyle(this.elm.nativeElement, 'transform', `translate(${translateX}px, ${translateY}px)`);
         }
 
+        this.onResize.emit({
+          edges: currentResize.edges,
+          rectangle: newBoundingRect
+        });
+
       }
     });
+
+    const resetElementStyles: Function = (): void => {
+      for (let key in currentResize.originalStyles) {
+        const value: string = currentResize.originalStyles[key];
+        if (typeof value !== 'undefined') {
+          this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
+        }
+      }
+    };
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
       const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
       if (Object.keys(resizeEdges).length > 0) {
-        let previousTranslate: any;
-        const transform: string = this.elm.nativeElement.style.transform;
-        if (transform) {
-          const [, translateX, translateY]: any = transform.match(/translate\((.+)px, (.+)px\)/);
-          previousTranslate = {
-            translateX,
-            translateY
-          };
+        if (currentResize) {
+          resetElementStyles();
         }
+        const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
         currentResize = {
+          startCoords: {
+            mouseX,
+            mouseY
+          },
           edges: resizeEdges,
-          startingRect: this.elm.nativeElement.getBoundingClientRect(),
-          previousTranslate
+          startingRect,
+          originalStyles: {
+            position: this.elm.nativeElement.style.position,
+            left: this.elm.nativeElement.style.left,
+            top: this.elm.nativeElement.style.top,
+            transform: this.elm.nativeElement.style.transform,
+            width: `${startingRect.width}px`,
+            height: `${startingRect.height}px`,
+            'user-drag': this.elm.nativeElement.style['user-drag']
+          }
         };
-        console.log('resize started', currentResize);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
+        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
+        this.onResizeStart.emit({
+          edges: resizeEdges,
+          rectangle: startingRect
+        });
       }
     });
 
-    this.mouseup.subscribe(() => {
+    this.mouseup.subscribe(({mouseX, mouseY}) => {
       if (currentResize) {
-        console.log('resize ended');
+        this.onResizeEnd.emit({
+          edges: currentResize.edges,
+          rectangle: getNewBoundingRectangle(
+            currentResize.startingRect,
+            currentResize.edges,
+            mouseX - currentResize.startCoords.mouseX,
+            mouseY - currentResize.startCoords.mouseY
+          )
+        });
+        resetElementStyles();
         currentResize = null;
       }
     });

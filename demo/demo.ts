@@ -1,28 +1,44 @@
 import {Component} from '@angular/core';
+import {NgStyle} from '@angular/common';
 import {Resizable} from './../angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [Resizable],
+  directives: [Resizable, NgStyle],
   styles: [`
     .rectangle {
       position: relative;
-      top: 100px;
+      top: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 300px;
       height: 150px;
       background-color: #FD4140;
       border: solid 1px #121621;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: #121621;
+      margin: auto;
     }
   `],
   template: `
     <div class="text-center">
-      <div class="rectangle" mwl-resizeable>Resize me!</div>
+      <h1>Drag and pull the edges of the rectangle</h1>
+      <div class="rectangle" [ngStyle]="style" mwl-resizeable (onResizeEnd)="onResizeEnd($event)"></div>
     </div>
   `
 })
-export class DemoApp {}
+export class DemoApp {
+
+  public style: Object = {};
+
+  onResizeEnd(event: any): void {
+    this.style = {
+      position: 'fixed',
+      left: `${event.rectangle.left}px`,
+      top: `${event.rectangle.top}px`,
+      width: `${event.rectangle.width}px`,
+      height: `${event.rectangle.height}px`
+    };
+  }
+
+}
