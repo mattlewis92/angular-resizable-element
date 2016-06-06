@@ -65,9 +65,9 @@ const getNewBoundingRectangle: Function =
 })
 export class Resizable implements OnInit {
 
-  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter();
-  @Output() onResize: EventEmitter<Object> = new EventEmitter();
-  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter();
+  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
+  @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
+  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
 
   private mouseup: Subject<any> = new Subject();
   private mousedown: Subject<any> = new Subject();
