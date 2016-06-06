@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
+import {NgStyle} from '@angular/common';
 import {Resizable} from './../angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [Resizable],
+  directives: [Resizable, NgStyle],
   styles: [`
     .rectangle {
       position: relative;
@@ -22,14 +23,22 @@ import {Resizable} from './../angular2-resizable';
   template: `
     <div class="text-center">
       <h1>Drag and pull the edges of the rectangle</h1>
-      <div class="rectangle" mwl-resizeable (onResizeEnd)="log($event)"></div>
+      <div class="rectangle" [ngStyle]="style" mwl-resizeable (onResizeEnd)="onResizeEnd($event)"></div>
     </div>
   `
 })
 export class DemoApp {
 
-  log(value: any): void {
-    console.log(value);
+  public style: Object = {};
+
+  onResizeEnd(event: any): void {
+    this.style = {
+      position: 'fixed',
+      left: `${event.rectangle.left}px`,
+      top: `${event.rectangle.top}px`,
+      width: `${event.rectangle.width}px`,
+      height: `${event.rectangle.height}px`
+    };
   }
 
 }
