@@ -7,22 +7,28 @@ import {Resizable} from './../angular2-resizable';
   styles: [`
     .rectangle {
       position: relative;
-      top: 100px;
+      top: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 300px;
       height: 150px;
       background-color: #FD4140;
       border: solid 1px #121621;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: #121621;
+      margin: auto;
     }
   `],
   template: `
     <div class="text-center">
-      <div class="rectangle" mwl-resizeable>Resize me!</div>
+      <div class="rectangle" mwl-resizeable (onResizeEnd)="log($event)">Resize me!</div>
     </div>
   `
 })
-export class DemoApp {}
+export class DemoApp {
+
+  log(value: any): void {
+    console.log(value);
+  }
+
+}
