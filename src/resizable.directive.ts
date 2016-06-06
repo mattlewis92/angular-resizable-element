@@ -123,7 +123,7 @@ export class Resizable implements OnInit {
       }
     });
 
-    const resetElementStyles = () => {
+    const resetElementStyles: Function = (): void => {
       for (let key in currentResize.originalStyles) {
         const value: string = currentResize.originalStyles[key];
         if (typeof value !== 'undefined') {
