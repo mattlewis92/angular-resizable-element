@@ -21,7 +21,8 @@ import {Resizable} from './../angular2-resizable';
   `],
   template: `
     <div class="text-center">
-      <div class="rectangle" mwl-resizeable (onResizeEnd)="log($event)">Resize me!</div>
+      <h1>Drag and pull the edges of the rectangle</h1>
+      <div class="rectangle" mwl-resizeable (onResizeEnd)="log($event)"></div>
     </div>
   `
 })
