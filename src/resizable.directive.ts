@@ -82,13 +82,21 @@ export class Resizable implements OnInit {
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
       const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
-      if (resizeEdges.left || resizeEdges.right) {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', 'ew-resize');
+      let cursor: string = 'auto';
+      if (resizeEdges.left && resizeEdges.top) {
+        cursor = 'nw-resize';
+      } else if (resizeEdges.right && resizeEdges.top) {
+        cursor = 'ne-resize';
+      } else if (resizeEdges.left && resizeEdges.bottom) {
+        cursor = 'sw-resize';
+      } else if (resizeEdges.right && resizeEdges.bottom) {
+        cursor = 'se-resize';
+      } else if (resizeEdges.left || resizeEdges.right) {
+        cursor = 'ew-resize';
       } else if (resizeEdges.top || resizeEdges.bottom) {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', 'ns-resize');
-      }  else {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', 'auto');
+        cursor = 'ns-resize';
       }
+      this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
 
@@ -203,17 +211,20 @@ export class Resizable implements OnInit {
   private getResizeEdges({mouseX, mouseY}: any): Edges {
 
     const elmPosition: ClientRect = this.elm.nativeElement.getBoundingClientRect();
+    const edges: Edges = {};
     if (isNumberCloseTo(mouseX, elmPosition.left)) {
-      return {left: true};
-    } if (isNumberCloseTo(mouseX, elmPosition.right)) {
-      return {right: true};
-    } if (isNumberCloseTo(mouseY, elmPosition.top)) {
-      return {top: true};
-    } if (isNumberCloseTo(mouseY, elmPosition.bottom)) {
-      return {bottom: true};
-    } else {
-      return {};
+      edges.left = true;
     }
+    if (isNumberCloseTo(mouseX, elmPosition.right)) {
+      edges.right = true;
+    }
+    if (isNumberCloseTo(mouseY, elmPosition.top)) {
+      edges.top = true;
+    }
+    if (isNumberCloseTo(mouseY, elmPosition.bottom)) {
+      edges.bottom = true;
+    }
+    return edges;
 
   }
 
