@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgStyle} from '@angular/common';
-import {Resizable} from './../angular2-resizable';
+import {Resizable, BoundingRectangle, Edges} from './../angular2-resizable';
 
 @Component({
   selector: 'demo-app',
@@ -31,7 +31,7 @@ export class DemoApp {
 
   public style: Object = {};
 
-  onResizeEnd(event: any): void {
+  onResizeEnd(event: {rectangle: BoundingRectangle, edges: Edges}): void {
     this.style = {
       position: 'fixed',
       left: `${event.rectangle.left}px`,

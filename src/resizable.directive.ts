@@ -10,14 +10,14 @@ import {
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 
-interface Edges {
+export interface Edges {
   top?: boolean;
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
 }
 
-interface BoundingRectangle {
+export interface BoundingRectangle {
   top: number;
   bottom: number;
   left: number;
@@ -142,7 +142,7 @@ export class Resizable implements OnInit {
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
-      const cursor = getResizeCursor(resizeEdges);
+      const cursor: string = getResizeCursor(resizeEdges);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
