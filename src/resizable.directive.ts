@@ -10,20 +10,25 @@ import {
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 
-export interface Edges {
+interface Edges {
   top?: boolean;
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
 }
 
-export interface BoundingRectangle {
+interface BoundingRectangle {
   top: number;
   bottom: number;
   left: number;
   right: number;
   height?: number;
   width?: number;
+}
+
+export interface ResizeEvent {
+  rectangle: BoundingRectangle;
+  edges: Edges;
 }
 
 const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
