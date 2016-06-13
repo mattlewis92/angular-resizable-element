@@ -1,6 +1,6 @@
 {
   "name": "angular2-resizable",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An angular2 directive that allows an element to be dragged and resized",
   "main": "./angular2-resizable.js",
   "typings": "./angular2-resizable.d.ts",
@@ -61,7 +61,7 @@
     "rxjs": "5.0.0-beta.6",
     "standard-version": "~2.3.0",
     "ts-loader": "~0.8.2",
-    "tslint": "~3.10.0",
+    "tslint": "~3.11.0",
     "tslint-loader": "~2.1.4",
     "typedoc": "~0.4.1",
     "typescript": "~1.8.10",
