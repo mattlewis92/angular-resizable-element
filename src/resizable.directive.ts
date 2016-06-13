@@ -78,6 +78,24 @@ const getResizeEdges: Function = ({mouseX, mouseY, elm}: {mouseX: number, mouseY
   return edges;
 };
 
+const getResizeCursor: Function = (edges: Edges): string => {
+  if (edges.left && edges.top) {
+    return 'nw-resize';
+  } else if (edges.right && edges.top) {
+    return 'ne-resize';
+  } else if (edges.left && edges.bottom) {
+    return 'sw-resize';
+  } else if (edges.right && edges.bottom) {
+    return 'se-resize';
+  } else if (edges.left || edges.right) {
+    return 'ew-resize';
+  } else if (edges.top || edges.bottom) {
+    return 'ns-resize';
+  } else {
+    return 'auto';
+  }
+};
+
 @Directive({
   selector: '[mwl-resizeable]'
 })
@@ -124,20 +142,7 @@ export class Resizable implements OnInit {
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
-      let cursor: string = 'auto';
-      if (resizeEdges.left && resizeEdges.top) {
-        cursor = 'nw-resize';
-      } else if (resizeEdges.right && resizeEdges.top) {
-        cursor = 'ne-resize';
-      } else if (resizeEdges.left && resizeEdges.bottom) {
-        cursor = 'sw-resize';
-      } else if (resizeEdges.right && resizeEdges.bottom) {
-        cursor = 'se-resize';
-      } else if (resizeEdges.left || resizeEdges.right) {
-        cursor = 'ew-resize';
-      } else if (resizeEdges.top || resizeEdges.bottom) {
-        cursor = 'ns-resize';
-      }
+      const cursor = getResizeCursor(resizeEdges);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
