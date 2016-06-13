@@ -114,13 +114,11 @@ export class Resizable implements OnInit {
 
         const newBoundingRect: BoundingRectangle = getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
 
-        let translateY: number = (newBoundingRect.top - currentResize.startingRect.top);
-        let translateX: number = (newBoundingRect.left - currentResize.startingRect.left);
-
         if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
           this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
           this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
-          this.renderer.setElementStyle(this.elm.nativeElement, 'transform', `translate(${translateX}px, ${translateY}px)`);
+          this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
+          this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
         }
 
         this.onResize.emit({
@@ -141,8 +139,8 @@ export class Resizable implements OnInit {
     };
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
-      const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
-      if (Object.keys(resizeEdges).length > 0) {
+      const edges: Edges = this.getResizeEdges({mouseX, mouseY});
+      if (Object.keys(edges).length > 0) {
         if (currentResize) {
           resetElementStyles();
         }
@@ -152,13 +150,12 @@ export class Resizable implements OnInit {
             mouseX,
             mouseY
           },
-          edges: resizeEdges,
+          edges,
           startingRect,
           originalStyles: {
             position: this.elm.nativeElement.style.position,
             left: this.elm.nativeElement.style.left,
             top: this.elm.nativeElement.style.top,
-            transform: this.elm.nativeElement.style.transform,
             width: `${startingRect.width}px`,
             height: `${startingRect.height}px`,
             'user-drag': this.elm.nativeElement.style['user-drag']
@@ -169,7 +166,7 @@ export class Resizable implements OnInit {
         this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
         this.onResizeStart.emit({
-          edges: resizeEdges,
+          edges,
           rectangle: startingRect
         });
       }
