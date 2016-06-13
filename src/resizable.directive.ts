@@ -77,7 +77,22 @@ export class Resizable implements OnInit {
 
   ngOnInit(): void {
 
-    let currentResize: any;
+    let currentResize: {
+      startCoords: {
+        mouseX: number,
+        mouseY: number
+      },
+      edges: Edges,
+      startingRect: BoundingRectangle,
+      originalStyles: {
+        position: string,
+        left: string,
+        top: string,
+        width: string,
+        height: string,
+        'user-drag': string
+      }
+    };
 
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
@@ -205,7 +220,7 @@ export class Resizable implements OnInit {
     this.mousemove.next({mouseX, mouseY});
   }
 
-  private getResizeEdges({mouseX, mouseY}: any): Edges {
+  private getResizeEdges({mouseX, mouseY}: {mouseX: number, mouseY: number}): Edges {
 
     const elmPosition: ClientRect = this.elm.nativeElement.getBoundingClientRect();
     const edges: Edges = {};
