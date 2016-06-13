@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.3"></a>
+## [0.0.3](https://github.com/mattlewis92/angular2-resizable/compare/v0.0.2...v0.0.3) (2016-06-13)
+
+
+### Bug Fixes
+
+* import missing rxjs operators ([300ac10](https://github.com/mattlewis92/angular2-resizable/commit/300ac10))
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/mattlewis92/angular2-resizable/compare/v0.0.1...v0.0.2) (2016-06-13)
 

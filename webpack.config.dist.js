@@ -29,6 +29,18 @@ module.exports = {
       commonjs: 'rxjs/Observable',
       commonjs2: 'rxjs/Observable',
       amd: 'rxjs/Observable'
+    },
+    'rxjs/add/operator/map': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/map',
+      commonjs2: 'rxjs/operator/map',
+      amd: 'rxjs/operator/map'
+    },
+    'rxjs/add/operator/mergeMap': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/mergeMap',
+      commonjs2: 'rxjs/operator/mergeMap',
+      amd: 'rxjs/operator/mergeMap'
     }
   },
   devtool: 'source-map',
