@@ -10,14 +10,14 @@ import {
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 
-interface Edges {
+export interface Edges {
   top?: boolean;
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
 }
 
-interface BoundingRectangle {
+export interface BoundingRectangle {
   top: number;
   bottom: number;
   left: number;
