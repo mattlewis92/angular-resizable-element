@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/mattlewis92/angular2-resizable/compare/v0.0.1...v0.0.2) (2016-06-13)
+
+
+### Bug Fixes
+
+* **types:** export Edges and BoundingRectangle types ([fe49114](https://github.com/mattlewis92/angular2-resizable/commit/fe49114))
+* dont bundle rxjs with the library ([7b1280e](https://github.com/mattlewis92/angular2-resizable/commit/7b1280e))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2016-06-13)
 
