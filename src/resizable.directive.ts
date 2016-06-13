@@ -60,6 +60,24 @@ const getNewBoundingRectangle: Function =
 
 };
 
+const getResizeEdges: Function = ({mouseX, mouseY, elm}: {mouseX: number, mouseY: number, elm: ElementRef}): Edges => {
+  const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
+  const edges: Edges = {};
+  if (isNumberCloseTo(mouseX, elmPosition.left)) {
+    edges.left = true;
+  }
+  if (isNumberCloseTo(mouseX, elmPosition.right)) {
+    edges.right = true;
+  }
+  if (isNumberCloseTo(mouseY, elmPosition.top)) {
+    edges.top = true;
+  }
+  if (isNumberCloseTo(mouseY, elmPosition.bottom)) {
+    edges.bottom = true;
+  }
+  return edges;
+};
+
 @Directive({
   selector: '[mwl-resizeable]'
 })
@@ -94,9 +112,18 @@ export class Resizable implements OnInit {
       }
     };
 
+    const resetElementStyles: Function = (): void => {
+      for (let key in currentResize.originalStyles) {
+        const value: string = currentResize.originalStyles[key];
+        if (typeof value !== 'undefined') {
+          this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
+        }
+      }
+    };
+
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
-      const resizeEdges: Edges = this.getResizeEdges({mouseX, mouseY});
+      const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
       let cursor: string = 'auto';
       if (resizeEdges.left && resizeEdges.top) {
         cursor = 'nw-resize';
@@ -144,17 +171,8 @@ export class Resizable implements OnInit {
       }
     });
 
-    const resetElementStyles: Function = (): void => {
-      for (let key in currentResize.originalStyles) {
-        const value: string = currentResize.originalStyles[key];
-        if (typeof value !== 'undefined') {
-          this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
-        }
-      }
-    };
-
     this.mousedown.subscribe(({mouseX, mouseY}) => {
-      const edges: Edges = this.getResizeEdges({mouseX, mouseY});
+      const edges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
       if (Object.keys(edges).length > 0) {
         if (currentResize) {
           resetElementStyles();
@@ -218,26 +236,6 @@ export class Resizable implements OnInit {
   @HostListener('document:mousemove', ['$event.clientX', '$event.clientY'])
   private onMousemove(mouseX: number, mouseY: number): void {
     this.mousemove.next({mouseX, mouseY});
-  }
-
-  private getResizeEdges({mouseX, mouseY}: {mouseX: number, mouseY: number}): Edges {
-
-    const elmPosition: ClientRect = this.elm.nativeElement.getBoundingClientRect();
-    const edges: Edges = {};
-    if (isNumberCloseTo(mouseX, elmPosition.left)) {
-      edges.left = true;
-    }
-    if (isNumberCloseTo(mouseX, elmPosition.right)) {
-      edges.right = true;
-    }
-    if (isNumberCloseTo(mouseY, elmPosition.top)) {
-      edges.top = true;
-    }
-    if (isNumberCloseTo(mouseY, elmPosition.bottom)) {
-      edges.bottom = true;
-    }
-    return edges;
-
   }
 
 }
