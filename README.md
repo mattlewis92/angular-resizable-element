@@ -25,21 +25,29 @@ An angular2 directive that allows an element to be dragged and resized
 
 Install through npm:
 ```
-npm install --save @angular/core@2.0.0-rc.1 angular2-resizable
+npm install --save angular2-resizable
 ```
 
 Then use it in your app like so:
 
 ```typescript
 import {Component} from '@angular/core';
-import {HelloWorld} from 'angular2-resizable';
+import {Resizable} from 'angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [HelloWorld],
-  template: '<hello-world></hello-world>'
+  directives: [Resizable],
+  // you should add some styles to the element. See the demo folder for a more fleshed out example
+  template: '<div mwl-resizeable (onResizeEnd)="onResizeEnd($event)"></div>'
 })
-export class DemoApp {}
+export class DemoApp {
+
+  onResizeEnd(event: any): void {
+    console.log('Element was resized', event);
+  }
+
+}
+
 ```
 
 You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular2-resizable/blob/master/demo/demo.ts).
@@ -48,7 +56,7 @@ You may also find it useful to view the [demo source](https://github.com/mattlew
 ```
 <script src="node_modules/angular2-resizable/angular2-resizable.js"></script>
 <script>
-    // everything is exported angular2Resizable namespace
+    // everything is exported on the  angular2Resizable namespace
 </script>
 ```
 
