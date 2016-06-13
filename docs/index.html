@@ -86,23 +86,30 @@
 				<p>An angular2 directive that allows an element to be dragged and resized</p>
 				<h2 id="installation">Installation</h2>
 				<p>Install through npm:</p>
-				<pre><code>npm install --save <span class="hljs-variable">@angular</span>/core<span class="hljs-variable">@2</span>.<span class="hljs-number">0.0</span>-rc.<span class="hljs-number">1</span> angular2-resizable
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular2-resizable</span>
 </code></pre><p>Then use it in your app like so:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {HelloWorld} from <span class="hljs-string">'angular2-resizable'</span>;
+<span class="hljs-keyword">import</span> {Resizable} from <span class="hljs-string">'angular2-resizable'</span>;
 
 @Component({
   selector: <span class="hljs-string">'demo-app'</span>,
-  directives: [HelloWorld],
-  template: <span class="hljs-string">'&lt;hello-world&gt;&lt;/hello-world&gt;'</span>
+  directives: [Resizable],
+  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span>
+  template: <span class="hljs-string">'&lt;div mwl-resizeable (onResizeEnd)="onResizeEnd($event)"&gt;&lt;/div&gt;'</span>
 })
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoApp {}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoApp {
+
+  onResizeEnd(event: <span class="hljs-built_in">any</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);
+  }
+
+}
 </code></pre>
 				<p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular2-resizable/blob/master/demo/demo.ts">demo source</a>.</p>
 				<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
 				<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/angular2-resizable/angular2-resizable.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
-    <span class="hljs-comment">// everything is exported angular2Resizable namespace</span>
+    <span class="hljs-comment">// everything is exported on the  angular2Resizable namespace</span>
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre><h2 id="documentation">Documentation</h2>
 				<p>All documentation is auto-generated from the source via typedoc and can be viewed here:
@@ -146,8 +153,17 @@
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="interfaces/edges.html" class="tsd-kind-icon">Edges</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
+					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#getnewboundingrectangle" class="tsd-kind-icon">get<wbr>New<wbr>Bounding<wbr>Rectangle</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getresizecursor" class="tsd-kind-icon">get<wbr>Resize<wbr>Cursor</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getresizeedges" class="tsd-kind-icon">get<wbr>Resize<wbr>Edges</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#isnumbercloseto" class="tsd-kind-icon">is<wbr>Number<wbr>Close<wbr>To</a>
