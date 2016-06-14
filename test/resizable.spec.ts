@@ -194,90 +194,113 @@ describe('resizable directive', () => {
 
   describe('resize events', () => {
 
+    let domEvents: Array<any>, spyName: string, expectedEvent: Object;
+
     it('should emit a starting resize event', () => {
-      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
-        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
-        triggerDomEvent('mousedown', elm, {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
           clientX: 150,
           clientY: 200
-        });
-        expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
-          edges: {
-            top: true
-          },
-          rectangle: {
-            top: 200,
-            left: 100,
-            width: 300,
-            height: 150,
-            right: 400,
-            bottom: 350
-          }
-        });
-      });
+        }
+      }];
+      spyName = 'onResizeStart';
+      expectedEvent = {
+        edges: {
+          top: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      };
     });
 
     it('should emit a resize event whenever the mouse is clicked and dragged', () => {
-      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
-        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
-        triggerDomEvent('mousedown', elm, {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
           clientX: 150,
           clientY: 200
-        });
-        triggerDomEvent('mousemove', elm, {
+        }
+      }, {
+        name: 'mousemove',
+        data: {
           clientX: 150,
           clientY: 199
-        });
-        expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
-          edges: {
-            top: true
-          },
-          rectangle: {
-            top: 199,
-            left: 100,
-            width: 300,
-            height: 151,
-            right: 400,
-            bottom: 350
-          }
-        });
-      });
+        }
+      }];
+      spyName = 'onResize';
+      expectedEvent = {
+        edges: {
+          top: true
+        },
+        rectangle: {
+          top: 199,
+          left: 100,
+          width: 300,
+          height: 151,
+          right: 400,
+          bottom: 350
+        }
+      };
     });
 
     it('should emit a resize event end whenever the mouse is clicked, dragged and released', () => {
-      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
-        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
-        triggerDomEvent('mousedown', elm, {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
           clientX: 150,
           clientY: 200
-        });
-        triggerDomEvent('mousemove', elm, {
+        }
+      }, {
+        name: 'mousemove',
+        data: {
           clientX: 150,
           clientY: 199
-        });
-        triggerDomEvent('mousemove', elm, {
+        }
+      }, {
+        name: 'mousemove',
+        data: {
           clientX: 150,
           clientY: 198
-        });
-        triggerDomEvent('mouseup', elm, {
+        }
+      }, {
+        name: 'mouseup',
+        data: {
           clientX: 150,
           clientY: 198
-        });
-        expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
-          edges: {
-            top: true
-          },
-          rectangle: {
-            top: 198,
-            left: 100,
-            width: 300,
-            height: 152,
-            right: 400,
-            bottom: 350
-          }
-        });
-      });
+        }
+      }];
+      spyName = 'onResizeEnd';
+      expectedEvent = {
+        edges: {
+          top: true
+        },
+        rectangle: {
+          top: 198,
+          left: 100,
+          width: 300,
+          height: 152,
+          right: 400,
+          bottom: 350
+        }
+      };
     });
+
+    afterEach(async(() => {
+      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+        domEvents.forEach(event => {
+          triggerDomEvent(event.name, elm, event.data);
+        });
+        expect(fixture.componentInstance[spyName]).toHaveBeenCalledWith(expectedEvent);
+      });
+    }));
 
   });
 
