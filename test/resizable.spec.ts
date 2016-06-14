@@ -510,6 +510,82 @@ describe('resizable directive', () => {
       expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
       expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
     });
+
+  }));
+
+  it('should cancel an existing resize event', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 205
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 98,
+        clientY: 205
+      });
+      expect(elm.style.width).toEqual('302px');
+      fixture.componentInstance.onResizeEnd.calls.reset();
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+      expect(elm.style.width).toEqual('300px');
+      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 101,
+        clientY: 205
+      });
+      triggerDomEvent('mouseup', elm, {
+        clientX: 101,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 101,
+          width: 299,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+    });
+
   }));
 
 });
