@@ -41,22 +41,16 @@ describe('resizable directive', () => {
   })
   class TestCmp {
 
-    @ViewChild(Resizable) resizable: Resizable;
-
+    @ViewChild(Resizable) public resizable: Resizable;
     public style: Object = {};
+    public onResizeStart: jasmine.Spy;
+    public onResize: jasmine.Spy;
+    public onResizeEnd: jasmine.Spy;
 
-    onResizeStart(event: ResizeEvent): void {}
-
-    onResize(event: ResizeEvent): void {}
-
-    onResizeEnd(event: ResizeEvent): void {
-      this.style = {
-        position: 'fixed',
-        left: `${event.rectangle.left}px`,
-        top: `${event.rectangle.top}px`,
-        width: `${event.rectangle.width}px`,
-        height: `${event.rectangle.height}px`
-      };
+    constructor() {
+      this.onResizeStart = jasmine.createSpy('onResizeStart');
+      this.onResize = jasmine.createSpy('onResize');
+      this.onResizeEnd = jasmine.createSpy('onResizeEnd');
     }
 
   }
@@ -198,5 +192,93 @@ describe('resizable directive', () => {
 
   });
 
+  describe('resize events', () => {
+
+    it('should emit a starting resize event', () => {
+      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+        triggerDomEvent('mousedown', elm, {
+          clientX: 150,
+          clientY: 200
+        });
+        expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+          edges: {
+            top: true
+          },
+          rectangle: {
+            top: 200,
+            left: 100,
+            width: 300,
+            height: 150,
+            right: 400,
+            bottom: 350
+          }
+        });
+      });
+    });
+
+    it('should emit a resize event whenever the mouse is clicked and dragged', () => {
+      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+        triggerDomEvent('mousedown', elm, {
+          clientX: 150,
+          clientY: 200
+        });
+        triggerDomEvent('mousemove', elm, {
+          clientX: 150,
+          clientY: 199
+        });
+        expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+          edges: {
+            top: true
+          },
+          rectangle: {
+            top: 199,
+            left: 100,
+            width: 300,
+            height: 151,
+            right: 400,
+            bottom: 350
+          }
+        });
+      });
+    });
+
+    it('should emit a resize event end whenever the mouse is clicked, dragged and released', () => {
+      componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+        const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+        triggerDomEvent('mousedown', elm, {
+          clientX: 150,
+          clientY: 200
+        });
+        triggerDomEvent('mousemove', elm, {
+          clientX: 150,
+          clientY: 199
+        });
+        triggerDomEvent('mousemove', elm, {
+          clientX: 150,
+          clientY: 198
+        });
+        triggerDomEvent('mouseup', elm, {
+          clientX: 150,
+          clientY: 198
+        });
+        expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+          edges: {
+            top: true
+          },
+          rectangle: {
+            top: 198,
+            left: 100,
+            width: 300,
+            height: 152,
+            right: 400,
+            bottom: 350
+          }
+        });
+      });
+    });
+
+  });
 
 });
