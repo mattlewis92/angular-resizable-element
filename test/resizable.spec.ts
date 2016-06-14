@@ -588,4 +588,40 @@ describe('resizable directive', () => {
 
   }));
 
+  it('should reset existing styles after a resize', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 200
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 200
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 199
+      });
+      let elmStyle: CSSStyleDeclaration = getComputedStyle(elm);
+      expect(elmStyle.position).toEqual('fixed');
+      expect(elmStyle.top).toEqual('199px');
+      expect(elmStyle.left).toEqual('99px');
+      expect(elmStyle.height).toEqual('151px');
+      expect(elmStyle.width).toEqual('301px');
+      triggerDomEvent('mouseup', elm, {
+        clientX: 99,
+        clientY: 199
+      });
+      elmStyle = getComputedStyle(elm);
+      expect(elmStyle.position).toEqual('relative');
+      expect(elmStyle.top).toEqual('200px');
+      expect(elmStyle.left).toEqual('100px');
+      expect(elmStyle.height).toEqual('150px');
+      expect(elmStyle.width).toEqual('300px');
+    });
+
+  }));
+
 });
