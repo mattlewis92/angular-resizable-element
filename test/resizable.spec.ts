@@ -250,7 +250,7 @@ describe('resizable directive', () => {
       };
     });
 
-    it('should emit a resize event end whenever the mouse is clicked, dragged and released', () => {
+    it('should resize from the top', () => {
       domEvents = [{
         name: 'mousedown',
         data: {
@@ -262,12 +262,24 @@ describe('resizable directive', () => {
         data: {
           clientX: 150,
           clientY: 199
+        },
+        style: {
+          top: '199px',
+          left: '100px',
+          width: '300px',
+          height: '151px'
         }
       }, {
         name: 'mousemove',
         data: {
           clientX: 150,
           clientY: 198
+        },
+        style: {
+          top: '198px',
+          left: '100px',
+          width: '300px',
+          height: '152px'
         }
       }, {
         name: 'mouseup',
@@ -292,11 +304,181 @@ describe('resizable directive', () => {
       };
     });
 
+    it('should resize from the left', () => {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
+          clientX: 100,
+          clientY: 205
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 99,
+          clientY: 205
+        },
+        style: {
+          top: '200px',
+          left: '99px',
+          width: '301px',
+          height: '150px'
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 98,
+          clientY: 205
+        },
+        style: {
+          top: '200px',
+          left: '98px',
+          width: '302px',
+          height: '150px'
+        }
+      }, {
+        name: 'mouseup',
+        data: {
+          clientX: 98,
+          clientY: 205
+        }
+      }];
+      spyName = 'onResizeEnd';
+      expectedEvent = {
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 98,
+          width: 302,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      };
+    });
+
+    it('should resize from the bottom', () => {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
+          clientX: 150,
+          clientY: 350
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 150,
+          clientY: 351
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          width: '300px',
+          height: '151px'
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 150,
+          clientY: 352
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          width: '300px',
+          height: '152px'
+        }
+      }, {
+        name: 'mouseup',
+        data: {
+          clientX: 150,
+          clientY: 352
+        }
+      }];
+      spyName = 'onResizeEnd';
+      expectedEvent = {
+        edges: {
+          bottom: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 152,
+          right: 400,
+          bottom: 352
+        }
+      };
+    });
+
+    it('should resize from the right', () => {
+      domEvents = [{
+        name: 'mousedown',
+        data: {
+          clientX: 400,
+          clientY: 205
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 401,
+          clientY: 205
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          width: '301px',
+          height: '150px'
+        }
+      }, {
+        name: 'mousemove',
+        data: {
+          clientX: 402,
+          clientY: 205
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          width: '302px',
+          height: '150px'
+        }
+      }, {
+        name: 'mouseup',
+        data: {
+          clientX: 402,
+          clientY: 205
+        }
+      }];
+      spyName = 'onResizeEnd';
+      expectedEvent = {
+        edges: {
+          right: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 302,
+          height: 150,
+          right: 402,
+          bottom: 350
+        }
+      };
+    });
+
     afterEach(async(() => {
       componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
         const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
         domEvents.forEach(event => {
           triggerDomEvent(event.name, elm, event.data);
+          if (event.name !== 'mouseup') {
+            expect(elm.style.position).toEqual('fixed');
+          }
+          if (event.style) {
+            Object.keys(event.style).forEach(styleKey => {
+              expect(elm.style[styleKey]).toEqual(event.style[styleKey]);
+            });
+          }
         });
         expect(fixture.componentInstance[spyName]).toHaveBeenCalledWith(expectedEvent);
       });
