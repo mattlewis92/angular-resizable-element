@@ -212,7 +212,7 @@ export class Resizable implements OnInit {
         this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
         this.onResizeStart.emit({
           edges,
-          rectangle: startingRect
+          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
         });
       }
     });
