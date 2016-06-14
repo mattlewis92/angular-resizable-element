@@ -486,4 +486,30 @@ describe('resizable directive', () => {
 
   });
 
+  it('should not resize when clicking and dragging outside of the element edges', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 10,
+        clientY: 20
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 11,
+        clientY: 20
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 12,
+        clientY: 20
+      });
+      triggerDomEvent('mouseup', elm, {
+        clientX: 12,
+        clientY: 20
+      });
+      expect(fixture.componentInstance.onResizeStart).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+    });
+  }));
+
 });
