@@ -11,6 +11,8 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/filter';
 
 export interface Edges {
   top?: boolean;
@@ -160,27 +162,23 @@ export class Resizable implements OnInit {
           mouseX: moveCoords.mouseX - startCoords.mouseX,
           mouseY: moveCoords.mouseY - startCoords.mouseY
         };
-      });
-    });
+      }).takeUntil(this.mouseup);
+    }).filter(() => !!currentResize);
 
     mousedrag.subscribe(({mouseX, mouseY}) => {
-      if (currentResize) {
+      const newBoundingRect: BoundingRectangle = getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
 
-        const newBoundingRect: BoundingRectangle = getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
-
-        if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
-          this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
-          this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
-          this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
-          this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
-        }
-
-        this.onResize.emit({
-          edges: currentResize.edges,
-          rectangle: newBoundingRect
-        });
-
+      if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
+        this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
       }
+
+      this.onResize.emit({
+        edges: currentResize.edges,
+        rectangle: newBoundingRect
+      });
     });
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {

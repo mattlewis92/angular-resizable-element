@@ -41,6 +41,18 @@ module.exports = {
       commonjs: 'rxjs/operator/mergeMap',
       commonjs2: 'rxjs/operator/mergeMap',
       amd: 'rxjs/operator/mergeMap'
+    },
+    'rxjs/add/operator/takeUntil': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/takeUntil',
+      commonjs2: 'rxjs/operator/takeUntil',
+      amd: 'rxjs/operator/takeUntil'
+    },
+    'rxjs/add/operator/filter': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/filter',
+      commonjs2: 'rxjs/operator/filter',
+      amd: 'rxjs/operator/filter'
     }
   },
   devtool: 'source-map',

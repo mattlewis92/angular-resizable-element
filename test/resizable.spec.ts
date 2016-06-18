@@ -624,4 +624,28 @@ describe('resizable directive', () => {
 
   }));
 
+  it('should cancel the mousedrag observable when the mouseup event fires', async(() => {
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 200
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 200
+      });
+      triggerDomEvent('mouseup', elm, {
+        clientX: 99,
+        clientY: 200
+      });
+      fixture.componentInstance.onResize.calls.reset();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 199
+      });
+      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+    });
+  }));
+
 });
