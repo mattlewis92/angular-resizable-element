@@ -215,15 +215,15 @@ export class Resizable implements OnInit {
       }
     });
 
-    this.mouseup.subscribe(({mouseX, mouseY}) => {
+    this.mouseup.subscribe(() => {
       if (currentResize) {
         this.onResizeEnd.emit({
           edges: currentResize.edges,
           rectangle: getNewBoundingRectangle(
-            currentResize.startingRect,
-            currentResize.edges,
-            mouseX - currentResize.startCoords.mouseX,
-            mouseY - currentResize.startCoords.mouseY
+            this.elm.nativeElement.getBoundingClientRect(),
+            {},
+            0,
+            0
           )
         });
         resetElementStyles();

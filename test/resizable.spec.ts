@@ -648,4 +648,35 @@ describe('resizable directive', () => {
     });
   }));
 
+  it('should fire the resize end event with the last valid bounding rectangle', async(() => {
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 210
+      });
+      triggerDomEvent('mouseup', elm, {
+        clientX: 500,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 99,
+          width: 301,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+    });
+  }));
+
 });
