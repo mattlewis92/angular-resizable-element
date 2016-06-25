@@ -135,7 +135,8 @@ export class Resizable implements OnInit {
         top: string,
         width: string,
         height: string,
-        'user-drag': string
+        'user-drag': string,
+        '-webkit-user-drag': string
       }
     };
 
@@ -207,13 +208,15 @@ export class Resizable implements OnInit {
             top: this.elm.nativeElement.style.top,
             width: `${startingRect.width}px`,
             height: `${startingRect.height}px`,
-            'user-drag': this.elm.nativeElement.style['user-drag']
+            'user-drag': this.elm.nativeElement.style['user-drag'],
+            '-webkit-user-drag': this.elm.nativeElement.style['-webkit-user-drag']
           }
         };
         this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
         this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
+        this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
         this.onResizeStart.emit({
           edges,
           rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
