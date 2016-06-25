@@ -107,7 +107,7 @@ const getResizeCursor: Function = (edges: Edges): string => {
 };
 
 @Directive({
-  selector: '[mwl-resizeable]'
+  selector: '[mwl-resizable]'
 })
 export class Resizable implements OnInit {
 

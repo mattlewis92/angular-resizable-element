@@ -32,7 +32,7 @@ describe('resizable directive', () => {
       <div
         class="rectangle"
         [ngStyle]="style"
-        mwl-resizeable
+        mwl-resizable
         [validateResize]="validate"
         [resizeEdges]="resizeEdges"
         (onResizeStart)="onResizeStart($event)"
