@@ -112,7 +112,6 @@ const getResizeCursor: Function = (edges: Edges): string => {
 export class Resizable implements OnInit {
 
   @Input() validateResize: Function;
-  @Input() disableResize: boolean = false;
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
@@ -148,7 +147,7 @@ export class Resizable implements OnInit {
       }
     };
 
-    this.mousemove.filter(() => !this.disableResize).subscribe(({mouseX, mouseY}) => {
+    this.mousemove.subscribe(({mouseX, mouseY}) => {
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
       const cursor: string = getResizeCursor(resizeEdges);
@@ -190,7 +189,7 @@ export class Resizable implements OnInit {
 
     });
 
-    this.mousedown.filter(() => !this.disableResize).subscribe(({mouseX, mouseY}) => {
+    this.mousedown.subscribe(({mouseX, mouseY}) => {
       const edges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
       if (Object.keys(edges).length > 0) {
         if (currentResize) {
