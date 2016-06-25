@@ -34,6 +34,7 @@ describe('resizable directive', () => {
         [ngStyle]="style"
         mwl-resizeable
         [validateResize]="validate"
+        [disableResize]="disableResize"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
         (onResizeEnd)="onResizeEnd($event)">
@@ -48,6 +49,7 @@ describe('resizable directive', () => {
     public onResize: jasmine.Spy = jasmine.createSpy('onResize');
     public onResizeEnd: jasmine.Spy = jasmine.createSpy('onResizeEnd');
     public validate: jasmine.Spy = jasmine.createSpy('validate');
+    public disableResize: boolean = false;
 
     constructor() {
       this.validate.and.returnValue(true);
@@ -734,6 +736,36 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith(firstResizeEvent);
     });
+  }));
+
+  it('should disable resizing of the element', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      fixture.componentInstance.disableResize = true;
+      fixture.detectChanges();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      expect(getComputedStyle(elm).cursor).toEqual('auto');
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeStart).not.toHaveBeenCalled();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      triggerDomEvent('mouseup', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+    });
+
   }));
 
 });
