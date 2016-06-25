@@ -27,6 +27,7 @@ import {Resizable, ResizeEvent} from './../angular2-resizable';
         class="rectangle"
         [ngStyle]="style"
         mwl-resizeable
+        [resizeEdges]="{left: true, top: true}"
         [validateResize]="validate"
         (onResizeEnd)="onResizeEnd($event)">
       </div>

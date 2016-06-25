@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgStyle} from '@angular/common';
-import {Resizable, ResizeEvent} from './../angular2-resizable';
+import {Resizable, ResizeEvent, Edges} from './../angular2-resizable';
 import {
   describe,
   expect,
@@ -34,6 +34,7 @@ describe('resizable directive', () => {
         [ngStyle]="style"
         mwl-resizeable
         [validateResize]="validate"
+        [resizeEdges]="resizeEdges"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
         (onResizeEnd)="onResizeEnd($event)">
@@ -48,6 +49,7 @@ describe('resizable directive', () => {
     public onResize: jasmine.Spy = jasmine.createSpy('onResize');
     public onResizeEnd: jasmine.Spy = jasmine.createSpy('onResizeEnd');
     public validate: jasmine.Spy = jasmine.createSpy('validate');
+    public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
 
     constructor() {
       this.validate.and.returnValue(true);
@@ -734,6 +736,68 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith(firstResizeEvent);
     });
+  }));
+
+  it('should only allow resizing of the element along the left side', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      fixture.componentInstance.resizeEdges = {left: true};
+      fixture.detectChanges();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 100,
+        clientY: 200
+      });
+      expect(getComputedStyle(elm).cursor).toEqual('ew-resize');
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 200
+      });
+      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+    });
+
+  }));
+
+  it('should disable resizing of the element', async(() => {
+
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      fixture.componentInstance.resizeEdges = {};
+      fixture.detectChanges();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      expect(getComputedStyle(elm).cursor).toEqual('auto');
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeStart).not.toHaveBeenCalled();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      triggerDomEvent('mouseup', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+    });
+
   }));
 
 });

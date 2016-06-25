@@ -70,19 +70,19 @@ const getNewBoundingRectangle: Function =
 
 };
 
-const getResizeEdges: Function = ({mouseX, mouseY, elm}: {mouseX: number, mouseY: number, elm: ElementRef}): Edges => {
+const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
-  if (isNumberCloseTo(mouseX, elmPosition.left)) {
+  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left)) {
     edges.left = true;
   }
-  if (isNumberCloseTo(mouseX, elmPosition.right)) {
+  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right)) {
     edges.right = true;
   }
-  if (isNumberCloseTo(mouseY, elmPosition.top)) {
+  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top)) {
     edges.top = true;
   }
-  if (isNumberCloseTo(mouseY, elmPosition.bottom)) {
+  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom)) {
     edges.bottom = true;
   }
   return edges;
@@ -112,6 +112,7 @@ const getResizeCursor: Function = (edges: Edges): string => {
 export class Resizable implements OnInit {
 
   @Input() validateResize: Function;
+  @Input() resizeEdges: Edges = {};
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
@@ -149,7 +150,7 @@ export class Resizable implements OnInit {
 
     this.mousemove.subscribe(({mouseX, mouseY}) => {
 
-      const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
+      const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
       const cursor: string = getResizeCursor(resizeEdges);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
@@ -190,7 +191,7 @@ export class Resizable implements OnInit {
     });
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
-      const edges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm});
+      const edges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
       if (Object.keys(edges).length > 0) {
         if (currentResize) {
           resetElementStyles();
