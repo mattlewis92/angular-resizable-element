@@ -125,10 +125,6 @@ export class Resizable implements OnInit {
   ngOnInit(): void {
 
     let currentResize: {
-      startCoords: {
-        mouseX: number,
-        mouseY: number
-      },
       edges: Edges,
       startingRect: BoundingRectangle,
       currentRect: BoundingRectangle,
@@ -201,10 +197,6 @@ export class Resizable implements OnInit {
         }
         const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
         currentResize = {
-          startCoords: {
-            mouseX,
-            mouseY
-          },
           edges,
           startingRect,
           currentRect: startingRect,
