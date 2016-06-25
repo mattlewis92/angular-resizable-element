@@ -165,20 +165,22 @@ export class Resizable implements OnInit {
       }).takeUntil(this.mouseup);
     }).filter(() => !!currentResize);
 
-    mousedrag.subscribe(({mouseX, mouseY}) => {
-      const newBoundingRect: BoundingRectangle = getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
+    mousedrag.map(({mouseX, mouseY}) => {
+      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
+    }).filter((newBoundingRect: BoundingRectangle) => {
+      return newBoundingRect.height > 0 && newBoundingRect.width > 0;
+    }).subscribe((newBoundingRect: BoundingRectangle) => {
 
-      if (newBoundingRect.height > 0 && newBoundingRect.width > 0) {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
-      }
+      this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
+      this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
+      this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
+      this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
 
       this.onResize.emit({
         edges: currentResize.edges,
         rectangle: newBoundingRect
       });
+
     });
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
