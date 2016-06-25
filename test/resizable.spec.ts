@@ -33,6 +33,7 @@ describe('resizable directive', () => {
         class="rectangle"
         [ngStyle]="style"
         mwl-resizeable
+        [validateResize]="validate"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
         (onResizeEnd)="onResizeEnd($event)">
@@ -43,14 +44,13 @@ describe('resizable directive', () => {
 
     @ViewChild(Resizable) public resizable: Resizable;
     public style: Object = {};
-    public onResizeStart: jasmine.Spy;
-    public onResize: jasmine.Spy;
-    public onResizeEnd: jasmine.Spy;
+    public onResizeStart: jasmine.Spy = jasmine.createSpy('onResizeStart');
+    public onResize: jasmine.Spy = jasmine.createSpy('onResize');
+    public onResizeEnd: jasmine.Spy = jasmine.createSpy('onResizeEnd');
+    public validate: jasmine.Spy = jasmine.createSpy('validate');
 
     constructor() {
-      this.onResizeStart = jasmine.createSpy('onResizeStart');
-      this.onResize = jasmine.createSpy('onResize');
-      this.onResizeEnd = jasmine.createSpy('onResizeEnd');
+      this.validate.and.returnValue(true);
     }
 
   }
@@ -676,6 +676,63 @@ describe('resizable directive', () => {
           bottom: 350
         }
       });
+    });
+  }));
+
+  it('should allow invalidating of resize events', async(() => {
+    componentPromise.then((fixture: ComponentFixture<TestCmp>) => {
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      fixture.componentInstance.validate.and.returnValue(true);
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 210
+      });
+      const firstResizeEvent: ResizeEvent = {
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 99,
+          width: 301,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      };
+      expect(fixture.componentInstance.validate).toHaveBeenCalledWith(firstResizeEvent);
+      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith(firstResizeEvent);
+      fixture.componentInstance.validate.and.returnValue(false);
+      fixture.componentInstance.validate.calls.reset();
+      fixture.componentInstance.onResize.calls.reset();
+      triggerDomEvent('mousemove', elm, {
+        clientX: 98,
+        clientY: 210
+      });
+      const secondResizeEvent: ResizeEvent = {
+        edges: {
+          left: true
+        },
+        rectangle: {
+          top: 200,
+          left: 98,
+          width: 302,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      };
+      expect(fixture.componentInstance.validate).toHaveBeenCalledWith(secondResizeEvent);
+      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      triggerDomEvent('mouseup', elm, {
+        clientX: 98,
+        clientY: 210
+      });
+      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith(firstResizeEvent);
     });
   }));
 

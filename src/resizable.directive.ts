@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnInit,
   Output,
+  Input,
   EventEmitter
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
@@ -110,6 +111,7 @@ const getResizeCursor: Function = (edges: Edges): string => {
 })
 export class Resizable implements OnInit {
 
+  @Input() validateResize: Function;
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
@@ -170,6 +172,11 @@ export class Resizable implements OnInit {
       return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
     }).filter((newBoundingRect: BoundingRectangle) => {
       return newBoundingRect.height > 0 && newBoundingRect.width > 0;
+    }).filter((newBoundingRect: BoundingRectangle) => {
+      return this.validateResize ? this.validateResize({
+        rectangle: newBoundingRect,
+        edges: currentResize.edges
+      }) : true;
     }).subscribe((newBoundingRect: BoundingRectangle) => {
 
       this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);

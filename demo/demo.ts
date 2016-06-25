@@ -23,13 +23,27 @@ import {Resizable, ResizeEvent} from './../angular2-resizable';
   template: `
     <div class="text-center">
       <h1>Drag and pull the edges of the rectangle</h1>
-      <div class="rectangle" [ngStyle]="style" mwl-resizeable (onResizeEnd)="onResizeEnd($event)"></div>
+      <div
+        class="rectangle"
+        [ngStyle]="style"
+        mwl-resizeable
+        [validateResize]="validate"
+        (onResizeEnd)="onResizeEnd($event)">
+      </div>
     </div>
   `
 })
 export class DemoApp {
 
   public style: Object = {};
+
+  validate(event: ResizeEvent): boolean {
+    const MIN_DIMENSIONS_PX: number = 50;
+    if (event.rectangle.width < MIN_DIMENSIONS_PX || event.rectangle.height < MIN_DIMENSIONS_PX) {
+      return false;
+    }
+    return true;
+  }
 
   onResizeEnd(event: ResizeEvent): void {
     this.style = {
