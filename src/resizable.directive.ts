@@ -129,6 +129,7 @@ export class Resizable implements OnInit {
       },
       edges: Edges,
       startingRect: BoundingRectangle,
+      currentRect: BoundingRectangle,
       originalStyles: {
         position: string,
         left: string,
@@ -181,6 +182,8 @@ export class Resizable implements OnInit {
         rectangle: newBoundingRect
       });
 
+      currentResize.currentRect = newBoundingRect;
+
     });
 
     this.mousedown.subscribe(({mouseX, mouseY}) => {
@@ -197,6 +200,7 @@ export class Resizable implements OnInit {
           },
           edges,
           startingRect,
+          currentRect: startingRect,
           originalStyles: {
             position: this.elm.nativeElement.style.position,
             left: this.elm.nativeElement.style.left,
@@ -221,12 +225,7 @@ export class Resizable implements OnInit {
       if (currentResize) {
         this.onResizeEnd.emit({
           edges: currentResize.edges,
-          rectangle: getNewBoundingRectangle(
-            this.elm.nativeElement.getBoundingClientRect(),
-            {},
-            0,
-            0
-          )
+          rectangle: currentResize.currentRect
         });
         resetElementStyles();
         currentResize = null;
