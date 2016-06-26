@@ -153,6 +153,7 @@ export class Resizable implements OnInit, AfterViewInit {
 
   @Input() validateResize: Function;
   @Input() resizeEdges: Edges = {};
+  @Input() enableResizeStyling: boolean = false;
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
@@ -182,10 +183,12 @@ export class Resizable implements OnInit, AfterViewInit {
     };
 
     const resetElementStyles: Function = (): void => {
-      for (let key in currentResize.originalStyles) {
-        const value: string = currentResize.originalStyles[key];
-        if (typeof value !== 'undefined') {
-          this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
+      if (this.enableResizeStyling) {
+        for (let key in currentResize.originalStyles) {
+          const value: string = currentResize.originalStyles[key];
+          if (typeof value !== 'undefined') {
+            this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
+          }
         }
       }
     };
@@ -222,10 +225,12 @@ export class Resizable implements OnInit, AfterViewInit {
       }) : true;
     }).subscribe((newBoundingRect: BoundingRectangle) => {
 
-      this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
-      this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
-      this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
-      this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
+      if (this.enableResizeStyling) {
+        this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
+      }
 
       this.onResize.emit({
         edges: getEdgesDiff({
@@ -263,11 +268,13 @@ export class Resizable implements OnInit, AfterViewInit {
           '-webkit-user-drag': this.elm.nativeElement.style['-webkit-user-drag']
         }
       };
-      this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
-      this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
-      this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
-      this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
-      this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
+      if (this.enableResizeStyling) {
+        this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
+        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
+        this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
+      }
       this.onResizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
         rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)

@@ -35,6 +35,7 @@ describe('resizable directive', () => {
         mwl-resizable
         [validateResize]="validate"
         [resizeEdges]="resizeEdges"
+        [enableResizeStyling]="enableResizeStyling"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
         (onResizeEnd)="onResizeEnd($event)">
@@ -50,6 +51,7 @@ describe('resizable directive', () => {
     public onResizeEnd: jasmine.Spy = jasmine.createSpy('onResizeEnd');
     public validate: jasmine.Spy = jasmine.createSpy('validate');
     public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
+    public enableResizeStyling: boolean = true;
 
     constructor() {
       this.validate.and.returnValue(true);
@@ -880,6 +882,30 @@ describe('resizable directive', () => {
         }
       });
 
+    });
+
+  }));
+
+  it('should disable the temporary resize effect applied to the element', async(() => {
+
+    createComponent().then((fixture: ComponentFixture<TestCmp>) => {
+      fixture.componentInstance.enableResizeStyling = false;
+      fixture.detectChanges();
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 200
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 201
+      });
+      const style: CSSStyleDeclaration = getComputedStyle(elm);
+      expect(style.position).toEqual('relative');
+      expect(style.width).toEqual('300px');
+      expect(style.height).toEqual('150px');
+      expect(style.top).toEqual('200px');
+      expect(style.left).toEqual('100px');
     });
 
   }));

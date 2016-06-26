@@ -35,6 +35,7 @@ import {Resizable, ResizeEvent, ResizeHandle} from './../angular2-resizable';
         mwl-resizable
         [validateResize]="validate"
         [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+        [enableResizeStyling]="true"
         (onResizeEnd)="onResizeEnd($event)">
         <img
           src="http://i.imgur.com/eqzz2dl.gif"
