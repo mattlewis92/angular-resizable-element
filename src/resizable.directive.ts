@@ -20,10 +20,10 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
 
 export interface Edges {
-  top?: boolean;
-  bottom?: boolean;
-  left?: boolean;
-  right?: boolean;
+  top?: boolean | number;
+  bottom?: boolean | number;
+  left?: boolean | number;
+  right?: boolean | number;
 }
 
 export interface BoundingRectangle {
@@ -108,6 +108,16 @@ const getResizeCursor: Function = (edges: Edges): string => {
   } else {
     return 'auto';
   }
+};
+
+const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges => {
+
+  const edgesDiff: Edges = {};
+  Object.keys(edges).forEach((edge: string) => {
+    edgesDiff[edge] = newRectangle[edge] - initialRectangle[edge];
+  });
+  return edgesDiff;
+
 };
 
 @Directive({
@@ -204,7 +214,11 @@ export class Resizable implements OnInit, AfterViewInit {
     }).filter((newBoundingRect: BoundingRectangle) => {
       return this.validateResize ? this.validateResize({
         rectangle: newBoundingRect,
-        edges: currentResize.edges
+        edges: getEdgesDiff({
+          edges: currentResize.edges,
+          initialRectangle: currentResize.startingRect,
+          newRectangle: newBoundingRect
+        })
       }) : true;
     }).subscribe((newBoundingRect: BoundingRectangle) => {
 
@@ -214,7 +228,11 @@ export class Resizable implements OnInit, AfterViewInit {
       this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
 
       this.onResize.emit({
-        edges: currentResize.edges,
+        edges: getEdgesDiff({
+          edges: currentResize.edges,
+          initialRectangle: currentResize.startingRect,
+          newRectangle: newBoundingRect
+        }),
         rectangle: newBoundingRect
       });
 
@@ -251,7 +269,7 @@ export class Resizable implements OnInit, AfterViewInit {
       this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
       this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
       this.onResizeStart.emit({
-        edges,
+        edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
         rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
       });
     });
@@ -259,7 +277,11 @@ export class Resizable implements OnInit, AfterViewInit {
     this.mouseup.subscribe(() => {
       if (currentResize) {
         this.onResizeEnd.emit({
-          edges: currentResize.edges,
+          edges: getEdgesDiff({
+            edges: currentResize.edges,
+            initialRectangle: currentResize.startingRect,
+            newRectangle: currentResize.currentRect
+          }),
           rectangle: currentResize.currentRect
         });
         resetElementStyles();

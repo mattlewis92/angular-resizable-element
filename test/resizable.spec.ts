@@ -214,7 +214,7 @@ describe('resizable directive', () => {
       spyName = 'onResizeStart';
       expectedEvent = {
         edges: {
-          top: true
+          top: 0
         },
         rectangle: {
           top: 200,
@@ -244,7 +244,7 @@ describe('resizable directive', () => {
       spyName = 'onResize';
       expectedEvent = {
         edges: {
-          top: true
+          top: -1
         },
         rectangle: {
           top: 199,
@@ -298,7 +298,7 @@ describe('resizable directive', () => {
       spyName = 'onResizeEnd';
       expectedEvent = {
         edges: {
-          top: true
+          top: -2
         },
         rectangle: {
           top: 198,
@@ -352,7 +352,7 @@ describe('resizable directive', () => {
       spyName = 'onResizeEnd';
       expectedEvent = {
         edges: {
-          left: true
+          left: -2
         },
         rectangle: {
           top: 200,
@@ -406,7 +406,7 @@ describe('resizable directive', () => {
       spyName = 'onResizeEnd';
       expectedEvent = {
         edges: {
-          bottom: true
+          bottom: 2
         },
         rectangle: {
           top: 200,
@@ -460,7 +460,7 @@ describe('resizable directive', () => {
       spyName = 'onResizeEnd';
       expectedEvent = {
         edges: {
-          right: true
+          right: 2
         },
         rectangle: {
           top: 200,
@@ -530,7 +530,7 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
         edges: {
-          left: true
+          left: 0
         },
         rectangle: {
           top: 200,
@@ -559,7 +559,7 @@ describe('resizable directive', () => {
       expect(elm.style.width).toEqual('300px');
       expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
         edges: {
-          left: true
+          left: 0
         },
         rectangle: {
           top: 200,
@@ -580,7 +580,7 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
         edges: {
-          left: true
+          left: 1
         },
         rectangle: {
           top: 200,
@@ -672,7 +672,7 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
         edges: {
-          left: true
+          left: -1
         },
         rectangle: {
           top: 200,
@@ -700,7 +700,7 @@ describe('resizable directive', () => {
       });
       const firstResizeEvent: ResizeEvent = {
         edges: {
-          left: true
+          left: -1
         },
         rectangle: {
           top: 200,
@@ -722,7 +722,7 @@ describe('resizable directive', () => {
       });
       const secondResizeEvent: ResizeEvent = {
         edges: {
-          left: true
+          left: -2
         },
         rectangle: {
           top: 200,
@@ -760,7 +760,7 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
         edges: {
-          left: true
+          left: 0
         },
         rectangle: {
           top: 200,
@@ -831,8 +831,8 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
         edges: {
-          bottom: true,
-          right: true
+          bottom: 0,
+          right: 0
         },
         rectangle: {
           top: 200,
@@ -849,8 +849,8 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
         edges: {
-          bottom: true,
-          right: true
+          bottom: 0,
+          right: 1
         },
         rectangle: {
           top: 200,
@@ -867,8 +867,8 @@ describe('resizable directive', () => {
       });
       expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
         edges: {
-          bottom: true,
-          right: true
+          bottom: 0,
+          right: 1
         },
         rectangle: {
           top: 200,
