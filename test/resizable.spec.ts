@@ -36,6 +36,7 @@ describe('resizable directive', () => {
         [validateResize]="validate"
         [resizeEdges]="resizeEdges"
         [enableResizeStyling]="enableResizeStyling"
+        [resizeSnapGrid]="resizeSnapGrid"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
         (onResizeEnd)="onResizeEnd($event)">
@@ -52,6 +53,7 @@ describe('resizable directive', () => {
     public validate: jasmine.Spy = jasmine.createSpy('validate');
     public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
     public enableResizeStyling: boolean = true;
+    public resizeSnapGrid: Object = {};
 
     constructor() {
       this.validate.and.returnValue(true);
@@ -906,6 +908,77 @@ describe('resizable directive', () => {
       expect(style.height).toEqual('150px');
       expect(style.top).toEqual('200px');
       expect(style.left).toEqual('100px');
+    });
+
+  }));
+
+  it('should support resizing to a snap grid', async(() => {
+
+    createComponent().then((fixture: ComponentFixture<TestCmp>) => {
+      fixture.componentInstance.resizeSnapGrid = {left: 10};
+      fixture.detectChanges();
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 205
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+        edges: {
+          left: 0
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 95,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResize.calls.count()).toBe(1);
+      triggerDomEvent('mousemove', elm, {
+        clientX: 89,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+        edges: {
+          left: -10
+        },
+        rectangle: {
+          top: 200,
+          left: 90,
+          width: 310,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
+      expect(fixture.componentInstance.onResize.calls.count()).toBe(2);
+      triggerDomEvent('mouseup', elm, {
+        clientX: 89,
+        clientY: 205
+      });
+      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+        edges: {
+          left: -10
+        },
+        rectangle: {
+          top: 200,
+          left: 90,
+          width: 310,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      });
     });
 
   }));

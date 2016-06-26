@@ -59,6 +59,18 @@ module.exports = {
       commonjs: 'rxjs/operator/filter',
       commonjs2: 'rxjs/operator/filter',
       amd: 'rxjs/operator/filter'
+    },
+    'rxjs/add/operator/pairwise': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/pairwise',
+      commonjs2: 'rxjs/operator/pairwise',
+      amd: 'rxjs/operator/pairwise'
+    },
+    'rxjs/add/operator/take': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/take',
+      commonjs2: 'rxjs/operator/take',
+      amd: 'rxjs/operator/take'
     }
   },
   devtool: 'source-map',

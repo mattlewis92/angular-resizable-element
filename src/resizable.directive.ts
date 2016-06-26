@@ -18,6 +18,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/pairwise';
+import 'rxjs/add/operator/take';
 
 export interface Edges {
   top?: boolean | number;
@@ -38,6 +40,11 @@ export interface BoundingRectangle {
 export interface ResizeEvent {
   rectangle: BoundingRectangle;
   edges: Edges;
+}
+
+interface Coordinate {
+  x: number;
+  y: number;
 }
 
 const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
@@ -154,6 +161,7 @@ export class Resizable implements OnInit, AfterViewInit {
   @Input() validateResize: Function;
   @Input() resizeEdges: Edges = {};
   @Input() enableResizeStyling: boolean = false;
+  @Input() resizeSnapGrid: Edges = {};
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
@@ -202,12 +210,66 @@ export class Resizable implements OnInit, AfterViewInit {
     });
 
     const mousedrag: Observable<any> = this.mousedown.flatMap(startCoords => {
-      return this.mousemove.map(moveCoords => {
+
+      const getDiff: Function = moveCoords => {
         return {
           mouseX: moveCoords.mouseX - startCoords.mouseX,
           mouseY: moveCoords.mouseY - startCoords.mouseY
         };
+      };
+
+      const getSnapGrid: Function = () => {
+        const snapGrid: Coordinate = {x: 1, y: 1};
+
+        if (currentResize) {
+          if (this.resizeSnapGrid.left && currentResize.edges.left) {
+            snapGrid.x = +this.resizeSnapGrid.left;
+          } else if (this.resizeSnapGrid.right && currentResize.edges.right) {
+            snapGrid.x = +this.resizeSnapGrid.right;
+          }
+
+          if (this.resizeSnapGrid.top && currentResize.edges.top) {
+            snapGrid.y = +this.resizeSnapGrid.top;
+          } else if (this.resizeSnapGrid.bottom && currentResize.edges.bottom) {
+            snapGrid.y = +this.resizeSnapGrid.bottom;
+          }
+        }
+
+        return snapGrid;
+      };
+
+      const getGrid: Function = (coords, snapGrid) => {
+        return {
+          x: Math.ceil(coords.mouseX / snapGrid.x),
+          y: Math.ceil(coords.mouseY / snapGrid.y)
+        };
+      };
+
+      return merge(
+        this.mousemove.take(1).map(coords => [, coords]),
+        this.mousemove.pairwise()
+      ).map(([previousCoords, newCoords]) => {
+        return [previousCoords ? getDiff(previousCoords) : previousCoords, getDiff(newCoords)];
+      }).filter(([previousCoords, newCoords]) => {
+
+        if (!previousCoords) {
+          return true;
+        }
+
+        const snapGrid: Coordinate = getSnapGrid();
+        const previousGrid: Coordinate = getGrid(previousCoords, snapGrid);
+        const newGrid: Coordinate = getGrid(newCoords, snapGrid);
+
+        return (previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y);
+
+      }).map(([, newCoords]) => {
+        const snapGrid: Coordinate = getSnapGrid();
+        return {
+          mouseX: Math.round(newCoords.mouseX / snapGrid.x) * snapGrid.x,
+          mouseY: Math.round(newCoords.mouseY / snapGrid.y) * snapGrid.y
+        };
       }).takeUntil(merge(this.mouseup, this.mousedown));
+
     }).filter(() => !!currentResize);
 
     mousedrag.map(({mouseX, mouseY}) => {
