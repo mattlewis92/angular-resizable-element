@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
+import {merge} from 'rxjs/observable/merge';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
@@ -193,7 +194,7 @@ export class Resizable implements OnInit, AfterViewInit {
           mouseX: moveCoords.mouseX - startCoords.mouseX,
           mouseY: moveCoords.mouseY - startCoords.mouseY
         };
-      }).takeUntil(this.mouseup);
+      }).takeUntil(merge(this.mouseup, this.mousedown));
     }).filter(() => !!currentResize);
 
     mousedrag.map(({mouseX, mouseY}) => {

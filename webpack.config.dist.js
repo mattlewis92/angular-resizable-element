@@ -30,6 +30,12 @@ module.exports = {
       commonjs2: 'rxjs/Observable',
       amd: 'rxjs/Observable'
     },
+    'rxjs/observable/merge': {
+      root: ['rx', 'Observable', 'merge'],
+      commonjs: 'rxjs/observable/merge',
+      commonjs2: 'rxjs/observable/merge',
+      amd: 'rxjs/observable/merge'
+    },
     'rxjs/add/operator/map': {
       root: ['rx', 'Observable'],
       commonjs: 'rxjs/operator/map',
