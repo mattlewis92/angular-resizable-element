@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>BoundingRectangle | angular2-resizable</title>
+	<title>ResizeHandle | angular2-resizable</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="boundingrectangle.html">BoundingRectangle</a>
+					<a href="resizehandle.html">ResizeHandle</a>
 				</li>
 			</ul>
-			<h1>Interface BoundingRectangle</h1>
+			<h1>Class ResizeHandle</h1>
 		</div>
 	</div>
 </header>
@@ -70,15 +70,20 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The bounding rectangle of the resized element</p>
+						<p>An element placed inside a <code>mwl-resizable</code> directive to be used as a drag and resize handle</p>
 					</div>
+					<p>For example</p>
+					<pre><code><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">mwl-resizable</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">mwl-resize-handle</span> [<span class="hljs-attr">resizeEdges</span>]=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{bottom: true, right: true}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">BoundingRectangle</span>
+						<span class="target">ResizeHandle</span>
 					</li>
 				</ul>
 			</section>
@@ -89,12 +94,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#bottom" class="tsd-kind-icon">bottom</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#left" class="tsd-kind-icon">left</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#right" class="tsd-kind-icon">right</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#top" class="tsd-kind-icon">top</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="boundingrectangle.html#width" class="tsd-kind-icon">width</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizehandle.html#resizable" class="tsd-kind-icon">resizable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizehandle.html#resizeedges" class="tsd-kind-icon">resize<wbr>Edges</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizehandle.html#onmousedown" class="tsd-kind-icon">on<wbr>Mousedown</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizehandle.html#onmousemove" class="tsd-kind-icon">on<wbr>Mousemove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizehandle.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouseup</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,65 +111,119 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="bottom" class="tsd-anchor"></a>
-					<h3>bottom</h3>
-					<div class="tsd-signature tsd-kind-icon">bottom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="resizable" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> resizable</h3>
+					<div class="tsd-signature tsd-kind-icon">resizable<span class="tsd-signature-symbol">:</span> <a href="resizable.html" class="tsd-signature-type">Resizable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L39">src/resizable.directive.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L181">src/resizable.directive.ts:181</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="height" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> height</h3>
-					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="resizeedges" class="tsd-anchor"></a>
+					<h3>resize<wbr>Edges</h3>
+					<div class="tsd-signature tsd-kind-icon">resize<wbr>Edges<span class="tsd-signature-symbol">:</span> <a href="../interfaces/edges.html" class="tsd-signature-type">Edges</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L42">src/resizable.directive.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L176">src/resizable.directive.ts:176</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The <code>Edges</code> object that contains the edges of the parent element that dragging the handle will trigger a resize on</p>
+						</div>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="left" class="tsd-anchor"></a>
-					<h3>left</h3>
-					<div class="tsd-signature tsd-kind-icon">left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L40">src/resizable.directive.ts:40</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onmousedown" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Mousedown</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Mousedown<span class="tsd-signature-symbol">(</span>mouseX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mouseY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L195">src/resizable.directive.ts:195</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mouseX: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>mouseY: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="right" class="tsd-anchor"></a>
-					<h3>right</h3>
-					<div class="tsd-signature tsd-kind-icon">right<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L41">src/resizable.directive.ts:41</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onmousemove" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Mousemove</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Mousemove<span class="tsd-signature-symbol">(</span>mouseX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mouseY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L203">src/resizable.directive.ts:203</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mouseX: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>mouseY: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="top" class="tsd-anchor"></a>
-					<h3>top</h3>
-					<div class="tsd-signature tsd-kind-icon">top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L38">src/resizable.directive.ts:38</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="width" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> width</h3>
-					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L43">src/resizable.directive.ts:43</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onmouseup" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Mouseup</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Mouseup<span class="tsd-signature-symbol">(</span>mouseX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, mouseY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L187">src/resizable.directive.ts:187</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mouseX: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>mouseY: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -175,46 +238,43 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="../classes/resizable.html" class="tsd-kind-icon">Resizable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
+						<a href="resizable.html" class="tsd-kind-icon">Resizable</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
+					<li class="current tsd-kind-class">
+						<a href="resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#bottom" class="tsd-kind-icon">bottom</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="resizehandle.html#resizable" class="tsd-kind-icon">resizable</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#height" class="tsd-kind-icon">height</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resizehandle.html#resizeedges" class="tsd-kind-icon">resize<wbr>Edges</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#left" class="tsd-kind-icon">left</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="resizehandle.html#onmousedown" class="tsd-kind-icon">on<wbr>Mousedown</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#right" class="tsd-kind-icon">right</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="resizehandle.html#onmousemove" class="tsd-kind-icon">on<wbr>Mousemove</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#top" class="tsd-kind-icon">top</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="boundingrectangle.html#width" class="tsd-kind-icon">width</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="resizehandle.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouseup</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-is-private tsd-is-not-exported">
-						<a href="coordinate.html" class="tsd-kind-icon">Coordinate</a>
+						<a href="../interfaces/coordinate.html" class="tsd-kind-icon">Coordinate</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="edges.html" class="tsd-kind-icon">Edges</a>
+						<a href="../interfaces/edges.html" class="tsd-kind-icon">Edges</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
+						<a href="../interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="../globals.html#getedgesdiff" class="tsd-kind-icon">get<wbr>Edges<wbr>Diff</a>

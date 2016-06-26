@@ -67,6 +67,16 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Place this on an element to make it resizable</p>
+					</div>
+					<p>For example</p>
+					<pre><code><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">mwl-resizable</span> [<span class="hljs-attr">resizeEdges</span>]=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{bottom: true, right: true, top: true, left: true}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span> [<span class="hljs-attr">enableResizeStyling</span>]=<span class="hljs-string">"true"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -79,22 +89,24 @@
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
 					<li><span class="tsd-signature-type">OnInit</span></li>
+					<li><span class="tsd-signature-type">AfterViewInit</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="resizable.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-private"><a href="resizable.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#elm" class="tsd-kind-icon">elm</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#enableresizestyling" class="tsd-kind-icon">enable<wbr>Resize<wbr>Styling</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#mousedown" class="tsd-kind-icon">mousedown</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#mousemove" class="tsd-kind-icon">mousemove</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#mouseup" class="tsd-kind-icon">mouseup</a></li>
@@ -102,12 +114,17 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#onresizeend" class="tsd-kind-icon">on<wbr>Resize<wbr>End</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#onresizestart" class="tsd-kind-icon">on<wbr>Resize<wbr>Start</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#renderer" class="tsd-kind-icon">renderer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#resizeedges" class="tsd-kind-icon">resize<wbr>Edges</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="resizable.html#resizehandles" class="tsd-kind-icon">resize<wbr>Handles</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#resizesnapgrid" class="tsd-kind-icon">resize<wbr>Snap<wbr>Grid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resizable.html#validateresize" class="tsd-kind-icon">validate<wbr>Resize</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resizable.html#ngoninit" class="tsd-kind-icon">ng<wbr>OnInit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizable.html#ngafterviewinit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizable.html#ngoninit" class="tsd-kind-icon">ng<wbr>OnInit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizable.html#onmousedown" class="tsd-kind-icon">on<wbr>Mousedown</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizable.html#onmousemove" class="tsd-kind-icon">on<wbr>Mousemove</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resizable.html#onmouseup" class="tsd-kind-icon">on<wbr>Mouseup</a></li>
@@ -116,21 +133,23 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-private">
 					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Resizable<span class="tsd-signature-symbol">(</span>renderer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Renderer</span>, elm<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ElementRef</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="resizable.html" class="tsd-signature-type">Resizable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L117">src/resizable.directive.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L278">src/resizable.directive.ts:278</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -153,9 +172,24 @@
 					<div class="tsd-signature tsd-kind-icon">elm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ElementRef</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L119">src/resizable.directive.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L283">src/resizable.directive.ts:283</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="enableresizestyling" class="tsd-anchor"></a>
+					<h3>enable<wbr>Resize<wbr>Styling</h3>
+					<div class="tsd-signature tsd-kind-icon">enable<wbr>Resize<wbr>Styling<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L236">src/resizable.directive.ts:236</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set to <code>true</code> to enable a temporary resizing effect of the element in between the <code>onResizeStart</code> and <code>onResizeEnd</code> events.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="mousedown" class="tsd-anchor"></a>
@@ -163,9 +197,11 @@
 					<div class="tsd-signature tsd-kind-icon">mousedown<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Subject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Subject()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L116">src/resizable.directive.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L268">src/resizable.directive.ts:268</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="mousemove" class="tsd-anchor"></a>
@@ -173,9 +209,11 @@
 					<div class="tsd-signature tsd-kind-icon">mousemove<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Subject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Subject()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L117">src/resizable.directive.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L273">src/resizable.directive.ts:273</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="mouseup" class="tsd-anchor"></a>
@@ -183,9 +221,11 @@
 					<div class="tsd-signature tsd-kind-icon">mouseup<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Subject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Subject()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L115">src/resizable.directive.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L263">src/resizable.directive.ts:263</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="onresize" class="tsd-anchor"></a>
@@ -193,9 +233,14 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Resize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new EventEmitter(false)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L112">src/resizable.directive.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L253">src/resizable.directive.ts:253</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Called as the mouse is dragged after a resize event has begun. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="onresizeend" class="tsd-anchor"></a>
@@ -203,9 +248,14 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Resize<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new EventEmitter(false)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L113">src/resizable.directive.ts:113</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L258">src/resizable.directive.ts:258</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Called after the mouse is released after a resize event. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="onresizestart" class="tsd-anchor"></a>
@@ -213,9 +263,14 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Resize<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new EventEmitter(false)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L111">src/resizable.directive.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L248">src/resizable.directive.ts:248</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Called when the mouse is pressed and a resize event is about to begin. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="renderer" class="tsd-anchor"></a>
@@ -223,26 +278,105 @@
 					<div class="tsd-signature tsd-kind-icon">renderer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Renderer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L119">src/resizable.directive.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L283">src/resizable.directive.ts:283</a></li>
 						</ul>
 					</aside>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="resizeedges" class="tsd-anchor"></a>
+					<h3>resize<wbr>Edges</h3>
+					<div class="tsd-signature tsd-kind-icon">resize<wbr>Edges<span class="tsd-signature-symbol">:</span> <a href="../interfaces/edges.html" class="tsd-signature-type">Edges</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L231">src/resizable.directive.ts:231</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The edges that an element can be resized from. Pass an object like <code>{top: true, bottom: false}</code>. By default no edges can be resized.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="resizehandles" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> resize<wbr>Handles</h3>
+					<div class="tsd-signature tsd-kind-icon">resize<wbr>Handles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">QueryList</span><span class="tsd-signature-symbol">&lt;</span><a href="resizehandle.html" class="tsd-signature-type">ResizeHandle</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L278">src/resizable.directive.ts:278</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="resizesnapgrid" class="tsd-anchor"></a>
+					<h3>resize<wbr>Snap<wbr>Grid</h3>
+					<div class="tsd-signature tsd-kind-icon">resize<wbr>Snap<wbr>Grid<span class="tsd-signature-symbol">:</span> <a href="../interfaces/edges.html" class="tsd-signature-type">Edges</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L243">src/resizable.directive.ts:243</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A snap grid that resize events will be locked to.</p>
+						</div>
+						<p>e.g. to only allow the element to be resized every 10px set it to <code>{left: 10, right: 10}</code></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="validateresize" class="tsd-anchor"></a>
+					<h3>validate<wbr>Resize</h3>
+					<div class="tsd-signature tsd-kind-icon">validate<wbr>Resize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L226">src/resizable.directive.ts:226</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A function that will be called before each resize event. Return <code>true</code> to allow the resize event to propagate or <code>false</code> to cancel it</p>
+						</div>
+					</div>
+				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="ngafterviewinit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> ng<wbr>After<wbr>View<wbr>Init</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L478">src/resizable.directive.ts:478</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="ngoninit" class="tsd-anchor"></a>
-					<h3>ng<wbr>OnInit</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> ng<wbr>OnInit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">ng<wbr>OnInit<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L121">src/resizable.directive.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L288">src/resizable.directive.ts:288</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -257,9 +391,11 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L244">src/resizable.directive.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L496">src/resizable.directive.ts:496</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -283,9 +419,11 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L249">src/resizable.directive.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L504">src/resizable.directive.ts:504</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -309,9 +447,11 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/f7d1eb0/src/resizable.directive.ts#L239">src/resizable.directive.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L488">src/resizable.directive.ts:488</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -342,11 +482,14 @@
 					<li class="current tsd-kind-class">
 						<a href="resizable.html" class="tsd-kind-icon">Resizable</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-private">
 								<a href="resizable.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="resizable.html#elm" class="tsd-kind-icon">elm</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resizable.html#enableresizestyling" class="tsd-kind-icon">enable<wbr>Resize<wbr>Styling</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="resizable.html#mousedown" class="tsd-kind-icon">mousedown</a>
@@ -369,7 +512,22 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="resizable.html#renderer" class="tsd-kind-icon">renderer</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resizable.html#resizeedges" class="tsd-kind-icon">resize<wbr>Edges</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="resizable.html#resizehandles" class="tsd-kind-icon">resize<wbr>Handles</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resizable.html#resizesnapgrid" class="tsd-kind-icon">resize<wbr>Snap<wbr>Grid</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resizable.html#validateresize" class="tsd-kind-icon">validate<wbr>Resize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="resizable.html#ngafterviewinit" class="tsd-kind-icon">ng<wbr>After<wbr>View<wbr>Init</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="resizable.html#ngoninit" class="tsd-kind-icon">ng<wbr>OnInit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -385,8 +543,14 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-private tsd-is-not-exported">
+						<a href="../interfaces/coordinate.html" class="tsd-kind-icon">Coordinate</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/edges.html" class="tsd-kind-icon">Edges</a>
@@ -394,16 +558,19 @@
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
+						<a href="../globals.html#getedgesdiff" class="tsd-kind-icon">get<wbr>Edges<wbr>Diff</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="../globals.html#getnewboundingrectangle" class="tsd-kind-icon">get<wbr>New<wbr>Bounding<wbr>Rectangle</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="../globals.html#getresizecursor" class="tsd-kind-icon">get<wbr>Resize<wbr>Cursor</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="../globals.html#getresizeedges" class="tsd-kind-icon">get<wbr>Resize<wbr>Edges</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="../globals.html#isnumbercloseto" class="tsd-kind-icon">is<wbr>Number<wbr>Close<wbr>To</a>
 					</li>
 				</ul>
