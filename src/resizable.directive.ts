@@ -21,6 +21,9 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
 
+/**
+ * The edges that the resize event were triggered on
+ */
 export interface Edges {
   top?: boolean | number;
   bottom?: boolean | number;
@@ -28,6 +31,9 @@ export interface Edges {
   right?: boolean | number;
 }
 
+/**
+ * The bounding rectangle of the resized element
+ */
 export interface BoundingRectangle {
   top: number;
   bottom: number;
@@ -37,21 +43,33 @@ export interface BoundingRectangle {
   width?: number;
 }
 
+/**
+ * The `$event` object that is passed to the resize events
+ */
 export interface ResizeEvent {
   rectangle: BoundingRectangle;
   edges: Edges;
 }
 
+/**
+ * @private
+ */
 interface Coordinate {
   x: number;
   y: number;
 }
 
+/**
+ * @private
+ */
 const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
   const diff: number = Math.abs(value1 - value2);
   return diff < precision;
 };
 
+/**
+ * @private
+ */
 const getNewBoundingRectangle: Function =
   (startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle => {
 
@@ -81,6 +99,9 @@ const getNewBoundingRectangle: Function =
 
 };
 
+/**
+ * @private
+ */
 const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
@@ -99,6 +120,9 @@ const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges =>
   return edges;
 };
 
+/**
+ * @private
+ */
 const getResizeCursor: Function = (edges: Edges): string => {
   if (edges.left && edges.top) {
     return 'nw-resize';
@@ -117,6 +141,9 @@ const getResizeCursor: Function = (edges: Edges): string => {
   }
 };
 
+/**
+ * @private
+ */
 const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges => {
 
   const edgesDiff: Edges = {};
@@ -127,25 +154,51 @@ const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges 
 
 };
 
+/**
+ * An element placed inside a `mwl-resizable` directive to be used as a drag and resize handle
+ *
+ * For example
+ *
+ * ```
+ * <div mwl-resizable>
+ *   <div mwl-resize-handle [resizeEdges]="{bottom: true, right: true}"></div>
+ * </div>
+ * ```
+ */
 @Directive({
   selector: '[mwl-resize-handle]'
 })
 export class ResizeHandle {
 
+  /**
+   * The `Edges` object that contains the edges of the parent element that dragging the handle will trigger a resize on
+   */
   @Input() resizeEdges: Edges = {};
 
+  /**
+   * @private
+   */
   public resizable: Resizable; // set by the parent mwl-resizable directive
 
+  /**
+   * @private
+   */
   @HostListener('mouseup', ['$event.clientX', '$event.clientY'])
   private onMouseup(mouseX: number, mouseY: number): void {
     this.resizable.mouseup.next({mouseX, mouseY, edges: this.resizeEdges});
   }
 
+  /**
+   * @private
+   */
   @HostListener('mousedown', ['$event.clientX', '$event.clientY'])
   private onMousedown(mouseX: number, mouseY: number): void {
     this.resizable.mousedown.next({mouseX, mouseY, edges: this.resizeEdges});
   }
 
+  /**
+   * @private
+   */
   @HostListener('mousemove', ['$event.clientX', '$event.clientY'])
   private onMousemove(mouseX: number, mouseY: number): void {
     this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges});
@@ -153,26 +206,85 @@ export class ResizeHandle {
 
 }
 
+/**
+ * Place this on an element to make it resizable
+ *
+ * For example
+ *
+ * ```
+ * <div mwl-resizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableResizeStyling]="true"></div>
+ * ```
+ */
 @Directive({
   selector: '[mwl-resizable]'
 })
 export class Resizable implements OnInit, AfterViewInit {
 
+  /**
+   * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
+   */
   @Input() validateResize: Function;
-  @Input() resizeEdges: Edges = {};
-  @Input() enableResizeStyling: boolean = false;
-  @Input() resizeSnapGrid: Edges = {};
-  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
-  @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
-  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
-  @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
 
+  /**
+   * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
+   */
+  @Input() resizeEdges: Edges = {};
+
+  /**
+   * Set to `true` to enable a temporary resizing effect of the element in between the `onResizeStart` and `onResizeEnd` events.
+   */
+  @Input() enableResizeStyling: boolean = false;
+
+  /**
+   * A snap grid that resize events will be locked to.
+   *
+   * e.g. to only allow the element to be resized every 10px set it to `{left: 10, right: 10}`
+   */
+  @Input() resizeSnapGrid: Edges = {};
+
+  /**
+   * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
+   */
+  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
+
+  /**
+   * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
+   */
+  @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
+
+  /**
+   * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
+   */
+  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
+
+  /**
+   * @private
+   */
   public mouseup: Subject<any> = new Subject();
+
+  /**
+   * @private
+   */
   public mousedown: Subject<any> = new Subject();
+
+  /**
+   * @private
+   */
   public mousemove: Subject<any> = new Subject();
 
+  /**
+   * @private
+   */
+  @ContentChildren(ResizeHandle) private resizeHandles: QueryList<ResizeHandle>;
+
+  /**
+   * @private
+   */
   constructor(private renderer: Renderer, private elm: ElementRef) {}
 
+  /**
+   * @private
+   */
   ngOnInit(): void {
 
     let currentResize: {
@@ -360,22 +472,34 @@ export class Resizable implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * @private
+   */
   ngAfterViewInit(): void {
     this.resizeHandles.forEach((handle: ResizeHandle) => {
       handle.resizable = this;
     });
   }
 
+  /**
+   * @private
+   */
   @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
   private onMouseup(mouseX: number, mouseY: number): void {
     this.mouseup.next({mouseX, mouseY});
   }
 
+  /**
+   * @private
+   */
   @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
   private onMousedown(mouseX: number, mouseY: number): void {
     this.mousedown.next({mouseX, mouseY});
   }
 
+  /**
+   * @private
+   */
   @HostListener('document:mousemove', ['$event.clientX', '$event.clientY'])
   private onMousemove(mouseX: number, mouseY: number): void {
     this.mousemove.next({mouseX, mouseY});
