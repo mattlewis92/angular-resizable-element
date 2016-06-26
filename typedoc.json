@@ -1,4 +1,4 @@
-module.exports = {
+{
   "mode": "file",
   "out": "docs",
   "ignoreCompilerErrors": "true",
@@ -11,4 +11,4 @@ module.exports = {
   "suppressExcessPropertyErrors": "true",
   "suppressImplicitAnyIndexErrors": "true",
   "module": "commonjs"
-};
+}

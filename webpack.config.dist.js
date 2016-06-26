@@ -30,6 +30,12 @@ module.exports = {
       commonjs2: 'rxjs/Observable',
       amd: 'rxjs/Observable'
     },
+    'rxjs/observable/merge': {
+      root: ['rx', 'Observable', 'merge'],
+      commonjs: 'rxjs/observable/merge',
+      commonjs2: 'rxjs/observable/merge',
+      amd: 'rxjs/observable/merge'
+    },
     'rxjs/add/operator/map': {
       root: ['rx', 'Observable'],
       commonjs: 'rxjs/operator/map',
@@ -41,6 +47,30 @@ module.exports = {
       commonjs: 'rxjs/operator/mergeMap',
       commonjs2: 'rxjs/operator/mergeMap',
       amd: 'rxjs/operator/mergeMap'
+    },
+    'rxjs/add/operator/takeUntil': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/takeUntil',
+      commonjs2: 'rxjs/operator/takeUntil',
+      amd: 'rxjs/operator/takeUntil'
+    },
+    'rxjs/add/operator/filter': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/filter',
+      commonjs2: 'rxjs/operator/filter',
+      amd: 'rxjs/operator/filter'
+    },
+    'rxjs/add/operator/pairwise': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/pairwise',
+      commonjs2: 'rxjs/operator/pairwise',
+      amd: 'rxjs/operator/pairwise'
+    },
+    'rxjs/add/operator/take': {
+      root: ['rx', 'Observable'],
+      commonjs: 'rxjs/operator/take',
+      commonjs2: 'rxjs/operator/take',
+      amd: 'rxjs/operator/take'
     }
   },
   devtool: 'source-map',
