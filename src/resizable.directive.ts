@@ -4,9 +4,12 @@ import {
   Renderer,
   ElementRef,
   OnInit,
+  AfterViewInit,
   Output,
   Input,
-  EventEmitter
+  EventEmitter,
+  ContentChildren,
+  QueryList
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -107,19 +110,46 @@ const getResizeCursor: Function = (edges: Edges): string => {
 };
 
 @Directive({
+  selector: '[mwl-resize-handle]'
+})
+export class ResizeHandle {
+
+  @Input() resizeEdges: Edges = {};
+
+  public resizable: Resizable; // set by the parent mwl-resizable directive
+
+  @HostListener('mouseup', ['$event.clientX', '$event.clientY'])
+  private onMouseup(mouseX: number, mouseY: number): void {
+    this.resizable.mouseup.next({mouseX, mouseY, edges: this.resizeEdges});
+  }
+
+  @HostListener('mousedown', ['$event.clientX', '$event.clientY'])
+  private onMousedown(mouseX: number, mouseY: number): void {
+    this.resizable.mousedown.next({mouseX, mouseY, edges: this.resizeEdges});
+  }
+
+  @HostListener('mousemove', ['$event.clientX', '$event.clientY'])
+  private onMousemove(mouseX: number, mouseY: number): void {
+    this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges});
+  }
+
+}
+
+@Directive({
   selector: '[mwl-resizable]'
 })
-export class Resizable implements OnInit {
+export class Resizable implements OnInit, AfterViewInit {
 
   @Input() validateResize: Function;
   @Input() resizeEdges: Edges = {};
   @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
   @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
+  @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
 
-  private mouseup: Subject<any> = new Subject();
-  private mousedown: Subject<any> = new Subject();
-  private mousemove: Subject<any> = new Subject();
+  public mouseup: Subject<any> = new Subject();
+  public mousedown: Subject<any> = new Subject();
+  public mousemove: Subject<any> = new Subject();
 
   constructor(private renderer: Renderer, private elm: ElementRef) {}
 
@@ -191,37 +221,38 @@ export class Resizable implements OnInit {
 
     });
 
-    this.mousedown.subscribe(({mouseX, mouseY}) => {
-      const edges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      if (Object.keys(edges).length > 0) {
-        if (currentResize) {
-          resetElementStyles();
-        }
-        const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
-        currentResize = {
-          edges,
-          startingRect,
-          currentRect: startingRect,
-          originalStyles: {
-            position: this.elm.nativeElement.style.position,
-            left: this.elm.nativeElement.style.left,
-            top: this.elm.nativeElement.style.top,
-            width: `${startingRect.width}px`,
-            height: `${startingRect.height}px`,
-            'user-drag': this.elm.nativeElement.style['user-drag'],
-            '-webkit-user-drag': this.elm.nativeElement.style['-webkit-user-drag']
-          }
-        };
-        this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
-        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
-        this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
-        this.onResizeStart.emit({
-          edges,
-          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
-        });
+    this.mousedown.map(({mouseX, mouseY, edges}) => {
+      return edges || getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+    }).filter((edges: Edges) => {
+      return Object.keys(edges).length > 0;
+    }).subscribe((edges: Edges) => {
+      if (currentResize) {
+        resetElementStyles();
       }
+      const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
+      currentResize = {
+        edges,
+        startingRect,
+        currentRect: startingRect,
+        originalStyles: {
+          position: this.elm.nativeElement.style.position,
+          left: this.elm.nativeElement.style.left,
+          top: this.elm.nativeElement.style.top,
+          width: `${startingRect.width}px`,
+          height: `${startingRect.height}px`,
+          'user-drag': this.elm.nativeElement.style['user-drag'],
+          '-webkit-user-drag': this.elm.nativeElement.style['-webkit-user-drag']
+        }
+      };
+      this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
+      this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
+      this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
+      this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
+      this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
+      this.onResizeStart.emit({
+        edges,
+        rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+      });
     });
 
     this.mouseup.subscribe(() => {
@@ -235,6 +266,12 @@ export class Resizable implements OnInit {
       }
     });
 
+  }
+
+  ngAfterViewInit(): void {
+    this.resizeHandles.forEach((handle: ResizeHandle) => {
+      handle.resizable = this;
+    });
   }
 
   @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
