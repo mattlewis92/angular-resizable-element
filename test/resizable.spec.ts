@@ -2,18 +2,11 @@ import {Component, ViewChild} from '@angular/core';
 import {NgStyle} from '@angular/common';
 import {Resizable, ResizeEvent, Edges, ResizeHandle} from './../angular2-resizable';
 import {
-  describe,
-  expect,
-  it,
   inject,
-  beforeEach,
-  afterEach,
-  async
-} from '@angular/core/testing';
-import {
+  async,
   TestComponentBuilder,
   ComponentFixture
-} from '@angular/compiler/testing';
+} from '@angular/core/testing';
 
 describe('resizable directive', () => {
 
