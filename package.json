@@ -55,6 +55,8 @@
     "karma-coverage": "~1.0.0",
     "karma-mocha": "~1.1.1",
     "karma-phantomjs-launcher": "~1.0.0",
+    "karma-remap-istanbul": "github:mattlewis92/karma-remap-istanbul",
+    "karma-source-map-support": "~1.1.0",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.7.0",
     "mocha": "~2.5.3",
