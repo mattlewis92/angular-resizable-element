@@ -2,18 +2,13 @@ import {Component, ViewChild} from '@angular/core';
 import {NgStyle} from '@angular/common';
 import {Resizable, ResizeEvent, Edges, ResizeHandle} from './../angular2-resizable';
 import {
-  describe,
-  expect,
-  it,
   inject,
-  beforeEach,
-  afterEach,
-  async
-} from '@angular/core/testing';
-import {
+  async,
   TestComponentBuilder,
   ComponentFixture
-} from '@angular/compiler/testing';
+} from '@angular/core/testing';
+import {expect} from 'chai';
+import * as sinon from 'sinon';
 
 describe('resizable directive', () => {
 
@@ -35,7 +30,7 @@ describe('resizable directive', () => {
         mwl-resizable
         [validateResize]="validate"
         [resizeEdges]="resizeEdges"
-        [enableResizeStyling]="enableResizeStyling"
+        [enableGhostResize]="enableGhostResize"
         [resizeSnapGrid]="resizeSnapGrid"
         (onResizeStart)="onResizeStart($event)"
         (onResize)="onResize($event)"
@@ -47,17 +42,13 @@ describe('resizable directive', () => {
 
     @ViewChild(Resizable) public resizable: Resizable;
     public style: Object = {};
-    public onResizeStart: jasmine.Spy = jasmine.createSpy('onResizeStart');
-    public onResize: jasmine.Spy = jasmine.createSpy('onResize');
-    public onResizeEnd: jasmine.Spy = jasmine.createSpy('onResizeEnd');
-    public validate: jasmine.Spy = jasmine.createSpy('validate');
+    public onResizeStart: Function = sinon.spy();
+    public onResize: Function = sinon.spy();
+    public onResizeEnd: Function = sinon.spy();
+    public validate: Function = sinon.stub().returns(true);
     public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
-    public enableResizeStyling: boolean = true;
+    public enableGhostResize: boolean = true;
     public resizeSnapGrid: Object = {};
-
-    constructor() {
-      this.validate.and.returnValue(true);
-    }
 
   }
 
@@ -196,7 +187,7 @@ describe('resizable directive', () => {
         const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
         assertions.forEach(({coords, cursor}: {coords: Object, cursor: string}) => {
           triggerDomEvent('mousemove', elm, coords);
-          expect(elm.style.cursor).toEqual(cursor);
+          expect(elm.style.cursor).to.equal(cursor);
         });
       });
     }));
@@ -483,15 +474,15 @@ describe('resizable directive', () => {
         domEvents.forEach(event => {
           triggerDomEvent(event.name, elm, event.data);
           if (event.name !== 'mouseup') {
-            expect(elm.style.position).toEqual('fixed');
+            expect(elm.nextSibling['style'].position).to.equal('fixed');
           }
           if (event.style) {
             Object.keys(event.style).forEach(styleKey => {
-              expect(elm.style[styleKey]).toEqual(event.style[styleKey]);
+              expect(elm.nextSibling['style'][styleKey]).to.equal(event.style[styleKey]);
             });
           }
         });
-        expect(fixture.componentInstance[spyName]).toHaveBeenCalledWith(expectedEvent);
+        expect(fixture.componentInstance[spyName]).to.have.been.calledWith(expectedEvent);
       });
     }));
 
@@ -517,9 +508,9 @@ describe('resizable directive', () => {
         clientX: 12,
         clientY: 20
       });
-      expect(fixture.componentInstance.onResizeStart).not.toHaveBeenCalled();
-      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
-      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResizeStart).not.to.have.been.called;
+      expect(fixture.componentInstance.onResize).not.to.have.been.called;
+      expect(fixture.componentInstance.onResizeEnd).not.to.have.been.called;
     });
 
   }));
@@ -532,7 +523,7 @@ describe('resizable directive', () => {
         clientX: 100,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeStart).to.have.been.calledWith({
         edges: {
           left: 0
         },
@@ -553,15 +544,14 @@ describe('resizable directive', () => {
         clientX: 98,
         clientY: 205
       });
-      expect(elm.style.width).toEqual('302px');
-      fixture.componentInstance.onResizeEnd.calls.reset();
+      expect(elm.nextSibling['style'].width).to.equal('302px');
+      fixture.componentInstance.onResizeEnd.reset();
       triggerDomEvent('mousedown', elm, {
         clientX: 100,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
-      expect(elm.style.width).toEqual('300px');
-      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeEnd).not.to.have.been.called;
+      expect(fixture.componentInstance.onResizeStart).to.have.been.calledWith({
         edges: {
           left: 0
         },
@@ -582,7 +572,7 @@ describe('resizable directive', () => {
         clientX: 101,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeEnd).to.have.been.calledWith({
         edges: {
           left: 1
         },
@@ -616,21 +606,13 @@ describe('resizable directive', () => {
         clientY: 199
       });
       let elmStyle: CSSStyleDeclaration = getComputedStyle(elm);
-      expect(elmStyle.position).toEqual('fixed');
-      expect(elmStyle.top).toEqual('199px');
-      expect(elmStyle.left).toEqual('99px');
-      expect(elmStyle.height).toEqual('151px');
-      expect(elmStyle.width).toEqual('301px');
+      expect(elmStyle.visibility).to.equal('hidden');
       triggerDomEvent('mouseup', elm, {
         clientX: 99,
         clientY: 199
       });
       elmStyle = getComputedStyle(elm);
-      expect(elmStyle.position).toEqual('relative');
-      expect(elmStyle.top).toEqual('200px');
-      expect(elmStyle.left).toEqual('100px');
-      expect(elmStyle.height).toEqual('150px');
-      expect(elmStyle.width).toEqual('300px');
+      expect(elmStyle.visibility).to.equal('visible');
     });
 
   }));
@@ -650,12 +632,12 @@ describe('resizable directive', () => {
         clientX: 99,
         clientY: 200
       });
-      fixture.componentInstance.onResize.calls.reset();
+      fixture.componentInstance.onResize.reset();
       triggerDomEvent('mousemove', elm, {
         clientX: 99,
         clientY: 199
       });
-      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResize).not.to.have.been.called;
     });
   }));
 
@@ -674,7 +656,7 @@ describe('resizable directive', () => {
         clientX: 500,
         clientY: 210
       });
-      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeEnd).to.have.been.calledWith({
         edges: {
           left: -1
         },
@@ -697,7 +679,7 @@ describe('resizable directive', () => {
         clientX: 100,
         clientY: 210
       });
-      fixture.componentInstance.validate.and.returnValue(true);
+      fixture.componentInstance.validate.returns(true);
       triggerDomEvent('mousemove', elm, {
         clientX: 99,
         clientY: 210
@@ -715,11 +697,11 @@ describe('resizable directive', () => {
           bottom: 350
         }
       };
-      expect(fixture.componentInstance.validate).toHaveBeenCalledWith(firstResizeEvent);
-      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith(firstResizeEvent);
-      fixture.componentInstance.validate.and.returnValue(false);
-      fixture.componentInstance.validate.calls.reset();
-      fixture.componentInstance.onResize.calls.reset();
+      expect(fixture.componentInstance.validate).to.have.been.calledWith(firstResizeEvent);
+      expect(fixture.componentInstance.onResize).to.have.been.calledWith(firstResizeEvent);
+      fixture.componentInstance.validate.returns(false);
+      fixture.componentInstance.validate.reset();
+      fixture.componentInstance.onResize.reset();
       triggerDomEvent('mousemove', elm, {
         clientX: 98,
         clientY: 210
@@ -737,13 +719,13 @@ describe('resizable directive', () => {
           bottom: 350
         }
       };
-      expect(fixture.componentInstance.validate).toHaveBeenCalledWith(secondResizeEvent);
-      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.validate).to.have.been.calledWith(secondResizeEvent);
+      expect(fixture.componentInstance.onResize).not.to.have.been.called;
       triggerDomEvent('mouseup', elm, {
         clientX: 98,
         clientY: 210
       });
-      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith(firstResizeEvent);
+      expect(fixture.componentInstance.onResizeEnd).to.have.been.calledWith(firstResizeEvent);
     });
   }));
 
@@ -757,12 +739,12 @@ describe('resizable directive', () => {
         clientX: 100,
         clientY: 200
       });
-      expect(getComputedStyle(elm).cursor).toEqual('ew-resize');
+      expect(getComputedStyle(elm).cursor).to.equal('ew-resize');
       triggerDomEvent('mousedown', elm, {
         clientX: 100,
         clientY: 200
       });
-      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeStart).to.have.been.calledWith({
         edges: {
           left: 0
         },
@@ -789,22 +771,22 @@ describe('resizable directive', () => {
         clientX: 100,
         clientY: 210
       });
-      expect(getComputedStyle(elm).cursor).toEqual('auto');
+      expect(getComputedStyle(elm).cursor).to.equal('auto');
       triggerDomEvent('mousedown', elm, {
         clientX: 100,
         clientY: 210
       });
-      expect(fixture.componentInstance.onResizeStart).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResizeStart).not.to.have.been.called;
       triggerDomEvent('mousemove', elm, {
         clientX: 101,
         clientY: 210
       });
-      expect(fixture.componentInstance.onResize).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResize).not.to.have.been.called;
       triggerDomEvent('mouseup', elm, {
         clientX: 101,
         clientY: 210
       });
-      expect(fixture.componentInstance.onResizeEnd).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.onResizeEnd).not.to.have.been.called;
     });
 
   }));
@@ -833,7 +815,7 @@ describe('resizable directive', () => {
         clientX: 395,
         clientY: 345
       });
-      expect(fixture.componentInstance.onResizeStart).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeStart).to.have.been.calledWith({
         edges: {
           bottom: 0,
           right: 0
@@ -851,7 +833,7 @@ describe('resizable directive', () => {
         clientX: 396,
         clientY: 345
       });
-      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResize).to.have.been.calledWith({
         edges: {
           bottom: 0,
           right: 1
@@ -869,7 +851,7 @@ describe('resizable directive', () => {
         clientX: 396,
         clientY: 345
       });
-      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeEnd).to.have.been.calledWith({
         edges: {
           bottom: 0,
           right: 1
@@ -891,7 +873,7 @@ describe('resizable directive', () => {
   it('should disable the temporary resize effect applied to the element', async(() => {
 
     createComponent().then((fixture: ComponentFixture<TestCmp>) => {
-      fixture.componentInstance.enableResizeStyling = false;
+      fixture.componentInstance.enableGhostResize = false;
       fixture.detectChanges();
       const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
       triggerDomEvent('mousedown', elm, {
@@ -903,11 +885,11 @@ describe('resizable directive', () => {
         clientY: 201
       });
       const style: CSSStyleDeclaration = getComputedStyle(elm);
-      expect(style.position).toEqual('relative');
-      expect(style.width).toEqual('300px');
-      expect(style.height).toEqual('150px');
-      expect(style.top).toEqual('200px');
-      expect(style.left).toEqual('100px');
+      expect(style.position).to.equal('relative');
+      expect(style.width).to.equal('300px');
+      expect(style.height).to.equal('150px');
+      expect(style.top).to.equal('200px');
+      expect(style.left).to.equal('100px');
     });
 
   }));
@@ -926,7 +908,7 @@ describe('resizable directive', () => {
         clientX: 99,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResize).to.have.been.calledWith({
         edges: {
           left: 0
         },
@@ -943,12 +925,12 @@ describe('resizable directive', () => {
         clientX: 95,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResize.calls.count()).toBe(1);
+      expect(fixture.componentInstance.onResize).to.have.been.calledOnce;
       triggerDomEvent('mousemove', elm, {
         clientX: 89,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResize).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResize).to.have.been.calledWith({
         edges: {
           left: -10
         },
@@ -961,12 +943,12 @@ describe('resizable directive', () => {
           bottom: 350
         }
       });
-      expect(fixture.componentInstance.onResize.calls.count()).toBe(2);
+      expect(fixture.componentInstance.onResize).to.have.been.calledTwice;
       triggerDomEvent('mouseup', elm, {
         clientX: 89,
         clientY: 205
       });
-      expect(fixture.componentInstance.onResizeEnd).toHaveBeenCalledWith({
+      expect(fixture.componentInstance.onResizeEnd).to.have.been.calledWith({
         edges: {
           left: -10
         },
@@ -979,6 +961,29 @@ describe('resizable directive', () => {
           bottom: 350
         }
       });
+    });
+
+  }));
+
+  it('should not resize when the mouse is parallel with an edge but not inside the bounding rectangle', async(() => {
+
+    createComponent().then((fixture: ComponentFixture<TestCmp>) => {
+      fixture.detectChanges();
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 100
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 101
+      });
+      const style: CSSStyleDeclaration = getComputedStyle(elm);
+      expect(style.position).to.equal('relative');
+      expect(style.width).to.equal('300px');
+      expect(style.height).to.equal('150px');
+      expect(style.top).to.equal('200px');
+      expect(style.left).to.equal('100px');
     });
 
   }));

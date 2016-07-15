@@ -99,22 +99,30 @@ const getNewBoundingRectangle: Function =
 
 };
 
+const isWithinBoundingY: Function = ({mouseY, rect}: {mouseY: number, rect: ClientRect}) => {
+  return mouseY >= rect.top && mouseY <= rect.bottom;
+};
+
+const isWithinBoundingX: Function = ({mouseX, rect}: {mouseX: number, rect: ClientRect}) => {
+  return mouseX >= rect.left && mouseX <= rect.right;
+};
+
 /**
  * @private
  */
 const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
-  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left)) {
+  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.left = true;
   }
-  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right)) {
+  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right) && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.right = true;
   }
-  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top)) {
+  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top) && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.top = true;
   }
-  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom)) {
+  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom) && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.bottom = true;
   }
   return edges;
@@ -212,7 +220,7 @@ export class ResizeHandle {
  * For example
  *
  * ```
- * <div mwl-resizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableResizeStyling]="true"></div>
+ * <div mwl-resizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"></div>
  * ```
  */
 @Directive({
@@ -233,7 +241,7 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * Set to `true` to enable a temporary resizing effect of the element in between the `onResizeStart` and `onResizeEnd` events.
    */
-  @Input() enableResizeStyling: boolean = false;
+  @Input() enableGhostResize: boolean = false;
 
   /**
    * A snap grid that resize events will be locked to.
@@ -291,25 +299,13 @@ export class Resizable implements OnInit, AfterViewInit {
       edges: Edges,
       startingRect: BoundingRectangle,
       currentRect: BoundingRectangle,
-      originalStyles: {
-        position: string,
-        left: string,
-        top: string,
-        width: string,
-        height: string,
-        'user-drag': string,
-        '-webkit-user-drag': string
-      }
+      clonedNode?: HTMLElement
     };
 
-    const resetElementStyles: Function = (): void => {
-      if (this.enableResizeStyling) {
-        for (let key in currentResize.originalStyles) {
-          const value: string = currentResize.originalStyles[key];
-          if (typeof value !== 'undefined') {
-            this.renderer.setElementStyle(this.elm.nativeElement, key, currentResize.originalStyles[key]);
-          }
-        }
+    const removeGhostElement: Function = (): void => {
+      if (currentResize.clonedNode) {
+        this.elm.nativeElement.parentElement.removeChild(currentResize.clonedNode);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'inherit');
       }
     };
 
@@ -399,11 +395,11 @@ export class Resizable implements OnInit, AfterViewInit {
       }) : true;
     }).subscribe((newBoundingRect: BoundingRectangle) => {
 
-      if (this.enableResizeStyling) {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'height', `${newBoundingRect.height}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'width', `${newBoundingRect.width}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${newBoundingRect.top}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${newBoundingRect.left}px`);
+      if (currentResize.clonedNode) {
+        this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${newBoundingRect.height}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${newBoundingRect.width}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${newBoundingRect.top}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
       this.onResize.emit({
@@ -425,29 +421,23 @@ export class Resizable implements OnInit, AfterViewInit {
       return Object.keys(edges).length > 0;
     }).subscribe((edges: Edges) => {
       if (currentResize) {
-        resetElementStyles();
+        removeGhostElement();
       }
       const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
       currentResize = {
         edges,
         startingRect,
-        currentRect: startingRect,
-        originalStyles: {
-          position: this.elm.nativeElement.style.position,
-          left: this.elm.nativeElement.style.left,
-          top: this.elm.nativeElement.style.top,
-          width: `${startingRect.width}px`,
-          height: `${startingRect.height}px`,
-          'user-drag': this.elm.nativeElement.style['user-drag'],
-          '-webkit-user-drag': this.elm.nativeElement.style['-webkit-user-drag']
-        }
+        currentRect: startingRect
       };
-      if (this.enableResizeStyling) {
-        this.renderer.setElementStyle(this.elm.nativeElement, 'position', 'fixed');
-        this.renderer.setElementStyle(this.elm.nativeElement, 'left', `${currentResize.startingRect.left}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'user-drag', 'none');
-        this.renderer.setElementStyle(this.elm.nativeElement, '-webkit-user-drag', 'none');
+      if (this.enableGhostResize) {
+        currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
+        this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
+        this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
+        this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
+        this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'user-drag', 'none');
+        this.renderer.setElementStyle(currentResize.clonedNode, '-webkit-user-drag', 'none');
       }
       this.onResizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
@@ -465,7 +455,7 @@ export class Resizable implements OnInit, AfterViewInit {
           }),
           rectangle: currentResize.currentRect
         });
-        resetElementStyles();
+        removeGhostElement();
         currentResize = null;
       }
     });
