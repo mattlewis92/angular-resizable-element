@@ -99,22 +99,30 @@ const getNewBoundingRectangle: Function =
 
 };
 
+const isWithinBoundingY: Function = ({mouseY, rect}: {mouseY: number, rect: ClientRect}) => {
+  return mouseY >= rect.top && mouseY <= rect.bottom;
+};
+
+const isWithinBoundingX: Function = ({mouseX, rect}: {mouseX: number, rect: ClientRect}) => {
+  return mouseX >= rect.left && mouseX <= rect.right;
+};
+
 /**
  * @private
  */
 const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
-  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left)) {
+  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.left = true;
   }
-  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right)) {
+  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right) && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.right = true;
   }
-  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top)) {
+  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top) && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.top = true;
   }
-  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom)) {
+  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom) && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.bottom = true;
   }
   return edges;

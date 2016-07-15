@@ -974,4 +974,27 @@ describe('resizable directive', () => {
 
   }));
 
+  it('should not resize when the mouse is parallel with an edge but not inside the bounding rectangle', async(() => {
+
+    createComponent().then((fixture: ComponentFixture<TestCmp>) => {
+      fixture.detectChanges();
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 100
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 99,
+        clientY: 101
+      });
+      const style: CSSStyleDeclaration = getComputedStyle(elm);
+      expect(style.position).to.equal('relative');
+      expect(style.width).to.equal('300px');
+      expect(style.height).to.equal('150px');
+      expect(style.top).to.equal('200px');
+      expect(style.left).to.equal('100px');
+    });
+
+  }));
+
 });
