@@ -84,7 +84,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected tsd-is-not-exported">
+						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-is-private tsd-is-not-exported"><a href="globals.html#getedgesdiff" class="tsd-kind-icon">get<wbr>Edges<wbr>Diff</a></li>
@@ -92,12 +92,14 @@
 								<li class="tsd-kind-function tsd-is-private tsd-is-not-exported"><a href="globals.html#getresizecursor" class="tsd-kind-icon">get<wbr>Resize<wbr>Cursor</a></li>
 								<li class="tsd-kind-function tsd-is-private tsd-is-not-exported"><a href="globals.html#getresizeedges" class="tsd-kind-icon">get<wbr>Resize<wbr>Edges</a></li>
 								<li class="tsd-kind-function tsd-is-private tsd-is-not-exported"><a href="globals.html#isnumbercloseto" class="tsd-kind-icon">is<wbr>Number<wbr>Close<wbr>To</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#iswithinboundingx" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingX</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#iswithinboundingy" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingY</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-private tsd-is-not-exported">
 					<a name="getedgesdiff" class="tsd-anchor"></a>
@@ -109,7 +111,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L147">src/resizable.directive.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L155">src/resizable.directive.ts:155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -143,7 +145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L73">src/resizable.directive.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L73">src/resizable.directive.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,7 +177,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L126">src/resizable.directive.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L134">src/resizable.directive.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -198,7 +200,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L105">src/resizable.directive.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L113">src/resizable.directive.ts:113</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +237,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5995dfb/src/resizable.directive.ts#L65">src/resizable.directive.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L65">src/resizable.directive.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,6 +250,68 @@
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> precision: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;3</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="iswithinboundingx" class="tsd-anchor"></a>
+					<h3>is<wbr>Within<wbr>BoundingX</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Within<wbr>BoundingX<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L106">src/resizable.directive.ts:106</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>mouseX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>rect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ClientRect</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="iswithinboundingy" class="tsd-anchor"></a>
+					<h3>is<wbr>Within<wbr>BoundingY</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Within<wbr>BoundingY<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular2-resizable/blob/5c64353/src/resizable.directive.ts#L102">src/resizable.directive.ts:102</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>mouseY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>rect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ClientRect</span></h5>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -298,6 +362,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
 						<a href="globals.html#isnumbercloseto" class="tsd-kind-icon">is<wbr>Number<wbr>Close<wbr>To</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#iswithinboundingx" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingX</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#iswithinboundingy" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingY</a>
 					</li>
 				</ul>
 			</nav>
