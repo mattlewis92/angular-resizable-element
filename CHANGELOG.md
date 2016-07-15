@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/mattlewis92/angular2-resizable/compare/v0.1.0...v0.2.0) (2016-07-15)
+
+
+### Bug Fixes
+
+* create a clone of the ghost element instead of applying styling to the host ([fa73345](https://github.com/mattlewis92/angular2-resizable/commit/fa73345)), closes [#15](https://github.com/mattlewis92/angular2-resizable/issues/15)
+* only resize when the cursor is within the bounding rectangle ([dedc3bb](https://github.com/mattlewis92/angular2-resizable/commit/dedc3bb))
+
+
+### BREAKING CHANGES
+
+* `enableResizeStyling` has been renamed to `enableGhostResize`
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/mattlewis92/angular2-resizable/compare/v0.0.3...v0.1.0) (2016-06-26)
 
