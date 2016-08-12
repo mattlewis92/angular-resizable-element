@@ -163,18 +163,18 @@ const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges 
 };
 
 /**
- * An element placed inside a `mwl-resizable` directive to be used as a drag and resize handle
+ * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
  *
  * For example
  *
  * ```
- * <div mwl-resizable>
- *   <div mwl-resize-handle [resizeEdges]="{bottom: true, right: true}"></div>
+ * <div mwlResizable>
+ *   <div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"></div>
  * </div>
  * ```
  */
 @Directive({
-  selector: '[mwl-resize-handle]'
+  selector: '[mwlResizeHandle]'
 })
 export class ResizeHandle {
 
@@ -186,7 +186,7 @@ export class ResizeHandle {
   /**
    * @private
    */
-  public resizable: Resizable; // set by the parent mwl-resizable directive
+  public resizable: Resizable; // set by the parent mwlResizable directive
 
   /**
    * @private
@@ -220,11 +220,11 @@ export class ResizeHandle {
  * For example
  *
  * ```
- * <div mwl-resizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"></div>
+ * <div mwlResizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"></div>
  * ```
  */
 @Directive({
-  selector: '[mwl-resizable]'
+  selector: '[mwlResizable]'
 })
 export class Resizable implements OnInit, AfterViewInit {
 
@@ -239,7 +239,7 @@ export class Resizable implements OnInit, AfterViewInit {
   @Input() resizeEdges: Edges = {};
 
   /**
-   * Set to `true` to enable a temporary resizing effect of the element in between the `onResizeStart` and `onResizeEnd` events.
+   * Set to `true` to enable a temporary resizing effect of the element in between the `resizeStart` and `resizeEnd` events.
    */
   @Input() enableGhostResize: boolean = false;
 
@@ -253,17 +253,17 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
-  @Output() onResizeStart: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizeStart: EventEmitter<Object> = new EventEmitter(false);
 
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() onResize: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resize: EventEmitter<Object> = new EventEmitter(false);
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
    */
-  @Output() onResizeEnd: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizeEnd: EventEmitter<Object> = new EventEmitter(false);
 
   /**
    * @private
@@ -288,7 +288,7 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * @private
    */
-  constructor(private renderer: Renderer, private elm: ElementRef) {}
+  constructor(private renderer: Renderer, public elm: ElementRef) {}
 
   /**
    * @private
@@ -402,7 +402,7 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
-      this.onResize.emit({
+      this.resize.emit({
         edges: getEdgesDiff({
           edges: currentResize.edges,
           initialRectangle: currentResize.startingRect,
@@ -439,7 +439,7 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'user-drag', 'none');
         this.renderer.setElementStyle(currentResize.clonedNode, '-webkit-user-drag', 'none');
       }
-      this.onResizeStart.emit({
+      this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
         rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
       });
@@ -447,7 +447,7 @@ export class Resizable implements OnInit, AfterViewInit {
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
-        this.onResizeEnd.emit({
+        this.resizeEnd.emit({
           edges: getEdgesDiff({
             edges: currentResize.edges,
             initialRectangle: currentResize.startingRect,

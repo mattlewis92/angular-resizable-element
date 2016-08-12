@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
-import {NgStyle} from '@angular/common';
-import {Resizable, ResizeEvent, ResizeHandle} from './../angular2-resizable';
+import {ResizeEvent} from './../angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [Resizable, ResizeHandle, NgStyle],
   styles: [`
     .rectangle {
       position: relative;
@@ -32,22 +30,22 @@ import {Resizable, ResizeEvent, ResizeHandle} from './../angular2-resizable';
       <div
         class="rectangle"
         [ngStyle]="style"
-        mwl-resizable
+        mwlResizable
         [validateResize]="validate"
         [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
         [enableGhostResize]="true"
         [resizeSnapGrid]="{left: 50, right: 50}"
-        (onResizeEnd)="onResizeEnd($event)">
+        (resizeEnd)="onResizeEnd($event)">
         <img
           src="http://i.imgur.com/eqzz2dl.gif"
           class="resize-handle"
-          mwl-resize-handle
+          mwlResizeHandle
           [resizeEdges]="{bottom: true, right: true}">
       </div>
     </div>
   `
 })
-export class DemoApp {
+export class Demo {
 
   public style: Object = {};
 

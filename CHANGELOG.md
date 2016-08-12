@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/mattlewis92/angular2-resizable/compare/v0.2.1...v0.3.0) (2016-08-12)
+
+
+### Features
+
+* **events:** rename all outputs to drop the on prefix ([9c76aac](https://github.com/mattlewis92/angular2-resizable/commit/9c76aac))
+* directive selectors are now camel case instead of dash case ([ffad2ca](https://github.com/mattlewis92/angular2-resizable/commit/ffad2ca))
+* upgrade to angular RC5 ([9557c0a](https://github.com/mattlewis92/angular2-resizable/commit/9557c0a))
+
+
+### BREAKING CHANGES
+
+* `mwl-resizable` is now `mwlResizable` and `mwl-resize-handle` is now `mwlResizeHandle`
+* Angular RC5 is now required
+
+The Resizable and ResizeHandle directives are now no longer exported. Instead you must use the ResizableModule. See the readme or the demo app for an example of how to do this.
+* events: The `onResizeStart` output has been renamed to `resizeStart`
+
+The `onResize` output has been renamed to `resize`
+
+The `onResizeEnd` output has been renamed to `resizeEnd`
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/mattlewis92/angular2-resizable/compare/v0.2.0...v0.2.1) (2016-07-15)
 

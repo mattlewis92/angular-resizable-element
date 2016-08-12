@@ -32,21 +32,31 @@ Then use it in your app like so:
 
 ```typescript
 import {Component} from '@angular/core';
-import {Resizable} from 'angular2-resizable';
+import {ResizeEvent} from 'angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [Resizable],
   // you should add some styles to the element. See the demo folder for a more fleshed out example
-  template: '<div mwl-resizable (onResizeEnd)="onResizeEnd($event)"></div>'
+  template: '<div mwlResizable (resizeEnd)="onResizeEnd($event)"></div>'
 })
-export class DemoApp {
+export class MyComponent {
 
-  onResizeEnd(event: any): void {
+  onResizeEnd(event: ResizeEvent): void {
     console.log('Element was resized', event);
   }
 
 }
+
+// now use within your apps module
+import {NgModule} from '@angular/core';
+import {ResizableModule} from 'angular2-resizable';
+
+@NgModule({
+  declarations: [MyComponent],
+  imports: [ResizableModule],
+  bootstrap: [MyComponent]
+})
+class MyModule {}
 
 ```
 
@@ -71,7 +81,7 @@ https://mattlewis92.github.io/angular2-resizable/docs/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `npm start` to start a development server on port 8000 with auto reload + tests. 
+Run `npm start` to start a development server on port 8000 with auto reload + tests.
 
 ### Testing
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
