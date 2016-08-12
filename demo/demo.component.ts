@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
-import {NgStyle} from '@angular/common';
-import {Resizable, ResizeEvent, ResizeHandle} from './../angular2-resizable';
+import {ResizeEvent} from './../angular2-resizable';
 
 @Component({
   selector: 'demo-app',
-  directives: [Resizable, ResizeHandle, NgStyle],
   styles: [`
     .rectangle {
       position: relative;
@@ -47,7 +45,7 @@ import {Resizable, ResizeEvent, ResizeHandle} from './../angular2-resizable';
     </div>
   `
 })
-export class DemoApp {
+export class Demo {
 
   public style: Object = {};
 

@@ -288,7 +288,7 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * @private
    */
-  constructor(private renderer: Renderer, private elm: ElementRef) {}
+  constructor(private renderer: Renderer, public elm: ElementRef) {}
 
   /**
    * @private

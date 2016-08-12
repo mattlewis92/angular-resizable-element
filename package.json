@@ -26,7 +26,8 @@
     "url": "git+https://github.com/mattlewis92/angular2-resizable.git"
   },
   "keywords": [
-    "angular2"
+    "angular2",
+    "resizable"
   ],
   "author": "Matt Lewis",
   "license": "MIT",
@@ -35,11 +36,11 @@
   },
   "homepage": "https://github.com/mattlewis92/angular2-resizable#readme",
   "devDependencies": {
-    "@angular/common": "2.0.0-rc.4",
-    "@angular/compiler": "2.0.0-rc.4",
-    "@angular/core": "2.0.0-rc.4",
-    "@angular/platform-browser": "2.0.0-rc.4",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.4",
+    "@angular/common": "2.0.0-rc.5",
+    "@angular/compiler": "2.0.0-rc.5",
+    "@angular/core": "2.0.0-rc.5",
+    "@angular/platform-browser": "2.0.0-rc.5",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.5",
     "chai": "~3.5.0",
     "commitizen": "~2.8.1",
     "concurrently": "~2.2.0",
@@ -78,7 +79,7 @@
     "zone.js": "~0.6.12"
   },
   "peerDependencies": {
-    "@angular/core": "2.0.0-rc.4"
+    "@angular/core": "2.0.0-rc.5"
   },
   "files": [
     "angular2-resizable.js",
