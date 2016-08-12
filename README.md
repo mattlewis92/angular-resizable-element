@@ -37,7 +37,7 @@ import {ResizeEvent} from 'angular2-resizable';
 @Component({
   selector: 'demo-app',
   // you should add some styles to the element. See the demo folder for a more fleshed out example
-  template: '<div mwl-resizable (resizeEnd)="onResizeEnd($event)"></div>'
+  template: '<div mwlResizable (resizeEnd)="onResizeEnd($event)"></div>'
 })
 export class MyComponent {
 

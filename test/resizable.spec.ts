@@ -21,7 +21,7 @@ describe('resizable directive', () => {
       <div
         class="rectangle"
         [ngStyle]="style"
-        mwl-resizable
+        mwlResizable
         [validateResize]="validate"
         [resizeEdges]="resizeEdges"
         [enableGhostResize]="enableGhostResize"
@@ -785,14 +785,14 @@ describe('resizable directive', () => {
       <div
         class="rectangle"
         [ngStyle]="style"
-        mwl-resizable
+        mwlResizable
         (resizeStart)="resizeStart($event)"
         (resize)="resize($event)"
         (resizeEnd)="resizeEnd($event)">
         <span
           style="width: 5px; height: 5px; position: absolute; bottom: 5px; right: 5px"
           class="resize-handle"
-          mwl-resize-handle
+          mwlResizeHandle
           [resizeEdges]="{bottom: true, right: true}">
         </span>
       </div>

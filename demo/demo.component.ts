@@ -30,7 +30,7 @@ import {ResizeEvent} from './../angular2-resizable';
       <div
         class="rectangle"
         [ngStyle]="style"
-        mwl-resizable
+        mwlResizable
         [validateResize]="validate"
         [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
         [enableGhostResize]="true"
@@ -39,7 +39,7 @@ import {ResizeEvent} from './../angular2-resizable';
         <img
           src="http://i.imgur.com/eqzz2dl.gif"
           class="resize-handle"
-          mwl-resize-handle
+          mwlResizeHandle
           [resizeEdges]="{bottom: true, right: true}">
       </div>
     </div>

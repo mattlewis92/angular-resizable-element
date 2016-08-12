@@ -163,18 +163,18 @@ const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges 
 };
 
 /**
- * An element placed inside a `mwl-resizable` directive to be used as a drag and resize handle
+ * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
  *
  * For example
  *
  * ```
- * <div mwl-resizable>
- *   <div mwl-resize-handle [resizeEdges]="{bottom: true, right: true}"></div>
+ * <div mwlResizable>
+ *   <div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"></div>
  * </div>
  * ```
  */
 @Directive({
-  selector: '[mwl-resize-handle]'
+  selector: '[mwlResizeHandle]'
 })
 export class ResizeHandle {
 
@@ -186,7 +186,7 @@ export class ResizeHandle {
   /**
    * @private
    */
-  public resizable: Resizable; // set by the parent mwl-resizable directive
+  public resizable: Resizable; // set by the parent mwlResizable directive
 
   /**
    * @private
@@ -220,11 +220,11 @@ export class ResizeHandle {
  * For example
  *
  * ```
- * <div mwl-resizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"></div>
+ * <div mwlResizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"></div>
  * ```
  */
 @Directive({
-  selector: '[mwl-resizable]'
+  selector: '[mwlResizable]'
 })
 export class Resizable implements OnInit, AfterViewInit {
 
