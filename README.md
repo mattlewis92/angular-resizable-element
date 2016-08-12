@@ -38,7 +38,7 @@ import {Resizable} from 'angular2-resizable';
   selector: 'demo-app',
   directives: [Resizable],
   // you should add some styles to the element. See the demo folder for a more fleshed out example
-  template: '<div mwl-resizable (onResizeEnd)="onResizeEnd($event)"></div>'
+  template: '<div mwl-resizable (resizeEnd)="onResizeEnd($event)"></div>'
 })
 export class DemoApp {
 
@@ -71,7 +71,7 @@ https://mattlewis92.github.io/angular2-resizable/docs/
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
-Run `npm start` to start a development server on port 8000 with auto reload + tests. 
+Run `npm start` to start a development server on port 8000 with auto reload + tests.
 
 ### Testing
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
