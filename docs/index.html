@@ -89,21 +89,31 @@
 				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular2-resizable</span>
 </code></pre><p>Then use it in your app like so:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {Resizable} from <span class="hljs-string">'angular2-resizable'</span>;
+<span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular2-resizable'</span>;
 
 @Component({
   selector: <span class="hljs-string">'demo-app'</span>,
-  directives: [Resizable],
   <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span>
-  template: <span class="hljs-string">'&lt;div mwl-resizable (onResizeEnd)="onResizeEnd($event)"&gt;&lt;/div&gt;'</span>
+  template: <span class="hljs-string">'&lt;div mwlResizable (resizeEnd)="onResizeEnd($event)"&gt;&lt;/div&gt;'</span>
 })
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoApp {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {
 
-  onResizeEnd(event: <span class="hljs-built_in">any</span>): <span class="hljs-built_in">void</span> {
+  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);
   }
 
 }
+
+<span class="hljs-comment">// now use within your apps module</span>
+<span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular2-resizable'</span>;
+
+@NgModule({
+  declarations: [MyComponent],
+  imports: [ResizableModule],
+  bootstrap: [MyComponent]
+})
+<span class="hljs-keyword">class</span> MyModule {}
 </code></pre>
 				<p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular2-resizable/blob/master/demo/demo.ts">demo source</a>.</p>
 				<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
@@ -121,7 +131,7 @@
 					<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
 				</ul>
 				<h3 id="development-server">Development server</h3>
-				<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests. </p>
+				<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
 				<h3 id="testing">Testing</h3>
 				<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
 				<h3 id="release">Release</h3>
@@ -146,6 +156,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
 						<a href="classes/resizable.html" class="tsd-kind-icon">Resizable</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/resizablemodule.html" class="tsd-kind-icon">Resizable<wbr>Module</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
