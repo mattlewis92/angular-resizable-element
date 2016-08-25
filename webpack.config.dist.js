@@ -38,39 +38,39 @@ module.exports = {
     },
     'rxjs/add/operator/map': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/map',
-      commonjs2: 'rxjs/operator/map',
-      amd: 'rxjs/operator/map'
+      commonjs: 'rxjs/add/operator/map',
+      commonjs2: 'rxjs/add/operator/map',
+      amd: 'rxjs/add/operator/map'
     },
     'rxjs/add/operator/mergeMap': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/mergeMap',
-      commonjs2: 'rxjs/operator/mergeMap',
-      amd: 'rxjs/operator/mergeMap'
+      commonjs: 'rxjs/add/operator/mergeMap',
+      commonjs2: 'rxjs/add/operator/mergeMap',
+      amd: 'rxjs/add/operator/mergeMap'
     },
     'rxjs/add/operator/takeUntil': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/takeUntil',
-      commonjs2: 'rxjs/operator/takeUntil',
-      amd: 'rxjs/operator/takeUntil'
+      commonjs: 'rxjs/add/operator/takeUntil',
+      commonjs2: 'rxjs/add/operator/takeUntil',
+      amd: 'rxjs/add/operator/takeUntil'
     },
     'rxjs/add/operator/filter': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/filter',
-      commonjs2: 'rxjs/operator/filter',
-      amd: 'rxjs/operator/filter'
+      commonjs: 'rxjs/add/operator/filter',
+      commonjs2: 'rxjs/add/operator/filter',
+      amd: 'rxjs/add/operator/filter'
     },
     'rxjs/add/operator/pairwise': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/pairwise',
-      commonjs2: 'rxjs/operator/pairwise',
-      amd: 'rxjs/operator/pairwise'
+      commonjs: 'rxjs/add/operator/pairwise',
+      commonjs2: 'rxjs/add/operator/pairwise',
+      amd: 'rxjs/add/operator/pairwise'
     },
     'rxjs/add/operator/take': {
       root: ['rx', 'Observable'],
-      commonjs: 'rxjs/operator/take',
-      commonjs2: 'rxjs/operator/take',
-      amd: 'rxjs/operator/take'
+      commonjs: 'rxjs/add/operator/take',
+      commonjs2: 'rxjs/add/operator/take',
+      amd: 'rxjs/add/operator/take'
     }
   },
   devtool: 'source-map',
