@@ -11,7 +11,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'source-map-support'],
+    frameworks: ['mocha'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -55,7 +55,12 @@ module.exports = function(config) {
         emitErrors: !WATCH,
         failOnHint: false
       },
-      plugins: WATCH ? [] : [new webpack.NoErrorsPlugin()]
+      plugins: [
+        new webpack.SourceMapDevToolPlugin({
+          filename: null,
+          test: /\.(ts|js)($|\?)/i
+        })
+      ].concat(!WATCH ? [new webpack.NoErrorsPlugin()] : [])
     },
 
     remapIstanbulReporter: {
