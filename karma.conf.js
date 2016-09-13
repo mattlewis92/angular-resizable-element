@@ -29,7 +29,6 @@ module.exports = function(config) {
     },
 
     webpack: {
-      devtool: 'inline-source-map',
       resolve: {
         extensions: ['', '.ts', '.js'],
         alias: {
