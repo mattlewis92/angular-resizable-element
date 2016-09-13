@@ -1,6 +1,6 @@
 {
   "name": "angular2-resizable",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An angular2 directive that allows an element to be dragged and resized",
   "main": "./angular2-resizable.js",
   "typings": "./angular2-resizable.d.ts",
