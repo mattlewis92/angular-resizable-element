@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ResizeEvent} from './../angular2-resizable';
+import {ResizeEvent} from './../src';
 
 @Component({
   selector: 'demo-app',

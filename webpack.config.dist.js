@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './angular2-resizable.ts',
+  entry: './src/index.ts',
   output: {
     filename: './angular2-resizable.js',
     libraryTarget: 'umd',

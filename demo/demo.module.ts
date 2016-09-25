@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ResizableModule} from './../angular2-resizable';
+import {ResizableModule} from './../src';
 import {Demo} from './demo.component';
 
 @NgModule({
