@@ -10,10 +10,10 @@ module.exports = {
   },
   module: {
     preLoaders: [{
-      test: /\.ts$/, loader: 'tslint?emitErrors=false&failOnHint=false', exclude: /node_modules/
+      test: /\.ts$/, loader: 'tslint-loader?emitErrors=false&failOnHint=false', exclude: /node_modules/
     }],
     loaders: [{
-      test: /\.ts$/, loader: 'ts', exclude: /node_modules/
+      test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/
     }]
   },
   resolve: {
