@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {Edges, Resizable} from './../src/resizable.directive';
-import {ResizeEvent, ResizableModule} from './../angular2-resizable';
+import {ResizeEvent, ResizableModule} from './../src';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
