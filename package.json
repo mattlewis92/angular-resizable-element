@@ -20,7 +20,7 @@
     "gh-pages": "git checkout gh-pages && git merge master && npm run build:demo && npm run typedoc && git add . && git commit -m 'chore: build demo and docs' && git push && git checkout master",
     "prerelease": "npm test",
     "release": "standard-version --first-release && git push --follow-tags origin master && npm run build:dist && npm publish",
-    "postrelease": "npm run clean && npm run gh-pages"
+    "postrelease": "npm run build:clean && npm run gh-pages"
   },
   "repository": {
     "type": "git",
