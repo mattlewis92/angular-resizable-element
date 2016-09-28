@@ -11,7 +11,8 @@
     "rootDir": "./",
     "sourceMap": true,
     "inlineSources": true,
-    "skipLibCheck": true
+    "types": [],
+    "lib": ["es6", "dom"]
   },
   "files": [
     "src/index.ts"
