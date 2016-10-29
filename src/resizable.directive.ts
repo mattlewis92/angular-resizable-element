@@ -258,7 +258,7 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() resize: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizing: EventEmitter<Object> = new EventEmitter(false);
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
@@ -406,7 +406,7 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
-      this.resize.emit({
+      this.resizing.emit({
         edges: getEdgesDiff({
           edges: currentResize.edges,
           initialRectangle: currentResize.startingRect,
