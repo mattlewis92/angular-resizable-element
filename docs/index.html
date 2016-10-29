@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>angular2-resizable</title>
+	<title>angular-resizable-element</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">angular2-resizable</a>
+					<a href="index.html" class="title">angular-resizable-element</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -57,7 +57,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> angular2-resizable</h1>
+			<h1> angular-resizable-element</h1>
 		</div>
 	</div>
 </header>
@@ -65,15 +65,15 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="angular2-resizable">angular2 resizable</h1>
-				<p><a href="https://travis-ci.org/mattlewis92/angular2-resizable"><img src="https://travis-ci.org/mattlewis92/angular2-resizable.svg?branch=master" alt="Build Status"></a>
-					<a href="http://badge.fury.io/js/angular2-resizable"><img src="https://badge.fury.io/js/angular2-resizable.svg" alt="npm version"></a>
-					<a href="https://david-dm.org/mattlewis92/angular2-resizable#info=devDependencies"><img src="https://david-dm.org/mattlewis92/angular2-resizable/dev-status.svg" alt="devDependency Status"></a>
-					<a href="https://github.com/mattlewis92/angular2-resizable/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular2-resizable.svg" alt="GitHub issues"></a>
-					<a href="https://github.com/mattlewis92/angular2-resizable/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular2-resizable.svg" alt="GitHub stars"></a>
-				<a href="https://raw.githubusercontent.com/mattlewis92/angular2-resizable/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
+				<h1 id="angular-resizable-element">angular resizable element</h1>
+				<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status"></a>
+					<a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version"></a>
+					<a href="https://david-dm.org/mattlewis92/angular-resizable-element#info=devDependencies"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status"></a>
+					<a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues"></a>
+					<a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars"></a>
+				<a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
 				<h2 id="demo">Demo</h2>
-				<p><a href="https://mattlewis92.github.io/angular2-resizable/demo/">https://mattlewis92.github.io/angular2-resizable/demo/</a></p>
+				<p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
 				<h2 id="table-of-contents">Table of contents</h2>
 				<ul>
 					<li><a href="#about">About</a></li>
@@ -83,13 +83,13 @@
 					<li><a href="#licence">License</a></li>
 				</ul>
 				<h2 id="about">About</h2>
-				<p>An angular2 directive that allows an element to be dragged and resized</p>
+				<p>An angular 2.0+ directive that allows an element to be dragged and resized</p>
 				<h2 id="installation">Installation</h2>
 				<p>Install through npm:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular2-resizable</span>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular-resizable-element</span>
 </code></pre><p>Then use it in your app like so:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular2-resizable'</span>;
+<span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular-resizable-element'</span>;
 
 @Component({
   selector: <span class="hljs-string">'demo-app'</span>,
@@ -106,7 +106,7 @@
 
 <span class="hljs-comment">// now use within your apps module</span>
 <span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular2-resizable'</span>;
+<span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular-resizable-element'</span>;
 
 @NgModule({
   declarations: [MyComponent],
@@ -115,15 +115,15 @@
 })
 <span class="hljs-keyword">class</span> MyModule {}
 </code></pre>
-				<p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular2-resizable/blob/master/demo/demo.ts">demo source</a>.</p>
+				<p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts">demo source</a>.</p>
 				<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
-				<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/angular2-resizable/angular2-resizable.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+				<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/angular-resizable-element/angular-resizable-element.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
-    <span class="hljs-comment">// everything is exported on the  angular2Resizable namespace</span>
+    <span class="hljs-comment">// everything is exported on the  angularResizableElement namespace</span>
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre><h2 id="documentation">Documentation</h2>
 				<p>All documentation is auto-generated from the source via typedoc and can be viewed here:
-				<a href="https://mattlewis92.github.io/angular2-resizable/docs/">https://mattlewis92.github.io/angular2-resizable/docs/</a></p>
+				<a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
 				<h2 id="development">Development</h2>
 				<h3 id="prepare-your-environment">Prepare your environment</h3>
 				<ul>
