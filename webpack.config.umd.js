@@ -2,9 +2,9 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: __dirname + '/dist/umd',
-    filename: './angular2-resizable.js',
+    filename: './angular-resizable-element.js',
     libraryTarget: 'umd',
-    library: 'angular2Resizable'
+    library: 'angularResizableElement'
   },
   externals: {
     '@angular/core': {
