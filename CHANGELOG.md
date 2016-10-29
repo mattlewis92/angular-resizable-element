@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.4.1...v0.5.0) (2016-10-29)
+
+
+### Bug Fixes
+
+* fix resizing via a drag handle ([5f7f468](https://github.com/mattlewis92/angular-resizable-element/commit/5f7f468))
+* prevent text from being selected when resizing an element ([5571069](https://github.com/mattlewis92/angular-resizable-element/commit/5571069)), closes [#22](https://github.com/mattlewis92/angular-resizable-element/issues/22)
+
+
+### Features
+
+* rename the library from angular2-resizable to angular-resizable-element ([927235e](https://github.com/mattlewis92/angular-resizable-element/commit/927235e)), closes [#21](https://github.com/mattlewis92/angular-resizable-element/issues/21)
+* rename the resize output to resizing ([9597986](https://github.com/mattlewis92/angular-resizable-element/commit/9597986)), closes [#20](https://github.com/mattlewis92/angular-resizable-element/issues/20)
+
+
+### BREAKING CHANGES
+
+* The library has been renamed to `angular-resizable-element`.
+
+The UMD entry point has changed to
+```
+node_modules/angular-resizable-element/dist/umd/angular-resizable-element.js
+```
+* Before
+```
+(resize)="onResize($event)"
+```
+
+After:
+```
+(resizing)="onResizing($event)"
+```
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/mattlewis92/angular-resizable-element/compare/v0.4.0...v0.4.1) (2016-09-28)
 
