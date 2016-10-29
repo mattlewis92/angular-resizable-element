@@ -1,13 +1,13 @@
-# angular2 resizable
-[![Build Status](https://travis-ci.org/mattlewis92/angular2-resizable.svg?branch=master)](https://travis-ci.org/mattlewis92/angular2-resizable)
-[![npm version](https://badge.fury.io/js/angular2-resizable.svg)](http://badge.fury.io/js/angular2-resizable)
-[![devDependency Status](https://david-dm.org/mattlewis92/angular2-resizable/dev-status.svg)](https://david-dm.org/mattlewis92/angular2-resizable#info=devDependencies)
-[![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular2-resizable.svg)](https://github.com/mattlewis92/angular2-resizable/issues)
-[![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular2-resizable.svg)](https://github.com/mattlewis92/angular2-resizable/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular2-resizable/master/LICENSE)
+# angular resizable element
+[![Build Status](https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-resizable-element)
+[![npm version](https://badge.fury.io/js/angular-resizable-element.svg)](http://badge.fury.io/js/angular-resizable-element)
+[![devDependency Status](https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg)](https://david-dm.org/mattlewis92/angular-resizable-element#info=devDependencies)
+[![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/issues)
+[![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
 
 ## Demo
-https://mattlewis92.github.io/angular2-resizable/demo/
+https://mattlewis92.github.io/angular-resizable-element/demo/
 
 ## Table of contents
 
@@ -19,20 +19,20 @@ https://mattlewis92.github.io/angular2-resizable/demo/
 
 ## About
 
-An angular2 directive that allows an element to be dragged and resized
+An angular 2.0+ directive that allows an element to be dragged and resized
 
 ## Installation
 
 Install through npm:
 ```
-npm install --save angular2-resizable
+npm install --save angular-resizable-element
 ```
 
 Then use it in your app like so:
 
 ```typescript
 import {Component} from '@angular/core';
-import {ResizeEvent} from 'angular2-resizable';
+import {ResizeEvent} from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
@@ -49,7 +49,7 @@ export class MyComponent {
 
 // now use within your apps module
 import {NgModule} from '@angular/core';
-import {ResizableModule} from 'angular2-resizable';
+import {ResizableModule} from 'angular-resizable-element';
 
 @NgModule({
   declarations: [MyComponent],
@@ -60,19 +60,19 @@ class MyModule {}
 
 ```
 
-You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular2-resizable/blob/master/demo/demo.ts).
+You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts).
 
 ### Usage without a module bundler
 ```
-<script src="node_modules/angular2-resizable/angular2-resizable.js"></script>
+<script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script>
 <script>
-    // everything is exported on the  angular2Resizable namespace
+    // everything is exported on the  angularResizableElement namespace
 </script>
 ```
 
 ## Documentation
 All documentation is auto-generated from the source via typedoc and can be viewed here:
-https://mattlewis92.github.io/angular2-resizable/docs/
+https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ## Development
 

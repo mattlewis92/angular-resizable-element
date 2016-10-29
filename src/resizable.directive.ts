@@ -207,9 +207,9 @@ export class ResizeHandle {
   /**
    * @private
    */
-  @HostListener('mousemove', ['$event.clientX', '$event.clientY'])
-  private onMousemove(mouseX: number, mouseY: number): void {
-    this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges});
+  @HostListener('mousemove', ['$event'])
+  private onMousemove(event: MouseEvent): void {
+    this.resizable.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, edges: this.resizeEdges, event});
   }
 
 }
@@ -258,7 +258,7 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() resize: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizing: EventEmitter<Object> = new EventEmitter(false);
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
@@ -309,7 +309,11 @@ export class Resizable implements OnInit, AfterViewInit {
       }
     };
 
-    this.mousemove.subscribe(({mouseX, mouseY}) => {
+    this.mousemove.subscribe(({mouseX, mouseY, event}) => {
+
+      if (currentResize) {
+        event.preventDefault();
+      }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
       const cursor: string = getResizeCursor(resizeEdges);
@@ -402,7 +406,7 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
-      this.resize.emit({
+      this.resizing.emit({
         edges: getEdgesDiff({
           edges: currentResize.edges,
           initialRectangle: currentResize.startingRect,
@@ -436,8 +440,6 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'user-drag', 'none');
-        this.renderer.setElementStyle(currentResize.clonedNode, '-webkit-user-drag', 'none');
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
@@ -490,9 +492,9 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * @private
    */
-  @HostListener('document:mousemove', ['$event.clientX', '$event.clientY'])
-  private onMousemove(mouseX: number, mouseY: number): void {
-    this.mousemove.next({mouseX, mouseY});
+  @HostListener('document:mousemove', ['$event'])
+  private onMousemove(event: MouseEvent): void {
+    this.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, event});
   }
 
 }
