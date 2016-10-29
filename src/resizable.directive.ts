@@ -207,9 +207,9 @@ export class ResizeHandle {
   /**
    * @private
    */
-  @HostListener('mousemove', ['$event.clientX', '$event.clientY'])
-  private onMousemove(mouseX: number, mouseY: number): void {
-    this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges});
+  @HostListener('mousemove', ['$event'])
+  private onMousemove(event: MouseEvent): void {
+    this.resizable.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, edges: this.resizeEdges, event});
   }
 
 }
