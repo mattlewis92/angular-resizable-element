@@ -309,7 +309,11 @@ export class Resizable implements OnInit, AfterViewInit {
       }
     };
 
-    this.mousemove.subscribe(({mouseX, mouseY}) => {
+    this.mousemove.subscribe(({mouseX, mouseY, event}) => {
+
+      if (currentResize) {
+        event.preventDefault();
+      }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
       const cursor: string = getResizeCursor(resizeEdges);
@@ -436,8 +440,6 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'user-drag', 'none');
-        this.renderer.setElementStyle(currentResize.clonedNode, '-webkit-user-drag', 'none');
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
@@ -490,9 +492,9 @@ export class Resizable implements OnInit, AfterViewInit {
   /**
    * @private
    */
-  @HostListener('document:mousemove', ['$event.clientX', '$event.clientY'])
-  private onMousemove(mouseX: number, mouseY: number): void {
-    this.mousemove.next({mouseX, mouseY});
+  @HostListener('document:mousemove', ['$event'])
+  private onMousemove(event: MouseEvent): void {
+    this.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, event});
   }
 
 }

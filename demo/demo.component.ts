@@ -21,7 +21,6 @@ import {ResizeEvent} from './../src';
       position: absolute;
       bottom: 10px;
       right: 10px;
-      -webkit-user-drag: none;
     }
   `],
   template: `
