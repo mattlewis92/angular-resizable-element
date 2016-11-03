@@ -316,7 +316,7 @@ export class Resizable implements OnInit, AfterViewInit {
       }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      const cursor: string = getResizeCursor(resizeEdges);
+      const cursor: string = currentResize ? 'auto' : getResizeCursor(resizeEdges);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
@@ -440,6 +440,7 @@ export class Resizable implements OnInit, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', 'auto');
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
