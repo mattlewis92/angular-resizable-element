@@ -972,4 +972,37 @@ describe('resizable directive', () => {
 
   });
 
+  it('should end the mouseup observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mouseup.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
+
+  });
+
+  it('should end the mousedown observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mousedown.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
+
+  });
+
+  it('should end the mousemove observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mousemove.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
+
+  });
+
 });
