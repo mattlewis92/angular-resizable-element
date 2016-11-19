@@ -36,10 +36,10 @@ describe('resizable directive', () => {
 
     @ViewChild(Resizable) public resizable: Resizable;
     public style: Object = {};
-    public resizeStart: Sinon.SinonSpy = sinon.spy();
-    public resizing: Sinon.SinonSpy = sinon.spy();
-    public resizeEnd: Sinon.SinonSpy = sinon.spy();
-    public validate: Sinon.SinonStub = sinon.stub().returns(true);
+    public resizeStart: sinon.SinonSpy = sinon.spy();
+    public resizing: sinon.SinonSpy = sinon.spy();
+    public resizeEnd: sinon.SinonSpy = sinon.spy();
+    public validate: sinon.SinonStub = sinon.stub().returns(true);
     public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
     public enableGhostResize: boolean = true;
     public resizeSnapGrid: Object = {};
@@ -969,6 +969,39 @@ describe('resizable directive', () => {
     expect(style.height).to.equal('150px');
     expect(style.top).to.equal('200px');
     expect(style.left).to.equal('100px');
+
+  });
+
+  it('should end the mouseup observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mouseup.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
+
+  });
+
+  it('should end the mousedown observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mousedown.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
+
+  });
+
+  it('should end the mousemove observable when the component is destroyed', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const onComplete: sinon.SinonSpy = sinon.spy();
+    fixture.componentInstance.resizable.mousemove.subscribe(() => '', () => '', onComplete);
+    fixture.destroy();
+    expect(onComplete).to.have.been.calledOnce;
 
   });
 

@@ -9,7 +9,8 @@ import {
   Input,
   EventEmitter,
   ContentChildren,
-  QueryList
+  QueryList,
+  OnDestroy
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -226,7 +227,7 @@ export class ResizeHandle {
 @Directive({
   selector: '[mwlResizable]'
 })
-export class Resizable implements OnInit, AfterViewInit {
+export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
@@ -472,6 +473,15 @@ export class Resizable implements OnInit, AfterViewInit {
     this.resizeHandles.forEach((handle: ResizeHandle) => {
       handle.resizable = this;
     });
+  }
+
+  /**
+   * @private
+   */
+  ngOnDestroy(): void {
+    this.mousedown.complete();
+    this.mouseup.complete();
+    this.mousemove.complete();
   }
 
   /**
