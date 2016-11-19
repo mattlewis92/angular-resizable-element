@@ -94,7 +94,14 @@
 @Component({
   selector: <span class="hljs-string">'demo-app'</span>,
   <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span>
-  template: <span class="hljs-string">'&lt;div mwlResizable (resizeEnd)="onResizeEnd($event)"&gt;&lt;/div&gt;'</span>
+  template: <span class="hljs-string">`
+    &lt;div
+      mwlResizable
+      [enableGhostResize]="true"
+      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+      (resizeEnd)="onResizeEnd($event)"&gt;
+    &lt;/div&gt;
+  `</span>
 })
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {
 
