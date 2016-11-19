@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.3"></a>
+## [0.5.3](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.2...v0.5.3) (2016-11-19)
+
+
+### Bug Fixes
+
+* unsubscribe all observables when the component is destroyed ([d5ea756](https://github.com/mattlewis92/angular-resizable-element/commit/d5ea756)), closes [#27](https://github.com/mattlewis92/angular-resizable-element/issues/27)
+
+
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.1...v0.5.2) (2016-11-05)
 
