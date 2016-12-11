@@ -105,7 +105,7 @@ describe('resizable directive', () => {
           clientX: 150,
           clientY: 197
         },
-        cursor: 'auto'
+        cursor: ''
       }];
     });
 

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.4"></a>
+## [0.5.4](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.3...v0.5.4) (2016-12-11)
+
+
+### Bug Fixes
+
+* **cursor:** reset the cursor instead of changing it to auto ([514851f](https://github.com/mattlewis92/angular-resizable-element/commit/514851f))
+
+
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.2...v0.5.3) (2016-11-19)
 
