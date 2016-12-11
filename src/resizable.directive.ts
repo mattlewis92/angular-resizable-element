@@ -146,7 +146,7 @@ const getResizeCursor: Function = (edges: Edges): string => {
   } else if (edges.top || edges.bottom) {
     return 'ns-resize';
   } else {
-    return 'auto';
+    return null;
   }
 };
 
@@ -317,7 +317,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      const cursor: string = currentResize ? 'auto' : getResizeCursor(resizeEdges);
+      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
