@@ -1,7 +1,7 @@
 # angular resizable element
 [![Build Status](https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-resizable-element)
 [![npm version](https://badge.fury.io/js/angular-resizable-element.svg)](http://badge.fury.io/js/angular-resizable-element)
-[![devDependency Status](https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg)](https://david-dm.org/mattlewis92/angular-resizable-element#info=devDependencies)
+[![devDependency Status](https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg)](https://david-dm.org/mattlewis92/angular-resizable-element?type=dev)
 [![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/issues)
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
