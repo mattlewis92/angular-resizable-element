@@ -20,7 +20,8 @@
     "gh-pages": "git checkout gh-pages && git merge master && npm run build:demo && npm run typedoc && git add . && git commit -m 'chore: build demo and docs' && git push && git checkout master",
     "prerelease": "npm test",
     "release": "standard-version --first-release && git push --follow-tags origin master && npm run build:dist && npm publish",
-    "postrelease": "npm run build:clean && npm run gh-pages"
+    "postrelease": "npm run build:clean && npm run gh-pages",
+    "commitmsg": "validate-commit-msg"
   },
   "repository": {
     "type": "git",
@@ -56,7 +57,7 @@
     "conventional-changelog-cli": "^1.2.0",
     "core-js": "^2.4.1",
     "cz-conventional-changelog": "^1.2.0",
-    "ghooks": "^1.3.2",
+    "husky": "^0.12.0",
     "imports-loader": "^0.7.0",
     "jasmine-core": "^2.5.0",
     "karma": "^1.3.0",
@@ -89,9 +90,6 @@
     "dist"
   ],
   "config": {
-    "ghooks": {
-      "commit-msg": "validate-commit-msg"
-    },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
