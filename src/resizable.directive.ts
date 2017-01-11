@@ -441,6 +441,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
+        this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges));
       }
       this.resizeStart.emit({
