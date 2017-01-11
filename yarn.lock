@@ -140,13 +140,9 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
-amdefine@1.0.0:
+amdefine@1.0.0, amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
-
-amdefine@>=0.0.4:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
 ansi-align@^1.1.0:
   version "1.1.0"
@@ -197,6 +193,10 @@ argparse@^1.0.7:
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
     sprintf-js "~1.0.2"
+
+argv@>=0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/argv/-/argv-0.0.2.tgz#ecbd16f8949b157183711b1bda334f37840185ab"
 
 arr-diff@^2.0.0:
   version "2.0.0"
@@ -601,6 +601,15 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+codecov@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/codecov/-/codecov-1.0.1.tgz#97260ceac0e96b8eda8d562006558a53a139dffd"
+  dependencies:
+    argv ">=0.0.2"
+    execSync "1.0.2"
+    request ">=2.42.0"
+    urlgrey ">=0.4.0"
+
 colors@^1.0.3, colors@^1.1.0, colors@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
@@ -993,7 +1002,7 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-dateformat@^1.0.11, dateformat@^1.0.12, dateformat@^1.0.6:
+dateformat@^1.0.11, dateformat@^1.0.12:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-1.0.12.tgz#9f124b67594c937ff706932e4a642cca8dbbfee9"
   dependencies:
@@ -1247,6 +1256,12 @@ eventsource@~0.1.6:
   resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-0.1.6.tgz#0acede849ed7dd1ccc32c811bb11b944d4f29232"
   dependencies:
     original ">=0.0.5"
+
+execSync@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/execSync/-/execSync-1.0.2.tgz#1f42eda582225180053224ecdd3fd1960fdb3139"
+  dependencies:
+    temp "~0.5.1"
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -1731,6 +1746,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
+graceful-fs@~1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-1.2.3.tgz#15a4806a57547cb2d2dbf27f42e89a8c3451b364"
+
 "graceful-readlink@>= 1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
@@ -2180,7 +2199,7 @@ istanbul@0.4.3:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-istanbul@0.x.x, istanbul@^0.4.0, istanbul@^0.4.3:
+istanbul@0.x.x, istanbul@^0.4.3:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/istanbul/-/istanbul-0.4.5.tgz#65c7d73d4c4da84d4f3ac310b918fb0b8033733b"
   dependencies:
@@ -2265,16 +2284,6 @@ jsprim@^1.2.2:
     extsprintf "1.0.2"
     json-schema "0.2.3"
     verror "1.3.6"
-
-karma-coverage@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/karma-coverage/-/karma-coverage-1.1.1.tgz#5aff8b39cf6994dc22de4c84362c76001b637cf6"
-  dependencies:
-    dateformat "^1.0.6"
-    istanbul "^0.4.0"
-    lodash "^3.8.0"
-    minimatch "^3.0.0"
-    source-map "^0.5.1"
 
 karma-jasmine@^1.0.2:
   version "1.1.0"
@@ -3302,7 +3311,7 @@ request-progress@~2.0.1:
   dependencies:
     throttleit "^1.0.0"
 
-request@^2.79.0, request@~2.79.0:
+request@>=2.42.0, request@^2.79.0, request@~2.79.0:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -3376,6 +3385,12 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.3.3, rimraf@^2.4.4, rimraf@~2.5.1, rimraf@~2.
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.4.tgz#96800093cbf1a0c86bd95b4625467535c29dfa04"
   dependencies:
     glob "^7.0.5"
+
+rimraf@~2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.1.4.tgz#5a6eb62eeda068f51ede50f29b3e5cd22f3d9bb2"
+  optionalDependencies:
+    graceful-fs "~1"
 
 ripemd160@0.2.0:
   version "0.2.0"
@@ -3599,7 +3614,7 @@ source-map-support@^0.4.2:
   dependencies:
     source-map "^0.5.3"
 
-source-map@>=0.5.6, source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1:
+source-map@>=0.5.6, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
 
@@ -3821,6 +3836,12 @@ tar@~2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
+
+temp@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/temp/-/temp-0.5.1.tgz#77ab19c79aa7b593cbe4fac2441768cad987b8df"
+  dependencies:
+    rimraf "~2.1.4"
 
 tempfile@^1.1.1:
   version "1.1.1"
@@ -4095,6 +4116,10 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+urlgrey@>=0.4.0:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/urlgrey/-/urlgrey-0.4.4.tgz#892fe95960805e85519f1cd4389f2cb4cbb7652f"
 
 useragent@^2.1.9:
   version "2.1.10"
