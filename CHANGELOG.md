@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.5"></a>
+## [0.5.5](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.4...v0.5.5) (2017-01-11)
+
+
+### Bug Fixes
+
+* add width and height to cloned node ([75ce122](https://github.com/mattlewis92/angular-resizable-element/commit/75ce122)), closes [#31](https://github.com/mattlewis92/angular-resizable-element/issues/31)
+* keep cursor while resizing ([93a5c4e](https://github.com/mattlewis92/angular-resizable-element/commit/93a5c4e)), closes [#33](https://github.com/mattlewis92/angular-resizable-element/issues/33)
+
+
+
 <a name="0.5.4"></a>
 ## [0.5.4](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.3...v0.5.4) (2016-12-11)
 
