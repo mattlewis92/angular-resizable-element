@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ResizeEvent | angular-resizable-element</title>
+	<title>Demo | angular-resizable-element</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,28 +56,21 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="resizeevent.html">ResizeEvent</a>
+					<a href="demo.html">Demo</a>
 				</li>
 			</ul>
-			<h1>Interface ResizeEvent</h1>
+			<h1>Class Demo</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The <code>$event</code> object that is passed to the resize events</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ResizeEvent</span>
+						<span class="target">Demo</span>
 					</li>
 				</ul>
 			</section>
@@ -88,8 +81,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="resizeevent.html#edges" class="tsd-kind-icon">edges</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="resizeevent.html#rectangle" class="tsd-kind-icon">rectangle</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="demo.html#style" class="tsd-kind-icon">style</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="demo.html#onresizeend" class="tsd-kind-icon">on<wbr>Resize<wbr>End</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="demo.html#validate" class="tsd-kind-icon">validate</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,25 +96,64 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="edges" class="tsd-anchor"></a>
-					<h3>edges</h3>
-					<div class="tsd-signature tsd-kind-icon">edges<span class="tsd-signature-symbol">:</span> <a href="edges.html" class="tsd-signature-type">Edges</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="style" class="tsd-anchor"></a>
+					<h3>style</h3>
+					<div class="tsd-signature tsd-kind-icon">style<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular-resizable-element/blob/2a4c335/src/resizable.directive.ts#L52">src/resizable.directive.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/mattlewis92/angular-resizable-element/blob/2a4c335/demo/demo.component.ts#L49">demo/demo.component.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="rectangle" class="tsd-anchor"></a>
-					<h3>rectangle</h3>
-					<div class="tsd-signature tsd-kind-icon">rectangle<span class="tsd-signature-symbol">:</span> <a href="boundingrectangle.html" class="tsd-signature-type">BoundingRectangle</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/mattlewis92/angular-resizable-element/blob/2a4c335/src/resizable.directive.ts#L51">src/resizable.directive.ts:51</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onresizeend" class="tsd-anchor"></a>
+					<h3>on<wbr>Resize<wbr>End</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Resize<wbr>End<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/resizeevent.html" class="tsd-signature-type">ResizeEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular-resizable-element/blob/2a4c335/demo/demo.component.ts#L59">demo/demo.component.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/resizeevent.html" class="tsd-signature-type">ResizeEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="validate" class="tsd-anchor"></a>
+					<h3>validate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">validate<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/resizeevent.html" class="tsd-signature-type">ResizeEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mattlewis92/angular-resizable-element/blob/2a4c335/demo/demo.component.ts#L51">demo/demo.component.ts:51</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/resizeevent.html" class="tsd-signature-type">ResizeEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -129,45 +167,48 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/demo.html" class="tsd-kind-icon">Demo</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/demomodule.html" class="tsd-kind-icon">Demo<wbr>Module</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/resizable.html" class="tsd-kind-icon">Resizable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/resizablemodule.html" class="tsd-kind-icon">Resizable<wbr>Module</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-private tsd-is-not-exported">
-						<a href="coordinate.html" class="tsd-kind-icon">Coordinate</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="edges.html" class="tsd-kind-icon">Edges</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
+					<li class="current tsd-kind-class">
+						<a href="demo.html" class="tsd-kind-icon">Demo</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="resizeevent.html#edges" class="tsd-kind-icon">edges</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="demo.html#style" class="tsd-kind-icon">style</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="resizeevent.html#rectangle" class="tsd-kind-icon">rectangle</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="demo.html#onresizeend" class="tsd-kind-icon">on<wbr>Resize<wbr>End</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="demo.html#validate" class="tsd-kind-icon">validate</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="demomodule.html" class="tsd-kind-icon">Demo<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="resizable.html" class="tsd-kind-icon">Resizable</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="resizablemodule.html" class="tsd-kind-icon">Resizable<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-private tsd-is-not-exported">
+						<a href="../interfaces/coordinate.html" class="tsd-kind-icon">Coordinate</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/edges.html" class="tsd-kind-icon">Edges</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
+					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="../globals.html#env" class="tsd-kind-icon">ENV</a>
 					</li>
