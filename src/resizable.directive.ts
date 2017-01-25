@@ -192,6 +192,8 @@ export class ResizeHandle {
   /**
    * @private
    */
+  @HostListener('touchend', ['$event.clientX', '$event.clientY'])
+  @HostListener('touchcancel', ['$event.clientX', '$event.clientY'])
   @HostListener('mouseup', ['$event.clientX', '$event.clientY'])
   onMouseup(mouseX: number, mouseY: number): void {
     this.resizable.mouseup.next({mouseX, mouseY, edges: this.resizeEdges});
@@ -200,6 +202,7 @@ export class ResizeHandle {
   /**
    * @private
    */
+  @HostListener('touchstart', ['$event.clientX', '$event.clientY'])
   @HostListener('mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
     this.resizable.mousedown.next({mouseX, mouseY, edges: this.resizeEdges});
@@ -208,6 +211,7 @@ export class ResizeHandle {
   /**
    * @private
    */
+  @HostListener('touchmove', ['$event'])
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent): void {
     this.resizable.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, edges: this.resizeEdges, event});
@@ -489,6 +493,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
+  @HostListener('document:touchend', ['$event.clientX', '$event.clientY'])
+  @HostListener('document:touchcancel', ['$event.clientX', '$event.clientY'])
   @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
   onMouseup(mouseX: number, mouseY: number): void {
     this.mouseup.next({mouseX, mouseY});
@@ -497,6 +503,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
+  @HostListener('document:touchstart', ['$event.clientX', '$event.clientY'])
   @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
     this.mousedown.next({mouseX, mouseY});
@@ -505,6 +512,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
+  @HostListener('document:touchmove', ['$event'])
   @HostListener('document:mousemove', ['$event'])
   onMousemove(event: MouseEvent): void {
     this.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, event});
