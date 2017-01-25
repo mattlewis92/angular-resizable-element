@@ -42,7 +42,7 @@ module.exports = function(config) {
         postLoaders: [{
           test: /src\/.+\.ts$/,
           exclude: /(test|node_modules)/,
-          loader: 'sourcemap-istanbul-instrumenter?force-sourcemap=true'
+          loader: 'istanbul-instrumenter-loader'
         }]
       },
       tslint: {
@@ -57,18 +57,15 @@ module.exports = function(config) {
       ].concat(config.singleRun ? [new webpack.NoErrorsPlugin()] : [])
     },
 
-    remapIstanbulReporter: {
-      reports: {
-        html: 'coverage/html',
-        'text-summary': null,
-        lcovonly: 'coverage/lcov.info'
-      }
+    coverageIstanbulReporter: {
+      reports: ['text-summary', 'html', 'lcovonly'],
+      fixWebpackSourcePaths: true
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'karma-remap-istanbul'],
+    reporters: ['progress', 'coverage-istanbul'],
 
     // web server port
     port: 9876,
