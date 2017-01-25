@@ -1914,10 +1914,11 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-husky@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-0.12.0.tgz#3a44922fce8071803242c3c7522a6582c50525dc"
+husky@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-0.13.1.tgz#11efc6fc10e0ec4e789776f6582be37d71ba4ccf"
   dependencies:
+    chalk "^1.1.3"
     find-parent-dir "^0.3.0"
     is-ci "^1.0.9"
     normalize-path "^1.0.0"
@@ -2310,9 +2311,9 @@ karma-sourcemap-loader@^0.3.7:
   dependencies:
     graceful-fs "^4.1.2"
 
-karma-webpack@^1.8.0:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-1.8.1.tgz#39d5fd2edeea3cc3ef5b405989b37d5b0e6a3b4e"
+karma-webpack@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-2.0.1.tgz#271ac955685b9bd99365ef010ffc5655eac28ef6"
   dependencies:
     async "~0.9.0"
     loader-utils "^0.2.5"
@@ -3928,14 +3929,13 @@ trim-off-newlines@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.1.tgz#9f9ba9d9efa8764c387698bcbfeb2c848f11adb3"
 
-ts-loader@^1.2.2:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-1.3.3.tgz#30c6203e1e66b841a88701ed8858f1725d94b026"
+ts-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-2.0.0.tgz#26f382b51951bf5db4c88ea5f3b156c1cfdd813f"
   dependencies:
     colors "^1.0.3"
     enhanced-resolve "^3.0.0"
     loader-utils "^0.2.6"
-    object-assign "^4.1.0"
     semver "^5.0.1"
 
 tsickle@^0.2:
