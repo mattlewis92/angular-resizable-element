@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "files": [
+    "src/resizable.directive.ts",
+    "src/resizeHandle.directive.ts",
+    "src/resizable.module.ts"
+  ]
+}

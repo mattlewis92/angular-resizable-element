@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
-import {Resizable, ResizeHandle} from './resizable.directive';
+import {Resizable} from './resizable.directive';
+import {ResizeHandle} from './resizeHandle.directive';
 
 @NgModule({
   declarations: [Resizable, ResizeHandle],
