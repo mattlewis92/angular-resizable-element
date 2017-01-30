@@ -68,7 +68,7 @@ class MyModule {}
 
 ```
 
-You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts).
+You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts).
 
 ### Usage without a module bundler
 ```
