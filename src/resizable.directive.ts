@@ -438,17 +438,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
-  @HostListener('document:touchend', ['$event.clientX', '$event.clientY'])
-  @HostListener('document:touchcancel', ['$event.clientX', '$event.clientY'])
-  @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
-  onMouseup(mouseX: number, mouseY: number): void {
-    this.mouseup.next({mouseX, mouseY});
-  }
-
-  /**
-   * @private
-   */
-  @HostListener('document:touchstart', ['$event.clientX', '$event.clientY'])
+  @HostListener('document:touchstart', ['$event.touches[0].clientX', '$event.touches[0].clientY'])
   @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
     this.mousedown.next({mouseX, mouseY});
@@ -457,10 +447,20 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
-  @HostListener('document:touchmove', ['$event'])
-  @HostListener('document:mousemove', ['$event'])
-  onMousemove(event: MouseEvent): void {
-    this.mousemove.next({mouseX: event.clientX, mouseY: event.clientY, event});
+  @HostListener('document:touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
+  @HostListener('document:mousemove', ['$event', '$event.clientX', '$event.clientY'])
+  onMousemove(event: MouseEvent, mouseX: number, mouseY: number): void {
+    this.mousemove.next({mouseX, mouseY, event});
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('document:touchend', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
+  @HostListener('document:touchcancel', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
+  @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
+  onMouseup(mouseX: number, mouseY: number): void {
+    this.mouseup.next({mouseX, mouseY});
   }
 
 }
