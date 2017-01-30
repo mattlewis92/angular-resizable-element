@@ -1,8 +1,6 @@
-'use strict';
+import * as webpack from 'webpack';
 
-const webpack = require('webpack');
-
-module.exports = function(config) {
+export default function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -53,8 +51,9 @@ module.exports = function(config) {
         new webpack.SourceMapDevToolPlugin({
           filename: null,
           test: /\.(ts|js)($|\?)/i
-        })
-      ].concat(config.singleRun ? [new webpack.NoErrorsPlugin()] : [])
+        }),
+        ...(config.singleRun ? [new webpack.NoErrorsPlugin()] : [])
+      ]
     },
 
     coverageIstanbulReporter: {
@@ -67,18 +66,18 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage-istanbul'],
 
-    // web server port
-    port: 9876,
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS']
+    browsers: ['PhantomJS'],
+
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+      exitOnResourceError: true
+    }
+
   });
 };
