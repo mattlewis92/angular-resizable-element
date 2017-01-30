@@ -79,7 +79,7 @@ You may also find it useful to view the [demo source](https://github.com/mattlew
 ```
 
 ## Documentation
-All documentation is auto-generated from the source via typedoc and can be viewed here:
+All documentation is auto-generated from the source and can be viewed here:
 https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ## Development
