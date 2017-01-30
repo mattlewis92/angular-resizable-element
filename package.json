@@ -8,7 +8,7 @@
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
     "build:demo": "webpack -p",
-    "build:umd": "webpack --config webpack.config.umd.js",
+    "build:umd": "webpack --config webpack.config.umd.ts",
     "build:ngc": "ngc -p tsconfig-ngc.json",
     "build:dist": "npm run build:umd && npm run build:ngc",
     "build:clean": "rm -rf dist",
@@ -82,8 +82,8 @@
     "tslint-loader": "^3.3.0",
     "typescript": "~2.0.3",
     "validate-commit-msg": "^2.8.0",
-    "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.16.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0",
     "zone.js": "^0.7.2"
   },
   "peerDependencies": {

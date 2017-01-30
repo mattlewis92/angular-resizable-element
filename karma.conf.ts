@@ -23,36 +23,45 @@ export default function(config) {
 
     webpack: {
       resolve: {
-        extensions: ['', '.ts', '.js'],
+        extensions: ['.ts', '.js'],
         alias: {
           sinon: 'sinon/pkg/sinon'
         }
       },
       module: {
-        preLoaders: [{
-          test: /\.ts$/, loader: 'tslint', exclude: /node_modules/
-        }],
-        loaders: [{
-          test: /\.ts$/, loader: 'ts', exclude: /node_modules/
+        rules: [{
+          test: /\.ts$/,
+          loader: 'tslint-loader',
+          exclude: /node_modules/,
+          enforce: 'pre',
+          options: {
+            emitErrors: config.singleRun,
+            failOnHint: false
+          }
         }, {
-          test: /sinon.js$/, loader: 'imports?define=>false,require=>false'
-        }],
-        postLoaders: [{
+          test: /\.ts$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/
+        }, {
+          test: /sinon.js$/,
+          loader: 'imports-loader?define=>false,require=>false'
+        }, {
           test: /src\/.+\.ts$/,
-          exclude: /(test|node_modules)/,
-          loader: 'istanbul-instrumenter-loader'
+          exclude: /(node_modules|\.spec\.ts$)/,
+          loader: 'istanbul-instrumenter-loader',
+          enforce: 'post'
         }]
-      },
-      tslint: {
-        emitErrors: config.singleRun,
-        failOnHint: false
       },
       plugins: [
         new webpack.SourceMapDevToolPlugin({
           filename: null,
           test: /\.(ts|js)($|\?)/i
         }),
-        ...(config.singleRun ? [new webpack.NoErrorsPlugin()] : [])
+        new webpack.ContextReplacementPlugin(
+          /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+          __dirname + '/src'
+        ),
+        ...(config.singleRun ? [new webpack.NoEmitOnErrorsPlugin()] : [])
       ]
     },
 
