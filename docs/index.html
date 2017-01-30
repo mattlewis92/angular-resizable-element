@@ -1,292 +1,287 @@
 <!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>angular-resizable-element</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">angular-resizable-element</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1> angular-resizable-element</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="angular-resizable-element">angular resizable element</h1>
-				<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status"></a>
-					<a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov"></a>
-					<a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version"></a>
-					<a href="https://david-dm.org/mattlewis92/angular-resizable-element?type=dev"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status"></a>
-					<a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues"></a>
-					<a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars"></a>
-				<a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
-				<h2 id="demo">Demo</h2>
-				<p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
-				<h2 id="table-of-contents">Table of contents</h2>
-				<ul>
-					<li><a href="#about">About</a></li>
-					<li><a href="#installation">Installation</a></li>
-					<li><a href="#documentation">Documentation</a></li>
-					<li><a href="#development">Development</a></li>
-					<li><a href="#licence">License</a></li>
-				</ul>
-				<h2 id="about">About</h2>
-				<p>An angular 2.0+ directive that allows an element to be dragged and resized</p>
-				<h2 id="installation">Installation</h2>
-				<p>Install through npm:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular-resizable-element</span>
-</code></pre><p>Then use it in your app like so:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular-resizable-element'</span>;
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-resizable-element documentation</title>
+        <meta name="description" content="">
+        <base href="/angular-resizable-element/docs/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<span class="hljs-meta">@Component</span>({
-  selector: <span class="hljs-string">'demo-app'</span>,
-  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span>
-  template: <span class="hljs-string">`
-    &lt;div
-      mwlResizable
-      [enableGhostResize]="true"
-      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-      (resizeEnd)="onResizeEnd($event)"&gt;
-    &lt;/div&gt;
-  `</span>
-})
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	    <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
 
-  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);
-  }
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">angular-resizable-element documentation</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
 
-}
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="./">angular-resizable-element documentation</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a href="./"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                    <a  href="./overview.html" 
+                                        
+                                         href="./overview.html" 
+                                        
+                                        >
+                                        <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./modules.html" >
+                            <span class="fa fa-archive"></span>
+                            <span>Modules</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-modules-links"
+                            ></span>
+                        </a>
+                        <ul class="links collapse in"
+                                id="xs-modules-links"
+                            >
+                                <li class="link">
+                                    <a href="./modules/ResizableModule.html" >ResizableModule</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-code"></span>
+                            <span>Directives</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-directives-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-directives-links"
+                            >
+                                <li class="link">
+                                    <a href="./directives/Resizable.html" >Resizable</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./directives/ResizeHandle.html" >ResizeHandle</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+            
+            
+            
+            
+                    <li class="divider"></li>
+                    <li class="copyright">
+                            Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                                        <img src="./images/compodoc-vectorise.svg" class="img-responsive">
+                            </a>
+                    </li>
+            
+                </ul>
+            
+            </nav>
+        </div>
 
-<span class="hljs-comment">// now use within your apps module</span>
-<span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular-resizable-element'</span>;
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="./">angular-resizable-element documentation</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a href="./"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                           <a  href="./overview.html" 
+                                               
+                                                href="./overview.html" 
+                                               
+                                               >
+                                               <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./modules.html" >
+                                   <span class="fa fa-archive"></span>
+                                   <span>Modules</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#modules-links"
+                                   ></span>
+                               </a>
+                               <ul class="links collapse in"
+                                       id="modules-links"
+                   >
+                                       <li class="link">
+                                           <a href="./modules/ResizableModule.html" >ResizableModule</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-code"></span>
+                                   <span>Directives</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#directives-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="directives-links"
+                   >
+                                       <li class="link">
+                                           <a href="./directives/Resizable.html" >Resizable</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./directives/ResizeHandle.html" >ResizeHandle</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                           <li class="divider"></li>
+                           <li class="copyright">
+                                   Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                                               <img src="./images/compodoc-vectorise.svg" class="img-responsive">
+                                   </a>
+                           </li>
+                   
+                       </ul>
+                   
+                   </nav>
+               </div>
+               <div class="content readme">
+                   <div class="content-data">
+<h1 id="angular-resizable-element">angular resizable element</h1>
+<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status" class="img-responsive"></a><br><a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov" class="img-responsive"></a><br><a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version" class="img-responsive"></a><br><a href="https://david-dm.org/mattlewis92/angular-resizable-element?type=dev"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars" class="img-responsive"></a><br><a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
+<h2 id="demo">Demo</h2>
+<p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#licence">License</a></li>
+</ul>
+<h2 id="about">About</h2>
+<p>An angular 2.0+ directive that allows an element to be dragged and resized</p>
+<h2 id="installation">Installation</h2>
+<p>Install through npm:</p>
+<pre><code class="hljs undefined">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@Component</span>({<br>  selector: <span class="hljs-string">'demo-app'</span>,<br>  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span><br>  template: <span class="hljs-string">`<br>    &lt;div<br>      mwlResizable<br>      [enableGhostResize]="true"<br>      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"<br>      (resizeEnd)="onResizeEnd($event)"&gt;<br>    &lt;/div&gt;<br>  `</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {<br><br>  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);<br>  }<br><br>}<br><br><span class="hljs-comment">// now use within your apps module</span><br><span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@NgModule</span>({<br>  declarations: [MyComponent],<br>  imports: [ResizableModule],<br>  bootstrap: [MyComponent]<br>})<br><span class="hljs-keyword">class</span> MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts">demo source</a>.</p>
+<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
+<pre><code class="hljs undefined"><script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script><br><script><br>    // everything is exported on the  angularResizableElement namespace<br></script></code></pre><h2 id="documentation">Documentation</h2>
+<p>All documentation is auto-generated from the source and can be viewed here:<br><a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
+<h2 id="development">Development</h2>
+<h3 id="prepare-your-environment">Prepare your environment</h3>
+<ul>
+<li>Install <a href="http://nodejs.org/">Node.js</a> and NPM (should come with)</li>
+<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
+</ul>
+<h3 id="development-server">Development server</h3>
+<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
+<h3 id="testing">Testing</h3>
+<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
+<h3 id="release">Release</h3>
+<ul>
+<li>Bump the version in package.json (once the module hits 1.0 this will become automatic)<pre><code class="hljs bash">npm run release</code></pre></li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT</p>
 
-<span class="hljs-meta">@NgModule</span>({
-  declarations: [MyComponent],
-  imports: [ResizableModule],
-  bootstrap: [MyComponent]
-})
-<span class="hljs-keyword">class</span> MyModule {}
-</code></pre>
-				<p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts">demo source</a>.</p>
-				<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
-				<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/angular-resizable-element/angular-resizable-element.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
-    <span class="hljs-comment">// everything is exported on the  angularResizableElement namespace</span>
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre><h2 id="documentation">Documentation</h2>
-				<p>All documentation is auto-generated from the source via typedoc and can be viewed here:
-				<a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
-				<h2 id="development">Development</h2>
-				<h3 id="prepare-your-environment">Prepare your environment</h3>
-				<ul>
-					<li>Install <a href="http://nodejs.org/">Node.js</a> and NPM (should come with)</li>
-					<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
-				</ul>
-				<h3 id="development-server">Development server</h3>
-				<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
-				<h3 id="testing">Testing</h3>
-				<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
-				<h3 id="release">Release</h3>
-				<ul>
-					<li>Bump the version in package.json (once the module hits 1.0 this will become automatic)<pre><code class="lang-bash">npm run release
-</code></pre>
-					</li>
-				</ul>
-				<h2 id="license">License</h2>
-				<p>MIT</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="classes/demo.html" class="tsd-kind-icon">Demo</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/demomodule.html" class="tsd-kind-icon">Demo<wbr>Module</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/resizable.html" class="tsd-kind-icon">Resizable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/resizablemodule.html" class="tsd-kind-icon">Resizable<wbr>Module</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/resizehandle.html" class="tsd-kind-icon">Resize<wbr>Handle</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/boundingrectangle.html" class="tsd-kind-icon">Bounding<wbr>Rectangle</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-private tsd-is-not-exported">
-						<a href="interfaces/coordinate.html" class="tsd-kind-icon">Coordinate</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/edges.html" class="tsd-kind-icon">Edges</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/resizeevent.html" class="tsd-kind-icon">Resize<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#env" class="tsd-kind-icon">ENV</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#require" class="tsd-kind-icon">require</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#testscontext" class="tsd-kind-icon">tests<wbr>Context</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
-						<a href="globals.html#getedgesdiff" class="tsd-kind-icon">get<wbr>Edges<wbr>Diff</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
-						<a href="globals.html#getnewboundingrectangle" class="tsd-kind-icon">get<wbr>New<wbr>Bounding<wbr>Rectangle</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
-						<a href="globals.html#getresizecursor" class="tsd-kind-icon">get<wbr>Resize<wbr>Cursor</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
-						<a href="globals.html#getresizeedges" class="tsd-kind-icon">get<wbr>Resize<wbr>Edges</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-private tsd-is-not-exported">
-						<a href="globals.html#isnumbercloseto" class="tsd-kind-icon">is<wbr>Number<wbr>Close<wbr>To</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#iswithinboundingx" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingX</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#iswithinboundingy" class="tsd-kind-icon">is<wbr>Within<wbr>BoundingY</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
 </div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
-</body>
+           </div>
+       </div>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
+
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/highlight.pack.js"></script>
+       <script src="./js/libs/highlightjs-line-numbers.min.js"></script>
+       <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                hljs.initHighlightingOnLoad();
+                hljs.initLineNumbersOnLoad();
+            });
+       </script>
+
+    </body>
 </html>
