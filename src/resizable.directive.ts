@@ -118,19 +118,37 @@ function getResizeEdges(
   return edges;
 }
 
-function getResizeCursor(edges: Edges): string {
+interface ResizeCursors {
+  topLeft: string;
+  topRight: string;
+  bottomLeft: string;
+  bottomRight: string;
+  leftOrRight: string;
+  topOrBottom: string;
+}
+
+const DEFAULT_RESIZE_CURSORS: ResizeCursors = Object.freeze({
+  topLeft: 'nw-resize',
+  topRight: 'ne-resize',
+  bottomLeft: 'sw-resize',
+  bottomRight: 'se-resize',
+  leftOrRight: 'ew-resize',
+  topOrBottom: 'ns-resize'
+});
+
+function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   if (edges.left && edges.top) {
-    return 'nw-resize';
+    return cursors.topLeft;
   } else if (edges.right && edges.top) {
-    return 'ne-resize';
+    return cursors.topRight;
   } else if (edges.left && edges.bottom) {
-    return 'sw-resize';
+    return cursors.bottomLeft;
   } else if (edges.right && edges.bottom) {
-    return 'se-resize';
+    return cursors.bottomRight;
   } else if (edges.left || edges.right) {
-    return 'ew-resize';
+    return cursors.leftOrRight;
   } else if (edges.top || edges.bottom) {
-    return 'ns-resize';
+    return cursors.topOrBottom;
   } else {
     return null;
   }
@@ -182,6 +200,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * e.g. to only allow the element to be resized every 10px set it to `{left: 10, right: 10}`
    */
   @Input() resizeSnapGrid: Edges = {};
+
+  /**
+   * The mouse cursors that will be set on the resize edges
+   */
+  @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -249,7 +272,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges);
+      const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
+      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
@@ -368,6 +392,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       };
       if (this.enableGhostResize) {
         currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
+        const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
         this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
@@ -375,7 +400,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges));
+        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),

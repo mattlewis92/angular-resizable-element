@@ -26,6 +26,7 @@ describe('resizable directive', () => {
         [resizeEdges]="resizeEdges"
         [enableGhostResize]="enableGhostResize"
         [resizeSnapGrid]="resizeSnapGrid"
+        [resizeCursors]="resizeCursors"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -43,6 +44,7 @@ describe('resizable directive', () => {
     public resizeEdges: Edges = {top: true, bottom: true, left: true, right: true};
     public enableGhostResize: boolean = true;
     public resizeSnapGrid: Object = {};
+    public resizeCursors: Object = {};
 
   }
 
@@ -1002,6 +1004,18 @@ describe('resizable directive', () => {
     fixture.componentInstance.resizable.mousemove.subscribe(() => '', () => '', onComplete);
     fixture.destroy();
     expect(onComplete).to.have.been.calledOnce;
+
+  });
+
+  it('should allow the resize cursor to be customised', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.componentInstance.resizeCursors = {leftOrRight: 'col-resize'};
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {clientX: 100, clientY: 300});
+    expect(elm.style.cursor).to.equal('col-resize');
+    fixture.destroy();
 
   });
 
