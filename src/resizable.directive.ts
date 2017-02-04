@@ -91,15 +91,16 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 
 }
 
-function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}) {
+function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
   return mouseY >= rect.top && mouseY <= rect.bottom;
 }
 
-function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}) {
+function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): boolean {
   return mouseX >= rect.left && mouseX <= rect.right;
 }
 
-function getResizeEdges({mouseX, mouseY, elm, allowedEdges}): Edges {
+function getResizeEdges(
+  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
   if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
@@ -135,7 +136,8 @@ function getResizeCursor(edges: Edges): string {
   }
 }
 
-function getEdgesDiff({edges, initialRectangle, newRectangle}): Edges {
+function getEdgesDiff(
+  {edges, initialRectangle, newRectangle}: {edges: Edges, initialRectangle: BoundingRectangle, newRectangle: BoundingRectangle}): Edges {
 
   const edgesDiff: Edges = {};
   Object.keys(edges).forEach((edge: string) => {
