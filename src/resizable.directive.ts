@@ -53,27 +53,17 @@ export interface ResizeEvent {
   edges: Edges;
 }
 
-/**
- * @private
- */
 interface Coordinate {
   x: number;
   y: number;
 }
 
-/**
- * @private
- */
-const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
+function isNumberCloseTo(value1: number, value2: number, precision: number = 3): boolean {
   const diff: number = Math.abs(value1 - value2);
   return diff < precision;
-};
+}
 
-/**
- * @private
- */
-const getNewBoundingRectangle: Function =
-  (startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle => {
+function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
 
   const newBoundingRect: BoundingRectangle = {
     top: startingRect.top,
@@ -99,20 +89,17 @@ const getNewBoundingRectangle: Function =
 
   return newBoundingRect;
 
-};
+}
 
-const isWithinBoundingY: Function = ({mouseY, rect}: {mouseY: number, rect: ClientRect}) => {
+function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}) {
   return mouseY >= rect.top && mouseY <= rect.bottom;
-};
+}
 
-const isWithinBoundingX: Function = ({mouseX, rect}: {mouseX: number, rect: ClientRect}) => {
+function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}) {
   return mouseX >= rect.left && mouseX <= rect.right;
-};
+}
 
-/**
- * @private
- */
-const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
+function getResizeEdges({mouseX, mouseY, elm, allowedEdges}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
   if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
@@ -128,12 +115,9 @@ const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges =>
     edges.bottom = true;
   }
   return edges;
-};
+}
 
-/**
- * @private
- */
-const getResizeCursor: Function = (edges: Edges): string => {
+function getResizeCursor(edges: Edges): string {
   if (edges.left && edges.top) {
     return 'nw-resize';
   } else if (edges.right && edges.top) {
@@ -149,12 +133,9 @@ const getResizeCursor: Function = (edges: Edges): string => {
   } else {
     return null;
   }
-};
+}
 
-/**
- * @private
- */
-const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges => {
+function getEdgesDiff({edges, initialRectangle, newRectangle}): Edges {
 
   const edgesDiff: Edges = {};
   Object.keys(edges).forEach((edge: string) => {
@@ -162,7 +143,7 @@ const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges 
   });
   return edgesDiff;
 
-};
+}
 
 /**
  * Place this on an element to make it resizable
