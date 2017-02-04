@@ -95,7 +95,6 @@ Run `npm start` to start a development server on port 8000 with auto reload + te
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
 
 ### Release
-* Bump the version in package.json (once the module hits 1.0 this will become automatic)
 ```bash
 npm run release
 ```
