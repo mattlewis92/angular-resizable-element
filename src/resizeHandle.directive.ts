@@ -1,5 +1,6 @@
 import { Directive, Input, HostListener } from '@angular/core';
-import { Edges, Resizable } from './resizable.directive';
+import { Resizable } from './resizable.directive';
+import { Edges } from './interfaces/edges.interface';
 
 /**
  * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle

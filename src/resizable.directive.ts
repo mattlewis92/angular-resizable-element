@@ -21,59 +21,21 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
-import { ResizeHandle } from './resizeHandle.directive';
+import {ResizeHandle} from './resizeHandle.directive';
+import {Edges} from './interfaces/edges.interface';
+import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
 
-/**
- * The edges that the resize event were triggered on
- */
-export interface Edges {
-  top?: boolean | number;
-  bottom?: boolean | number;
-  left?: boolean | number;
-  right?: boolean | number;
-}
-
-/**
- * The bounding rectangle of the resized element
- */
-export interface BoundingRectangle {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height?: number;
-  width?: number;
-}
-
-/**
- * The `$event` object that is passed to the resize events
- */
-export interface ResizeEvent {
-  rectangle: BoundingRectangle;
-  edges: Edges;
-}
-
-/**
- * @private
- */
 interface Coordinate {
   x: number;
   y: number;
 }
 
-/**
- * @private
- */
-const isNumberCloseTo: Function = (value1: number, value2: number, precision: number = 3): boolean => {
+function isNumberCloseTo(value1: number, value2: number, precision: number = 3): boolean {
   const diff: number = Math.abs(value1 - value2);
   return diff < precision;
-};
+}
 
-/**
- * @private
- */
-const getNewBoundingRectangle: Function =
-  (startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle => {
+function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
 
   const newBoundingRect: BoundingRectangle = {
     top: startingRect.top,
@@ -99,20 +61,18 @@ const getNewBoundingRectangle: Function =
 
   return newBoundingRect;
 
-};
+}
 
-const isWithinBoundingY: Function = ({mouseY, rect}: {mouseY: number, rect: ClientRect}) => {
+function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
   return mouseY >= rect.top && mouseY <= rect.bottom;
-};
+}
 
-const isWithinBoundingX: Function = ({mouseX, rect}: {mouseX: number, rect: ClientRect}) => {
+function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): boolean {
   return mouseX >= rect.left && mouseX <= rect.right;
-};
+}
 
-/**
- * @private
- */
-const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges => {
+function getResizeEdges(
+  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
   if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
@@ -128,33 +88,46 @@ const getResizeEdges: Function = ({mouseX, mouseY, elm, allowedEdges}): Edges =>
     edges.bottom = true;
   }
   return edges;
-};
+}
 
-/**
- * @private
- */
-const getResizeCursor: Function = (edges: Edges): string => {
+export interface ResizeCursors {
+  topLeft: string;
+  topRight: string;
+  bottomLeft: string;
+  bottomRight: string;
+  leftOrRight: string;
+  topOrBottom: string;
+}
+
+const DEFAULT_RESIZE_CURSORS: ResizeCursors = Object.freeze({
+  topLeft: 'nw-resize',
+  topRight: 'ne-resize',
+  bottomLeft: 'sw-resize',
+  bottomRight: 'se-resize',
+  leftOrRight: 'ew-resize',
+  topOrBottom: 'ns-resize'
+});
+
+function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   if (edges.left && edges.top) {
-    return 'nw-resize';
+    return cursors.topLeft;
   } else if (edges.right && edges.top) {
-    return 'ne-resize';
+    return cursors.topRight;
   } else if (edges.left && edges.bottom) {
-    return 'sw-resize';
+    return cursors.bottomLeft;
   } else if (edges.right && edges.bottom) {
-    return 'se-resize';
+    return cursors.bottomRight;
   } else if (edges.left || edges.right) {
-    return 'ew-resize';
+    return cursors.leftOrRight;
   } else if (edges.top || edges.bottom) {
-    return 'ns-resize';
+    return cursors.topOrBottom;
   } else {
     return null;
   }
-};
+}
 
-/**
- * @private
- */
-const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges => {
+function getEdgesDiff(
+  {edges, initialRectangle, newRectangle}: {edges: Edges, initialRectangle: BoundingRectangle, newRectangle: BoundingRectangle}): Edges {
 
   const edgesDiff: Edges = {};
   Object.keys(edges).forEach((edge: string) => {
@@ -162,7 +135,7 @@ const getEdgesDiff: Function = ({edges, initialRectangle, newRectangle}): Edges 
   });
   return edgesDiff;
 
-};
+}
 
 /**
  * Place this on an element to make it resizable
@@ -199,6 +172,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * e.g. to only allow the element to be resized every 10px set it to `{left: 10, right: 10}`
    */
   @Input() resizeSnapGrid: Edges = {};
+
+  /**
+   * The mouse cursors that will be set on the resize edges
+   */
+  @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -266,7 +244,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
 
       const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges);
+      const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
+      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
 
     });
@@ -385,6 +364,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       };
       if (this.enableGhostResize) {
         currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
+        const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
         this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
         this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
@@ -392,7 +372,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges));
+        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),

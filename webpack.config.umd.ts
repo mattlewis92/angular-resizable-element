@@ -1,8 +1,10 @@
-module.exports = {
-  entry: './src/index.ts',
+import * as webpack from 'webpack';
+
+export default {
+  entry: __dirname + '/src/index.ts',
   output: {
     path: __dirname + '/dist/umd',
-    filename: './angular-resizable-element.js',
+    filename: 'angular-resizable-element.js',
     libraryTarget: 'umd',
     library: 'angularResizableElement'
   },
@@ -76,14 +78,24 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    preLoaders: [{
-      test: /\.ts$/, loader: 'tslint-loader?emitErrors=true&failOnHint=true', exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/
+    rules: [{
+      test: /\.ts$/,
+      loader: 'tslint-loader?emitErrors=true&failOnHint=true',
+      exclude: /node_modules/,
+      enforce: 'pre'
+    }, {
+      test: /\.ts$/,
+      loader: 'ts-loader',
+      exclude: /node_modules/
     }]
   },
   resolve: {
-    extensions: ['', '.ts', '.js']
-  }
+    extensions: ['.ts', '.js']
+  },
+  plugins: [
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      __dirname + '/src'
+    )
+  ]
 };

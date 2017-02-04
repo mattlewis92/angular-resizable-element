@@ -1,8 +1,6 @@
-'use strict';
+import * as webpack from 'webpack';
 
-const webpack = require('webpack');
-
-module.exports = function(config) {
+export default function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -25,36 +23,46 @@ module.exports = function(config) {
 
     webpack: {
       resolve: {
-        extensions: ['', '.ts', '.js'],
+        extensions: ['.ts', '.js'],
         alias: {
           sinon: 'sinon/pkg/sinon'
         }
       },
       module: {
-        preLoaders: [{
-          test: /\.ts$/, loader: 'tslint', exclude: /node_modules/
-        }],
-        loaders: [{
-          test: /\.ts$/, loader: 'ts', exclude: /node_modules/
+        rules: [{
+          test: /\.ts$/,
+          loader: 'tslint-loader',
+          exclude: /node_modules/,
+          enforce: 'pre',
+          options: {
+            emitErrors: config.singleRun,
+            failOnHint: false
+          }
         }, {
-          test: /sinon.js$/, loader: 'imports?define=>false,require=>false'
-        }],
-        postLoaders: [{
+          test: /\.ts$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/
+        }, {
+          test: /sinon.js$/,
+          loader: 'imports-loader?define=>false,require=>false'
+        }, {
           test: /src\/.+\.ts$/,
-          exclude: /(test|node_modules)/,
-          loader: 'istanbul-instrumenter-loader'
+          exclude: /(node_modules|\.spec\.ts$)/,
+          loader: 'istanbul-instrumenter-loader',
+          enforce: 'post'
         }]
-      },
-      tslint: {
-        emitErrors: config.singleRun,
-        failOnHint: false
       },
       plugins: [
         new webpack.SourceMapDevToolPlugin({
           filename: null,
           test: /\.(ts|js)($|\?)/i
-        })
-      ].concat(config.singleRun ? [new webpack.NoErrorsPlugin()] : [])
+        }),
+        new webpack.ContextReplacementPlugin(
+          /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+          __dirname + '/src'
+        ),
+        ...(config.singleRun ? [new webpack.NoEmitOnErrorsPlugin()] : [])
+      ]
     },
 
     coverageIstanbulReporter: {
@@ -67,18 +75,18 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage-istanbul'],
 
-    // web server port
-    port: 9876,
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS']
+    browsers: ['PhantomJS'],
+
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+      exitOnResourceError: true
+    }
+
   });
 };

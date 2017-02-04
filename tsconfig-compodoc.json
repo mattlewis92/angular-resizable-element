@@ -9,6 +9,9 @@
   "files": [
     "src/resizable.directive.ts",
     "src/resizeHandle.directive.ts",
-    "src/resizable.module.ts"
+    "src/resizable.module.ts",
+    "src/interfaces/boundingRectangle.interface.ts",
+    "src/interfaces/edges.interface.ts",
+    "src/interfaces/resizeEvent.interface.ts"
   ]
 }

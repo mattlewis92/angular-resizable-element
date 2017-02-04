@@ -1,2 +1,2 @@
 export * from './resizable.module';
-export {ResizeEvent} from './resizable.directive'; // tslint:disable-line
+export {ResizeEvent} from './interfaces/resizeEvent.interface'; // tslint:disable-line
