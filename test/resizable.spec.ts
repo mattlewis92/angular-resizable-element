@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import {Edges, Resizable} from './../src/resizable.directive';
+import {Resizable} from '../src/resizable.directive';
+import {Edges} from '../src/interfaces/edges.interface';
 import {ResizeEvent, ResizableModule} from './../src';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {expect} from 'chai';

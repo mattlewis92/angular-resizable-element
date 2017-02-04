@@ -21,37 +21,9 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
-import { ResizeHandle } from './resizeHandle.directive';
-
-/**
- * The edges that the resize event were triggered on
- */
-export interface Edges {
-  top?: boolean | number;
-  bottom?: boolean | number;
-  left?: boolean | number;
-  right?: boolean | number;
-}
-
-/**
- * The bounding rectangle of the resized element
- */
-export interface BoundingRectangle {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height?: number;
-  width?: number;
-}
-
-/**
- * The `$event` object that is passed to the resize events
- */
-export interface ResizeEvent {
-  rectangle: BoundingRectangle;
-  edges: Edges;
-}
+import {ResizeHandle} from './resizeHandle.directive';
+import {Edges} from './interfaces/edges.interface';
+import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
 
 interface Coordinate {
   x: number;
