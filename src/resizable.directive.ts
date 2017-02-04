@@ -90,7 +90,7 @@ function getResizeEdges(
   return edges;
 }
 
-interface ResizeCursors {
+export interface ResizeCursors {
   topLeft: string;
   topRight: string;
   bottomLeft: string;
