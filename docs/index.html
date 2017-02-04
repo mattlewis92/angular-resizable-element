@@ -92,6 +92,28 @@
             
             
             
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-interfaces-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/Edges.html" >Edges</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                </li>
+                        </ul>
+                    </li>
             
             
             
@@ -183,6 +205,28 @@
                    
                    
                    
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#interfaces-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/Edges.html" >Edges</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                       </li>
+                               </ul>
+                           </li>
                    
                    
                    
@@ -216,7 +260,7 @@
 <h2 id="installation">Installation</h2>
 <p>Install through npm:</p>
 <pre><code class="hljs undefined">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@Component</span>({<br>  selector: <span class="hljs-string">'demo-app'</span>,<br>  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span><br>  template: <span class="hljs-string">`<br>    &lt;div<br>      mwlResizable<br>      [enableGhostResize]="true"<br>      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"<br>      (resizeEnd)="onResizeEnd($event)"&gt;<br>    &lt;/div&gt;<br>  `</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {<br><br>  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);<br>  }<br><br>}<br><br><span class="hljs-comment">// now use within your apps module</span><br><span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@NgModule</span>({<br>  declarations: [MyComponent],<br>  imports: [ResizableModule],<br>  bootstrap: [MyComponent]<br>})<br><span class="hljs-keyword">class</span> MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.ts">demo source</a>.</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> {Component} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizeEvent} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@Component</span>({<br>  selector: <span class="hljs-string">'demo-app'</span>,<br>  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span><br>  template: <span class="hljs-string">`<br>    &lt;div<br>      mwlResizable<br>      [enableGhostResize]="true"<br>      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"<br>      (resizeEnd)="onResizeEnd($event)"&gt;<br>    &lt;/div&gt;<br>  `</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {<br><br>  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);<br>  }<br><br>}<br><br><span class="hljs-comment">// now use within your apps module</span><br><span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizableModule} from <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@NgModule</span>({<br>  declarations: [MyComponent],<br>  imports: [ResizableModule],<br>  bootstrap: [MyComponent]<br>})<br><span class="hljs-keyword">class</span> MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts">demo source</a>.</p>
 <h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
 <pre><code class="hljs undefined"><script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script><br><script><br>    // everything is exported on the  angularResizableElement namespace<br></script></code></pre><h2 id="documentation">Documentation</h2>
 <p>All documentation is auto-generated from the source and can be viewed here:<br><a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
@@ -231,10 +275,7 @@
 <h3 id="testing">Testing</h3>
 <p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
 <h3 id="release">Release</h3>
-<ul>
-<li>Bump the version in package.json (once the module hits 1.0 this will become automatic)<pre><code class="hljs bash">npm run release</code></pre></li>
-</ul>
-<h2 id="license">License</h2>
+<pre><code class="hljs bash">npm run release</code></pre><h2 id="license">License</h2>
 <p>MIT</p>
 
 

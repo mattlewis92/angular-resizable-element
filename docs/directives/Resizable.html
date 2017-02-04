@@ -92,6 +92,28 @@
             
             
             
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-interfaces-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/Edges.html" >Edges</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                </li>
+                        </ul>
+                    </li>
             
             
             
@@ -183,6 +205,28 @@
                    
                    
                    
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#interfaces-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/Edges.html" >Edges</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                       </li>
+                               </ul>
+                           </li>
                    
                    
                    
@@ -265,6 +309,26 @@
                                       </p>
                                     <p>
                                       <em>Default value: </em><code>false</code>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2">
+                                    <code>resizeCursors</code>
+                                </td>
+                                <td class="col-md-10">
+                                    <div><p>The mouse cursors that will be set on the resize edges</p>
+</div>
+                                      <p>
+                                        <em>Type:</em>    <code>ResizeCursors</code>
+
+                                      </p>
+                                    <p>
+                                      <em>Default value: </em><code>DEFAULT_RESIZE_CURSORS</code>
                                     </p>
                                 </td>
                             </tr>
@@ -401,59 +465,21 @@ import &#x27;rxjs/add/operator/takeUntil&#x27;;
 import &#x27;rxjs/add/operator/filter&#x27;;
 import &#x27;rxjs/add/operator/pairwise&#x27;;
 import &#x27;rxjs/add/operator/take&#x27;;
-import { ResizeHandle } from &#x27;./resizeHandle.directive&#x27;;
+import {ResizeHandle} from &#x27;./resizeHandle.directive&#x27;;
+import {Edges} from &#x27;./interfaces/edges.interface&#x27;;
+import {BoundingRectangle} from &#x27;./interfaces/boundingRectangle.interface&#x27;;
 
-/**
- * The edges that the resize event were triggered on
- */
-export interface Edges {
-  top?: boolean | number;
-  bottom?: boolean | number;
-  left?: boolean | number;
-  right?: boolean | number;
-}
-
-/**
- * The bounding rectangle of the resized element
- */
-export interface BoundingRectangle {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height?: number;
-  width?: number;
-}
-
-/**
- * The &#x60;$event&#x60; object that is passed to the resize events
- */
-export interface ResizeEvent {
-  rectangle: BoundingRectangle;
-  edges: Edges;
-}
-
-/**
- * @private
- */
 interface Coordinate {
   x: number;
   y: number;
 }
 
-/**
- * @private
- */
-const isNumberCloseTo: Function &#x3D; (value1: number, value2: number, precision: number &#x3D; 3): boolean &#x3D;&gt; {
+function isNumberCloseTo(value1: number, value2: number, precision: number &#x3D; 3): boolean {
   const diff: number &#x3D; Math.abs(value1 - value2);
   return diff &lt; precision;
-};
+}
 
-/**
- * @private
- */
-const getNewBoundingRectangle: Function &#x3D;
-  (startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle &#x3D;&gt; {
+function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
 
   const newBoundingRect: BoundingRectangle &#x3D; {
     top: startingRect.top,
@@ -479,20 +505,18 @@ const getNewBoundingRectangle: Function &#x3D;
 
   return newBoundingRect;
 
-};
+}
 
-const isWithinBoundingY: Function &#x3D; ({mouseY, rect}: {mouseY: number, rect: ClientRect}) &#x3D;&gt; {
+function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
   return mouseY &gt;&#x3D; rect.top &amp;&amp; mouseY &lt;&#x3D; rect.bottom;
-};
+}
 
-const isWithinBoundingX: Function &#x3D; ({mouseX, rect}: {mouseX: number, rect: ClientRect}) &#x3D;&gt; {
+function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): boolean {
   return mouseX &gt;&#x3D; rect.left &amp;&amp; mouseX &lt;&#x3D; rect.right;
-};
+}
 
-/**
- * @private
- */
-const getResizeEdges: Function &#x3D; ({mouseX, mouseY, elm, allowedEdges}): Edges &#x3D;&gt; {
+function getResizeEdges(
+  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
   const elmPosition: ClientRect &#x3D; elm.nativeElement.getBoundingClientRect();
   const edges: Edges &#x3D; {};
   if (allowedEdges.left &amp;&amp; isNumberCloseTo(mouseX, elmPosition.left) &amp;&amp; isWithinBoundingY({mouseY, rect: elmPosition})) {
@@ -508,33 +532,46 @@ const getResizeEdges: Function &#x3D; ({mouseX, mouseY, elm, allowedEdges}): Edg
     edges.bottom &#x3D; true;
   }
   return edges;
-};
+}
 
-/**
- * @private
- */
-const getResizeCursor: Function &#x3D; (edges: Edges): string &#x3D;&gt; {
+export interface ResizeCursors {
+  topLeft: string;
+  topRight: string;
+  bottomLeft: string;
+  bottomRight: string;
+  leftOrRight: string;
+  topOrBottom: string;
+}
+
+const DEFAULT_RESIZE_CURSORS: ResizeCursors &#x3D; Object.freeze({
+  topLeft: &#x27;nw-resize&#x27;,
+  topRight: &#x27;ne-resize&#x27;,
+  bottomLeft: &#x27;sw-resize&#x27;,
+  bottomRight: &#x27;se-resize&#x27;,
+  leftOrRight: &#x27;ew-resize&#x27;,
+  topOrBottom: &#x27;ns-resize&#x27;
+});
+
+function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   if (edges.left &amp;&amp; edges.top) {
-    return &#x27;nw-resize&#x27;;
+    return cursors.topLeft;
   } else if (edges.right &amp;&amp; edges.top) {
-    return &#x27;ne-resize&#x27;;
+    return cursors.topRight;
   } else if (edges.left &amp;&amp; edges.bottom) {
-    return &#x27;sw-resize&#x27;;
+    return cursors.bottomLeft;
   } else if (edges.right &amp;&amp; edges.bottom) {
-    return &#x27;se-resize&#x27;;
+    return cursors.bottomRight;
   } else if (edges.left || edges.right) {
-    return &#x27;ew-resize&#x27;;
+    return cursors.leftOrRight;
   } else if (edges.top || edges.bottom) {
-    return &#x27;ns-resize&#x27;;
+    return cursors.topOrBottom;
   } else {
     return null;
   }
-};
+}
 
-/**
- * @private
- */
-const getEdgesDiff: Function &#x3D; ({edges, initialRectangle, newRectangle}): Edges &#x3D;&gt; {
+function getEdgesDiff(
+  {edges, initialRectangle, newRectangle}: {edges: Edges, initialRectangle: BoundingRectangle, newRectangle: BoundingRectangle}): Edges {
 
   const edgesDiff: Edges &#x3D; {};
   Object.keys(edges).forEach((edge: string) &#x3D;&gt; {
@@ -542,7 +579,7 @@ const getEdgesDiff: Function &#x3D; ({edges, initialRectangle, newRectangle}): E
   });
   return edgesDiff;
 
-};
+}
 
 /**
  * Place this on an element to make it resizable
@@ -579,6 +616,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * e.g. to only allow the element to be resized every 10px set it to &#x60;{left: 10, right: 10}&#x60;
    */
   @Input() resizeSnapGrid: Edges &#x3D; {};
+
+  /**
+   * The mouse cursors that will be set on the resize edges
+   */
+  @Input() resizeCursors: ResizeCursors &#x3D; DEFAULT_RESIZE_CURSORS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
@@ -646,7 +688,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
 
       const resizeEdges: Edges &#x3D; getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
-      const cursor: string &#x3D; currentResize ? null : getResizeCursor(resizeEdges);
+      const resizeCursors: ResizeCursors &#x3D; Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
+      const cursor: string &#x3D; currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
       this.renderer.setElementStyle(this.elm.nativeElement, &#x27;cursor&#x27;, cursor);
 
     });
@@ -765,6 +808,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       };
       if (this.enableGhostResize) {
         currentResize.clonedNode &#x3D; this.elm.nativeElement.cloneNode(true);
+        const resizeCursors: ResizeCursors &#x3D; Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
         this.renderer.setElementStyle(this.elm.nativeElement, &#x27;visibility&#x27;, &#x27;hidden&#x27;);
         this.renderer.setElementStyle(currentResize.clonedNode, &#x27;position&#x27;, &#x27;fixed&#x27;);
@@ -772,7 +816,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, &#x27;top&#x27;, &#x60;${currentResize.startingRect.top}px&#x60;);
         this.renderer.setElementStyle(currentResize.clonedNode, &#x27;height&#x27;, &#x60;${currentResize.startingRect.height}px&#x60;);
         this.renderer.setElementStyle(currentResize.clonedNode, &#x27;width&#x27;, &#x60;${currentResize.startingRect.width}px&#x60;);
-        this.renderer.setElementStyle(currentResize.clonedNode, &#x27;cursor&#x27;, getResizeCursor(currentResize.edges));
+        this.renderer.setElementStyle(currentResize.clonedNode, &#x27;cursor&#x27;, getResizeCursor(currentResize.edges, resizeCursors));
       }
       this.resizeStart.emit({
         edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
