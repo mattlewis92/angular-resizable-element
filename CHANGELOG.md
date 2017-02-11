@@ -2,16 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.6.1"></a>
-## [0.6.1](https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.0...v0.6.1) (2017-02-11)
-
-
-### Bug Fixes
-
-* add support for universal pre-rendering ([4adf599](https://github.com/mattlewis92/angular-resizable-element/commit/4adf599))
-
-
-
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.7...v0.6.0) (2017-02-04)
 
