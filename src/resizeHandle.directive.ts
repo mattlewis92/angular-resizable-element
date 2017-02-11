@@ -42,7 +42,7 @@ export class ResizeHandle {
    */
   @HostListener('touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
   @HostListener('mousemove', ['$event', '$event.clientX', '$event.clientY'])
-  onMousemove(event: MouseEvent, mouseX: number, mouseY: number): void {
+  onMousemove(event: any, mouseX: number, mouseY: number): void {
     this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges, event});
   }
 

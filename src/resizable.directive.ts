@@ -429,7 +429,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    */
   @HostListener('document:touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
   @HostListener('document:mousemove', ['$event', '$event.clientX', '$event.clientY'])
-  onMousemove(event: MouseEvent, mouseX: number, mouseY: number): void {
+  onMousemove(event: any, mouseX: number, mouseY: number): void {
     this.mousemove.next({mouseX, mouseY, event});
   }
 
