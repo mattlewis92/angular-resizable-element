@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* add support for universal pre-rendering ([4adf599](https://github.com/mattlewis92/angular-resizable-element/commit/4adf599))
 * **universal:** remove MouseEvent reference ([520abce](https://github.com/mattlewis92/angular-resizable-element/commit/520abce)), closes [#41](https://github.com/mattlewis92/angular-resizable-element/issues/41)
 
 
