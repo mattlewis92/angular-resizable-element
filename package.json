@@ -1,6 +1,6 @@
 {
   "name": "angular-resizable-element",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "An angular 2.0+ directive that allows an element to be dragged and resized",
   "main": "./dist/umd/angular-resizable-element.js",
   "module": "./dist/esm/src/index.js",
@@ -19,7 +19,7 @@
     "compodoc": "compodoc -p tsconfig-compodoc.json -d docs -b /angular-resizable-element/docs/ --disableGraph --disableCoverage",
     "gh-pages": "git checkout gh-pages && git merge master --no-edit && npm run build:demo && npm run compodoc && git add . && git commit -m 'chore: build demo and docs' && git push && git checkout master",
     "prerelease": "npm test",
-    "release": "git pull && standard-version && git push --follow-tags origin master && npm run build:dist && npm publish",
+    "release": "git pull && standard-version && npm run build:dist && npm publish && git push --follow-tags origin master",
     "postrelease": "npm run build:clean && npm run gh-pages",
     "commitmsg": "validate-commit-msg",
     "codecov": "cat coverage/lcov.info | codecov"
