@@ -2,9 +2,6 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { Resizable } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
 
-/* tslint:disable-next-line */
-const MouseEvent = (global as any).MouseEvent as MouseEvent;
-
 /**
  * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
  *
