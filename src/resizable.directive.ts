@@ -25,6 +25,9 @@ import {ResizeHandle} from './resizeHandle.directive';
 import {Edges} from './interfaces/edges.interface';
 import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
 
+/* tslint:disable-next-line */
+const MouseEvent = (global as any).MouseEvent as MouseEvent;
+
 interface Coordinate {
   x: number;
   y: number;
