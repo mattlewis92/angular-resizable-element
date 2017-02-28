@@ -1061,4 +1061,20 @@ describe('resizable directive', () => {
 
   });
 
+  it('should set the resize edge classes', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {clientX: 100, clientY: 300});
+    expect(elm.classList.contains('resize-left-hover')).to.be.true;
+    expect(elm.classList.contains('resize-top-hover')).to.be.false;
+    expect(elm.classList.contains('resize-right-hover')).to.be.false;
+    expect(elm.classList.contains('resize-bottom-hover')).to.be.false;
+    triggerDomEvent('mousemove', elm, {clientX: 50, clientY: 300});
+    expect(elm.classList.contains('resize-left-hover')).to.be.false;
+    fixture.destroy();
+
+  });
+
 });
