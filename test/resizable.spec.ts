@@ -28,7 +28,7 @@ describe('resizable directive', () => {
         [enableGhostResize]="enableGhostResize"
         [resizeSnapGrid]="resizeSnapGrid"
         [resizeCursors]="resizeCursors"
-        [cursorPrecision]="cursorPrecision"
+        [resizeCursorPrecision]="resizeCursorPrecision"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -47,7 +47,7 @@ describe('resizable directive', () => {
     public enableGhostResize: boolean = true;
     public resizeSnapGrid: Object = {};
     public resizeCursors: Object = {};
-    public cursorPrecision: number;
+    public resizeCursorPrecision: number;
 
   }
 
@@ -1025,7 +1025,7 @@ describe('resizable directive', () => {
   it('should allow the cursor precision to be customised', () => {
 
     const fixture: ComponentFixture<TestCmp> = createComponent();
-    fixture.componentInstance.cursorPrecision = 5;
+    fixture.componentInstance.resizeCursorPrecision = 5;
     fixture.detectChanges();
     const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousemove', elm, {clientX: 96, clientY: 296});

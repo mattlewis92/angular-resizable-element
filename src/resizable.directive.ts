@@ -209,7 +209,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Mouse over thickness to active cursor.
    */
-  @Input() cursorPrecision: number = 3;
+  @Input() resizeCursorPrecision: number = 3;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -280,7 +280,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         mouseX, mouseY,
         elm: this.elm,
         allowedEdges: this.resizeEdges,
-        cursorPrecision: this.cursorPrecision
+        cursorPrecision: this.resizeCursorPrecision
       });
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
@@ -397,7 +397,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         mouseX, mouseY,
         elm: this.elm,
         allowedEdges: this.resizeEdges,
-        cursorPrecision: this.cursorPrecision
+        cursorPrecision: this.resizeCursorPrecision
       });
     }).filter((edges: Edges) => {
       return Object.keys(edges).length > 0;
