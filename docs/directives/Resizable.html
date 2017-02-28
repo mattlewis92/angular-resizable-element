@@ -318,6 +318,26 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-2">
+                                    <code>resizeCursorPrecision</code>
+                                </td>
+                                <td class="col-md-10">
+                                    <div><p>Mouse over thickness to active cursor.</p>
+</div>
+                                      <p>
+                                        <em>Type:</em>    <code>number</code>
+
+                                      </p>
+                                    <p>
+                                      <em>Default value: </em><code>3</code>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2">
                                     <code>resizeCursors</code>
                                 </td>
                                 <td class="col-md-10">
@@ -516,21 +536,43 @@ function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): 
 }
 
 function getResizeEdges(
-  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
+  {mouseX, mouseY, elm, allowedEdges, cursorPrecision}:
+    {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
   const elmPosition: ClientRect &#x3D; elm.nativeElement.getBoundingClientRect();
   const edges: Edges &#x3D; {};
-  if (allowedEdges.left &amp;&amp; isNumberCloseTo(mouseX, elmPosition.left) &amp;&amp; isWithinBoundingY({mouseY, rect: elmPosition})) {
+
+  if (
+    allowedEdges.left &amp;&amp;
+    isNumberCloseTo(mouseX, elmPosition.left, cursorPrecision) &amp;&amp;
+    isWithinBoundingY({mouseY, rect: elmPosition})
+  ) {
     edges.left &#x3D; true;
   }
-  if (allowedEdges.right &amp;&amp; isNumberCloseTo(mouseX, elmPosition.right) &amp;&amp; isWithinBoundingY({mouseY, rect: elmPosition})) {
+
+  if (
+    allowedEdges.right &amp;&amp;
+    isNumberCloseTo(mouseX, elmPosition.right, cursorPrecision) &amp;&amp;
+    isWithinBoundingY({mouseY, rect: elmPosition})
+  ) {
     edges.right &#x3D; true;
   }
-  if (allowedEdges.top &amp;&amp; isNumberCloseTo(mouseY, elmPosition.top) &amp;&amp; isWithinBoundingX({mouseX, rect: elmPosition})) {
+
+  if (
+    allowedEdges.top &amp;&amp;
+    isNumberCloseTo(mouseY, elmPosition.top, cursorPrecision) &amp;&amp;
+    isWithinBoundingX({mouseX, rect: elmPosition})
+  ) {
     edges.top &#x3D; true;
   }
-  if (allowedEdges.bottom &amp;&amp; isNumberCloseTo(mouseY, elmPosition.bottom) &amp;&amp; isWithinBoundingX({mouseX, rect: elmPosition})) {
+
+  if (
+    allowedEdges.bottom &amp;&amp;
+    isNumberCloseTo(mouseY, elmPosition.bottom, cursorPrecision) &amp;&amp;
+    isWithinBoundingX({mouseX, rect: elmPosition})
+  ) {
     edges.bottom &#x3D; true;
   }
+
   return edges;
 }
 
@@ -581,6 +623,12 @@ function getEdgesDiff(
 
 }
 
+const RESIZE_ACTIVE_CLASS: string &#x3D; &#x27;resize-active&#x27;;
+const RESIZE_LEFT_HOVER_CLASS: string &#x3D; &#x27;resize-left-hover&#x27;;
+const RESIZE_RIGHT_HOVER_CLASS: string &#x3D; &#x27;resize-right-hover&#x27;;
+const RESIZE_TOP_HOVER_CLASS: string &#x3D; &#x27;resize-top-hover&#x27;;
+const RESIZE_BOTTOM_HOVER_CLASS: string &#x3D; &#x27;resize-bottom-hover&#x27;;
+
 /**
  * Place this on an element to make it resizable
  *
@@ -621,6 +669,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * The mouse cursors that will be set on the resize edges
    */
   @Input() resizeCursors: ResizeCursors &#x3D; DEFAULT_RESIZE_CURSORS;
+
+  /**
+   * Mouse over thickness to active cursor.
+   */
+  @Input() resizeCursorPrecision: number &#x3D; 3;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
@@ -687,10 +740,21 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         event.preventDefault();
       }
 
-      const resizeEdges: Edges &#x3D; getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      const resizeEdges: Edges &#x3D; getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.resizeCursorPrecision
+      });
       const resizeCursors: ResizeCursors &#x3D; Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string &#x3D; currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
+
       this.renderer.setElementStyle(this.elm.nativeElement, &#x27;cursor&#x27;, cursor);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, !!currentResize);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left &#x3D;&#x3D;&#x3D; true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right &#x3D;&#x3D;&#x3D; true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_TOP_HOVER_CLASS, resizeEdges.top &#x3D;&#x3D;&#x3D; true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom &#x3D;&#x3D;&#x3D; true);
 
     });
 
@@ -793,7 +857,12 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.mousedown.map(({mouseX, mouseY, edges}) &#x3D;&gt; {
-      return edges || getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      return edges || getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.resizeCursorPrecision
+      });
     }).filter((edges: Edges) &#x3D;&gt; {
       return Object.keys(edges).length &gt; 0;
     }).subscribe((edges: Edges) &#x3D;&gt; {
@@ -826,6 +895,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
     this.mouseup.subscribe(() &#x3D;&gt; {
       if (currentResize) {
+        this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, false);
         this.resizeEnd.emit({
           edges: getEdgesDiff({
             edges: currentResize.edges,
