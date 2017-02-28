@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.1...v0.7.0) (2017-02-28)
+
+
+### Features
+
+* **cssClasses:** Gives classes to main element depend on state ([8e3f108](https://github.com/mattlewis92/angular-resizable-element/commit/8e3f108))
+* **cursorPrecision:** allow cursor precision value to be edited ([3ce508d](https://github.com/mattlewis92/angular-resizable-element/commit/3ce508d))
+
+
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.0...v0.6.1) (2017-02-11)
 
