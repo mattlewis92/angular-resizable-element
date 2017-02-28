@@ -1034,4 +1034,31 @@ describe('resizable directive', () => {
 
   });
 
+  it('should set the resize active class', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {
+      clientX: 100,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.false;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 210
+    });
+    triggerDomEvent('mousemove', elm, {
+      clientX: 101,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.true;
+    triggerDomEvent('mouseup', elm, {
+      clientX: 101,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.false;
+
+  });
+
 });

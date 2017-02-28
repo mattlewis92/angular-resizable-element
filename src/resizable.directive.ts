@@ -431,6 +431,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
+        this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, false);
         this.resizeEnd.emit({
           edges: getEdgesDiff({
             edges: currentResize.edges,
