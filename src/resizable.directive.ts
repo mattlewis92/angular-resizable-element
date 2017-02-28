@@ -72,19 +72,28 @@ function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): 
 }
 
 function getResizeEdges(
-  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
+  {mouseX, mouseY, elm, allowedEdges, cursorPrecision}:
+    {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
-  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
+  if (allowedEdges.left
+    && isNumberCloseTo(mouseX, elmPosition.left, cursorPrecision)
+    && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.left = true;
   }
-  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right) && isWithinBoundingY({mouseY, rect: elmPosition})) {
+  if (allowedEdges.right
+    && isNumberCloseTo(mouseX, elmPosition.right, cursorPrecision)
+    && isWithinBoundingY({mouseY, rect: elmPosition})) {
     edges.right = true;
   }
-  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top) && isWithinBoundingX({mouseX, rect: elmPosition})) {
+  if (allowedEdges.top
+    && isNumberCloseTo(mouseY, elmPosition.top, cursorPrecision)
+    && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.top = true;
   }
-  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom) && isWithinBoundingX({mouseX, rect: elmPosition})) {
+  if (allowedEdges.bottom
+    && isNumberCloseTo(mouseY, elmPosition.bottom, cursorPrecision)
+    && isWithinBoundingX({mouseX, rect: elmPosition})) {
     edges.bottom = true;
   }
   return edges;
@@ -179,6 +188,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
 
   /**
+   * Mouse over thickness to active cursor.
+   */
+  @Input() cursorPrecision: number = 3;
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
   @Output() resizeStart: EventEmitter<Object> = new EventEmitter(false);
@@ -243,7 +257,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         event.preventDefault();
       }
 
-      const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      const resizeEdges: Edges = getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.cursorPrecision});
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
@@ -349,7 +367,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.mousedown.map(({mouseX, mouseY, edges}) => {
-      return edges || getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      return edges || getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.cursorPrecision});
     }).filter((edges: Edges) => {
       return Object.keys(edges).length > 0;
     }).subscribe((edges: Edges) => {
