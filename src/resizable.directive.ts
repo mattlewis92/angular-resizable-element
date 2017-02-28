@@ -159,6 +159,12 @@ function getEdgesDiff(
 
 }
 
+const RESIZE_ACTIVE_CLASS: string = 'resize-active';
+const RESIZE_LEFT_HOVER_CLASS: string = 'resize-left-hover';
+const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
+const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
+const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
+
 /**
  * Place this on an element to make it resizable
  *
@@ -280,12 +286,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
 
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-hover', cursor !== null);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-active', currentResize !== null);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-left', resizeEdges.left === true);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-right', resizeEdges.right === true);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-top', resizeEdges.top === true);
-      this.renderer.setElementClass(this.elm.nativeElement, 'resize-bottom', resizeEdges.bottom === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, !!currentResize);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_TOP_HOVER_CLASS, resizeEdges.top === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom === true);
 
     });
 
