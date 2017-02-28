@@ -265,6 +265,12 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-hover', (cursor !== null));
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-active', (currentResize !== null));
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-left', (resizeEdges.left === true));
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-right', (resizeEdges.right === true));
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-top', (resizeEdges.top === true));
+      this.renderer.setElementClass(this.elm.nativeElement, 'resize-bottom', (resizeEdges.bottom === true));
 
     });
 
