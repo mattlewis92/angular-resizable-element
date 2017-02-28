@@ -72,21 +72,43 @@ function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): 
 }
 
 function getResizeEdges(
-  {mouseX, mouseY, elm, allowedEdges}: {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges}): Edges {
+  {mouseX, mouseY, elm, allowedEdges, cursorPrecision}:
+    {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
-  if (allowedEdges.left && isNumberCloseTo(mouseX, elmPosition.left) && isWithinBoundingY({mouseY, rect: elmPosition})) {
+
+  if (
+    allowedEdges.left &&
+    isNumberCloseTo(mouseX, elmPosition.left, cursorPrecision) &&
+    isWithinBoundingY({mouseY, rect: elmPosition})
+  ) {
     edges.left = true;
   }
-  if (allowedEdges.right && isNumberCloseTo(mouseX, elmPosition.right) && isWithinBoundingY({mouseY, rect: elmPosition})) {
+
+  if (
+    allowedEdges.right &&
+    isNumberCloseTo(mouseX, elmPosition.right, cursorPrecision) &&
+    isWithinBoundingY({mouseY, rect: elmPosition})
+  ) {
     edges.right = true;
   }
-  if (allowedEdges.top && isNumberCloseTo(mouseY, elmPosition.top) && isWithinBoundingX({mouseX, rect: elmPosition})) {
+
+  if (
+    allowedEdges.top &&
+    isNumberCloseTo(mouseY, elmPosition.top, cursorPrecision) &&
+    isWithinBoundingX({mouseX, rect: elmPosition})
+  ) {
     edges.top = true;
   }
-  if (allowedEdges.bottom && isNumberCloseTo(mouseY, elmPosition.bottom) && isWithinBoundingX({mouseX, rect: elmPosition})) {
+
+  if (
+    allowedEdges.bottom &&
+    isNumberCloseTo(mouseY, elmPosition.bottom, cursorPrecision) &&
+    isWithinBoundingX({mouseX, rect: elmPosition})
+  ) {
     edges.bottom = true;
   }
+
   return edges;
 }
 
@@ -137,6 +159,12 @@ function getEdgesDiff(
 
 }
 
+const RESIZE_ACTIVE_CLASS: string = 'resize-active';
+const RESIZE_LEFT_HOVER_CLASS: string = 'resize-left-hover';
+const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
+const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
+const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
+
 /**
  * Place this on an element to make it resizable
  *
@@ -177,6 +205,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * The mouse cursors that will be set on the resize edges
    */
   @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
+
+  /**
+   * Mouse over thickness to active cursor.
+   */
+  @Input() resizeCursorPrecision: number = 3;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -243,10 +276,21 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         event.preventDefault();
       }
 
-      const resizeEdges: Edges = getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      const resizeEdges: Edges = getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.resizeCursorPrecision
+      });
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
+
       this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, !!currentResize);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_TOP_HOVER_CLASS, resizeEdges.top === true);
+      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom === true);
 
     });
 
@@ -349,7 +393,12 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.mousedown.map(({mouseX, mouseY, edges}) => {
-      return edges || getResizeEdges({mouseX, mouseY, elm: this.elm, allowedEdges: this.resizeEdges});
+      return edges || getResizeEdges({
+        mouseX, mouseY,
+        elm: this.elm,
+        allowedEdges: this.resizeEdges,
+        cursorPrecision: this.resizeCursorPrecision
+      });
     }).filter((edges: Edges) => {
       return Object.keys(edges).length > 0;
     }).subscribe((edges: Edges) => {
@@ -382,6 +431,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
+        this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, false);
         this.resizeEnd.emit({
           edges: getEdgesDiff({
             edges: currentResize.edges,

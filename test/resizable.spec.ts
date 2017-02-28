@@ -28,6 +28,7 @@ describe('resizable directive', () => {
         [enableGhostResize]="enableGhostResize"
         [resizeSnapGrid]="resizeSnapGrid"
         [resizeCursors]="resizeCursors"
+        [resizeCursorPrecision]="resizeCursorPrecision"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -46,6 +47,7 @@ describe('resizable directive', () => {
     public enableGhostResize: boolean = true;
     public resizeSnapGrid: Object = {};
     public resizeCursors: Object = {};
+    public resizeCursorPrecision: number;
 
   }
 
@@ -1016,6 +1018,61 @@ describe('resizable directive', () => {
     const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousemove', elm, {clientX: 100, clientY: 300});
     expect(elm.style.cursor).to.equal('col-resize');
+    fixture.destroy();
+
+  });
+
+  it('should allow the cursor precision to be customised', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.componentInstance.resizeCursorPrecision = 5;
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {clientX: 96, clientY: 296});
+    expect(elm.style.cursor).to.equal('ew-resize');
+    fixture.destroy();
+
+  });
+
+  it('should set the resize active class', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {
+      clientX: 100,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.false;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 210
+    });
+    triggerDomEvent('mousemove', elm, {
+      clientX: 101,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.true;
+    triggerDomEvent('mouseup', elm, {
+      clientX: 101,
+      clientY: 210
+    });
+    expect(elm.classList.contains('resize-active')).to.be.false;
+
+  });
+
+  it('should set the resize edge classes', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousemove', elm, {clientX: 100, clientY: 300});
+    expect(elm.classList.contains('resize-left-hover')).to.be.true;
+    expect(elm.classList.contains('resize-top-hover')).to.be.false;
+    expect(elm.classList.contains('resize-right-hover')).to.be.false;
+    expect(elm.classList.contains('resize-bottom-hover')).to.be.false;
+    triggerDomEvent('mousemove', elm, {clientX: 50, clientY: 300});
+    expect(elm.classList.contains('resize-left-hover')).to.be.false;
     fixture.destroy();
 
   });
