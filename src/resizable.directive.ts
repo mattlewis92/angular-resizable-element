@@ -247,11 +247,6 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    */
   @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
 
-  private eventListeners: {
-    touchmove?: Function,
-    mousemove?: Function
-  } = {};
-
   /**
    * @private
    */
@@ -475,7 +470,6 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-    this.unsubscribeEventListeners();
   }
 
   /**
@@ -485,17 +479,18 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
     this.zone.runOutsideAngular(() => {
-      if (!this.eventListeners.touchmove) {
-        this.eventListeners.touchmove = this.renderer.listenGlobal('document', 'touchmove', (event: any) => {
-          this.onMousemove(event, event.targetTouches[0].clientX, event.targetTouches[0].clientY);
-        });
-      }
-      if (!this.eventListeners.mousemove) {
-        this.eventListeners.mousemove = this.renderer.listenGlobal('document', 'mousemove', (event: any) => {
-          this.onMousemove(event, event.clientX, event.clientY);
-        });
-      }
       this.mousedown.next({mouseX, mouseY});
+    });
+  }
+
+  /**
+   * @private
+   */
+  @HostListener('document:touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
+  @HostListener('document:mousemove', ['$event', '$event.clientX', '$event.clientY'])
+  onMousemove(event: any, mouseX: number, mouseY: number): void {
+    this.zone.runOutsideAngular(() => {
+      this.mousemove.next({mouseX, mouseY, event});
     });
   }
 
@@ -508,19 +503,6 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   onMouseup(mouseX: number, mouseY: number): void {
     this.zone.runOutsideAngular(() => {
       this.mouseup.next({mouseX, mouseY});
-    });
-  }
-
-  private onMousemove(event: any, mouseX: number, mouseY: number): void {
-    this.zone.runOutsideAngular(() => {
-      this.mousemove.next({mouseX, mouseY, event});
-    });
-  }
-
-  private unsubscribeEventListeners(): void {
-    Object.keys(this.eventListeners).forEach(type => {
-      this.eventListeners[type]();
-      delete this.eventListeners[type];
     });
   }
 
