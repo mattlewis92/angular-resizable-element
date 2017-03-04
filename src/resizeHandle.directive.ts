@@ -45,12 +45,16 @@ export class ResizeHandle implements OnDestroy {
   @HostListener('touchstart', ['$event.touches[0].clientX', '$event.touches[0].clientY'])
   @HostListener('mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
-    this.eventListeners.touchmove = this.renderer.listen(this.element.nativeElement, 'touchmove', (event: any) => {
-      this.onMousemove(event, event.targetTouches[0].clientX, event.targetTouches[0].clientY);
-    });
-    this.eventListeners.mousemove = this.renderer.listen(this.element.nativeElement, 'mousemove', (event: any) => {
-      this.onMousemove(event, event.clientX, event.clientY);
-    });
+    if (!this.eventListeners.touchmove) {
+      this.eventListeners.touchmove = this.renderer.listen(this.element.nativeElement, 'touchmove', (event: any) => {
+        this.onMousemove(event, event.targetTouches[0].clientX, event.targetTouches[0].clientY);
+      });
+    }
+    if (!this.eventListeners.mousemove) {
+      this.eventListeners.mousemove = this.renderer.listen(this.element.nativeElement, 'mousemove', (event: any) => {
+        this.onMousemove(event, event.clientX, event.clientY);
+      });
+    }
     this.resizable.mousedown.next({mouseX, mouseY, edges: this.resizeEdges});
   }
 
