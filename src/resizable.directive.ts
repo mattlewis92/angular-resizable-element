@@ -10,7 +10,8 @@ import {
   EventEmitter,
   ContentChildren,
   QueryList,
-  OnDestroy
+  OnDestroy,
+  NgZone
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -249,7 +250,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @private
    */
-  constructor(private renderer: Renderer, public elm: ElementRef) {}
+  constructor(private renderer: Renderer, public elm: ElementRef, private zone: NgZone) {}
 
   /**
    * @private
@@ -379,13 +380,15 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
-      this.resizing.emit({
-        edges: getEdgesDiff({
-          edges: currentResize.edges,
-          initialRectangle: currentResize.startingRect,
-          newRectangle: newBoundingRect
-        }),
-        rectangle: newBoundingRect
+      this.zone.run(() => {
+        this.resizing.emit({
+          edges: getEdgesDiff({
+            edges: currentResize.edges,
+            initialRectangle: currentResize.startingRect,
+            newRectangle: newBoundingRect
+          }),
+          rectangle: newBoundingRect
+        });
       });
 
       currentResize.currentRect = newBoundingRect;
@@ -423,22 +426,26 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
       }
-      this.resizeStart.emit({
-        edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
-        rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+      this.zone.run(() => {
+        this.resizeStart.emit({
+          edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
+          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+        });
       });
     });
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
         this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, false);
-        this.resizeEnd.emit({
-          edges: getEdgesDiff({
-            edges: currentResize.edges,
-            initialRectangle: currentResize.startingRect,
-            newRectangle: currentResize.currentRect
-          }),
-          rectangle: currentResize.currentRect
+        this.zone.run(() => {
+          this.resizeEnd.emit({
+            edges: getEdgesDiff({
+              edges: currentResize.edges,
+              initialRectangle: currentResize.startingRect,
+              newRectangle: currentResize.currentRect
+            }),
+            rectangle: currentResize.currentRect
+          });
         });
         removeGhostElement();
         currentResize = null;
@@ -471,7 +478,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:touchstart', ['$event.touches[0].clientX', '$event.touches[0].clientY'])
   @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
   onMousedown(mouseX: number, mouseY: number): void {
-    this.mousedown.next({mouseX, mouseY});
+    this.zone.runOutsideAngular(() => {
+      this.mousedown.next({mouseX, mouseY});
+    });
   }
 
   /**
@@ -480,7 +489,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
   @HostListener('document:mousemove', ['$event', '$event.clientX', '$event.clientY'])
   onMousemove(event: any, mouseX: number, mouseY: number): void {
-    this.mousemove.next({mouseX, mouseY, event});
+    this.zone.runOutsideAngular(() => {
+      this.mousemove.next({mouseX, mouseY, event});
+    });
   }
 
   /**
@@ -490,7 +501,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:touchcancel', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
   @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
   onMouseup(mouseX: number, mouseY: number): void {
-    this.mouseup.next({mouseX, mouseY});
+    this.zone.runOutsideAngular(() => {
+      this.mouseup.next({mouseX, mouseY});
+    });
   }
 
 }
