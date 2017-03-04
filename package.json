@@ -1,6 +1,6 @@
 {
   "name": "angular-resizable-element",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "An angular 2.0+ directive that allows an element to be dragged and resized",
   "main": "./dist/umd/angular-resizable-element.js",
   "module": "./dist/esm/src/index.js",
@@ -87,7 +87,7 @@
     "zone.js": "^0.7.2"
   },
   "peerDependencies": {
-    "@angular/core": "^2.0.0"
+    "@angular/core": ">=2.0.0 <5.0.0"
   },
   "files": [
     "dist"

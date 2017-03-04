@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.0...v0.7.2) (2017-03-04)
+
+
+### Bug Fixes
+
+* relax peer dependency warning to allow angular 4 ([8232e66](https://github.com/mattlewis92/angular-resizable-element/commit/8232e66))
+
+
+### Performance Improvements
+
+* run all rezize events outside the angular zone ([820612e](https://github.com/mattlewis92/angular-resizable-element/commit/820612e))
+* **resizable:** only register mouse move events when a rezize is active ([a74f9e2](https://github.com/mattlewis92/angular-resizable-element/commit/a74f9e2))
+* **resizeHandle:** dynamically register mouse move event listener ([4b20cde](https://github.com/mattlewis92/angular-resizable-element/commit/4b20cde))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.1...v0.7.0) (2017-02-28)
 
