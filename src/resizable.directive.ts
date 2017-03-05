@@ -36,14 +36,10 @@ function isNumberCloseTo(value1: number, value2: number, precision: number = 3):
   return diff < precision;
 }
 
-function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
+function getNewBoundingRectangle(element: ElementRef, edges: Edges, mouseX: number, mouseY: number,
+                                 elementToResizeFixed: boolean): BoundingRectangle {
 
-  const newBoundingRect: BoundingRectangle = {
-    top: startingRect.top,
-    bottom: startingRect.bottom,
-    left: startingRect.left,
-    right: startingRect.right
-  };
+  const newBoundingRect: BoundingRectangle = getElementRect(element, elementToResizeFixed);
 
   if (edges.top) {
     newBoundingRect.top += mouseY;
@@ -62,6 +58,25 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 
   return newBoundingRect;
 
+}
+
+function getElementRect(element: ElementRef, elementToResizeFixed: boolean): BoundingRectangle {
+  if (elementToResizeFixed) {
+    return {
+      top: element.nativeElement.offsetTop,
+      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
+      left: element.nativeElement.offsetLeft,
+      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+    };
+  } else {
+    const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
+    return {
+      top: boundingRect.top,
+      bottom: boundingRect.bottom,
+      left: boundingRect.left,
+      right: boundingRect.right
+    };
+  }
 }
 
 function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
@@ -213,6 +228,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @Input() resizeCursorPrecision: number = 3;
 
   /**
+   * If the element have already a position fixed set to true.
+   */
+  @Input() elementToResizeFixed: boolean = false;
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
   @Output() resizeStart: EventEmitter<Object> = new EventEmitter(false);
@@ -359,7 +379,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     }).filter(() => !!currentResize);
 
     mousedrag.map(({mouseX, mouseY}) => {
-      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
+      return getNewBoundingRectangle(this.elm, currentResize.edges, mouseX, mouseY, this.elementToResizeFixed);
     }).filter((newBoundingRect: BoundingRectangle) => {
       return newBoundingRect.height > 0 && newBoundingRect.width > 0;
     }).filter((newBoundingRect: BoundingRectangle) => {
@@ -408,7 +428,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       if (currentResize) {
         removeGhostElement();
       }
-      const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
+      const startingRect: BoundingRectangle = getElementRect(this.elm, this.elementToResizeFixed);
       currentResize = {
         edges,
         startingRect,
@@ -429,7 +449,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       this.zone.run(() => {
         this.resizeStart.emit({
           edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
-          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+          rectangle: getNewBoundingRectangle(this.elm, {}, 0, 0, this.elementToResizeFixed)
         });
       });
     });

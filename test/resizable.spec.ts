@@ -29,6 +29,7 @@ describe('resizable directive', () => {
         [resizeSnapGrid]="resizeSnapGrid"
         [resizeCursors]="resizeCursors"
         [resizeCursorPrecision]="resizeCursorPrecision"
+        [elementToResizeFixed]="elementToResizeFixed"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -48,7 +49,7 @@ describe('resizable directive', () => {
     public resizeSnapGrid: Object = {};
     public resizeCursors: Object = {};
     public resizeCursorPrecision: number;
-
+    public elementToResizeFixed: boolean = false;
   }
 
   const triggerDomEvent: Function = (eventType: string, target: HTMLElement | Element, eventData: Object = {}) => {
