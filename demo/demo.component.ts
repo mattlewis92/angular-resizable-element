@@ -37,7 +37,7 @@ import {ResizeEvent} from './../src';
           [validateResize]="validate"
           [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
           [enableGhostResize]="true"
-          [elementToResizeFixed]="true"
+          [enableAbsolutePositioning]="true"
           (resizeEnd)="onResizeEnd($event)">
           <img
             src="http://i.imgur.com/eqzz2dl.gif"

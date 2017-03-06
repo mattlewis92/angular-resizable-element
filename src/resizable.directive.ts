@@ -36,10 +36,14 @@ function isNumberCloseTo(value1: number, value2: number, precision: number = 3):
   return diff < precision;
 }
 
-function getNewBoundingRectangle(element: ElementRef, edges: Edges, mouseX: number, mouseY: number,
-                                 elementToResizeFixed: boolean): BoundingRectangle {
+function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
 
-  const newBoundingRect: BoundingRectangle = getElementRect(element, elementToResizeFixed);
+  const newBoundingRect: BoundingRectangle = {
+    top: startingRect.top,
+    bottom: startingRect.bottom,
+    left: startingRect.left,
+    right: startingRect.right
+  };
 
   if (edges.top) {
     newBoundingRect.top += mouseY;
@@ -60,8 +64,8 @@ function getNewBoundingRectangle(element: ElementRef, edges: Edges, mouseX: numb
 
 }
 
-function getElementRect(element: ElementRef, elementToResizeFixed: boolean): BoundingRectangle {
-  if (elementToResizeFixed) {
+function getElementRect(element: ElementRef, enableAbsolutePositioning: boolean): BoundingRectangle {
+  if (enableAbsolutePositioning) {
     return {
       top: element.nativeElement.offsetTop,
       bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
@@ -228,9 +232,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @Input() resizeCursorPrecision: number = 3;
 
   /**
-   * If the element have already a position fixed set to true.
+   * If we want to position cloned node with absolute position
    */
-  @Input() elementToResizeFixed: boolean = false;
+  @Input() enableAbsolutePositioning: boolean = false;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -379,7 +383,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     }).filter(() => !!currentResize);
 
     mousedrag.map(({mouseX, mouseY}) => {
-      return getNewBoundingRectangle(this.elm, currentResize.edges, mouseX, mouseY, this.elementToResizeFixed);
+      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
     }).filter((newBoundingRect: BoundingRectangle) => {
       return newBoundingRect.height > 0 && newBoundingRect.width > 0;
     }).filter((newBoundingRect: BoundingRectangle) => {
@@ -428,7 +432,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       if (currentResize) {
         removeGhostElement();
       }
-      const startingRect: BoundingRectangle = getElementRect(this.elm, this.elementToResizeFixed);
+      const startingRect: BoundingRectangle = getElementRect(this.elm, this.enableAbsolutePositioning);
       currentResize = {
         edges,
         startingRect,
@@ -439,7 +443,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
         this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
-        this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
+        if (this.enableAbsolutePositioning) {
+          this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'absolute');
+        } else {
+          this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
+        }
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
@@ -449,7 +457,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       this.zone.run(() => {
         this.resizeStart.emit({
           edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
-          rectangle: getNewBoundingRectangle(this.elm, {}, 0, 0, this.elementToResizeFixed)
+          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
         });
       });
     });
