@@ -6,7 +6,6 @@
   "module": "./dist/esm/src/index.js",
   "typings": "./dist/esm/src/index.d.ts",
   "scripts": {
-    "demo": "webpack-dev-server --open",
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
     "build:demo": "webpack -p",
     "build:umd": "webpack --config webpack.config.umd.ts",

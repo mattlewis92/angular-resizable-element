@@ -4,11 +4,8 @@ import {ResizeEvent} from './../src';
 @Component({
   selector: 'demo-app',
   styles: [`
-    .container {
-      transform: scale3d(0.7, 0.7, 0.7);
-    }
     .rectangle {
-      position: absolute;
+      position: relative;
       top: 200px;
       display: flex;
       align-items: center;
@@ -29,22 +26,20 @@ import {ResizeEvent} from './../src';
   template: `
     <div class="text-center">
       <h1>Drag and pull the edges of the rectangle</h1>
-      <div class="container">
-        <div
-          class="rectangle"
-          [ngStyle]="style"
-          mwlResizable
-          [validateResize]="validate"
-          [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-          [enableGhostResize]="true"
-          [enableAbsolutePositioning]="true"
-          (resizeEnd)="onResizeEnd($event)">
-          <img
-            src="http://i.imgur.com/eqzz2dl.gif"
-            class="resize-handle"
-            mwlResizeHandle
-            [resizeEdges]="{bottom: true, right: true}">
-        </div>
+      <div
+        class="rectangle"
+        [ngStyle]="style"
+        mwlResizable
+        [validateResize]="validate"
+        [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+        [enableGhostResize]="true"
+        [resizeSnapGrid]="{left: 50, right: 50}"
+        (resizeEnd)="onResizeEnd($event)">
+        <img
+          src="http://i.imgur.com/eqzz2dl.gif"
+          class="resize-handle"
+          mwlResizeHandle
+          [resizeEdges]="{bottom: true, right: true}">
       </div>
     </div>
   `
