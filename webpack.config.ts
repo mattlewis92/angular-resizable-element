@@ -31,7 +31,7 @@ export default {
     contentBase: 'demo'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    ...(IS_PROD ? [] : [new webpack.HotModuleReplacementPlugin()]),
     new webpack.DefinePlugin({
       ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
     }),
