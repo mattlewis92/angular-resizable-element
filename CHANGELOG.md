@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.2...v0.8.0) (2017-03-16)
+
+
+### Features
+
+* **ghostElementPositioning:** allow ghost element positioning to be configured ([b77c9fc](https://github.com/mattlewis92/angular-resizable-element/commit/b77c9fc))
+* expose Resizable and ResizeHandle directives ([3633040](https://github.com/mattlewis92/angular-resizable-element/commit/3633040))
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.0...v0.7.2) (2017-03-04)
 
