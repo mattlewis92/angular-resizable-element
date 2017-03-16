@@ -29,6 +29,7 @@ describe('resizable directive', () => {
         [resizeSnapGrid]="resizeSnapGrid"
         [resizeCursors]="resizeCursors"
         [resizeCursorPrecision]="resizeCursorPrecision"
+        [ghostElementPositioning]="ghostElementPositioning"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -48,7 +49,7 @@ describe('resizable directive', () => {
     public resizeSnapGrid: Object = {};
     public resizeCursors: Object = {};
     public resizeCursorPrecision: number;
-
+    public ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
   }
 
   const triggerDomEvent: Function = (eventType: string, target: HTMLElement | Element, eventData: Object = {}) => {
@@ -65,9 +66,12 @@ describe('resizable directive', () => {
   let component: ComponentFixture<TestCmp>, createComponent: Function;
   beforeEach(() => {
     document.body.style.margin = '0px';
-    createComponent = (template?: string) => {
+    createComponent = (template?: string, styles?: Array<string>) => {
       if (template) {
-        TestBed.overrideComponent(TestCmp, {set: {template}});
+        TestBed.overrideComponent(TestCmp, {set: {template: template}});
+      }
+      if (styles) {
+        TestBed.overrideComponent(TestCmp, {set: {styles: styles}});
       }
       const fixture: ComponentFixture<TestCmp> = TestBed.createComponent(TestCmp);
       fixture.detectChanges();
@@ -1075,6 +1079,155 @@ describe('resizable directive', () => {
     expect(elm.classList.contains('resize-left-hover')).to.be.false;
     fixture.destroy();
 
+  });
+
+  describe('absolute positioning', () => {
+    let domEvents: Array<any>;
+    beforeEach(() => {
+      domEvents = [];
+    });
+
+    it('should have the same top/left/height when resize from the right', () => {
+      domEvents.push({
+        name: 'mousedown',
+        data: {
+          clientX: 600,
+          clientY: 405
+        }
+      });
+      domEvents.push({
+        name: 'mousemove',
+        data: {
+          clientX: 620,
+          clientY: 405
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          height: '150px'
+        }
+      });
+    });
+
+    it('should have the same top/height when resize from the left', () => {
+      domEvents.push({
+        name: 'mousedown',
+        data: {
+          clientX: 300,
+          clientY: 405
+        }
+      });
+      domEvents.push({
+        name: 'mousemove',
+        data: {
+          clientX: 280,
+          clientY: 405
+        },
+        style: {
+          top: '200px',
+          height: '150px'
+        }
+      });
+    });
+
+    it('should have the same left/width when resize from the top', () => {
+      domEvents.push({
+        name: 'mousedown',
+        data: {
+          clientX: 400,
+          clientY: 400
+        }
+      });
+      domEvents.push({
+        name: 'mousemove',
+        data: {
+          clientX: 400,
+          clientY: 280
+        },
+        style: {
+          left: '100px',
+          width: '300px'
+        }
+      });
+    });
+
+    it('should have the same top/left/width when resize from the bottom', () => {
+      domEvents.push({
+        name: 'mousedown',
+        data: {
+          clientX: 400,
+          clientY: 550
+        }
+      });
+      domEvents.push({
+        name: 'mousemove',
+        data: {
+          clientX: 400,
+          clientY: 570
+        },
+        style: {
+          top: '200px',
+          left: '100px',
+          width: '300px',
+        }
+      });
+    });
+
+    afterEach(() => {
+      const template: string = `
+        <div class="container">
+         <div
+          class="rectangle"
+          [ngStyle]="style"
+          mwlResizable
+          [validateResize]="validate"
+          [resizeEdges]="resizeEdges"
+          [enableGhostResize]="enableGhostResize"
+          [resizeSnapGrid]="resizeSnapGrid"
+          [resizeCursors]="resizeCursors"
+          [resizeCursorPrecision]="resizeCursorPrecision"
+          [ghostElementPositioning]="ghostElementPositioning"
+          (resizeStart)="resizeStart($event)"
+          (resizing)="resizing($event)"
+          (resizeEnd)="resizeEnd($event)">
+          </div>
+      </div>
+    `;
+      const styles: Array<string> = [`
+              .container {
+                -webkit-transform: scale3d(1, 1, 1);
+                position: relative;
+                top: 200px;
+                left: 200px;
+              }
+              .rectangle {
+                position: absolute;
+                top: 200px;
+                left: 100px;
+                width: 300px;
+                height: 150px;
+              }
+      `];
+
+      const fixture: ComponentFixture<TestCmp> = createComponent(template, styles);
+      fixture.componentInstance.ghostElementPositioning = 'absolute';
+      fixture.detectChanges();
+
+      const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+      domEvents.forEach(event => {
+        triggerDomEvent(event.name, elm, event.data);
+
+        const clonedNode: Element = elm.parentElement.children[1];
+        if (event.name !== 'mouseup') {
+          expect(clonedNode['style'].position).to.equal('absolute');
+        }
+        if (event.style) {
+          Object.keys(event.style).forEach(styleKey => {
+            expect(clonedNode['style'][styleKey]).to.equal(event.style[styleKey]);
+          });
+        }
+      });
+    });
   });
 
 });
