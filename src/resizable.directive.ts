@@ -64,6 +64,25 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 
 }
 
+function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
+  if (ghostElementPositioning === 'absolute') {
+    return {
+      top: element.nativeElement.offsetTop,
+      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
+      left: element.nativeElement.offsetLeft,
+      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+    };
+  } else {
+    const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
+    return {
+      top: boundingRect.top,
+      bottom: boundingRect.bottom,
+      left: boundingRect.left,
+      right: boundingRect.right
+    };
+  }
+}
+
 function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
   return mouseY >= rect.top && mouseY <= rect.bottom;
 }
@@ -211,6 +230,11 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * Mouse over thickness to active cursor.
    */
   @Input() resizeCursorPrecision: number = 3;
+
+  /**
+   * Define the positioning of the ghost element (can be fixed or absolute)
+   */
+  @Input() ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -408,7 +432,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       if (currentResize) {
         removeGhostElement();
       }
-      const startingRect: BoundingRectangle = this.elm.nativeElement.getBoundingClientRect();
+      const startingRect: BoundingRectangle = getElementRect(this.elm, this.ghostElementPositioning);
       currentResize = {
         edges,
         startingRect,
@@ -419,7 +443,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
         this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
-        this.renderer.setElementStyle(currentResize.clonedNode, 'position', 'fixed');
+        this.renderer.setElementStyle(currentResize.clonedNode, 'position', this.ghostElementPositioning);
         this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
         this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
