@@ -16,12 +16,15 @@ import {
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
+import {interval} from 'rxjs/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/throttle';
+import 'rxjs/add/operator/share';
 import {ResizeHandle} from './resizeHandle.directive';
 import {Edges} from './interfaces/edges.interface';
 import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
@@ -185,6 +188,8 @@ const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
 const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
 const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
 
+export const MOUSE_MOVE_THROTTLE_MS: number = 50;
+
 /**
  * Place this on an element to make it resizable
  *
@@ -295,11 +300,15 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.mousemove.subscribe(({mouseX, mouseY, event}) => {
+    const mouseMove: Observable<any> = this.mousemove.share();
 
-      if (currentResize) {
+    mouseMove
+      .filter(() => !!currentResize)
+      .subscribe(({event}) => {
         event.preventDefault();
-      }
+      });
+
+    mouseMove.throttle(val => interval(MOUSE_MOVE_THROTTLE_MS)).subscribe(({mouseX, mouseY}) => {
 
       const resizeEdges: Edges = getResizeEdges({
         mouseX, mouseY,
@@ -356,8 +365,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       };
 
       return merge(
-        this.mousemove.take(1).map(coords => [, coords]),
-        this.mousemove.pairwise()
+        mouseMove.take(1).map(coords => [, coords]),
+        mouseMove.pairwise()
       ).map(([previousCoords, newCoords]) => {
         return [previousCoords ? getDiff(previousCoords) : previousCoords, getDiff(newCoords)];
       }).filter(([previousCoords, newCoords]) => {
