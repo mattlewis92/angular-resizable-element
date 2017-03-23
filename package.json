@@ -12,7 +12,7 @@
     "build:ngc": "ngc -p tsconfig-ngc.json",
     "build:dist": "npm run build:umd && npm run build:ngc",
     "build:clean": "rm -rf dist",
-    "test": "karma start --single-run",
+    "test": "karma start --single-run && npm run build:dist && npm run build:clean",
     "test:watch": "karma start --auto-watch",
     "commit": "git-cz",
     "compodoc": "compodoc -p tsconfig-compodoc.json -d docs -b /angular-resizable-element/docs/ --disableGraph --disableCoverage",
