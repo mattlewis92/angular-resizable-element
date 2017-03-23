@@ -2,7 +2,7 @@ import {Renderer, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 
-interface PointerEventCoordinate {
+export interface PointerEventCoordinate {
   clientX: number;
   clientY: number;
   event: MouseEvent | TouchEvent;
