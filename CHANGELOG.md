@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.1"></a>
+## [0.8.1](https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.0...v0.8.1) (2017-03-23)
+
+
+### Performance Improvements
+
+* throttle mousemove listener events ([05f7f7e](https://github.com/mattlewis92/angular-resizable-element/commit/05f7f7e))
+* use shared mouse event listeners across all resizable instances ([2a4b102](https://github.com/mattlewis92/angular-resizable-element/commit/2a4b102))
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.2...v0.8.0) (2017-03-16)
 

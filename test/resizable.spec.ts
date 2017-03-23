@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Resizable} from '../src/resizable.directive';
 import {Edges} from '../src/interfaces/edges.interface';
 import {ResizeEvent, ResizableModule} from './../src';
+import {MOUSE_MOVE_THROTTLE_MS} from '../src/resizable.directive';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {expect} from 'chai';
 import * as sinon from 'sinon';
@@ -90,7 +91,7 @@ describe('resizable directive', () => {
 
   describe('cursor changes', () => {
 
-    let assertions: Array<Object>;
+    let assertions: Array<any>;
 
     it('should change the cursor to the ns-resize when mousing over the top edge', () => {
       assertions = [{
@@ -188,13 +189,25 @@ describe('resizable directive', () => {
       }];
     });
 
-    afterEach(() => {
+    afterEach(done => {
+      let count: number = 0;
       const fixture: ComponentFixture<TestCmp> = createComponent();
       const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
-      assertions.forEach(({coords, cursor}: {coords: Object, cursor: string}) => {
-        triggerDomEvent('mousemove', elm, coords);
-        expect(elm.style.cursor).to.equal(cursor);
-      });
+
+      function runAssertion(): void {
+        if (count === assertions.length) {
+          done();
+        } else {
+          const {coords, cursor} = assertions[count];
+          triggerDomEvent('mousemove', elm, coords);
+          expect(elm.style.cursor).to.equal(cursor);
+          count++;
+          setTimeout(runAssertion, MOUSE_MOVE_THROTTLE_MS);
+        }
+      }
+
+      runAssertion();
+
     });
 
   });
@@ -1038,7 +1051,7 @@ describe('resizable directive', () => {
 
   });
 
-  it('should set the resize active class', () => {
+  it('should set the resize active class', done => {
 
     const fixture: ComponentFixture<TestCmp> = createComponent();
     fixture.detectChanges();
@@ -1048,24 +1061,27 @@ describe('resizable directive', () => {
       clientY: 210
     });
     expect(elm.classList.contains('resize-active')).to.be.false;
-    triggerDomEvent('mousedown', elm, {
-      clientX: 100,
-      clientY: 210
-    });
-    triggerDomEvent('mousemove', elm, {
-      clientX: 101,
-      clientY: 210
-    });
-    expect(elm.classList.contains('resize-active')).to.be.true;
-    triggerDomEvent('mouseup', elm, {
-      clientX: 101,
-      clientY: 210
-    });
-    expect(elm.classList.contains('resize-active')).to.be.false;
+    setTimeout(() => {
+      triggerDomEvent('mousedown', elm, {
+        clientX: 100,
+        clientY: 210
+      });
+      triggerDomEvent('mousemove', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(elm.classList.contains('resize-active')).to.be.true;
+      triggerDomEvent('mouseup', elm, {
+        clientX: 101,
+        clientY: 210
+      });
+      expect(elm.classList.contains('resize-active')).to.be.false;
+      done();
+    }, MOUSE_MOVE_THROTTLE_MS);
 
   });
 
-  it('should set the resize edge classes', () => {
+  it('should set the resize edge classes', done => {
 
     const fixture: ComponentFixture<TestCmp> = createComponent();
     fixture.detectChanges();
@@ -1075,9 +1091,12 @@ describe('resizable directive', () => {
     expect(elm.classList.contains('resize-top-hover')).to.be.false;
     expect(elm.classList.contains('resize-right-hover')).to.be.false;
     expect(elm.classList.contains('resize-bottom-hover')).to.be.false;
-    triggerDomEvent('mousemove', elm, {clientX: 50, clientY: 300});
-    expect(elm.classList.contains('resize-left-hover')).to.be.false;
-    fixture.destroy();
+    setTimeout(() => {
+      triggerDomEvent('mousemove', elm, {clientX: 50, clientY: 300});
+      expect(elm.classList.contains('resize-left-hover')).to.be.false;
+      fixture.destroy();
+      done();
+    }, MOUSE_MOVE_THROTTLE_MS);
 
   });
 

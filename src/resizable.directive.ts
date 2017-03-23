@@ -1,6 +1,5 @@
 import {
   Directive,
-  HostListener,
   Renderer,
   ElementRef,
   OnInit,
@@ -16,15 +15,19 @@ import {
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
+import {interval} from 'rxjs/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/throttle';
+import 'rxjs/add/operator/share';
 import {ResizeHandle} from './resizeHandle.directive';
 import {Edges} from './interfaces/edges.interface';
 import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
+import {PointerEventListeners} from './pointerEventListeners';
 
 interface Coordinate {
   x: number;
@@ -36,7 +39,7 @@ function isNumberCloseTo(value1: number, value2: number, precision: number = 3):
   return diff < precision;
 }
 
-function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, mouseX: number, mouseY: number): BoundingRectangle {
+function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, clientX: number, clientY: number): BoundingRectangle {
 
   const newBoundingRect: BoundingRectangle = {
     top: startingRect.top,
@@ -46,16 +49,16 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
   };
 
   if (edges.top) {
-    newBoundingRect.top += mouseY;
+    newBoundingRect.top += clientY;
   }
   if (edges.bottom) {
-    newBoundingRect.bottom += mouseY;
+    newBoundingRect.bottom += clientY;
   }
   if (edges.left) {
-    newBoundingRect.left += mouseX;
+    newBoundingRect.left += clientX;
   }
   if (edges.right) {
-    newBoundingRect.right += mouseX;
+    newBoundingRect.right += clientX;
   }
   newBoundingRect.height = newBoundingRect.bottom - newBoundingRect.top;
   newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
@@ -83,48 +86,48 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
   }
 }
 
-function isWithinBoundingY({mouseY, rect}: {mouseY: number, rect: ClientRect}): boolean {
-  return mouseY >= rect.top && mouseY <= rect.bottom;
+function isWithinBoundingY({clientY, rect}: {clientY: number, rect: ClientRect}): boolean {
+  return clientY >= rect.top && clientY <= rect.bottom;
 }
 
-function isWithinBoundingX({mouseX, rect}: {mouseX: number, rect: ClientRect}): boolean {
-  return mouseX >= rect.left && mouseX <= rect.right;
+function isWithinBoundingX({clientX, rect}: {clientX: number, rect: ClientRect}): boolean {
+  return clientX >= rect.left && clientX <= rect.right;
 }
 
 function getResizeEdges(
-  {mouseX, mouseY, elm, allowedEdges, cursorPrecision}:
-    {mouseX: number, mouseY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
+  {clientX, clientY, elm, allowedEdges, cursorPrecision}:
+    {clientX: number, clientY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
 
   if (
     allowedEdges.left &&
-    isNumberCloseTo(mouseX, elmPosition.left, cursorPrecision) &&
-    isWithinBoundingY({mouseY, rect: elmPosition})
+    isNumberCloseTo(clientX, elmPosition.left, cursorPrecision) &&
+    isWithinBoundingY({clientY, rect: elmPosition})
   ) {
     edges.left = true;
   }
 
   if (
     allowedEdges.right &&
-    isNumberCloseTo(mouseX, elmPosition.right, cursorPrecision) &&
-    isWithinBoundingY({mouseY, rect: elmPosition})
+    isNumberCloseTo(clientX, elmPosition.right, cursorPrecision) &&
+    isWithinBoundingY({clientY, rect: elmPosition})
   ) {
     edges.right = true;
   }
 
   if (
     allowedEdges.top &&
-    isNumberCloseTo(mouseY, elmPosition.top, cursorPrecision) &&
-    isWithinBoundingX({mouseX, rect: elmPosition})
+    isNumberCloseTo(clientY, elmPosition.top, cursorPrecision) &&
+    isWithinBoundingX({clientX, rect: elmPosition})
   ) {
     edges.top = true;
   }
 
   if (
     allowedEdges.bottom &&
-    isNumberCloseTo(mouseY, elmPosition.bottom, cursorPrecision) &&
-    isWithinBoundingX({mouseX, rect: elmPosition})
+    isNumberCloseTo(clientY, elmPosition.bottom, cursorPrecision) &&
+    isWithinBoundingX({clientX, rect: elmPosition})
   ) {
     edges.bottom = true;
   }
@@ -184,6 +187,8 @@ const RESIZE_LEFT_HOVER_CLASS: string = 'resize-left-hover';
 const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
 const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
 const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
+
+export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 
 /**
  * Place this on an element to make it resizable
@@ -271,15 +276,38 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    */
   @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
 
+  private pointerEventListeners: PointerEventListeners;
+
+  private pointerEventListenerSubscriptions: any = {};
+
   /**
    * @private
    */
-  constructor(private renderer: Renderer, public elm: ElementRef, private zone: NgZone) {}
+  constructor(
+    private renderer: Renderer,
+    public elm: ElementRef,
+    private zone: NgZone
+  ) {
+    this.pointerEventListeners = PointerEventListeners.getInstance(renderer, zone);
+  }
 
   /**
    * @private
    */
   ngOnInit(): void {
+
+    // TODO - use some fancy Observable.merge's for this
+    this.pointerEventListenerSubscriptions.pointerDown = this.pointerEventListeners.pointerDown.subscribe(({clientX, clientY}) => {
+      this.mousedown.next({clientX, clientY});
+    });
+
+    this.pointerEventListenerSubscriptions.pointerMove = this.pointerEventListeners.pointerMove.subscribe(({clientX, clientY, event}) => {
+      this.mousemove.next({clientX, clientY, event});
+    });
+
+    this.pointerEventListenerSubscriptions.pointerUp =  this.pointerEventListeners.pointerUp.subscribe(({clientX, clientY}) => {
+      this.mouseup.next({clientX, clientY});
+    });
 
     let currentResize: {
       edges: Edges,
@@ -295,14 +323,18 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.mousemove.subscribe(({mouseX, mouseY, event}) => {
+    const mouseMove: Observable<any> = this.mousemove.share();
 
-      if (currentResize) {
+    mouseMove
+      .filter(() => !!currentResize)
+      .subscribe(({event}) => {
         event.preventDefault();
-      }
+      });
+
+    mouseMove.throttle(val => interval(MOUSE_MOVE_THROTTLE_MS)).subscribe(({clientX, clientY}) => {
 
       const resizeEdges: Edges = getResizeEdges({
-        mouseX, mouseY,
+        clientX, clientY,
         elm: this.elm,
         allowedEdges: this.resizeEdges,
         cursorPrecision: this.resizeCursorPrecision
@@ -323,8 +355,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
       const getDiff: Function = moveCoords => {
         return {
-          mouseX: moveCoords.mouseX - startCoords.mouseX,
-          mouseY: moveCoords.mouseY - startCoords.mouseY
+          clientX: moveCoords.clientX - startCoords.clientX,
+          clientY: moveCoords.clientY - startCoords.clientY
         };
       };
 
@@ -350,14 +382,14 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
       const getGrid: Function = (coords, snapGrid) => {
         return {
-          x: Math.ceil(coords.mouseX / snapGrid.x),
-          y: Math.ceil(coords.mouseY / snapGrid.y)
+          x: Math.ceil(coords.clientX / snapGrid.x),
+          y: Math.ceil(coords.clientY / snapGrid.y)
         };
       };
 
       return merge(
-        this.mousemove.take(1).map(coords => [, coords]),
-        this.mousemove.pairwise()
+        mouseMove.take(1).map(coords => [, coords]),
+        mouseMove.pairwise()
       ).map(([previousCoords, newCoords]) => {
         return [previousCoords ? getDiff(previousCoords) : previousCoords, getDiff(newCoords)];
       }).filter(([previousCoords, newCoords]) => {
@@ -375,15 +407,15 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       }).map(([, newCoords]) => {
         const snapGrid: Coordinate = getSnapGrid();
         return {
-          mouseX: Math.round(newCoords.mouseX / snapGrid.x) * snapGrid.x,
-          mouseY: Math.round(newCoords.mouseY / snapGrid.y) * snapGrid.y
+          clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
+          clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
         };
       }).takeUntil(merge(this.mouseup, this.mousedown));
 
     }).filter(() => !!currentResize);
 
-    mousedrag.map(({mouseX, mouseY}) => {
-      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, mouseX, mouseY);
+    mousedrag.map(({clientX, clientY}) => {
+      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, clientX, clientY);
     }).filter((newBoundingRect: BoundingRectangle) => {
       return newBoundingRect.height > 0 && newBoundingRect.width > 0;
     }).filter((newBoundingRect: BoundingRectangle) => {
@@ -419,9 +451,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
     });
 
-    this.mousedown.map(({mouseX, mouseY, edges}) => {
+    this.mousedown.map(({clientX, clientY, edges}) => {
       return edges || getResizeEdges({
-        mouseX, mouseY,
+        clientX, clientY,
         elm: this.elm,
         allowedEdges: this.resizeEdges,
         cursorPrecision: this.resizeCursorPrecision
@@ -494,40 +526,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-  }
-
-  /**
-   * @private
-   */
-  @HostListener('document:touchstart', ['$event.touches[0].clientX', '$event.touches[0].clientY'])
-  @HostListener('document:mousedown', ['$event.clientX', '$event.clientY'])
-  onMousedown(mouseX: number, mouseY: number): void {
-    this.zone.runOutsideAngular(() => {
-      this.mousedown.next({mouseX, mouseY});
-    });
-  }
-
-  /**
-   * @private
-   */
-  @HostListener('document:touchmove', ['$event', '$event.targetTouches[0].clientX', '$event.targetTouches[0].clientY'])
-  @HostListener('document:mousemove', ['$event', '$event.clientX', '$event.clientY'])
-  onMousemove(event: any, mouseX: number, mouseY: number): void {
-    this.zone.runOutsideAngular(() => {
-      this.mousemove.next({mouseX, mouseY, event});
-    });
-  }
-
-  /**
-   * @private
-   */
-  @HostListener('document:touchend', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
-  @HostListener('document:touchcancel', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
-  @HostListener('document:mouseup', ['$event.clientX', '$event.clientY'])
-  onMouseup(mouseX: number, mouseY: number): void {
-    this.zone.runOutsideAngular(() => {
-      this.mouseup.next({mouseX, mouseY});
-    });
+    this.pointerEventListenerSubscriptions.pointerDown.unsubscribe();
+    this.pointerEventListenerSubscriptions.pointerMove.unsubscribe();
+    this.pointerEventListenerSubscriptions.pointerUp.unsubscribe();
   }
 
 }
