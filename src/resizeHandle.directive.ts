@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, Renderer, ElementRef, OnDestroy, NgZone } from '@angular/core';
+import { Directive, Input, HostListener, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { Resizable } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
 
@@ -33,7 +33,7 @@ export class ResizeHandle implements OnDestroy {
     mousemove?: Function
   } = {};
 
-  constructor(private renderer: Renderer, private element: ElementRef, private zone: NgZone) {}
+  constructor(private renderer: Renderer2, private element: ElementRef, private zone: NgZone) {}
 
   ngOnDestroy(): void {
     this.unsubscribeEventListeners();

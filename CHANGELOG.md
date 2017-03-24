@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.1...v1.0.0) (2017-03-24)
+
+
+### Features
+
+* **ng4:** upgrade to angular 4 ([4c665d2](https://github.com/mattlewis92/angular-resizable-element/commit/4c665d2))
+
+
+### BREAKING CHANGES
+
+* **ng4:** angular 4.0 or higher is now required to use this library. The
+[upgrade](http://angularjs.blogspot.co.uk/2017/03/angular-400-now-available.html) should be seamless
+for most users.
+
+
+
 <a name="0.8.1"></a>
 ## [0.8.1](https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.0...v0.8.1) (2017-03-23)
 
