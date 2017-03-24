@@ -1,6 +1,6 @@
 import {
   Directive,
-  Renderer,
+  Renderer2,
   ElementRef,
   OnInit,
   AfterViewInit,
@@ -244,17 +244,17 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeStart: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizeStart: EventEmitter<Object> = new EventEmitter();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizing: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizing: EventEmitter<Object> = new EventEmitter();
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeEnd: EventEmitter<Object> = new EventEmitter(false);
+  @Output() resizeEnd: EventEmitter<Object> = new EventEmitter();
 
   /**
    * @private
@@ -284,7 +284,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
    * @private
    */
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
   ) {
@@ -319,7 +319,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     const removeGhostElement: Function = (): void => {
       if (currentResize.clonedNode) {
         this.elm.nativeElement.parentElement.removeChild(currentResize.clonedNode);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'inherit');
+        this.renderer.setStyle(this.elm.nativeElement, 'visibility', 'inherit');
       }
     };
 
@@ -342,12 +342,12 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
       const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
 
-      this.renderer.setElementStyle(this.elm.nativeElement, 'cursor', cursor);
-      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, !!currentResize);
-      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left === true);
-      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right === true);
-      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_TOP_HOVER_CLASS, resizeEdges.top === true);
-      this.renderer.setElementClass(this.elm.nativeElement, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom === true);
+      this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
+      this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
+      this.setElementClass(this.elm, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left === true);
+      this.setElementClass(this.elm, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right === true);
+      this.setElementClass(this.elm, RESIZE_TOP_HOVER_CLASS, resizeEdges.top === true);
+      this.setElementClass(this.elm, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom === true);
 
     });
 
@@ -430,10 +430,10 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     }).subscribe((newBoundingRect: BoundingRectangle) => {
 
       if (currentResize.clonedNode) {
-        this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${newBoundingRect.height}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${newBoundingRect.width}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${newBoundingRect.top}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'height', `${newBoundingRect.height}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'width', `${newBoundingRect.width}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'top', `${newBoundingRect.top}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
       }
 
       this.zone.run(() => {
@@ -474,13 +474,13 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
         const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
         this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
-        this.renderer.setElementStyle(this.elm.nativeElement, 'visibility', 'hidden');
-        this.renderer.setElementStyle(currentResize.clonedNode, 'position', this.ghostElementPositioning);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
-        this.renderer.setElementStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
+        this.renderer.setStyle(this.elm.nativeElement, 'visibility', 'hidden');
+        this.renderer.setStyle(currentResize.clonedNode, 'position', this.ghostElementPositioning);
+        this.renderer.setStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
+        this.renderer.setStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
       }
       this.zone.run(() => {
         this.resizeStart.emit({
@@ -492,7 +492,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
-        this.renderer.setElementClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS, false);
+        this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
         this.zone.run(() => {
           this.resizeEnd.emit({
             edges: getEdgesDiff({
@@ -529,6 +529,14 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     this.pointerEventListenerSubscriptions.pointerDown.unsubscribe();
     this.pointerEventListenerSubscriptions.pointerMove.unsubscribe();
     this.pointerEventListenerSubscriptions.pointerUp.unsubscribe();
+  }
+
+  private setElementClass(elm: ElementRef, name: string, add: boolean): void {
+    if (add) {
+      this.renderer.addClass(elm.nativeElement, name);
+    } else {
+      this.renderer.removeClass(elm.nativeElement, name);
+    }
   }
 
 }

@@ -36,7 +36,7 @@ export default {
       ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
     }),
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      /angular(\\|\/)core(\\|\/)@angular/,
       __dirname + '/src'
     )
   ]

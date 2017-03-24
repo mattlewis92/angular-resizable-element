@@ -23,10 +23,7 @@ export default function(config) {
 
     webpack: {
       resolve: {
-        extensions: ['.ts', '.js'],
-        alias: {
-          sinon: 'sinon/pkg/sinon'
-        }
+        extensions: ['.ts', '.js']
       },
       module: {
         rules: [{
@@ -43,9 +40,6 @@ export default function(config) {
           loader: 'ts-loader',
           exclude: /node_modules/
         }, {
-          test: /sinon.js$/,
-          loader: 'imports-loader?define=>false,require=>false'
-        }, {
           test: /src\/.+\.ts$/,
           exclude: /(node_modules|\.spec\.ts$)/,
           loader: 'istanbul-instrumenter-loader',
@@ -58,7 +52,7 @@ export default function(config) {
           test: /\.(ts|js)($|\?)/i
         }),
         new webpack.ContextReplacementPlugin(
-          /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+          /angular(\\|\/)core(\\|\/)@angular/,
           __dirname + '/src'
         ),
         ...(config.singleRun ? [new webpack.NoEmitOnErrorsPlugin()] : [])
@@ -86,6 +80,11 @@ export default function(config) {
     phantomjsLauncher: {
       // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
       exitOnResourceError: true
+    },
+
+    browserConsoleLogOptions: {
+      terminal: true,
+      level: 'log'
     }
 
   });
