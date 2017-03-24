@@ -36,13 +36,13 @@
                         <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
                         <ul class="links">
                                 <li class="link">
-                                    <a href="./"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                    <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a  href="./overview.html" 
+                                    <a 
                                         
                                          href="./overview.html" 
-                                        
+                                         href="./overview.html" 
                                         >
                                         <span class="fa fa-th"></span>Overview
                                     </a>
@@ -138,7 +138,7 @@
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                        <a data-type="chapter-link" href="./miscellaneous.html"  class="active" ><span class="fa fa-cubes"></span>Miscellaneous</a>
                     </li>
             
             
@@ -175,13 +175,13 @@
                                <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
                                <ul class="links">
                                        <li class="link">
-                                           <a href="./"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                           <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a  href="./overview.html" 
+                                           <a 
                                                
                                                 href="./overview.html" 
-                                               
+                                                href="./overview.html" 
                                                >
                                                <span class="fa fa-th"></span>Overview
                                            </a>
@@ -277,7 +277,7 @@
                    
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                               <a data-type="chapter-link" href="./miscellaneous.html"  class="active" ><span class="fa fa-cubes"></span>Miscellaneous</a>
                            </li>
                    
                    
@@ -292,42 +292,8 @@
                    
                    </nav>
                </div>
-               <div class="content readme">
+               <div class="content miscellaneous">
                    <div class="content-data">
-<h1 id="angular-resizable-element">angular resizable element</h1>
-<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status" class="img-responsive"></a><br><a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov" class="img-responsive"></a><br><a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version" class="img-responsive"></a><br><a href="https://david-dm.org/mattlewis92/angular-resizable-element?type=dev"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars" class="img-responsive"></a><br><a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
-<h2 id="demo">Demo</h2>
-<p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
-<h2 id="table-of-contents">Table of contents</h2>
-<ul>
-<li><a href="#about">About</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#documentation">Documentation</a></li>
-<li><a href="#development">Development</a></li>
-<li><a href="#licence">License</a></li>
-</ul>
-<h2 id="about">About</h2>
-<p>An angular 4.0+ directive that allows an element to be dragged and resized</p>
-<h2 id="installation">Installation</h2>
-<p>Install through npm:</p>
-<pre><code class="hljs undefined">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> {Component} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizeEvent} <span class="hljs-keyword">from</span> <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@Component</span>({<br>  selector: <span class="hljs-string">'demo-app'</span>,<br>  <span class="hljs-comment">// you should add some styles to the element. See the demo folder for a more fleshed out example</span><br>  template: <span class="hljs-string">`<br>    &lt;div<br>      mwlResizable<br>      [enableGhostResize]="true"<br>      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"<br>      (resizeEnd)="onResizeEnd($event)"&gt;<br>    &lt;/div&gt;<br>  `</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyComponent {<br><br>  onResizeEnd(event: ResizeEvent): <span class="hljs-built_in">void</span> {<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Element was resized'</span>, event);<br>  }<br><br>}<br><br><span class="hljs-comment">// now use within your apps module</span><br><span class="hljs-keyword">import</span> {NgModule} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;<br><span class="hljs-keyword">import</span> {ResizableModule} <span class="hljs-keyword">from</span> <span class="hljs-string">'angular-resizable-element'</span>;<br><br><span class="hljs-meta">@NgModule</span>({<br>  declarations: [MyComponent],<br>  imports: [ResizableModule],<br>  bootstrap: [MyComponent]<br>})<br><span class="hljs-keyword">class</span> MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts">demo source</a>.</p>
-<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
-<pre><code class="hljs undefined"><script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script><br><script><br>    // everything is exported on the  angularResizableElement namespace<br></script></code></pre><h2 id="documentation">Documentation</h2>
-<p>All documentation is auto-generated from the source and can be viewed here:<br><a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
-<h2 id="development">Development</h2>
-<h3 id="prepare-your-environment">Prepare your environment</h3>
-<ul>
-<li>Install <a href="http://nodejs.org/">Node.js</a> and NPM (should come with)</li>
-<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
-</ul>
-<h3 id="development-server">Development server</h3>
-<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
-<h3 id="testing">Testing</h3>
-<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
-<h3 id="release">Release</h3>
-<pre><code class="hljs bash">npm run release</code></pre><h2 id="license">License</h2>
-<p>MIT</p>
 
 
 
@@ -337,6 +303,148 @@
 
 
 
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+</ol>
+
+    <section>
+        <h3 id="inputs">Variables</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> DEFAULT_RESIZE_CURSORS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>DEFAULT_RESIZE_CURSORS:     <code>ResizeCursors</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> RESIZE_ACTIVE_CLASS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>RESIZE_ACTIVE_CLASS:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>resize-active</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> RESIZE_LEFT_HOVER_CLASS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>RESIZE_LEFT_HOVER_CLASS:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>resize-left-hover</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> RESIZE_RIGHT_HOVER_CLASS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>RESIZE_RIGHT_HOVER_CLASS:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>resize-right-hover</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> RESIZE_TOP_HOVER_CLASS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>RESIZE_TOP_HOVER_CLASS:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>resize-top-hover</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> RESIZE_BOTTOM_HOVER_CLASS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>RESIZE_BOTTOM_HOVER_CLASS:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>resize-bottom-hover</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> MOUSE_MOVE_THROTTLE_MS</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>MOUSE_MOVE_THROTTLE_MS:     <code>number</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>50</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+    </section>
 
 
 

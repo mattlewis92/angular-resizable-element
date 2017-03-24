@@ -80,7 +80,7 @@
                                 id="xs-directives-links"
                             >
                                 <li class="link">
-                                    <a href="../directives/Resizable.html"  class="active" >Resizable</a>
+                                    <a href="../directives/Resizable.html" >Resizable</a>
                                 </li>
                                 <li class="link">
                                     <a href="../directives/ResizeHandle.html" >ResizeHandle</a>
@@ -128,7 +128,7 @@
                                     <a href="../interfaces/Edges.html" >Edges</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/ResizeCursors.html" >ResizeCursors</a>
+                                    <a href="../interfaces/ResizeCursors.html"  class="active" >ResizeCursors</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
@@ -219,7 +219,7 @@
                                        id="directives-links"
                    >
                                        <li class="link">
-                                           <a href="../directives/Resizable.html"  class="active" >Resizable</a>
+                                           <a href="../directives/Resizable.html" >Resizable</a>
                                        </li>
                                        <li class="link">
                                            <a href="../directives/ResizeHandle.html" >ResizeHandle</a>
@@ -267,7 +267,7 @@
                                            <a href="../interfaces/Edges.html" >Edges</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/ResizeCursors.html" >ResizeCursors</a>
+                                           <a href="../interfaces/ResizeCursors.html"  class="active" >ResizeCursors</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
@@ -292,14 +292,18 @@
                    
                    </nav>
                </div>
-               <div class="content directive">
+               <div class="content interface">
                    <div class="content-data">
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Directives</li>
-  <li>Resizable</li>
+  <li>Interfaces</li>
+  <li>ResizeCursors</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -322,116 +326,167 @@
 
 
 
-        <section>
-            <h3>Metadata</h3>
-            <table class="table table-sm table-hover">
-                <tbody>
 
-                    <tr>
-                        <td class="col-md-3">selector</td>
-                        <td class="col-md-9"><code>[mwlResizable]</code></td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </section>
-
-
-
-            <section>
-                <h3 id="constructor">Constructor</h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <code>constructor(renderer: Renderer2, zone: <a href="https://angular.io/docs/ts/latest/api/core/index/NgZone-class.html" target="_blank" >NgZone</a>)</code>
-                                </td>
-                            </tr>
-            
-                        </tbody>
-                    </table>
-            </section>
-
-            <section>
-                <h3 id="methods">Methods</h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> getInstance</b>
-                                </td>
-                            </tr>
-            
-                            <tr>
-                                <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle">
-                                            <span class="fa fa-circle"></span>
-                                        </span>
-                                    <code>getInstance(renderer: Renderer2, zone: <a href="https://angular.io/docs/ts/latest/api/core/index/NgZone-class.html" target="_blank" >NgZone</a>)</code>
-                                </td>
-                            </tr>
-            
-                            <tr>
-                                <td class="col-md-4">
-                                        <div class="io-description">
-                                            <b>Returns: </b>    <code><a href="../classes/PointerEventListeners.html" target="_self" >PointerEventListeners</a></code>
-            
-                                        </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </section>
 
             <section>
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerDown</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerDown:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
-            </bcode>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>bottomLeft</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>bottomLeft:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerMove</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerMove:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
-            </bcode>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>bottomRight</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>bottomRight:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerUp</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerUp:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
-            </bcode>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>leftOrRight</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>leftOrRight:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>topLeft</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>topLeft:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>topOrBottom</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>topOrBottom:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <b>topRight</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>topRight:     <code>string</code>
+</bcode>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>string</code>
+
+                                        </td>
+                                    </tr>
+
+
+
                         </tbody>
                     </table>
             </section>
-
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
         <pre><code class="hljs javascript">import {
@@ -1068,10 +1123,6 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 </code></pre>
     </div>
 </div>
-
-
-
-
 
 
 
