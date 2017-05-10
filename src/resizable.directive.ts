@@ -35,89 +35,6 @@ interface PointerEventCoordinate {
   event: MouseEvent | TouchEvent;
 }
 
-class PointerEventListeners {
-
-  public pointerDown: Observable<PointerEventCoordinate>;
-
-  public pointerMove: Observable<PointerEventCoordinate>;
-
-  public pointerUp: Observable<PointerEventCoordinate>;
-
-  private static instance: PointerEventListeners; // tslint:disable-line
-
-  public static getInstance(renderer: Renderer2, zone: NgZone): PointerEventListeners {
-    if (!PointerEventListeners.instance) {
-      PointerEventListeners.instance = new PointerEventListeners(renderer, zone);
-    }
-    return PointerEventListeners.instance;
-  }
-
-  constructor(renderer: Renderer2, zone: NgZone) {
-
-    zone.runOutsideAngular(() => {
-
-      this.pointerDown = new Observable((observer: Observer<PointerEventCoordinate>) => {
-
-        const unsubscribeMouseDown: Function = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchStart: Function = renderer.listen('document', 'touchstart', (event: TouchEvent) => {
-          observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
-        });
-
-        return () => {
-          unsubscribeMouseDown();
-          unsubscribeTouchStart();
-        };
-
-      }).share();
-
-      this.pointerMove = new Observable((observer: Observer<PointerEventCoordinate>) => {
-
-        const unsubscribeMouseMove: Function = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchMove: Function = renderer.listen('document', 'touchmove', (event: TouchEvent) => {
-          observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
-        });
-
-        return () => {
-          unsubscribeMouseMove();
-          unsubscribeTouchMove();
-        };
-
-      }).share();
-
-      this.pointerUp = new Observable((observer: Observer<PointerEventCoordinate>) => {
-
-        const unsubscribeMouseUp: Function = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchEnd: Function = renderer.listen('document', 'touchend', (event: TouchEvent) => {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
-        });
-
-        const unsubscribeTouchCancel: Function = renderer.listen('document', 'touchcancel', (event: TouchEvent) => {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
-        });
-
-        return () => {
-          unsubscribeMouseUp();
-          unsubscribeTouchEnd();
-          unsubscribeTouchCancel();
-        };
-
-      }).share();
-
-    });
-
-  }
-
-}
-
 interface Coordinate {
   x: number;
   y: number;
@@ -346,22 +263,22 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   @Output() resizeEnd: EventEmitter<Object> = new EventEmitter();
 
   /**
-   * @private
+   * @hidden
    */
   public mouseup: Subject<any> = new Subject();
 
   /**
-   * @private
+   * @hidden
    */
   public mousedown: Subject<any> = new Subject();
 
   /**
-   * @private
+   * @hidden
    */
   public mousemove: Subject<any> = new Subject();
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
 
@@ -370,7 +287,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   private pointerEventListenerSubscriptions: any = {};
 
   /**
-   * @private
+   * @hidden
    */
   constructor(
     private renderer: Renderer2,
@@ -381,7 +298,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit(): void {
 
@@ -600,7 +517,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterViewInit(): void {
     this.resizeHandles.forEach((handle: ResizeHandle) => {
@@ -609,7 +526,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy(): void {
     this.mousedown.complete();
@@ -626,6 +543,89 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.renderer.removeClass(elm.nativeElement, name);
     }
+  }
+
+}
+
+class PointerEventListeners {
+
+  public pointerDown: Observable<PointerEventCoordinate>;
+
+  public pointerMove: Observable<PointerEventCoordinate>;
+
+  public pointerUp: Observable<PointerEventCoordinate>;
+
+  private static instance: PointerEventListeners; // tslint:disable-line
+
+  public static getInstance(renderer: Renderer2, zone: NgZone): PointerEventListeners {
+    if (!PointerEventListeners.instance) {
+      PointerEventListeners.instance = new PointerEventListeners(renderer, zone);
+    }
+    return PointerEventListeners.instance;
+  }
+
+  constructor(renderer: Renderer2, zone: NgZone) {
+
+    zone.runOutsideAngular(() => {
+
+      this.pointerDown = new Observable((observer: Observer<PointerEventCoordinate>) => {
+
+        const unsubscribeMouseDown: Function = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
+          observer.next({clientX: event.clientX, clientY: event.clientY, event});
+        });
+
+        const unsubscribeTouchStart: Function = renderer.listen('document', 'touchstart', (event: TouchEvent) => {
+          observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
+        });
+
+        return () => {
+          unsubscribeMouseDown();
+          unsubscribeTouchStart();
+        };
+
+      }).share();
+
+      this.pointerMove = new Observable((observer: Observer<PointerEventCoordinate>) => {
+
+        const unsubscribeMouseMove: Function = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
+          observer.next({clientX: event.clientX, clientY: event.clientY, event});
+        });
+
+        const unsubscribeTouchMove: Function = renderer.listen('document', 'touchmove', (event: TouchEvent) => {
+          observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
+        });
+
+        return () => {
+          unsubscribeMouseMove();
+          unsubscribeTouchMove();
+        };
+
+      }).share();
+
+      this.pointerUp = new Observable((observer: Observer<PointerEventCoordinate>) => {
+
+        const unsubscribeMouseUp: Function = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
+          observer.next({clientX: event.clientX, clientY: event.clientY, event});
+        });
+
+        const unsubscribeTouchEnd: Function = renderer.listen('document', 'touchend', (event: TouchEvent) => {
+          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
+        });
+
+        const unsubscribeTouchCancel: Function = renderer.listen('document', 'touchcancel', (event: TouchEvent) => {
+          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
+        });
+
+        return () => {
+          unsubscribeMouseUp();
+          unsubscribeTouchEnd();
+          unsubscribeTouchCancel();
+        };
+
+      }).share();
+
+    });
+
   }
 
 }
