@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/mattlewis92/angular-resizable-element/compare/v1.0.0...v1.1.0) (2017-05-12)
+
+
+### Features
+
+* add a class to the ghost element ([54be6b7](https://github.com/mattlewis92/angular-resizable-element/commit/54be6b7))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.1...v1.0.0) (2017-03-24)
 
