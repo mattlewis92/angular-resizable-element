@@ -193,6 +193,7 @@ const RESIZE_LEFT_HOVER_CLASS: string = 'resize-left-hover';
 const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
 const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
 const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
+const RESIZE_GHOST_ELEMENT_CLASS: string = 'resize-ghost-element';
 
 export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 
@@ -487,6 +488,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
         this.renderer.setStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
         this.renderer.setStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
+        this.renderer.addClass(currentResize.clonedNode, RESIZE_GHOST_ELEMENT_CLASS);
       }
       this.zone.run(() => {
         this.resizeStart.emit({
