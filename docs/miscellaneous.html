@@ -107,28 +107,6 @@
                     </li>
             
             
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-info"></span>
-                            <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-interfaces-links"
-                            >
-                                <li class="link">
-                                    <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./interfaces/Edges.html" >Edges</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                </li>
-                        </ul>
-                    </li>
             
             
             
@@ -241,28 +219,6 @@
                            </li>
                    
                    
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-info"></span>
-                                   <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="interfaces-links"
-                   >
-                                       <li class="link">
-                                           <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./interfaces/Edges.html" >Edges</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                       </li>
-                               </ul>
-                           </li>
                    
                    
                    
@@ -330,7 +286,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>resize-active</code>
+                                    <i>Default value : </i><code>resize-active</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -350,7 +306,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>resize-left-hover</code>
+                                    <i>Default value : </i><code>resize-left-hover</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -370,7 +326,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>resize-right-hover</code>
+                                    <i>Default value : </i><code>resize-right-hover</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -390,7 +346,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>resize-top-hover</code>
+                                    <i>Default value : </i><code>resize-top-hover</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -410,7 +366,27 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>resize-bottom-hover</code>
+                                    <i>Default value : </i><code>resize-bottom-hover</code>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+                <table class="table table-sm table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <b> RESIZE_GHOST_ELEMENT_CLASS</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>RESIZE_GHOST_ELEMENT_CLASS:     <code>string</code>
+        </bcode>
+                            </td>
+                        </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Default value : </i><code>resize-ghost-element</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -430,7 +406,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <i>Default value: </i><code>50</code>
+                                    <i>Default value : </i><code>50</code>
                                 </td>
                             </tr>
                     </tbody>
@@ -449,9 +425,10 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-        <code>isNumberCloseTo(value1: Number, value2: Number, precision: Number)</code>
+        <code>isNumberCloseTo(value1: undefined, value2: undefined, precision: undefined)</code>
                             </td>
                         </tr>
+        
         
         
                     </tbody>
@@ -465,9 +442,10 @@
                         </tr>
                         <tr>
                             <td class="col-md-4">
-        <code>getNewBoundingRectangle(startingRect: undefined, edges: undefined, clientX: Number, clientY: Number)</code>
+        <code>getNewBoundingRectangle(startingRect: undefined, edges: undefined, clientX: undefined, clientY: undefined)</code>
                             </td>
                         </tr>
+        
         
         
                     </tbody>
@@ -486,6 +464,7 @@
                         </tr>
         
         
+        
                     </tbody>
                 </table>
                 <table class="table table-sm table-bordered">
@@ -500,6 +479,7 @@
         <code>isWithinBoundingY(undefined: undefined)</code>
                             </td>
                         </tr>
+        
         
         
                     </tbody>
@@ -518,6 +498,7 @@
                         </tr>
         
         
+        
                     </tbody>
                 </table>
                 <table class="table table-sm table-bordered">
@@ -532,6 +513,7 @@
         <code>getResizeEdges(undefined: undefined)</code>
                             </td>
                         </tr>
+        
         
         
                     </tbody>
@@ -550,6 +532,7 @@
                         </tr>
         
         
+        
                     </tbody>
                 </table>
                 <table class="table table-sm table-bordered">
@@ -564,6 +547,7 @@
         <code>getEdgesDiff(undefined: undefined)</code>
                             </td>
                         </tr>
+        
         
         
                     </tbody>

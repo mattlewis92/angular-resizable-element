@@ -107,28 +107,6 @@
                     </li>
             
             
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-info"></span>
-                            <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-interfaces-links"
-                            >
-                                <li class="link">
-                                    <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./interfaces/Edges.html" >Edges</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                </li>
-                        </ul>
-                    </li>
             
             
             
@@ -241,28 +219,6 @@
                            </li>
                    
                    
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-info"></span>
-                                   <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="interfaces-links"
-                   >
-                                       <li class="link">
-                                           <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./interfaces/Edges.html" >Edges</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                       </li>
-                               </ul>
-                           </li>
                    
                    
                    
@@ -285,7 +241,13 @@
                <div class="content readme">
                    <div class="content-data">
 <h1 id="angular-resizable-element">angular resizable element</h1>
-<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status" class="img-responsive"></a><br><a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov" class="img-responsive"></a><br><a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version" class="img-responsive"></a><br><a href="https://david-dm.org/mattlewis92/angular-resizable-element?type=dev"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues" class="img-responsive"></a><br><a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars" class="img-responsive"></a><br><a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
+<p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status" class="img-responsive"></a>
+<a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov" class="img-responsive"></a>
+<a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version" class="img-responsive"></a>
+<a href="https://david-dm.org/mattlewis92/angular-resizable-element?type=dev"><img src="https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg" alt="devDependency Status" class="img-responsive"></a>
+<a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues" class="img-responsive"></a>
+<a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars" class="img-responsive"></a>
+<a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
 <h2 id="demo">Demo</h2>
 <p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
 <h2 id="table-of-contents">Table of contents</h2>
@@ -301,45 +263,46 @@
 <h2 id="installation">Installation</h2>
 <p>Install through npm:</p>
 <pre class="line-numbers"><code class="language-none">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
-<pre class="line-numbers"><code class="language-typescript">import {Component} from '@angular/core';
-import {ResizeEvent} from 'angular-resizable-element';
+<pre class="line-numbers"><code class="language-typescript">import {Component} from &#39;&#40;angular/core&#39;;
+import {ResizeEvent} from &#39;angular-resizable-element&#39;;
 
-@Component({
-  selector: 'demo-app',
+&#40;Component({
+  selector: &#39;demo-app&#39;,
   // you should add some styles to the element. See the demo folder for a more fleshed out example
   template: `
-    <div
+    &lt;div
       mwlResizable
-      [enableGhostResize]="true"
-      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-      (resizeEnd)="onResizeEnd($event)">
-    </div>
+      [enableGhostResize]=&quot;true&quot;
+      [resizeEdges]=&quot;{bottom: true, right: true, top: true, left: true}&quot;
+      (resizeEnd)=&quot;onResizeEnd($event)&quot;&gt;
+    &lt;/div&gt;
   `
 })
 export class MyComponent {
 
   onResizeEnd(event: ResizeEvent): void {
-    console.log('Element was resized', event);
+    console.log(&#39;Element was resized&#39;, event);
   }
 
 }
 
 // now use within your apps module
-import {NgModule} from '@angular/core';
-import {ResizableModule} from 'angular-resizable-element';
+import {NgModule} from &#39;&#40;angular/core&#39;;
+import {ResizableModule} from &#39;angular-resizable-element&#39;;
 
-@NgModule({
+&#40;NgModule({
   declarations: [MyComponent],
   imports: [ResizableModule],
   bootstrap: [MyComponent]
 })
 class MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts">demo source</a>.</p>
 <h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
-<pre class="line-numbers"><code class="language-none"><script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script>
-<script>
+<pre class="line-numbers"><code class="language-none">&lt;script src=&quot;node_modules/angular-resizable-element/angular-resizable-element.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
     // everything is exported on the  angularResizableElement namespace
-</script></code></pre><h2 id="documentation">Documentation</h2>
-<p>All documentation is auto-generated from the source and can be viewed here:<br><a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
+&lt;/script&gt;</code></pre><h2 id="documentation">Documentation</h2>
+<p>All documentation is auto-generated from the source and can be viewed here:
+<a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
 <h2 id="development">Development</h2>
 <h3 id="prepare-your-environment">Prepare your environment</h3>
 <ul>

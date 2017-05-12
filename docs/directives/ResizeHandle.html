@@ -107,28 +107,6 @@
                     </li>
             
             
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-info"></span>
-                            <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-interfaces-links"
-                            >
-                                <li class="link">
-                                    <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/Edges.html" >Edges</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                </li>
-                        </ul>
-                    </li>
             
             
             
@@ -241,28 +219,6 @@
                            </li>
                    
                    
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-info"></span>
-                                   <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="interfaces-links"
-                   >
-                                       <li class="link">
-                                           <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/Edges.html" >Edges</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                       </li>
-                               </ul>
-                           </li>
                    
                    
                    
@@ -314,11 +270,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>An element placed inside a <code>mwlResizable</code> directive to be used as a drag and resize handle</p>
-<p>For example</p>
-<pre class="line-numbers"><code class="language-none">&lt;div mwlResizable&gt;
-   &lt;div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"&gt;&lt;/div&gt;
-&lt;/div&gt;</code></pre>
+                <p>An element placed inside a <code>mwlResizable</code> directive to be used as a drag and resize handle</p><br/><p>For example</p><br/><pre class="line-numbers"><code class="language-none">&amp;lt;div mwlResizable&amp;gt;<br/>   &amp;lt;div mwlResizeHandle [resizeEdges]=&quot;{bottom: true, right: true}&quot;&amp;gt;&amp;lt;/div&amp;gt;<br/>&amp;lt;/div&amp;gt;</code></pre>
             </p>
 
             <p class="comment">
@@ -352,10 +304,9 @@
                                     <code>resizeEdges</code>
                                 </td>
                                 <td class="col-md-10">
-                                    <div><p>The <code>Edges</code> object that contains the edges of the parent element that dragging the handle will trigger a resize on</p>
-</div>
+                                    <div><p>The <code>Edges</code> object that contains the edges of the parent element that dragging the handle will trigger a resize on</p><br/></div>
                                       <p>
-                                        <em>Type:</em>    <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
+                                        <em>Type:</em>    <code>Edges</code>
 
                                       </p>
                                 </td>
@@ -407,6 +358,7 @@
                                 </td>
                             </tr>
             
+            
                                 <tr>
                                     <td class="col-md-4">
                                         <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/resizeHandle.directive.ts:38</a></div>
@@ -417,7 +369,7 @@
                                 <td class="col-md-4">
             
                                         <div class="io-description">
-                                            <b>Returns: </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>void</code>
             
                                         </div>
                                 </td>
@@ -439,6 +391,12 @@
             
                                 <tr>
                                     <td class="col-md-4">
+                                        <i>Decorators : </i><code>HostListenerHostListener</code>
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td class="col-md-4">
                                         <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/resizeHandle.directive.ts:47</a></div>
                                     </td>
                                 </tr>
@@ -449,7 +407,7 @@
                                         <div class="io-description">
                                         </div>
                                         <div class="io-description">
-                                            <b>Returns: </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>void</code>
             
                                         </div>
                                             <div class="io-description">
@@ -474,6 +432,12 @@
             
                                 <tr>
                                     <td class="col-md-4">
+                                        <i>Decorators : </i><code>HostListenerHostListenerHostListener</code>
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td class="col-md-4">
                                         <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/resizeHandle.directive.ts:69</a></div>
                                     </td>
                                 </tr>
@@ -484,7 +448,7 @@
                                         <div class="io-description">
                                         </div>
                                         <div class="io-description">
-                                            <b>Returns: </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>void</code>
             
                                         </div>
                                             <div class="io-description">
@@ -505,12 +469,12 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> resizable</b>
+                                    <b><span class="modifier">Static</span> resizable</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>resizable:     <code>Resizable</code>
+                                    <span class="modifier-icon fa fa-export"></span><code>resizable:     <code>Resizable</code>
             </bcode>
                                 </td>
                             </tr>

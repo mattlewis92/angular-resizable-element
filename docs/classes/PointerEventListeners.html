@@ -107,28 +107,6 @@
                     </li>
             
             
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-info"></span>
-                            <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-interfaces-links"
-                            >
-                                <li class="link">
-                                    <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/Edges.html" >Edges</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                </li>
-                        </ul>
-                    </li>
             
             
             
@@ -241,28 +219,6 @@
                            </li>
                    
                    
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-info"></span>
-                                   <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="interfaces-links"
-                   >
-                                       <li class="link">
-                                           <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/Edges.html" >Edges</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/ResizeEvent.html" >ResizeEvent</a>
-                                       </li>
-                               </ul>
-                           </li>
                    
                    
                    
@@ -327,7 +283,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="565" class="link-to-prism">src/resizable.directive.ts:565</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="567" class="link-to-prism">src/resizable.directive.ts:567</a></div>
                                     </td>
                                 </tr>
             
@@ -344,21 +300,22 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> getInstance</b>
+                                    <b><span class="modifier">Static</span> getInstance</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle">
-                                            <span class="fa fa-circle"></span>
+                                        <span class="modifier-icon method fa fa-play export">
+                                            <span class="fa fa-export"></span>
                                         </span>
                                     <code>getInstance(renderer: <a href="https://angular.io/docs/ts/latest/api/core/index/Renderer2-class.html" target="_blank">Renderer2</a>, zone: <a href="https://angular.io/docs/ts/latest/api/core/index/NgZone-class.html" target="_blank">NgZone</a>)</code>
                                 </td>
                             </tr>
             
+            
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="560" class="link-to-prism">src/resizable.directive.ts:560</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="562" class="link-to-prism">src/resizable.directive.ts:562</a></div>
                                     </td>
                                 </tr>
             
@@ -366,7 +323,7 @@
                                 <td class="col-md-4">
             
                                         <div class="io-description">
-                                            <b>Returns: </b>    <code><a href="../classes/PointerEventListeners.html" target="_self" >PointerEventListeners</a></code>
+                                            <b>Returns : </b>    <code><a href="../classes/PointerEventListeners.html" target="_self" >PointerEventListeners</a></code>
             
                                         </div>
                                 </td>
@@ -385,32 +342,12 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerDown</b>
+                                    <b><span class="modifier">Static</span> pointerDown</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerDown:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
-            </bcode>
-                                </td>
-                            </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="552" class="link-to-prism">src/resizable.directive.ts:552</a></div>
-                                    </td>
-                                </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerMove</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerMove:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
+                                    <span class="modifier-icon fa fa-export"></span><code>pointerDown:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
             </bcode>
                                 </td>
                             </tr>
@@ -425,18 +362,38 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier">Public</span> pointerUp</b>
+                                    <b><span class="modifier">Static</span> pointerMove</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-circle"></span><code>pointerUp:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
+                                    <span class="modifier-icon fa fa-export"></span><code>pointerMove:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
             </bcode>
                                 </td>
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
                                         <div class="io-line">Defined in <a href="" data-line="556" class="link-to-prism">src/resizable.directive.ts:556</a></div>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Static</span> pointerUp</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-export"></span><code>pointerUp:     <code>Observable&lt;PointerEventCoordinate&gt;</code>
+            </bcode>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <div class="io-line">Defined in <a href="" data-line="558" class="link-to-prism">src/resizable.directive.ts:558</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -639,6 +596,7 @@ const RESIZE_LEFT_HOVER_CLASS: string &#x3D; &#x27;resize-left-hover&#x27;;
 const RESIZE_RIGHT_HOVER_CLASS: string &#x3D; &#x27;resize-right-hover&#x27;;
 const RESIZE_TOP_HOVER_CLASS: string &#x3D; &#x27;resize-top-hover&#x27;;
 const RESIZE_BOTTOM_HOVER_CLASS: string &#x3D; &#x27;resize-bottom-hover&#x27;;
+const RESIZE_GHOST_ELEMENT_CLASS: string &#x3D; &#x27;resize-ghost-element&#x27;;
 
 export const MOUSE_MOVE_THROTTLE_MS: number &#x3D; 50;
 
@@ -933,6 +891,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setStyle(currentResize.clonedNode, &#x27;height&#x27;, &#x60;${currentResize.startingRect.height}px&#x60;);
         this.renderer.setStyle(currentResize.clonedNode, &#x27;width&#x27;, &#x60;${currentResize.startingRect.width}px&#x60;);
         this.renderer.setStyle(currentResize.clonedNode, &#x27;cursor&#x27;, getResizeCursor(currentResize.edges, resizeCursors));
+        this.renderer.addClass(currentResize.clonedNode, RESIZE_GHOST_ELEMENT_CLASS);
       }
       this.zone.run(() &#x3D;&gt; {
         this.resizeStart.emit({
