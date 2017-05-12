@@ -1100,6 +1100,20 @@ describe('resizable directive', () => {
 
   });
 
+  it('should add a class to the ghost element', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    fixture.detectChanges();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 200
+    });
+    expect(elm.classList.contains('resize-ghost-element')).to.be.false;
+    expect(elm.nextSibling['classList'].contains('resize-ghost-element')).to.be.true;
+
+  });
+
   describe('absolute positioning', () => {
     let domEvents: Array<any>;
     beforeEach(() => {

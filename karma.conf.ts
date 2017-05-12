@@ -33,7 +33,7 @@ export default function(config) {
           enforce: 'pre',
           options: {
             emitErrors: config.singleRun,
-            failOnHint: false
+            failOnHint: config.singleRun
           }
         }, {
           test: /\.ts$/,
