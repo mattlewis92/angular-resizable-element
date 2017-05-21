@@ -76,6 +76,8 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
   if (ghostElementPositioning === 'absolute') {
     return {
+      height: element.nativeElement.offsetHeight,
+      width: element.nativeElement.offsetWidth,
       top: element.nativeElement.offsetTop,
       bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
       left: element.nativeElement.offsetLeft,
@@ -84,6 +86,8 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
   } else {
     const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
     return {
+      height: boundingRect.height,
+      width: boundingRect.width,
       top: boundingRect.top,
       bottom: boundingRect.bottom,
       left: boundingRect.left,
