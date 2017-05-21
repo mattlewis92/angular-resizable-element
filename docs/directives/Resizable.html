@@ -318,7 +318,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">src/resizable.directive.ts:227</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">src/resizable.directive.ts:231</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -342,7 +342,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="249" class="link-to-prism">src/resizable.directive.ts:249</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">src/resizable.directive.ts:253</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -366,7 +366,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="244" class="link-to-prism">src/resizable.directive.ts:244</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="248" class="link-to-prism">src/resizable.directive.ts:248</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -390,7 +390,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="239" class="link-to-prism">src/resizable.directive.ts:239</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">src/resizable.directive.ts:243</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -411,7 +411,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="222" class="link-to-prism">src/resizable.directive.ts:222</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="226" class="link-to-prism">src/resizable.directive.ts:226</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -432,7 +432,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="234" class="link-to-prism">src/resizable.directive.ts:234</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">src/resizable.directive.ts:238</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -453,7 +453,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="217" class="link-to-prism">src/resizable.directive.ts:217</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="221" class="link-to-prism">src/resizable.directive.ts:221</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -476,7 +476,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="264" class="link-to-prism">src/resizable.directive.ts:264</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="268" class="link-to-prism">src/resizable.directive.ts:268</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -495,7 +495,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="254" class="link-to-prism">src/resizable.directive.ts:254</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="258" class="link-to-prism">src/resizable.directive.ts:258</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -514,7 +514,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="259" class="link-to-prism">src/resizable.directive.ts:259</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="263" class="link-to-prism">src/resizable.directive.ts:263</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -604,6 +604,8 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
   if (ghostElementPositioning &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
     return {
+      height: element.nativeElement.offsetHeight,
+      width: element.nativeElement.offsetWidth,
       top: element.nativeElement.offsetTop,
       bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
       left: element.nativeElement.offsetLeft,
@@ -612,6 +614,8 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
   } else {
     const boundingRect: BoundingRectangle &#x3D; element.nativeElement.getBoundingClientRect();
     return {
+      height: boundingRect.height,
+      width: boundingRect.width,
       top: boundingRect.top,
       bottom: boundingRect.bottom,
       left: boundingRect.left,
