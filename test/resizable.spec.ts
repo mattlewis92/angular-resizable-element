@@ -604,6 +604,19 @@ describe('resizable directive', () => {
 
   });
 
+  it('should set the cloned elements width and height on the resize start', () => {
+
+    const fixture: ComponentFixture<TestCmp> = createComponent();
+    const elm: HTMLElement = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 200
+    });
+    expect(elm.nextSibling['style'].width).to.equal('300px');
+    expect(elm.nextSibling['style'].height).to.equal('150px');
+
+  });
+
   it('should reset existing styles after a resize', () => {
 
     const fixture: ComponentFixture<TestCmp> = createComponent();

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.0...v1.1.1) (2017-05-21)
+
+
+### Bug Fixes
+
+* set ghost element width and height on resize start ([be5d727](https://github.com/mattlewis92/angular-resizable-element/commit/be5d727)), closes [#53](https://github.com/mattlewis92/angular-resizable-element/issues/53)
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/mattlewis92/angular-resizable-element/compare/v1.0.0...v1.1.0) (2017-05-12)
 
