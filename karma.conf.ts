@@ -1,4 +1,5 @@
 import * as webpack from 'webpack';
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default function(config) {
   config.set({
@@ -38,7 +39,10 @@ export default function(config) {
         }, {
           test: /\.ts$/,
           loader: 'ts-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          options: {
+            transpileOnly: !config.singleRun
+          }
         }, {
           test: /src\/.+\.ts$/,
           exclude: /(node_modules|\.spec\.ts$)/,
@@ -55,7 +59,13 @@ export default function(config) {
           /angular(\\|\/)core(\\|\/)@angular/,
           __dirname + '/src'
         ),
-        ...(config.singleRun ? [new webpack.NoEmitOnErrorsPlugin()] : [])
+        ...(config.singleRun ? [
+          new webpack.NoEmitOnErrorsPlugin()
+        ] : [
+          new ForkTsCheckerWebpackPlugin({
+            watch: ['./src', './test']
+          })
+        ])
       ]
     },
 
@@ -73,19 +83,13 @@ export default function(config) {
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
-
-    phantomjsLauncher: {
-      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
-      exitOnResourceError: true
+    mime: {
+      'text/x-typescript': ['ts']
     },
 
-    browserConsoleLogOptions: {
-      terminal: true,
-      level: 'log'
-    }
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['ChromeHeadless']
 
   });
 };
