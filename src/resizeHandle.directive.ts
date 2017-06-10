@@ -42,9 +42,10 @@ export class ResizeHandle implements OnDestroy {
   /**
    * @private
    */
-  @HostListener('touchstart', ['$event.touches[0].clientX', '$event.touches[0].clientY'])
-  @HostListener('mousedown', ['$event.clientX', '$event.clientY'])
-  onMousedown(mouseX: number, mouseY: number): void {
+  @HostListener('touchstart', ['$event', '$event.touches[0].clientX', '$event.touches[0].clientY'])
+  @HostListener('mousedown', ['$event', '$event.clientX', '$event.clientY'])
+  onMousedown(event: any, mouseX: number, mouseY: number): void {
+    event.preventDefault();
     this.zone.runOutsideAngular(() => {
       if (!this.eventListeners.touchmove) {
         this.eventListeners.touchmove = this.renderer.listen(this.element.nativeElement, 'touchmove', (event: any) => {
