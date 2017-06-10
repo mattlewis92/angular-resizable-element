@@ -385,7 +385,7 @@
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>onMousedown(mouseX: number, mouseY: number)</code>
+            <code>onMousedown(event: any, mouseX: number, mouseY: number)</code>
                                 </td>
                             </tr>
             
@@ -438,7 +438,7 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/resizeHandle.directive.ts:69</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/resizeHandle.directive.ts:70</a></div>
                                     </td>
                                 </tr>
             
@@ -533,9 +533,10 @@ export class ResizeHandle implements OnDestroy {
   /**
    * @private
    */
-  @HostListener(&#x27;touchstart&#x27;, [&#x27;$event.touches[0].clientX&#x27;, &#x27;$event.touches[0].clientY&#x27;])
-  @HostListener(&#x27;mousedown&#x27;, [&#x27;$event.clientX&#x27;, &#x27;$event.clientY&#x27;])
-  onMousedown(mouseX: number, mouseY: number): void {
+  @HostListener(&#x27;touchstart&#x27;, [&#x27;$event&#x27;, &#x27;$event.touches[0].clientX&#x27;, &#x27;$event.touches[0].clientY&#x27;])
+  @HostListener(&#x27;mousedown&#x27;, [&#x27;$event&#x27;, &#x27;$event.clientX&#x27;, &#x27;$event.clientY&#x27;])
+  onMousedown(event: any, mouseX: number, mouseY: number): void {
+    event.preventDefault();
     this.zone.runOutsideAngular(() &#x3D;&gt; {
       if (!this.eventListeners.touchmove) {
         this.eventListeners.touchmove &#x3D; this.renderer.listen(this.element.nativeElement, &#x27;touchmove&#x27;, (event: any) &#x3D;&gt; {
