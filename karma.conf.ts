@@ -1,4 +1,5 @@
 import * as webpack from 'webpack';
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default function(config) {
   config.set({
@@ -38,7 +39,10 @@ export default function(config) {
         }, {
           test: /\.ts$/,
           loader: 'ts-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
+          options: {
+            transpileOnly: !config.singleRun
+          }
         }, {
           test: /src\/.+\.ts$/,
           exclude: /(node_modules|\.spec\.ts$)/,
@@ -55,7 +59,13 @@ export default function(config) {
           /angular(\\|\/)core(\\|\/)@angular/,
           __dirname + '/src'
         ),
-        ...(config.singleRun ? [new webpack.NoEmitOnErrorsPlugin()] : [])
+        ...(config.singleRun ? [
+          new webpack.NoEmitOnErrorsPlugin()
+        ] : [
+          new ForkTsCheckerWebpackPlugin({
+            watch: ['./src', './test']
+          })
+        ])
       ]
     },
 
