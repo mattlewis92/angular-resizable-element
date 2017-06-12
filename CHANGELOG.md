@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.2...v1.2.0) (2017-06-12)
+
+
+### Features
+
+* export Edges and BoundingRectangle interfaces for use within applications ([10051cd](https://github.com/mattlewis92/angular-resizable-element/commit/10051cd))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.1...v1.1.2) (2017-06-10)
 
