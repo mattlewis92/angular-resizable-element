@@ -177,7 +177,7 @@ function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   } else if (edges.top || edges.bottom) {
     return cursors.topOrBottom;
   } else {
-    return null;
+    return '';
   }
 }
 
@@ -351,7 +351,7 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         cursorPrecision: this.resizeCursorPrecision
       });
       const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
-      const cursor: string = currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
+      const cursor: string = currentResize ? '' : getResizeCursor(resizeEdges, resizeCursors);
 
       this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
       this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);

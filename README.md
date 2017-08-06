@@ -37,7 +37,12 @@ import {ResizeEvent} from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
-  // you should add some styles to the element. See the demo folder for a more fleshed out example
+  // you should add some more styles to the element. See the demo folder for a more fleshed out example
+  styles: [`
+    mwlResizable {
+      box-sizing: border-box; // required for the enableGhostResize option to work
+    }
+  `],
   template: `
     <div
       mwlResizable
