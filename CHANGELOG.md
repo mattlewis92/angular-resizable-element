@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.1...v1.2.2) (2017-08-28)
+
+
+### Bug Fixes
+
+* ensure mouse event handlers are triggers outside of the angular zone ([23fc6e5](https://github.com/mattlewis92/angular-resizable-element/commit/23fc6e5)), closes [#65](https://github.com/mattlewis92/angular-resizable-element/issues/65)
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.0...v1.2.1) (2017-08-06)
 
