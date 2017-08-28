@@ -572,65 +572,75 @@ class PointerEventListeners {
 
   constructor(renderer: Renderer2, zone: NgZone) {
 
-    zone.runOutsideAngular(() => {
+    this.pointerDown = new Observable((observer: Observer<PointerEventCoordinate>) => {
 
-      this.pointerDown = new Observable((observer: Observer<PointerEventCoordinate>) => {
+      let unsubscribeMouseDown: Function, unsubscribeTouchStart: Function;
 
-        const unsubscribeMouseDown: Function = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
+      zone.runOutsideAngular(() => {
+        unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchStart: Function = renderer.listen('document', 'touchstart', (event: TouchEvent) => {
+        unsubscribeTouchStart = renderer.listen('document', 'touchstart', (event: TouchEvent) => {
           observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
         });
+      });
 
-        return () => {
-          unsubscribeMouseDown();
-          unsubscribeTouchStart();
-        };
+      return () => {
+        unsubscribeMouseDown();
+        unsubscribeTouchStart();
+      };
 
-      }).share();
+    }).share();
 
-      this.pointerMove = new Observable((observer: Observer<PointerEventCoordinate>) => {
+    this.pointerMove = new Observable((observer: Observer<PointerEventCoordinate>) => {
 
-        const unsubscribeMouseMove: Function = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
+      let unsubscribeMouseMove: Function, unsubscribeTouchMove: Function;
+
+      zone.runOutsideAngular(() => {
+
+        unsubscribeMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchMove: Function = renderer.listen('document', 'touchmove', (event: TouchEvent) => {
+        unsubscribeTouchMove = renderer.listen('document', 'touchmove', (event: TouchEvent) => {
           observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
         });
 
-        return () => {
-          unsubscribeMouseMove();
-          unsubscribeTouchMove();
-        };
+      });
 
-      }).share();
+      return () => {
+        unsubscribeMouseMove();
+        unsubscribeTouchMove();
+      };
 
-      this.pointerUp = new Observable((observer: Observer<PointerEventCoordinate>) => {
+    }).share();
 
-        const unsubscribeMouseUp: Function = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
+    this.pointerUp = new Observable((observer: Observer<PointerEventCoordinate>) => {
+
+      let unsubscribeMouseUp: Function, unsubscribeTouchEnd: Function, unsubscribeTouchCancel: Function;
+
+      zone.runOutsideAngular(() => {
+        unsubscribeMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchEnd: Function = renderer.listen('document', 'touchend', (event: TouchEvent) => {
+        unsubscribeTouchEnd = renderer.listen('document', 'touchend', (event: TouchEvent) => {
           observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
         });
 
-        const unsubscribeTouchCancel: Function = renderer.listen('document', 'touchcancel', (event: TouchEvent) => {
+        unsubscribeTouchCancel = renderer.listen('document', 'touchcancel', (event: TouchEvent) => {
           observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
         });
+      });
 
-        return () => {
-          unsubscribeMouseUp();
-          unsubscribeTouchEnd();
-          unsubscribeTouchCancel();
-        };
+      return () => {
+        unsubscribeMouseUp();
+        unsubscribeTouchEnd();
+        unsubscribeTouchCancel();
+      };
 
-      }).share();
-
-    });
+    }).share();
 
   }
 
