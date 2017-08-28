@@ -1100,65 +1100,75 @@ class PointerEventListeners {
 
   constructor(renderer: Renderer2, zone: NgZone) {
 
-    zone.runOutsideAngular(() &#x3D;&gt; {
+    this.pointerDown &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
 
-      this.pointerDown &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+      let unsubscribeMouseDown: Function, unsubscribeTouchStart: Function;
 
-        const unsubscribeMouseDown: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousedown&#x27;, (event: MouseEvent) &#x3D;&gt; {
+      zone.runOutsideAngular(() &#x3D;&gt; {
+        unsubscribeMouseDown &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousedown&#x27;, (event: MouseEvent) &#x3D;&gt; {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchStart: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchstart&#x27;, (event: TouchEvent) &#x3D;&gt; {
+        unsubscribeTouchStart &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchstart&#x27;, (event: TouchEvent) &#x3D;&gt; {
           observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
         });
+      });
 
-        return () &#x3D;&gt; {
-          unsubscribeMouseDown();
-          unsubscribeTouchStart();
-        };
+      return () &#x3D;&gt; {
+        unsubscribeMouseDown();
+        unsubscribeTouchStart();
+      };
 
-      }).share();
+    }).share();
 
-      this.pointerMove &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+    this.pointerMove &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
 
-        const unsubscribeMouseMove: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousemove&#x27;, (event: MouseEvent) &#x3D;&gt; {
+      let unsubscribeMouseMove: Function, unsubscribeTouchMove: Function;
+
+      zone.runOutsideAngular(() &#x3D;&gt; {
+
+        unsubscribeMouseMove &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousemove&#x27;, (event: MouseEvent) &#x3D;&gt; {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchMove: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchmove&#x27;, (event: TouchEvent) &#x3D;&gt; {
+        unsubscribeTouchMove &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchmove&#x27;, (event: TouchEvent) &#x3D;&gt; {
           observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
         });
 
-        return () &#x3D;&gt; {
-          unsubscribeMouseMove();
-          unsubscribeTouchMove();
-        };
+      });
 
-      }).share();
+      return () &#x3D;&gt; {
+        unsubscribeMouseMove();
+        unsubscribeTouchMove();
+      };
 
-      this.pointerUp &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+    }).share();
 
-        const unsubscribeMouseUp: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mouseup&#x27;, (event: MouseEvent) &#x3D;&gt; {
+    this.pointerUp &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+
+      let unsubscribeMouseUp: Function, unsubscribeTouchEnd: Function, unsubscribeTouchCancel: Function;
+
+      zone.runOutsideAngular(() &#x3D;&gt; {
+        unsubscribeMouseUp &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mouseup&#x27;, (event: MouseEvent) &#x3D;&gt; {
           observer.next({clientX: event.clientX, clientY: event.clientY, event});
         });
 
-        const unsubscribeTouchEnd: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchend&#x27;, (event: TouchEvent) &#x3D;&gt; {
+        unsubscribeTouchEnd &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchend&#x27;, (event: TouchEvent) &#x3D;&gt; {
           observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
         });
 
-        const unsubscribeTouchCancel: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchcancel&#x27;, (event: TouchEvent) &#x3D;&gt; {
+        unsubscribeTouchCancel &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchcancel&#x27;, (event: TouchEvent) &#x3D;&gt; {
           observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
         });
+      });
 
-        return () &#x3D;&gt; {
-          unsubscribeMouseUp();
-          unsubscribeTouchEnd();
-          unsubscribeTouchCancel();
-        };
+      return () &#x3D;&gt; {
+        unsubscribeMouseUp();
+        unsubscribeTouchEnd();
+        unsubscribeTouchCancel();
+      };
 
-      }).share();
-
-    });
+    }).share();
 
   }
 
