@@ -91,7 +91,9 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
       top: boundingRect.top,
       bottom: boundingRect.bottom,
       left: boundingRect.left,
-      right: boundingRect.right
+      right: boundingRect.right,
+      scrollTop: element.nativeElement.scrollTop,
+      scrollLeft: element.nativeElement.scrollLeft
     };
   }
 }
@@ -493,6 +495,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
         this.renderer.setStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
         this.renderer.addClass(currentResize.clonedNode, RESIZE_GHOST_ELEMENT_CLASS);
+        currentResize.clonedNode.scrollTop = currentResize.startingRect.scrollTop;
+        currentResize.clonedNode.scrollLeft = currentResize.startingRect.scrollLeft;
       }
       this.zone.run(() => {
         this.resizeStart.emit({
