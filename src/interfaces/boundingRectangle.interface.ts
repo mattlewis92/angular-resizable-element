@@ -8,4 +8,6 @@ export interface BoundingRectangle {
   right: number;
   height?: number;
   width?: number;
+  scrollTop?: number;
+  scrollLeft?: number;
 }

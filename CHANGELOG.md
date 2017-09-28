@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.2...v1.2.3) (2017-09-28)
+
+
+### Bug Fixes
+
+* Add startingRect scroll position to cloned node. ([#66](https://github.com/mattlewis92/angular-resizable-element/issues/66)) ([a056154](https://github.com/mattlewis92/angular-resizable-element/commit/a056154))
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.1...v1.2.2) (2017-08-28)
 
