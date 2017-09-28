@@ -318,7 +318,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">src/resizable.directive.ts:231</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="233" class="link-to-prism">src/resizable.directive.ts:233</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -342,7 +342,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">src/resizable.directive.ts:253</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="255" class="link-to-prism">src/resizable.directive.ts:255</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -366,7 +366,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="248" class="link-to-prism">src/resizable.directive.ts:248</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="250" class="link-to-prism">src/resizable.directive.ts:250</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -390,7 +390,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">src/resizable.directive.ts:243</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="245" class="link-to-prism">src/resizable.directive.ts:245</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -411,7 +411,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="226" class="link-to-prism">src/resizable.directive.ts:226</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="228" class="link-to-prism">src/resizable.directive.ts:228</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -432,7 +432,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">src/resizable.directive.ts:238</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="240" class="link-to-prism">src/resizable.directive.ts:240</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -453,7 +453,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="221" class="link-to-prism">src/resizable.directive.ts:221</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="223" class="link-to-prism">src/resizable.directive.ts:223</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -476,7 +476,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="268" class="link-to-prism">src/resizable.directive.ts:268</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="270" class="link-to-prism">src/resizable.directive.ts:270</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -495,7 +495,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="258" class="link-to-prism">src/resizable.directive.ts:258</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/resizable.directive.ts:260</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -514,7 +514,7 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-2" colspan="2">
-                                        <div class="io-line">Defined in <a href="" data-line="263" class="link-to-prism">src/resizable.directive.ts:263</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="265" class="link-to-prism">src/resizable.directive.ts:265</a></div>
                                     </td>
                                 </tr>
                         </tbody>
@@ -619,7 +619,9 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
       top: boundingRect.top,
       bottom: boundingRect.bottom,
       left: boundingRect.left,
-      right: boundingRect.right
+      right: boundingRect.right,
+      scrollTop: element.nativeElement.scrollTop,
+      scrollLeft: element.nativeElement.scrollLeft
     };
   }
 }
@@ -1021,6 +1023,8 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         this.renderer.setStyle(currentResize.clonedNode, &#x27;width&#x27;, &#x60;${currentResize.startingRect.width}px&#x60;);
         this.renderer.setStyle(currentResize.clonedNode, &#x27;cursor&#x27;, getResizeCursor(currentResize.edges, resizeCursors));
         this.renderer.addClass(currentResize.clonedNode, RESIZE_GHOST_ELEMENT_CLASS);
+        currentResize.clonedNode.scrollTop &#x3D; currentResize.startingRect.scrollTop;
+        currentResize.clonedNode.scrollLeft &#x3D; currentResize.startingRect.scrollLeft;
       }
       this.zone.run(() &#x3D;&gt; {
         this.resizeStart.emit({
