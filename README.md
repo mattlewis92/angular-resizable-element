@@ -7,6 +7,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-resizable-element'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-resizable-element.svg' />
+</a>
+
 ## Demo
 https://mattlewis92.github.io/angular-resizable-element/demo/
 
