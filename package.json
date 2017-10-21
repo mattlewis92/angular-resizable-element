@@ -85,7 +85,7 @@
     "zone.js": "^0.8.5"
   },
   "peerDependencies": {
-    "@angular/core": "^4.0.0"
+    "@angular/core": ">=4.0.0 <6.0.0"
   },
   "files": [
     "dist"
