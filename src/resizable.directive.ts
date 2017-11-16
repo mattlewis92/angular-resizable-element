@@ -74,24 +74,45 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
 }
 
 function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
+
+  var translateX: any = 0;
+  var translateY: any = 0;
+  var style: any = element.nativeElement.style;
+  if (style) {
+    var transform: string = element.nativeElement.style['transform'];
+    if (!transform)
+      transform = element.nativeElement.style['-ms-transform'];
+    if (!transform)
+      transform = element.nativeElement.style['-moz-transform'];
+    if (!transform)
+      transform = element.nativeElement.style['-o-transform'];
+
+    if (transform) {
+      if (transform.includes('translate')) {
+        translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
+        translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
+      }
+    }
+  }
+
   if (ghostElementPositioning === 'absolute') {
     return {
       height: element.nativeElement.offsetHeight,
       width: element.nativeElement.offsetWidth,
-      top: element.nativeElement.offsetTop,
-      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
-      left: element.nativeElement.offsetLeft,
-      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+      top: element.nativeElement.offsetTop - translateY,
+      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop - translateY,
+      left: element.nativeElement.offsetLeft - translateX,
+      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft - translateX
     };
   } else {
-    const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
+    var boundingRect: any = element.nativeElement.getBoundingClientRect();
     return {
       height: boundingRect.height,
       width: boundingRect.width,
-      top: boundingRect.top,
-      bottom: boundingRect.bottom,
-      left: boundingRect.left,
-      right: boundingRect.right,
+      top: boundingRect.top - translateY,
+      bottom: boundingRect.bottom - translateY,
+      left: boundingRect.left - translateX,
+      right: boundingRect.right - translateX,
       scrollTop: element.nativeElement.scrollTop,
       scrollLeft: element.nativeElement.scrollLeft
     };
