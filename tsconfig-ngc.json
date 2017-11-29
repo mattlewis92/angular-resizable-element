@@ -21,6 +21,9 @@
     "strictMetadataEmit": true,
     "genDir": "./dist/esm",
     "skipTemplateCodegen": true,
-    "debug": true
+    "debug": true,
+    "flatModuleOutFile": "angular-resizable-element.js",
+    "flatModuleId": "angular-resizable-element",
+    "annotateForClosureCompiler": true
   }
 }
