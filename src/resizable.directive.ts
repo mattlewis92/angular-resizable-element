@@ -81,26 +81,35 @@ function getElementRect(
   element: ElementRef,
   ghostElementPositioning: string
 ): BoundingRectangle {
+
+  let translateX = 0;
+  let translateY = 0;
+  const style = element.nativeElement.style;
+  const transformProperties = ['transform', '-ms-transform', '-moz-transform', '-o-transform'];
+  const transform = transformProperties.map(property => style[property]).find(value => !!value);
+  if (transform && transform.includes('translate')) {
+    translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
+    translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
+  }
+
   if (ghostElementPositioning === 'absolute') {
     return {
       height: element.nativeElement.offsetHeight,
       width: element.nativeElement.offsetWidth,
-      top: element.nativeElement.offsetTop,
-      bottom:
-        element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
-      left: element.nativeElement.offsetLeft,
-      right:
-        element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+      top: element.nativeElement.offsetTop - translateY,
+      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop - translateY,
+      left: element.nativeElement.offsetLeft - translateX,
+      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft - translateX
     };
   } else {
     const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
     return {
       height: boundingRect.height,
       width: boundingRect.width,
-      top: boundingRect.top,
-      bottom: boundingRect.bottom,
-      left: boundingRect.left,
-      right: boundingRect.right,
+      top: boundingRect.top - translateY,
+      bottom: boundingRect.bottom - translateY,
+      left: boundingRect.left - translateX,
+      right: boundingRect.right - translateX,
       scrollTop: element.nativeElement.scrollTop,
       scrollLeft: element.nativeElement.scrollLeft
     };
