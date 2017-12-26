@@ -39,23 +39,24 @@ describe('resizable directive', () => {
     `
   })
   class TestComponent {
-    @ViewChild(ResizableDirective) public resizable: ResizableDirective;
-    public style: object = {};
-    public resizeStart: sinon.SinonSpy = sinon.spy();
-    public resizing: sinon.SinonSpy = sinon.spy();
-    public resizeEnd: sinon.SinonSpy = sinon.spy();
-    public validate: sinon.SinonStub = sinon.stub().returns(true);
-    public resizeEdges: Edges = {
+    @ViewChild(ResizableDirective) resizable: ResizableDirective;
+    style: object = {};
+    resizeStart: sinon.SinonSpy = sinon.spy();
+    resizing: sinon.SinonSpy = sinon.spy();
+    resizeEnd: sinon.SinonSpy = sinon.spy();
+    validate: sinon.SinonStub = sinon.stub().returns(true);
+    resizeEdges: Edges = {
       top: true,
       bottom: true,
       left: true,
       right: true
     };
-    public enableGhostResize: boolean = true;
-    public resizeSnapGrid: object = {};
-    public resizeCursors: object = {};
-    public resizeCursorPrecision: number;
-    public ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
+    enableGhostResize: boolean = true;
+    resizeSnapGrid: object = {};
+    resizeCursors: object = {};
+    resizeCursorPrecision: number;
+    ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
+    showResizeHandle = false;
   }
 
   function triggerDomEvent(
@@ -1353,6 +1354,49 @@ describe('resizable directive', () => {
           });
         }
       });
+    });
+  });
+
+  it('should handle the drag handle being shown via an ngIf', () => {
+    const template: string = `
+      <div
+        class="rectangle"
+        [ngStyle]="style"
+        mwlResizable
+        (resizeStart)="resizeStart($event)"
+        (resizing)="resizing($event)"
+        (resizeEnd)="resizeEnd($event)">
+        <span
+          style="width: 5px; height: 5px; position: absolute; bottom: 5px; right: 5px"
+          class="resize-handle"
+          mwlResizeHandle
+          *ngIf="showResizeHandle"
+          [resizeEdges]="{bottom: true, right: true}">
+        </span>
+      </div>
+    `;
+    const fixture: ComponentFixture<TestComponent> = createComponent(template);
+
+    const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
+    fixture.componentInstance.showResizeHandle = true;
+    fixture.detectChanges();
+    triggerDomEvent('mousedown', elm.querySelector('.resize-handle'), {
+      clientX: 395,
+      clientY: 345
+    });
+    expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
+      edges: {
+        bottom: 0,
+        right: 0
+      },
+      rectangle: {
+        top: 200,
+        left: 100,
+        width: 300,
+        height: 150,
+        right: 400,
+        bottom: 350
+      }
     });
   });
 });

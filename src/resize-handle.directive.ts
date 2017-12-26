@@ -30,11 +30,6 @@ export class ResizeHandleDirective implements OnDestroy {
    */
   @Input() resizeEdges: Edges = {};
 
-  /**
-   * @private
-   */
-  public resizable: ResizableDirective; // set by the parent mwlResizable directive
-
   private eventListeners: {
     touchmove?: () => void;
     mousemove?: () => void;
@@ -43,7 +38,8 @@ export class ResizeHandleDirective implements OnDestroy {
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private resizable: ResizableDirective
   ) {}
 
   ngOnDestroy(): void {

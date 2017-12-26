@@ -3,12 +3,9 @@ import {
   Renderer2,
   ElementRef,
   OnInit,
-  AfterViewInit,
   Output,
   Input,
   EventEmitter,
-  ContentChildren,
-  QueryList,
   OnDestroy,
   NgZone
 } from '@angular/core';
@@ -25,7 +22,6 @@ import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/operator/share';
-import { ResizeHandleDirective } from './resize-handle.directive';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
@@ -257,7 +253,7 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]'
 })
-export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
+export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
@@ -337,12 +333,6 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
     edges?: Edges;
     event: MouseEvent | TouchEvent;
   }>();
-
-  /**
-   * @hidden
-   */
-  @ContentChildren(ResizeHandleDirective)
-  resizeHandles: QueryList<ResizeHandleDirective>;
 
   private pointerEventListeners: PointerEventListeners;
 
@@ -702,15 +692,6 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
         removeGhostElement();
         currentResize = null;
       }
-    });
-  }
-
-  /**
-   * @hidden
-   */
-  ngAfterViewInit(): void {
-    this.resizeHandles.forEach((handle: ResizeHandleDirective) => {
-      handle.resizable = this;
     });
   }
 
