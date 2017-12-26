@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ResizableDirective } from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
-import { ResizeEvent, ResizableModule } from './../src';
+import { ResizeEvent, ResizableModule } from '../src';
 import { MOUSE_MOVE_THROTTLE_MS } from '../src/resizable.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
@@ -554,19 +554,21 @@ describe('resizable directive', () => {
       domEvents.forEach(event => {
         triggerDomEvent(event.name, elm, event.data);
         if (event.name !== 'mouseup') {
-          expect(elm.nextSibling['style'].position).to.equal('fixed');
+          expect((elm.nextSibling as HTMLElement).style.position).to.equal(
+            'fixed'
+          );
         }
         if (event.style) {
           Object.keys(event.style).forEach(styleKey => {
-            expect(elm.nextSibling['style'][styleKey]).to.equal(
+            expect((elm.nextSibling as any).style[styleKey]).to.equal(
               event.style[styleKey]
             );
           });
         }
       });
-      expect(fixture.componentInstance[spyName]).to.have.been.calledWith(
-        expectedEvent
-      );
+      expect(
+        (fixture.componentInstance as any)[spyName]
+      ).to.have.been.calledWith(expectedEvent);
     });
   });
 
@@ -624,7 +626,7 @@ describe('resizable directive', () => {
       clientX: 98,
       clientY: 205
     });
-    expect(elm.nextSibling['style'].width).to.equal('302px');
+    expect((elm.nextSibling as HTMLElement).style.width).to.equal('302px');
     fixture.componentInstance.resizeEnd.reset();
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
@@ -675,8 +677,8 @@ describe('resizable directive', () => {
       clientX: 100,
       clientY: 200
     });
-    expect(elm.nextSibling['style'].width).to.equal('300px');
-    expect(elm.nextSibling['style'].height).to.equal('150px');
+    expect((elm.nextSibling as HTMLElement).style.width).to.equal('300px');
+    expect((elm.nextSibling as HTMLElement).style.height).to.equal('150px');
   });
 
   it('should reset existing styles after a resize', () => {
@@ -902,8 +904,7 @@ describe('resizable directive', () => {
     `;
     const fixture: ComponentFixture<TestComponent> = createComponent(template);
 
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
+    const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm.querySelector('.resize-handle'), {
       clientX: 395,
       clientY: 345
@@ -1190,8 +1191,11 @@ describe('resizable directive', () => {
       clientY: 200
     });
     expect(elm.classList.contains('resize-ghost-element')).to.be.false;
-    expect(elm.nextSibling['classList'].contains('resize-ghost-element')).to.be
-      .true;
+    expect(
+      (elm.nextSibling as HTMLElement).classList.contains(
+        'resize-ghost-element'
+      )
+    ).to.be.true;
   });
 
   describe('absolute positioning', () => {
@@ -1336,13 +1340,14 @@ describe('resizable directive', () => {
       domEvents.forEach(event => {
         triggerDomEvent(event.name, elm, event.data);
 
-        const clonedNode: Element = elm.parentElement.children[1];
+        const clonedNode: HTMLElement = (elm.parentElement as HTMLElement)
+          .children[1] as HTMLElement;
         if (event.name !== 'mouseup') {
           expect(clonedNode['style'].position).to.equal('absolute');
         }
         if (event.style) {
           Object.keys(event.style).forEach(styleKey => {
-            expect(clonedNode['style'][styleKey]).to.equal(
+            expect((clonedNode['style'] as any)[styleKey]).to.equal(
               event.style[styleKey]
             );
           });

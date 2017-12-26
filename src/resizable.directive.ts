@@ -228,7 +228,7 @@ function getEdgesDiff({
   newRectangle: BoundingRectangle;
 }): Edges {
   const edgesDiff: Edges = {};
-  Object.keys(edges).forEach((edge: string) => {
+  Object.keys(edges).forEach((edge: keyof Edges) => {
     edgesDiff[edge] = newRectangle[edge] - initialRectangle[edge];
   });
   return edgesDiff;
@@ -390,10 +390,10 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
       startingRect: BoundingRectangle;
       currentRect: BoundingRectangle;
       clonedNode?: HTMLElement;
-    };
+    } | null;
 
     const removeGhostElement = () => {
-      if (currentResize.clonedNode) {
+      if (currentResize && currentResize.clonedNode) {
         this.elm.nativeElement.parentElement.removeChild(
           currentResize.clonedNode
         );
@@ -408,7 +408,7 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
     });
 
     mouseMove
-      .throttle(val => interval(MOUSE_MOVE_THROTTLE_MS))
+      .throttle(() => interval(MOUSE_MOVE_THROTTLE_MS))
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
           clientX,
@@ -452,7 +452,7 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
 
     const mousedrag: Observable<any> = this.mousedown
       .flatMap(startCoords => {
-        function getDiff(moveCoords) {
+        function getDiff(moveCoords: { clientX: number; clientY: number }) {
           return {
             clientX: moveCoords.clientX - startCoords.clientX,
             clientY: moveCoords.clientY - startCoords.clientY
@@ -482,7 +482,10 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
           return snapGrid;
         };
 
-        function getGrid(coords, snapGrid) {
+        function getGrid(
+          coords: { clientX: number; clientY: number },
+          snapGrid: Coordinate
+        ) {
           return {
             x: Math.ceil(coords.clientX / snapGrid.x),
             y: Math.ceil(coords.clientY / snapGrid.y)
@@ -524,29 +527,34 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
     mousedrag
       .map(({ clientX, clientY }) => {
         return getNewBoundingRectangle(
-          currentResize.startingRect,
-          currentResize.edges,
+          currentResize!.startingRect,
+          currentResize!.edges,
           clientX,
           clientY
         );
       })
       .filter((newBoundingRect: BoundingRectangle) => {
-        return newBoundingRect.height > 0 && newBoundingRect.width > 0;
+        return !!(
+          newBoundingRect.height &&
+          newBoundingRect.width &&
+          newBoundingRect.height > 0 &&
+          newBoundingRect.width > 0
+        );
       })
       .filter((newBoundingRect: BoundingRectangle) => {
         return this.validateResize
           ? this.validateResize({
               rectangle: newBoundingRect,
               edges: getEdgesDiff({
-                edges: currentResize.edges,
-                initialRectangle: currentResize.startingRect,
+                edges: currentResize!.edges,
+                initialRectangle: currentResize!.startingRect,
                 newRectangle: newBoundingRect
               })
             })
           : true;
       })
       .subscribe((newBoundingRect: BoundingRectangle) => {
-        if (currentResize.clonedNode) {
+        if (currentResize && currentResize.clonedNode) {
           this.renderer.setStyle(
             currentResize.clonedNode,
             'height',
@@ -572,15 +580,15 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
         this.zone.run(() => {
           this.resizing.emit({
             edges: getEdgesDiff({
-              edges: currentResize.edges,
-              initialRectangle: currentResize.startingRect,
+              edges: currentResize!.edges,
+              initialRectangle: currentResize!.startingRect,
               newRectangle: newBoundingRect
             }),
             rectangle: newBoundingRect
           });
         });
 
-        currentResize.currentRect = newBoundingRect;
+        currentResize!.currentRect = newBoundingRect;
       });
 
     this.mousedown
@@ -661,10 +669,10 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
             currentResize.clonedNode,
             RESIZE_GHOST_ELEMENT_CLASS
           );
-          currentResize.clonedNode.scrollTop =
-            currentResize.startingRect.scrollTop;
-          currentResize.clonedNode.scrollLeft =
-            currentResize.startingRect.scrollLeft;
+          currentResize.clonedNode!.scrollTop = currentResize.startingRect
+            .scrollTop as number;
+          currentResize.clonedNode!.scrollLeft = currentResize.startingRect
+            .scrollLeft as number;
         }
         this.zone.run(() => {
           this.resizeStart.emit({
@@ -684,11 +692,11 @@ export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
         this.zone.run(() => {
           this.resizeEnd.emit({
             edges: getEdgesDiff({
-              edges: currentResize.edges,
-              initialRectangle: currentResize.startingRect,
-              newRectangle: currentResize.currentRect
+              edges: currentResize!.edges,
+              initialRectangle: currentResize!.startingRect,
+              newRectangle: currentResize!.currentRect
             }),
-            rectangle: currentResize.currentRect
+            rectangle: currentResize!.currentRect
           });
         });
         removeGhostElement();

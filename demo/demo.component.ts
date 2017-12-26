@@ -53,8 +53,10 @@ export class DemoComponent {
   validate(event: ResizeEvent): boolean {
     const MIN_DIMENSIONS_PX: number = 50;
     if (
-      event.rectangle.width < MIN_DIMENSIONS_PX ||
-      event.rectangle.height < MIN_DIMENSIONS_PX
+      event.rectangle.width &&
+      event.rectangle.height &&
+      (event.rectangle.width < MIN_DIMENSIONS_PX ||
+        event.rectangle.height < MIN_DIMENSIONS_PX)
     ) {
       return false;
     }

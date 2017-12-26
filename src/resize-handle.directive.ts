@@ -137,9 +137,11 @@ export class ResizeHandleDirective implements OnDestroy {
   }
 
   private unsubscribeEventListeners(): void {
-    Object.keys(this.eventListeners).forEach(type => {
-      this.eventListeners[type]();
-      delete this.eventListeners[type];
-    });
+    Object.keys(this.eventListeners).forEach(
+      (type: 'touchmove' | 'mousemove') => {
+        (this as any).eventListeners[type]();
+        delete this.eventListeners[type];
+      }
+    );
   }
 }
