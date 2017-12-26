@@ -26,18 +26,15 @@
                 <ul class="list">
             
                     <li class="title">
-                        <a href="../">angular-resizable-element documentation</a>
+                        <a href="../index.html">angular-resizable-element documentation</a>
                     </li>
             
                     <li class="divider"></li>
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="../"><span class="fa fa-home"></span>Getting started</a>
+                        <a data-type="chapter-link" href="../index.html"><span class="fa fa-home"></span>Getting started</a>
                         <ul class="links">
-                                <li class="link">
-                                    <a href="../" ><span class="fa fa-file-text-o"></span>README</a>
-                                </li>
                                 <li class="link">
                                     <a 
                                         
@@ -47,18 +44,36 @@
                                         <span class="fa fa-th"></span>Overview
                                     </a>
                                 </li>
+                                <li class="link">
+                                  <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                        <a href="../changelog.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>CHANGELOG
+                                    </a>
+                                </li>
+                                <li class="link">
+                                        <a href="../license.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>LICENSE
+                                    </a>
+                                </li>
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
-                        <a data-type="chapter-link" href="./modules.html" >
-                            <span class="fa fa-archive"></span>
-                            <span>Modules</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                        <a data-type="chapter-link" href="../modules.html" >
+                            <div class="menu-toggler linked" data-toggle="collapse"
                                     data-target="#xs-modules-links"
-                            ></span>
+                            >
+                                <span class="fa fa-archive"></span>
+                                <span class="link-name">Modules</span>
+                                <span class="fa fa-angle-down"></span>
+                            </div>
                         </a>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-modules-links"
                             >
                                 <li class="link">
@@ -69,34 +84,34 @@
             
             
                     <li class="chapter">
-                        <div class="simple">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-directives-links"
+                            >
                             <span class="fa fa-code"></span>
                             <span>Directives</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-directives-links"
-                                ></span>
+                            <span class="fa fa-angle-down"></span>
                         </div>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-directives-links"
                             >
                                 <li class="link">
-                                    <a href="../directives/Resizable.html" >Resizable</a>
+                                    <a href="../directives/ResizableDirective.html" >ResizableDirective</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../directives/ResizeHandle.html" >ResizeHandle</a>
+                                    <a href="../directives/ResizeHandleDirective.html" >ResizeHandleDirective</a>
                                 </li>
                         </ul>
                     </li>
             
                     <li class="chapter">
-                        <div class="simple">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-classes-links"
+                            >
                             <span class="fa fa-file-code-o"></span>
                             <span>Classes</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-classes-links"
-                                ></span>
+                            <span class="fa fa-angle-down"></span>
                         </div>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-classes-links"
                             >
                                 <li class="link">
@@ -108,24 +123,27 @@
             
             
                     <li class="chapter">
-                        <div class="simple">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interfaces-links"
+                            >
                             <span class="fa fa-info"></span>
                             <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
+                            <span class="fa fa-angle-down"></span>
                         </div>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
                                     <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/Coordinate.html"  class="active" >Coordinate</a>
+                                    <a href="../interfaces/Coordinate.html"  data-type="entity-link" class="active" >Coordinate</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/Edges.html" >Edges</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/PointerEventCoordinate.html" >PointerEventCoordinate</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ResizeCursors.html" >ResizeCursors</a>
@@ -138,13 +156,30 @@
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="../miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-miscellaneous-links"
+                            >
+                            <span class="fa fa-cubes"></span>
+                            <span>Miscellaneous</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-miscellaneous-links"
+                            >
+                                <li class="link">
+                                  <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                </li>
+                                <li class="link">
+                                  <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                </li>
+                        </ul>
                     </li>
+            
             
             
                     <li class="divider"></li>
                     <li class="copyright">
-                            Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                            Documentation generated using <a href="https://compodoc.github.io/website/" target="_blank">
                                         <img src="..//images/compodoc-vectorise.svg" class="img-responsive">
                             </a>
                     </li>
@@ -162,7 +197,7 @@
                        <ul class="list">
                    
                            <li class="title">
-                               <a href="../">angular-resizable-element documentation</a>
+                               <a href="../index.html">angular-resizable-element documentation</a>
                            </li>
                    
                            <li class="divider"></li>
@@ -172,11 +207,8 @@
                                </div>
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="../"><span class="fa fa-home"></span>Getting started</a>
+                               <a data-type="chapter-link" href="../index.html"><span class="fa fa-home"></span>Getting started</a>
                                <ul class="links">
-                                       <li class="link">
-                                           <a href="../" ><span class="fa fa-file-text-o"></span>README</a>
-                                       </li>
                                        <li class="link">
                                            <a 
                                                
@@ -186,18 +218,36 @@
                                                <span class="fa fa-th"></span>Overview
                                            </a>
                                        </li>
+                                       <li class="link">
+                                         <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="../changelog.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>CHANGELOG
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="../license.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>LICENSE
+                                           </a>
+                                       </li>
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
-                               <a data-type="chapter-link" href="./modules.html" >
-                                   <span class="fa fa-archive"></span>
-                                   <span>Modules</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                               <a data-type="chapter-link" href="../modules.html" >
+                                   <div class="menu-toggler linked" data-toggle="collapse"
                                            data-target="#modules-links"
-                                   ></span>
+                                   >
+                                       <span class="fa fa-archive"></span>
+                                       <span class="link-name">Modules</span>
+                                       <span class="fa fa-angle-down"></span>
+                                   </div>
                                </a>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="modules-links"
                    >
                                        <li class="link">
@@ -208,34 +258,34 @@
                    
                    
                            <li class="chapter">
-                               <div class="simple">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#directives-links"
+                   >
                                    <span class="fa fa-code"></span>
                                    <span>Directives</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#directives-links"
-                   ></span>
+                                   <span class="fa fa-angle-down"></span>
                                </div>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="directives-links"
                    >
                                        <li class="link">
-                                           <a href="../directives/Resizable.html" >Resizable</a>
+                                           <a href="../directives/ResizableDirective.html" >ResizableDirective</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../directives/ResizeHandle.html" >ResizeHandle</a>
+                                           <a href="../directives/ResizeHandleDirective.html" >ResizeHandleDirective</a>
                                        </li>
                                </ul>
                            </li>
                    
                            <li class="chapter">
-                               <div class="simple">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#classes-links"
+                   >
                                    <span class="fa fa-file-code-o"></span>
                                    <span>Classes</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#classes-links"
-                   ></span>
+                                   <span class="fa fa-angle-down"></span>
                                </div>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="classes-links"
                    >
                                        <li class="link">
@@ -247,24 +297,27 @@
                    
                    
                            <li class="chapter">
-                               <div class="simple">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interfaces-links"
+                   >
                                    <span class="fa fa-info"></span>
                                    <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
+                                   <span class="fa fa-angle-down"></span>
                                </div>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="interfaces-links"
                    >
                                        <li class="link">
                                            <a href="../interfaces/BoundingRectangle.html" >BoundingRectangle</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/Coordinate.html"  class="active" >Coordinate</a>
+                                           <a href="../interfaces/Coordinate.html"  data-type="entity-link" class="active" >Coordinate</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/Edges.html" >Edges</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/PointerEventCoordinate.html" >PointerEventCoordinate</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ResizeCursors.html" >ResizeCursors</a>
@@ -277,13 +330,30 @@
                    
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="../miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#miscellaneous-links"
+                   >
+                                   <span class="fa fa-cubes"></span>
+                                   <span>Miscellaneous</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="miscellaneous-links"
+                   >
+                                       <li class="link">
+                                         <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                       </li>
+                               </ul>
                            </li>
+                   
                    
                    
                            <li class="divider"></li>
                            <li class="copyright">
-                                   Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                                   Documentation generated using <a href="https://compodoc.github.io/website/" target="_blank">
                                                <img src="..//images/compodoc-vectorise.svg" class="img-responsive">
                                    </a>
                            </li>
@@ -301,6 +371,9 @@
 
 
 
+
+
+
 <ol class="breadcrumb">
   <li>Interfaces</li>
   <li>Coordinate</li>
@@ -308,15 +381,17 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="active">
-        <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
+        <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
     </li>
+
+
     <li>
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="infos">
+    <div class="tab-pane fade active in" id="c-info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -326,6 +401,31 @@
 
 
 
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#x">x</a>
+                                </li>
+                                <li>
+                                        <a href="#y">y</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
 
 
             <section>
@@ -334,25 +434,32 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <b>x</b>
+                                        <a name="x"></a>
+                                        <span class="name"><b>x</b><a href="#x"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>x:     <code>number</code>
-</bcode>
+                                        <code>x:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
                                     </td>
                                 </tr>
 
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>number</code>
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                                         </td>
                                     </tr>
 
 
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/resizable.directive.ts:36</a></div>
+                                        </td>
+                                    </tr>
 
                         </tbody>
                     </table>
@@ -360,50 +467,56 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <b>y</b>
+                                        <a name="y"></a>
+                                        <span class="name"><b>y</b><a href="#y"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>y:     <code>number</code>
-</bcode>
+                                        <code>y:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
                                     </td>
                                 </tr>
 
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>number</code>
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                                         </td>
                                     </tr>
 
 
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/resizable.directive.ts:37</a></div>
+                                        </td>
+                                    </tr>
+
                         </tbody>
                     </table>
             </section>
     </div>
-    <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import {
+
+
+    <div class="tab-pane fade tab-source-code" id="c-source">
+        <pre class="line-numbers"><code class="language-typescript">import {
   Directive,
   Renderer2,
   ElementRef,
   OnInit,
-  AfterViewInit,
   Output,
   Input,
   EventEmitter,
-  ContentChildren,
-  QueryList,
   OnDestroy,
   NgZone
 } from &#x27;@angular/core&#x27;;
-import {Subject} from &#x27;rxjs/Subject&#x27;;
-import {Observable} from &#x27;rxjs/Observable&#x27;;
-import {Observer} from &#x27;rxjs/Observer&#x27;;
-import {merge} from &#x27;rxjs/observable/merge&#x27;;
-import {interval} from &#x27;rxjs/observable/interval&#x27;;
+import { Subject } from &#x27;rxjs/Subject&#x27;;
+import { Observable } from &#x27;rxjs/Observable&#x27;;
+import { Observer } from &#x27;rxjs/Observer&#x27;;
+import { merge } from &#x27;rxjs/observable/merge&#x27;;
+import { interval } from &#x27;rxjs/observable/interval&#x27;;
 import &#x27;rxjs/add/operator/map&#x27;;
 import &#x27;rxjs/add/operator/mergeMap&#x27;;
 import &#x27;rxjs/add/operator/takeUntil&#x27;;
@@ -412,9 +525,9 @@ import &#x27;rxjs/add/operator/pairwise&#x27;;
 import &#x27;rxjs/add/operator/take&#x27;;
 import &#x27;rxjs/add/operator/throttle&#x27;;
 import &#x27;rxjs/add/operator/share&#x27;;
-import {ResizeHandle} from &#x27;./resizeHandle.directive&#x27;;
-import {Edges} from &#x27;./interfaces/edges.interface&#x27;;
-import {BoundingRectangle} from &#x27;./interfaces/boundingRectangle.interface&#x27;;
+import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
+import { BoundingRectangle } from &#x27;./interfaces/bounding-rectangle.interface&#x27;;
+import { ResizeEvent } from &#x27;./interfaces/resize-event.interface&#x27;;
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -422,101 +535,26 @@ interface PointerEventCoordinate {
   event: MouseEvent | TouchEvent;
 }
 
-class PointerEventListeners {
-
-  public pointerDown: Observable&lt;PointerEventCoordinate&gt;;
-
-  public pointerMove: Observable&lt;PointerEventCoordinate&gt;;
-
-  public pointerUp: Observable&lt;PointerEventCoordinate&gt;;
-
-  private static instance: PointerEventListeners; // tslint:disable-line
-
-  public static getInstance(renderer: Renderer2, zone: NgZone): PointerEventListeners {
-    if (!PointerEventListeners.instance) {
-      PointerEventListeners.instance &#x3D; new PointerEventListeners(renderer, zone);
-    }
-    return PointerEventListeners.instance;
-  }
-
-  constructor(renderer: Renderer2, zone: NgZone) {
-
-    zone.runOutsideAngular(() &#x3D;&gt; {
-
-      this.pointerDown &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
-
-        const unsubscribeMouseDown: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousedown&#x27;, (event: MouseEvent) &#x3D;&gt; {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchStart: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchstart&#x27;, (event: TouchEvent) &#x3D;&gt; {
-          observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
-        });
-
-        return () &#x3D;&gt; {
-          unsubscribeMouseDown();
-          unsubscribeTouchStart();
-        };
-
-      }).share();
-
-      this.pointerMove &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
-
-        const unsubscribeMouseMove: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mousemove&#x27;, (event: MouseEvent) &#x3D;&gt; {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchMove: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchmove&#x27;, (event: TouchEvent) &#x3D;&gt; {
-          observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
-        });
-
-        return () &#x3D;&gt; {
-          unsubscribeMouseMove();
-          unsubscribeTouchMove();
-        };
-
-      }).share();
-
-      this.pointerUp &#x3D; new Observable((observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
-
-        const unsubscribeMouseUp: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;mouseup&#x27;, (event: MouseEvent) &#x3D;&gt; {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        const unsubscribeTouchEnd: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchend&#x27;, (event: TouchEvent) &#x3D;&gt; {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
-        });
-
-        const unsubscribeTouchCancel: Function &#x3D; renderer.listen(&#x27;document&#x27;, &#x27;touchcancel&#x27;, (event: TouchEvent) &#x3D;&gt; {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
-        });
-
-        return () &#x3D;&gt; {
-          unsubscribeMouseUp();
-          unsubscribeTouchEnd();
-          unsubscribeTouchCancel();
-        };
-
-      }).share();
-
-    });
-
-  }
-
-}
-
 interface Coordinate {
   x: number;
   y: number;
 }
 
-function isNumberCloseTo(value1: number, value2: number, precision: number &#x3D; 3): boolean {
+function isNumberCloseTo(
+  value1: number,
+  value2: number,
+  precision: number &#x3D; 3
+): boolean {
   const diff: number &#x3D; Math.abs(value1 - value2);
   return diff &lt; precision;
 }
 
-function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, clientX: number, clientY: number): BoundingRectangle {
-
+function getNewBoundingRectangle(
+  startingRect: BoundingRectangle,
+  edges: Edges,
+  clientX: number,
+  clientY: number
+): BoundingRectangle {
   const newBoundingRect: BoundingRectangle &#x3D; {
     top: startingRect.top,
     bottom: startingRect.bottom,
@@ -540,46 +578,87 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
   newBoundingRect.width &#x3D; newBoundingRect.right - newBoundingRect.left;
 
   return newBoundingRect;
-
 }
 
-function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
+function getElementRect(
+  element: ElementRef,
+  ghostElementPositioning: string
+): BoundingRectangle {
+
+  let translateX &#x3D; 0;
+  let translateY &#x3D; 0;
+  const style &#x3D; element.nativeElement.style;
+  const transformProperties &#x3D; [&#x27;transform&#x27;, &#x27;-ms-transform&#x27;, &#x27;-moz-transform&#x27;, &#x27;-o-transform&#x27;];
+  const transform &#x3D; transformProperties.map(property &#x3D;&gt; style[property]).find(value &#x3D;&gt; !!value);
+  if (transform &amp;&amp; transform.includes(&#x27;translate&#x27;)) {
+    translateX &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$1&#x27;);
+    translateY &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$2&#x27;);
+  }
+
   if (ghostElementPositioning &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
     return {
-      top: element.nativeElement.offsetTop,
-      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
-      left: element.nativeElement.offsetLeft,
-      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+      height: element.nativeElement.offsetHeight,
+      width: element.nativeElement.offsetWidth,
+      top: element.nativeElement.offsetTop - translateY,
+      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop - translateY,
+      left: element.nativeElement.offsetLeft - translateX,
+      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft - translateX
     };
   } else {
     const boundingRect: BoundingRectangle &#x3D; element.nativeElement.getBoundingClientRect();
     return {
-      top: boundingRect.top,
-      bottom: boundingRect.bottom,
-      left: boundingRect.left,
-      right: boundingRect.right
+      height: boundingRect.height,
+      width: boundingRect.width,
+      top: boundingRect.top - translateY,
+      bottom: boundingRect.bottom - translateY,
+      left: boundingRect.left - translateX,
+      right: boundingRect.right - translateX,
+      scrollTop: element.nativeElement.scrollTop,
+      scrollLeft: element.nativeElement.scrollLeft
     };
   }
 }
 
-function isWithinBoundingY({clientY, rect}: {clientY: number, rect: ClientRect}): boolean {
+function isWithinBoundingY({
+  clientY,
+  rect
+}: {
+  clientY: number;
+  rect: ClientRect;
+}): boolean {
   return clientY &gt;&#x3D; rect.top &amp;&amp; clientY &lt;&#x3D; rect.bottom;
 }
 
-function isWithinBoundingX({clientX, rect}: {clientX: number, rect: ClientRect}): boolean {
+function isWithinBoundingX({
+  clientX,
+  rect
+}: {
+  clientX: number;
+  rect: ClientRect;
+}): boolean {
   return clientX &gt;&#x3D; rect.left &amp;&amp; clientX &lt;&#x3D; rect.right;
 }
 
-function getResizeEdges(
-  {clientX, clientY, elm, allowedEdges, cursorPrecision}:
-    {clientX: number, clientY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
+function getResizeEdges({
+  clientX,
+  clientY,
+  elm,
+  allowedEdges,
+  cursorPrecision
+}: {
+  clientX: number;
+  clientY: number;
+  elm: ElementRef;
+  allowedEdges: Edges;
+  cursorPrecision: number;
+}): Edges {
   const elmPosition: ClientRect &#x3D; elm.nativeElement.getBoundingClientRect();
   const edges: Edges &#x3D; {};
 
   if (
     allowedEdges.left &amp;&amp;
     isNumberCloseTo(clientX, elmPosition.left, cursorPrecision) &amp;&amp;
-    isWithinBoundingY({clientY, rect: elmPosition})
+    isWithinBoundingY({ clientY, rect: elmPosition })
   ) {
     edges.left &#x3D; true;
   }
@@ -587,7 +666,7 @@ function getResizeEdges(
   if (
     allowedEdges.right &amp;&amp;
     isNumberCloseTo(clientX, elmPosition.right, cursorPrecision) &amp;&amp;
-    isWithinBoundingY({clientY, rect: elmPosition})
+    isWithinBoundingY({ clientY, rect: elmPosition })
   ) {
     edges.right &#x3D; true;
   }
@@ -595,7 +674,7 @@ function getResizeEdges(
   if (
     allowedEdges.top &amp;&amp;
     isNumberCloseTo(clientY, elmPosition.top, cursorPrecision) &amp;&amp;
-    isWithinBoundingX({clientX, rect: elmPosition})
+    isWithinBoundingX({ clientX, rect: elmPosition })
   ) {
     edges.top &#x3D; true;
   }
@@ -603,7 +682,7 @@ function getResizeEdges(
   if (
     allowedEdges.bottom &amp;&amp;
     isNumberCloseTo(clientY, elmPosition.bottom, cursorPrecision) &amp;&amp;
-    isWithinBoundingX({clientX, rect: elmPosition})
+    isWithinBoundingX({ clientX, rect: elmPosition })
   ) {
     edges.bottom &#x3D; true;
   }
@@ -643,19 +722,24 @@ function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   } else if (edges.top || edges.bottom) {
     return cursors.topOrBottom;
   } else {
-    return null;
+    return &#x27;&#x27;;
   }
 }
 
-function getEdgesDiff(
-  {edges, initialRectangle, newRectangle}: {edges: Edges, initialRectangle: BoundingRectangle, newRectangle: BoundingRectangle}): Edges {
-
+function getEdgesDiff({
+  edges,
+  initialRectangle,
+  newRectangle
+}: {
+  edges: Edges;
+  initialRectangle: BoundingRectangle;
+  newRectangle: BoundingRectangle;
+}): Edges {
   const edgesDiff: Edges &#x3D; {};
-  Object.keys(edges).forEach((edge: string) &#x3D;&gt; {
+  Object.keys(edges).forEach((edge: keyof Edges) &#x3D;&gt; {
     edgesDiff[edge] &#x3D; newRectangle[edge] - initialRectangle[edge];
   });
   return edgesDiff;
-
 }
 
 const RESIZE_ACTIVE_CLASS: string &#x3D; &#x27;resize-active&#x27;;
@@ -663,27 +747,29 @@ const RESIZE_LEFT_HOVER_CLASS: string &#x3D; &#x27;resize-left-hover&#x27;;
 const RESIZE_RIGHT_HOVER_CLASS: string &#x3D; &#x27;resize-right-hover&#x27;;
 const RESIZE_TOP_HOVER_CLASS: string &#x3D; &#x27;resize-top-hover&#x27;;
 const RESIZE_BOTTOM_HOVER_CLASS: string &#x3D; &#x27;resize-bottom-hover&#x27;;
+const RESIZE_GHOST_ELEMENT_CLASS: string &#x3D; &#x27;resize-ghost-element&#x27;;
 
 export const MOUSE_MOVE_THROTTLE_MS: number &#x3D; 50;
 
 /**
- * Place this on an element to make it resizable
+ * Place this on an element to make it resizable. For example:
  *
- * For example
- *
- * &#x60;&#x60;&#x60;
- * &amp;lt;div mwlResizable [resizeEdges]&#x3D;&quot;{bottom: true, right: true, top: true, left: true}&quot; [enableGhostResize]&#x3D;&quot;true&quot;&amp;gt;&amp;lt;/div&amp;gt;
+ * &#x60;&#x60;&#x60;html
+ * &lt;div
+ *   mwlResizable
+ *   [resizeEdges]&#x3D;&quot;{bottom: true, right: true, top: true, left: true}&quot;
+ *   [enableGhostResize]&#x3D;&quot;true&quot;&gt;
+ * &lt;/div&gt;
  * &#x60;&#x60;&#x60;
  */
 @Directive({
   selector: &#x27;[mwlResizable]&#x27;
 })
-export class Resizable implements OnInit, OnDestroy, AfterViewInit {
-
+export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * A function that will be called before each resize event. Return &#x60;true&#x60; to allow the resize event to propagate or &#x60;false&#x60; to cancel it
    */
-  @Input() validateResize: Function;
+  @Input() validateResize: (resizeEvent: ResizeEvent) &#x3D;&gt; boolean;
 
   /**
    * The edges that an element can be resized from. Pass an object like &#x60;{top: true, bottom: false}&#x60;. By default no edges can be resized.
@@ -720,283 +806,416 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizeStart: EventEmitter&lt;Object&gt; &#x3D; new EventEmitter();
+  @Output() resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizing: EventEmitter&lt;Object&gt; &#x3D; new EventEmitter();
+  @Output() resizing &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
    * Called after the mouse is released after a resize event. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizeEnd: EventEmitter&lt;Object&gt; &#x3D; new EventEmitter();
+  @Output() resizeEnd &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
-   * @private
+   * @hidden
    */
-  public mouseup: Subject&lt;any&gt; &#x3D; new Subject();
+  public mouseup &#x3D; new Subject&lt;{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+  }&gt;();
 
   /**
-   * @private
+   * @hidden
    */
-  public mousedown: Subject&lt;any&gt; &#x3D; new Subject();
+  public mousedown &#x3D; new Subject&lt;{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+  }&gt;();
 
   /**
-   * @private
+   * @hidden
    */
-  public mousemove: Subject&lt;any&gt; &#x3D; new Subject();
-
-  /**
-   * @private
-   */
-  @ContentChildren(ResizeHandle) resizeHandles: QueryList&lt;ResizeHandle&gt;;
+  public mousemove &#x3D; new Subject&lt;{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+    event: MouseEvent | TouchEvent;
+  }&gt;();
 
   private pointerEventListeners: PointerEventListeners;
 
   private pointerEventListenerSubscriptions: any &#x3D; {};
 
   /**
-   * @private
+   * @hidden
    */
   constructor(
     private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
   ) {
-    this.pointerEventListeners &#x3D; PointerEventListeners.getInstance(renderer, zone);
+    this.pointerEventListeners &#x3D; PointerEventListeners.getInstance(
+      renderer,
+      zone
+    );
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit(): void {
-
     // TODO - use some fancy Observable.merge&#x27;s for this
-    this.pointerEventListenerSubscriptions.pointerDown &#x3D; this.pointerEventListeners.pointerDown.subscribe(({clientX, clientY}) &#x3D;&gt; {
-      this.mousedown.next({clientX, clientY});
-    });
+    this.pointerEventListenerSubscriptions.pointerDown &#x3D; this.pointerEventListeners.pointerDown.subscribe(
+      ({ clientX, clientY }) &#x3D;&gt; {
+        this.mousedown.next({ clientX, clientY });
+      }
+    );
 
-    this.pointerEventListenerSubscriptions.pointerMove &#x3D; this.pointerEventListeners.pointerMove.subscribe(({clientX, clientY, event}) &#x3D;&gt; {
-      this.mousemove.next({clientX, clientY, event});
-    });
+    this.pointerEventListenerSubscriptions.pointerMove &#x3D; this.pointerEventListeners.pointerMove.subscribe(
+      ({ clientX, clientY, event }) &#x3D;&gt; {
+        this.mousemove.next({ clientX, clientY, event });
+      }
+    );
 
-    this.pointerEventListenerSubscriptions.pointerUp &#x3D;  this.pointerEventListeners.pointerUp.subscribe(({clientX, clientY}) &#x3D;&gt; {
-      this.mouseup.next({clientX, clientY});
-    });
+    this.pointerEventListenerSubscriptions.pointerUp &#x3D; this.pointerEventListeners.pointerUp.subscribe(
+      ({ clientX, clientY }) &#x3D;&gt; {
+        this.mouseup.next({ clientX, clientY });
+      }
+    );
 
     let currentResize: {
-      edges: Edges,
-      startingRect: BoundingRectangle,
-      currentRect: BoundingRectangle,
-      clonedNode?: HTMLElement
-    };
+      edges: Edges;
+      startingRect: BoundingRectangle;
+      currentRect: BoundingRectangle;
+      clonedNode?: HTMLElement;
+    } | null;
 
-    const removeGhostElement: Function &#x3D; (): void &#x3D;&gt; {
-      if (currentResize.clonedNode) {
-        this.elm.nativeElement.parentElement.removeChild(currentResize.clonedNode);
+    const removeGhostElement &#x3D; () &#x3D;&gt; {
+      if (currentResize &amp;&amp; currentResize.clonedNode) {
+        this.elm.nativeElement.parentElement.removeChild(
+          currentResize.clonedNode
+        );
         this.renderer.setStyle(this.elm.nativeElement, &#x27;visibility&#x27;, &#x27;inherit&#x27;);
       }
     };
 
     const mouseMove: Observable&lt;any&gt; &#x3D; this.mousemove.share();
 
+    mouseMove.filter(() &#x3D;&gt; !!currentResize).subscribe(({ event }) &#x3D;&gt; {
+      event.preventDefault();
+    });
+
     mouseMove
-      .filter(() &#x3D;&gt; !!currentResize)
-      .subscribe(({event}) &#x3D;&gt; {
-        event.preventDefault();
-      });
-
-    mouseMove.throttle(val &#x3D;&gt; interval(MOUSE_MOVE_THROTTLE_MS)).subscribe(({clientX, clientY}) &#x3D;&gt; {
-
-      const resizeEdges: Edges &#x3D; getResizeEdges({
-        clientX, clientY,
-        elm: this.elm,
-        allowedEdges: this.resizeEdges,
-        cursorPrecision: this.resizeCursorPrecision
-      });
-      const resizeCursors: ResizeCursors &#x3D; Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
-      const cursor: string &#x3D; currentResize ? null : getResizeCursor(resizeEdges, resizeCursors);
-
-      this.renderer.setStyle(this.elm.nativeElement, &#x27;cursor&#x27;, cursor);
-      this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
-      this.setElementClass(this.elm, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left &#x3D;&#x3D;&#x3D; true);
-      this.setElementClass(this.elm, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right &#x3D;&#x3D;&#x3D; true);
-      this.setElementClass(this.elm, RESIZE_TOP_HOVER_CLASS, resizeEdges.top &#x3D;&#x3D;&#x3D; true);
-      this.setElementClass(this.elm, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom &#x3D;&#x3D;&#x3D; true);
-
-    });
-
-    const mousedrag: Observable&lt;any&gt; &#x3D; this.mousedown.flatMap(startCoords &#x3D;&gt; {
-
-      const getDiff: Function &#x3D; moveCoords &#x3D;&gt; {
-        return {
-          clientX: moveCoords.clientX - startCoords.clientX,
-          clientY: moveCoords.clientY - startCoords.clientY
-        };
-      };
-
-      const getSnapGrid: Function &#x3D; () &#x3D;&gt; {
-        const snapGrid: Coordinate &#x3D; {x: 1, y: 1};
-
+      .throttle(() &#x3D;&gt; interval(MOUSE_MOVE_THROTTLE_MS))
+      .subscribe(({ clientX, clientY }) &#x3D;&gt; {
+        const resizeEdges: Edges &#x3D; getResizeEdges({
+          clientX,
+          clientY,
+          elm: this.elm,
+          allowedEdges: this.resizeEdges,
+          cursorPrecision: this.resizeCursorPrecision
+        });
+        const resizeCursors: ResizeCursors &#x3D; Object.assign(
+          {},
+          DEFAULT_RESIZE_CURSORS,
+          this.resizeCursors
+        );
         if (currentResize) {
-          if (this.resizeSnapGrid.left &amp;&amp; currentResize.edges.left) {
-            snapGrid.x &#x3D; +this.resizeSnapGrid.left;
-          } else if (this.resizeSnapGrid.right &amp;&amp; currentResize.edges.right) {
-            snapGrid.x &#x3D; +this.resizeSnapGrid.right;
-          }
+          const cursor: string &#x3D; getResizeCursor(
+            currentResize.edges,
+            resizeCursors
+          );
+          this.renderer.setStyle(document.body, &#x27;cursor&#x27;, cursor);
+        } else {
+          const cursor: string &#x3D; getResizeCursor(resizeEdges, resizeCursors);
+          this.renderer.setStyle(this.elm.nativeElement, &#x27;cursor&#x27;, cursor);
+        }
+        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
+        this.setElementClass(
+          this.elm,
+          RESIZE_LEFT_HOVER_CLASS,
+          resizeEdges.left &#x3D;&#x3D;&#x3D; true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_RIGHT_HOVER_CLASS,
+          resizeEdges.right &#x3D;&#x3D;&#x3D; true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_TOP_HOVER_CLASS,
+          resizeEdges.top &#x3D;&#x3D;&#x3D; true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_BOTTOM_HOVER_CLASS,
+          resizeEdges.bottom &#x3D;&#x3D;&#x3D; true
+        );
+      });
 
-          if (this.resizeSnapGrid.top &amp;&amp; currentResize.edges.top) {
-            snapGrid.y &#x3D; +this.resizeSnapGrid.top;
-          } else if (this.resizeSnapGrid.bottom &amp;&amp; currentResize.edges.bottom) {
-            snapGrid.y &#x3D; +this.resizeSnapGrid.bottom;
-          }
+    const mousedrag: Observable&lt;any&gt; &#x3D; this.mousedown
+      .flatMap(startCoords &#x3D;&gt; {
+        function getDiff(moveCoords: { clientX: number; clientY: number }) {
+          return {
+            clientX: moveCoords.clientX - startCoords.clientX,
+            clientY: moveCoords.clientY - startCoords.clientY
+          };
         }
 
-        return snapGrid;
-      };
+        const getSnapGrid &#x3D; () &#x3D;&gt; {
+          const snapGrid: Coordinate &#x3D; { x: 1, y: 1 };
 
-      const getGrid: Function &#x3D; (coords, snapGrid) &#x3D;&gt; {
-        return {
-          x: Math.ceil(coords.clientX / snapGrid.x),
-          y: Math.ceil(coords.clientY / snapGrid.y)
+          if (currentResize) {
+            if (this.resizeSnapGrid.left &amp;&amp; currentResize.edges.left) {
+              snapGrid.x &#x3D; +this.resizeSnapGrid.left;
+            } else if (this.resizeSnapGrid.right &amp;&amp; currentResize.edges.right) {
+              snapGrid.x &#x3D; +this.resizeSnapGrid.right;
+            }
+
+            if (this.resizeSnapGrid.top &amp;&amp; currentResize.edges.top) {
+              snapGrid.y &#x3D; +this.resizeSnapGrid.top;
+            } else if (
+              this.resizeSnapGrid.bottom &amp;&amp;
+              currentResize.edges.bottom
+            ) {
+              snapGrid.y &#x3D; +this.resizeSnapGrid.bottom;
+            }
+          }
+
+          return snapGrid;
         };
-      };
 
-      return merge(
-        mouseMove.take(1).map(coords &#x3D;&gt; [, coords]),
-        mouseMove.pairwise()
-      ).map(([previousCoords, newCoords]) &#x3D;&gt; {
-        return [previousCoords ? getDiff(previousCoords) : previousCoords, getDiff(newCoords)];
-      }).filter(([previousCoords, newCoords]) &#x3D;&gt; {
-
-        if (!previousCoords) {
-          return true;
+        function getGrid(
+          coords: { clientX: number; clientY: number },
+          snapGrid: Coordinate
+        ) {
+          return {
+            x: Math.ceil(coords.clientX / snapGrid.x),
+            y: Math.ceil(coords.clientY / snapGrid.y)
+          };
         }
 
-        const snapGrid: Coordinate &#x3D; getSnapGrid();
-        const previousGrid: Coordinate &#x3D; getGrid(previousCoords, snapGrid);
-        const newGrid: Coordinate &#x3D; getGrid(newCoords, snapGrid);
+        return merge(
+          mouseMove.take(1).map(coords &#x3D;&gt; [, coords]),
+          mouseMove.pairwise()
+        )
+          .map(([previousCoords, newCoords]) &#x3D;&gt; {
+            return [
+              previousCoords ? getDiff(previousCoords) : previousCoords,
+              getDiff(newCoords)
+            ];
+          })
+          .filter(([previousCoords, newCoords]) &#x3D;&gt; {
+            if (!previousCoords) {
+              return true;
+            }
 
-        return (previousGrid.x !&#x3D;&#x3D; newGrid.x || previousGrid.y !&#x3D;&#x3D; newGrid.y);
+            const snapGrid: Coordinate &#x3D; getSnapGrid();
+            const previousGrid: Coordinate &#x3D; getGrid(previousCoords, snapGrid);
+            const newGrid: Coordinate &#x3D; getGrid(newCoords, snapGrid);
 
-      }).map(([, newCoords]) &#x3D;&gt; {
-        const snapGrid: Coordinate &#x3D; getSnapGrid();
-        return {
-          clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
-          clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+            return previousGrid.x !&#x3D;&#x3D; newGrid.x || previousGrid.y !&#x3D;&#x3D; newGrid.y;
+          })
+          .map(([, newCoords]) &#x3D;&gt; {
+            const snapGrid: Coordinate &#x3D; getSnapGrid();
+            return {
+              clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
+              clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+            };
+          })
+          .takeUntil(merge(this.mouseup, this.mousedown));
+      })
+      .filter(() &#x3D;&gt; !!currentResize);
+
+    mousedrag
+      .map(({ clientX, clientY }) &#x3D;&gt; {
+        return getNewBoundingRectangle(
+          currentResize!.startingRect,
+          currentResize!.edges,
+          clientX,
+          clientY
+        );
+      })
+      .filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
+        return !!(
+          newBoundingRect.height &amp;&amp;
+          newBoundingRect.width &amp;&amp;
+          newBoundingRect.height &gt; 0 &amp;&amp;
+          newBoundingRect.width &gt; 0
+        );
+      })
+      .filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
+        return this.validateResize
+          ? this.validateResize({
+              rectangle: newBoundingRect,
+              edges: getEdgesDiff({
+                edges: currentResize!.edges,
+                initialRectangle: currentResize!.startingRect,
+                newRectangle: newBoundingRect
+              })
+            })
+          : true;
+      })
+      .subscribe((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
+        if (currentResize &amp;&amp; currentResize.clonedNode) {
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;height&#x27;,
+            &#x60;${newBoundingRect.height}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;width&#x27;,
+            &#x60;${newBoundingRect.width}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;top&#x27;,
+            &#x60;${newBoundingRect.top}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;left&#x27;,
+            &#x60;${newBoundingRect.left}px&#x60;
+          );
+        }
+
+        this.zone.run(() &#x3D;&gt; {
+          this.resizing.emit({
+            edges: getEdgesDiff({
+              edges: currentResize!.edges,
+              initialRectangle: currentResize!.startingRect,
+              newRectangle: newBoundingRect
+            }),
+            rectangle: newBoundingRect
+          });
+        });
+
+        currentResize!.currentRect &#x3D; newBoundingRect;
+      });
+
+    this.mousedown
+      .map(({ clientX, clientY, edges }) &#x3D;&gt; {
+        return (
+          edges ||
+          getResizeEdges({
+            clientX,
+            clientY,
+            elm: this.elm,
+            allowedEdges: this.resizeEdges,
+            cursorPrecision: this.resizeCursorPrecision
+          })
+        );
+      })
+      .filter((edges: Edges) &#x3D;&gt; {
+        return Object.keys(edges).length &gt; 0;
+      })
+      .subscribe((edges: Edges) &#x3D;&gt; {
+        if (currentResize) {
+          removeGhostElement();
+        }
+        const startingRect: BoundingRectangle &#x3D; getElementRect(
+          this.elm,
+          this.ghostElementPositioning
+        );
+        currentResize &#x3D; {
+          edges,
+          startingRect,
+          currentRect: startingRect
         };
-      }).takeUntil(merge(this.mouseup, this.mousedown));
-
-    }).filter(() &#x3D;&gt; !!currentResize);
-
-    mousedrag.map(({clientX, clientY}) &#x3D;&gt; {
-      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, clientX, clientY);
-    }).filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-      return newBoundingRect.height &gt; 0 &amp;&amp; newBoundingRect.width &gt; 0;
-    }).filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-      return this.validateResize ? this.validateResize({
-        rectangle: newBoundingRect,
-        edges: getEdgesDiff({
-          edges: currentResize.edges,
-          initialRectangle: currentResize.startingRect,
-          newRectangle: newBoundingRect
-        })
-      }) : true;
-    }).subscribe((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-
-      if (currentResize.clonedNode) {
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;height&#x27;, &#x60;${newBoundingRect.height}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;width&#x27;, &#x60;${newBoundingRect.width}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;top&#x27;, &#x60;${newBoundingRect.top}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;left&#x27;, &#x60;${newBoundingRect.left}px&#x60;);
-      }
-
-      this.zone.run(() &#x3D;&gt; {
-        this.resizing.emit({
-          edges: getEdgesDiff({
-            edges: currentResize.edges,
-            initialRectangle: currentResize.startingRect,
-            newRectangle: newBoundingRect
-          }),
-          rectangle: newBoundingRect
+        if (this.enableGhostResize) {
+          currentResize.clonedNode &#x3D; this.elm.nativeElement.cloneNode(true);
+          const resizeCursors: ResizeCursors &#x3D; Object.assign(
+            {},
+            DEFAULT_RESIZE_CURSORS,
+            this.resizeCursors
+          );
+          this.elm.nativeElement.parentElement.appendChild(
+            currentResize.clonedNode
+          );
+          this.renderer.setStyle(
+            this.elm.nativeElement,
+            &#x27;visibility&#x27;,
+            &#x27;hidden&#x27;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;position&#x27;,
+            this.ghostElementPositioning
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;left&#x27;,
+            &#x60;${currentResize.startingRect.left}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;top&#x27;,
+            &#x60;${currentResize.startingRect.top}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;height&#x27;,
+            &#x60;${currentResize.startingRect.height}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;width&#x27;,
+            &#x60;${currentResize.startingRect.width}px&#x60;
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            &#x27;cursor&#x27;,
+            getResizeCursor(currentResize.edges, resizeCursors)
+          );
+          this.renderer.addClass(
+            currentResize.clonedNode,
+            RESIZE_GHOST_ELEMENT_CLASS
+          );
+          currentResize.clonedNode!.scrollTop &#x3D; currentResize.startingRect
+            .scrollTop as number;
+          currentResize.clonedNode!.scrollLeft &#x3D; currentResize.startingRect
+            .scrollLeft as number;
+        }
+        this.zone.run(() &#x3D;&gt; {
+          this.resizeStart.emit({
+            edges: getEdgesDiff({
+              edges,
+              initialRectangle: startingRect,
+              newRectangle: startingRect
+            }),
+            rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+          });
         });
       });
-
-      currentResize.currentRect &#x3D; newBoundingRect;
-
-    });
-
-    this.mousedown.map(({clientX, clientY, edges}) &#x3D;&gt; {
-      return edges || getResizeEdges({
-        clientX, clientY,
-        elm: this.elm,
-        allowedEdges: this.resizeEdges,
-        cursorPrecision: this.resizeCursorPrecision
-      });
-    }).filter((edges: Edges) &#x3D;&gt; {
-      return Object.keys(edges).length &gt; 0;
-    }).subscribe((edges: Edges) &#x3D;&gt; {
-      if (currentResize) {
-        removeGhostElement();
-      }
-      const startingRect: BoundingRectangle &#x3D; getElementRect(this.elm, this.ghostElementPositioning);
-      currentResize &#x3D; {
-        edges,
-        startingRect,
-        currentRect: startingRect
-      };
-      if (this.enableGhostResize) {
-        currentResize.clonedNode &#x3D; this.elm.nativeElement.cloneNode(true);
-        const resizeCursors: ResizeCursors &#x3D; Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
-        this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
-        this.renderer.setStyle(this.elm.nativeElement, &#x27;visibility&#x27;, &#x27;hidden&#x27;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;position&#x27;, this.ghostElementPositioning);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;left&#x27;, &#x60;${currentResize.startingRect.left}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;top&#x27;, &#x60;${currentResize.startingRect.top}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;height&#x27;, &#x60;${currentResize.startingRect.height}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;width&#x27;, &#x60;${currentResize.startingRect.width}px&#x60;);
-        this.renderer.setStyle(currentResize.clonedNode, &#x27;cursor&#x27;, getResizeCursor(currentResize.edges, resizeCursors));
-      }
-      this.zone.run(() &#x3D;&gt; {
-        this.resizeStart.emit({
-          edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
-          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
-        });
-      });
-    });
 
     this.mouseup.subscribe(() &#x3D;&gt; {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
+        this.renderer.setStyle(document.body, &#x27;cursor&#x27;, &#x27;&#x27;);
+        this.renderer.setStyle(this.elm.nativeElement, &#x27;cursor&#x27;, &#x27;&#x27;);
         this.zone.run(() &#x3D;&gt; {
           this.resizeEnd.emit({
             edges: getEdgesDiff({
-              edges: currentResize.edges,
-              initialRectangle: currentResize.startingRect,
-              newRectangle: currentResize.currentRect
+              edges: currentResize!.edges,
+              initialRectangle: currentResize!.startingRect,
+              newRectangle: currentResize!.currentRect
             }),
-            rectangle: currentResize.currentRect
+            rectangle: currentResize!.currentRect
           });
         });
         removeGhostElement();
         currentResize &#x3D; null;
       }
     });
-
   }
 
   /**
-   * @private
-   */
-  ngAfterViewInit(): void {
-    this.resizeHandles.forEach((handle: ResizeHandle) &#x3D;&gt; {
-      handle.resizable &#x3D; this;
-    });
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   ngOnDestroy(): void {
     this.mousedown.complete();
@@ -1014,7 +1233,159 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       this.renderer.removeClass(elm.nativeElement, name);
     }
   }
+}
 
+class PointerEventListeners {
+  public pointerDown: Observable&lt;PointerEventCoordinate&gt;;
+
+  public pointerMove: Observable&lt;PointerEventCoordinate&gt;;
+
+  public pointerUp: Observable&lt;PointerEventCoordinate&gt;;
+
+  private static instance: PointerEventListeners; // tslint:disable-line
+
+  public static getInstance(
+    renderer: Renderer2,
+    zone: NgZone
+  ): PointerEventListeners {
+    if (!PointerEventListeners.instance) {
+      PointerEventListeners.instance &#x3D; new PointerEventListeners(
+        renderer,
+        zone
+      );
+    }
+    return PointerEventListeners.instance;
+  }
+
+  constructor(renderer: Renderer2, zone: NgZone) {
+    this.pointerDown &#x3D; new Observable(
+      (observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+        let unsubscribeMouseDown: () &#x3D;&gt; void;
+        let unsubscribeTouchStart: () &#x3D;&gt; void;
+
+        zone.runOutsideAngular(() &#x3D;&gt; {
+          unsubscribeMouseDown &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;mousedown&#x27;,
+            (event: MouseEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchStart &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;touchstart&#x27;,
+            (event: TouchEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.touches[0].clientX,
+                clientY: event.touches[0].clientY,
+                event
+              });
+            }
+          );
+        });
+
+        return () &#x3D;&gt; {
+          unsubscribeMouseDown();
+          unsubscribeTouchStart();
+        };
+      }
+    ).share();
+
+    this.pointerMove &#x3D; new Observable(
+      (observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+        let unsubscribeMouseMove: () &#x3D;&gt; void;
+        let unsubscribeTouchMove: () &#x3D;&gt; void;
+
+        zone.runOutsideAngular(() &#x3D;&gt; {
+          unsubscribeMouseMove &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;mousemove&#x27;,
+            (event: MouseEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchMove &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;touchmove&#x27;,
+            (event: TouchEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.targetTouches[0].clientX,
+                clientY: event.targetTouches[0].clientY,
+                event
+              });
+            }
+          );
+        });
+
+        return () &#x3D;&gt; {
+          unsubscribeMouseMove();
+          unsubscribeTouchMove();
+        };
+      }
+    ).share();
+
+    this.pointerUp &#x3D; new Observable(
+      (observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
+        let unsubscribeMouseUp: () &#x3D;&gt; void;
+        let unsubscribeTouchEnd: () &#x3D;&gt; void;
+        let unsubscribeTouchCancel: () &#x3D;&gt; void;
+
+        zone.runOutsideAngular(() &#x3D;&gt; {
+          unsubscribeMouseUp &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;mouseup&#x27;,
+            (event: MouseEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchEnd &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;touchend&#x27;,
+            (event: TouchEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.changedTouches[0].clientX,
+                clientY: event.changedTouches[0].clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchCancel &#x3D; renderer.listen(
+            &#x27;document&#x27;,
+            &#x27;touchcancel&#x27;,
+            (event: TouchEvent) &#x3D;&gt; {
+              observer.next({
+                clientX: event.changedTouches[0].clientX,
+                clientY: event.changedTouches[0].clientY,
+                event
+              });
+            }
+          );
+        });
+
+        return () &#x3D;&gt; {
+          unsubscribeMouseUp();
+          unsubscribeTouchEnd();
+          unsubscribeTouchCancel();
+        };
+      }
+    ).share();
+  }
 }
 </code></pre>
     </div>
@@ -1045,20 +1416,17 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
 
        <script src="../js/compodoc.js"></script>
 
+       <script>var COMPODOC_CURRENT_PAGE_DEPTH = 1;</script>
+
        <script src="../js/search/search.js"></script>
        <script src="../js/search/lunr.min.js"></script>
        <script src="../js/search/search-lunr.js"></script>
 
+       <script src="../js/tabs.js"></script>
        <script src="../js/menu.js"></script>
-       <script src="../js/libs/highlight.pack.js"></script>
-       <script src="../js/libs/highlightjs-line-numbers.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
        <script src="../js/search/search_index.js"></script>
-       <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                hljs.initHighlightingOnLoad();
-                hljs.initLineNumbersOnLoad();
-            });
-       </script>
 
     </body>
 </html>

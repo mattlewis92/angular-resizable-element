@@ -36,15 +36,27 @@
                         <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
                         <ul class="links">
                                 <li class="link">
-                                    <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
-                                </li>
-                                <li class="link">
-                                    <a  href="./overview.html" 
+                                    <a 
                                         
                                          href="./overview.html" 
-                                        
+                                         href="./overview.html" 
                                         >
                                         <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                                <li class="link">
+                                  <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                        <a href="./changelog.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>CHANGELOG
+                                    </a>
+                                </li>
+                                <li class="link">
+                                        <a href="./license.html"
+                                    >
+                                        <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
                         </ul>
@@ -53,13 +65,15 @@
             
                     <li class="chapter">
                         <a data-type="chapter-link" href="./modules.html" >
-                            <span class="fa fa-archive"></span>
-                            <span>Modules</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                            <div class="menu-toggler linked" data-toggle="collapse"
                                     data-target="#xs-modules-links"
-                            ></span>
+                            >
+                                <span class="fa fa-archive"></span>
+                                <span class="link-name">Modules</span>
+                                <span class="fa fa-angle-down"></span>
+                            </div>
                         </a>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-modules-links"
                             >
                                 <li class="link">
@@ -70,34 +84,34 @@
             
             
                     <li class="chapter">
-                        <div class="simple">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-directives-links"
+                            >
                             <span class="fa fa-code"></span>
                             <span>Directives</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-directives-links"
-                                ></span>
+                            <span class="fa fa-angle-down"></span>
                         </div>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-directives-links"
                             >
                                 <li class="link">
-                                    <a href="./directives/Resizable.html" >Resizable</a>
+                                    <a href="./directives/ResizableDirective.html" >ResizableDirective</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./directives/ResizeHandle.html" >ResizeHandle</a>
+                                    <a href="./directives/ResizeHandleDirective.html" >ResizeHandleDirective</a>
                                 </li>
                         </ul>
                     </li>
             
                     <li class="chapter">
-                        <div class="simple">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-classes-links"
+                            >
                             <span class="fa fa-file-code-o"></span>
                             <span>Classes</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-classes-links"
-                                ></span>
+                            <span class="fa fa-angle-down"></span>
                         </div>
-                        <ul class="links collapse in"
+                        <ul class="links collapse "
                                 id="xs-classes-links"
                             >
                                 <li class="link">
@@ -108,11 +122,59 @@
             
             
             
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interfaces-links"
+                            >
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/Coordinate.html" >Coordinate</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/Edges.html" >Edges</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/PointerEventCoordinate.html" >PointerEventCoordinate</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ResizeCursors.html" >ResizeCursors</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                </li>
+                        </ul>
+                    </li>
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-miscellaneous-links"
+                            >
+                            <span class="fa fa-cubes"></span>
+                            <span>Miscellaneous</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-miscellaneous-links"
+                            >
+                                <li class="link">
+                                  <a href="./miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                </li>
+                                <li class="link">
+                                  <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                </li>
+                        </ul>
                     </li>
+            
             
             
                     <li class="divider"></li>
@@ -148,15 +210,27 @@
                                <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
                                <ul class="links">
                                        <li class="link">
-                                           <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
-                                       </li>
-                                       <li class="link">
-                                           <a  href="./overview.html" 
+                                           <a 
                                                
                                                 href="./overview.html" 
-                                               
+                                                href="./overview.html" 
                                                >
                                                <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="./changelog.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>CHANGELOG
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="./license.html"
+                                           >
+                                               <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
                                </ul>
@@ -165,13 +239,15 @@
                    
                            <li class="chapter">
                                <a data-type="chapter-link" href="./modules.html" >
-                                   <span class="fa fa-archive"></span>
-                                   <span>Modules</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                   <div class="menu-toggler linked" data-toggle="collapse"
                                            data-target="#modules-links"
-                                   ></span>
+                                   >
+                                       <span class="fa fa-archive"></span>
+                                       <span class="link-name">Modules</span>
+                                       <span class="fa fa-angle-down"></span>
+                                   </div>
                                </a>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="modules-links"
                    >
                                        <li class="link">
@@ -182,34 +258,34 @@
                    
                    
                            <li class="chapter">
-                               <div class="simple">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#directives-links"
+                   >
                                    <span class="fa fa-code"></span>
                                    <span>Directives</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#directives-links"
-                   ></span>
+                                   <span class="fa fa-angle-down"></span>
                                </div>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="directives-links"
                    >
                                        <li class="link">
-                                           <a href="./directives/Resizable.html" >Resizable</a>
+                                           <a href="./directives/ResizableDirective.html" >ResizableDirective</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./directives/ResizeHandle.html" >ResizeHandle</a>
+                                           <a href="./directives/ResizeHandleDirective.html" >ResizeHandleDirective</a>
                                        </li>
                                </ul>
                            </li>
                    
                            <li class="chapter">
-                               <div class="simple">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#classes-links"
+                   >
                                    <span class="fa fa-file-code-o"></span>
                                    <span>Classes</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#classes-links"
-                   ></span>
+                                   <span class="fa fa-angle-down"></span>
                                </div>
-                               <ul class="links collapse in"
+                               <ul class="links collapse "
                                        id="classes-links"
                    >
                                        <li class="link">
@@ -220,11 +296,59 @@
                    
                    
                    
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interfaces-links"
+                   >
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interfaces/BoundingRectangle.html" >BoundingRectangle</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/Coordinate.html" >Coordinate</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/Edges.html" >Edges</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/PointerEventCoordinate.html" >PointerEventCoordinate</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ResizeCursors.html" >ResizeCursors</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ResizeEvent.html" >ResizeEvent</a>
+                                       </li>
+                               </ul>
+                           </li>
                    
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#miscellaneous-links"
+                   >
+                                   <span class="fa fa-cubes"></span>
+                                   <span>Miscellaneous</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="miscellaneous-links"
+                   >
+                                       <li class="link">
+                                         <a href="./miscellaneous/functions.html" data-type="entity-link" >Functions</a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                       </li>
+                               </ul>
                            </li>
+                   
                    
                    
                            <li class="divider"></li>
@@ -238,8 +362,9 @@
                    
                    </nav>
                </div>
-               <div class="content readme">
+               <div class="content getting-started">
                    <div class="content-data">
+
 <h1 id="angular-resizable-element">angular resizable element</h1>
 <p><a href="https://travis-ci.org/mattlewis92/angular-resizable-element"><img src="https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master" alt="Build Status" class="img-responsive"></a>
 <a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg" alt="codecov" class="img-responsive"></a>
@@ -248,9 +373,6 @@
 <a href="https://github.com/mattlewis92/angular-resizable-element/issues"><img src="https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg" alt="GitHub issues" class="img-responsive"></a>
 <a href="https://github.com/mattlewis92/angular-resizable-element/stargazers"><img src="https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg" alt="GitHub stars" class="img-responsive"></a>
 <a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
-<p><a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-resizable-element'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/uSyax6FrP6eVdiUSuyThrNTG/mattlewis92/angular-resizable-element.svg' />
-</a></p>
 <h2 id="demo">Demo</h2>
 <p><a href="https://mattlewis92.github.io/angular-resizable-element/demo/">https://mattlewis92.github.io/angular-resizable-element/demo/</a></p>
 <h2 id="table-of-contents">Table of contents</h2>
@@ -266,10 +388,10 @@
 <h2 id="installation">Installation</h2>
 <p>Install through npm:</p>
 <pre class="line-numbers"><code class="language-none">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
-<pre class="line-numbers"><code class="language-typescript">import {Component} from &#39;&#40;angular/core&#39;;
+<pre class="line-numbers"><code class="language-typescript">import {Component} from &#39;&#64;angular/core&#39;;
 import {ResizeEvent} from &#39;angular-resizable-element&#39;;
 
-&#40;Component({
+&#64;Component({
   selector: &#39;demo-app&#39;,
   // you should add some more styles to the element. See the demo folder for a more fleshed out example
   styles: [`
@@ -295,10 +417,10 @@ export class MyComponent {
 }
 
 // now use within your apps module
-import {NgModule} from &#39;&#40;angular/core&#39;;
+import {NgModule} from &#39;&#64;angular/core&#39;;
 import {ResizableModule} from &#39;angular-resizable-element&#39;;
 
-&#40;NgModule({
+&#64;NgModule({
   declarations: [MyComponent],
   imports: [ResizableModule],
   bootstrap: [MyComponent]
@@ -324,6 +446,8 @@ class MyModule {}</code></pre><p>You may also find it useful to view the <a href
 <h3 id="release">Release</h3>
 <pre class="line-numbers"><code class="language-bash">npm run release</code></pre><h2 id="license">License</h2>
 <p>MIT</p>
+
+
 
 
 
