@@ -1399,4 +1399,26 @@ describe('resizable directive', () => {
       }
     });
   });
+
+  it('should set the resize cursor on the body when resizing', () => {
+    const fixture: ComponentFixture<TestComponent> = createComponent();
+    fixture.componentInstance.enableGhostResize = false;
+    fixture.detectChanges();
+    const elm: HTMLElement =
+      fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 200
+    });
+    triggerDomEvent('mousemove', elm, {
+      clientX: 101,
+      clientY: 200
+    });
+    expect(document.body.style.cursor).to.equal('nw-resize');
+    triggerDomEvent('mouseup', elm, {
+      clientX: 101,
+      clientY: 200
+    });
+    expect(document.body.style.cursor).to.equal('');
+  });
 });

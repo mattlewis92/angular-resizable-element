@@ -412,11 +412,16 @@ export class ResizableDirective implements OnInit, OnDestroy {
           DEFAULT_RESIZE_CURSORS,
           this.resizeCursors
         );
-        const cursor: string = currentResize
-          ? ''
-          : getResizeCursor(resizeEdges, resizeCursors);
-
-        this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
+        if (currentResize) {
+          const cursor: string = getResizeCursor(
+            currentResize.edges,
+            resizeCursors
+          );
+          this.renderer.setStyle(document.body, 'cursor', cursor);
+        } else {
+          const cursor: string = getResizeCursor(resizeEdges, resizeCursors);
+          this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
+        }
         this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
         this.setElementClass(
           this.elm,
@@ -679,6 +684,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.mouseup.subscribe(() => {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
+        this.renderer.setStyle(document.body, 'cursor', '');
+        this.renderer.setStyle(this.elm.nativeElement, 'cursor', '');
         this.zone.run(() => {
           this.resizeEnd.emit({
             edges: getEdgesDiff({
