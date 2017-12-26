@@ -16,7 +16,7 @@ https://mattlewis92.github.io/angular-resizable-element/demo/
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Development](#development)
-- [License](#licence)
+- [License](#license)
 
 ## About
 
@@ -74,14 +74,6 @@ class MyModule {}
 ```
 
 You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts).
-
-### Usage without a module bundler
-```
-<script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script>
-<script>
-    // everything is exported on the  angularResizableElement namespace
-</script>
-```
 
 ## Documentation
 All documentation is auto-generated from the source and can be viewed here:

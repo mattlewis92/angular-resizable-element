@@ -47,7 +47,7 @@ export class ResizeHandleDirective implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostListener('touchstart', [
     '$event',
@@ -97,7 +97,7 @@ export class ResizeHandleDirective implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostListener('touchend', [
     '$event.changedTouches[0].clientX',
