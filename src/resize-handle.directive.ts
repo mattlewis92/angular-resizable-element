@@ -1,5 +1,13 @@
-import { Directive, Input, HostListener, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
-import { Resizable } from './resizable.directive';
+import {
+  Directive,
+  Input,
+  HostListener,
+  Renderer2,
+  ElementRef,
+  OnDestroy,
+  NgZone
+} from '@angular/core';
+import { ResizableDirective } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
 
 /**
@@ -16,8 +24,7 @@ import { Edges } from './interfaces/edges.interface';
 @Directive({
   selector: '[mwlResizeHandle]'
 })
-export class ResizeHandle implements OnDestroy {
-
+export class ResizeHandleDirective implements OnDestroy {
   /**
    * The `Edges` object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
@@ -26,14 +33,18 @@ export class ResizeHandle implements OnDestroy {
   /**
    * @private
    */
-  public resizable: Resizable; // set by the parent mwlResizable directive
+  public resizable: ResizableDirective; // set by the parent mwlResizable directive
 
   private eventListeners: {
-    touchmove?: Function,
-    mousemove?: Function
+    touchmove?: () => void;
+    mousemove?: () => void;
   } = {};
 
-  constructor(private renderer: Renderer2, private element: ElementRef, private zone: NgZone) {}
+  constructor(
+    private renderer: Renderer2,
+    private element: ElementRef,
+    private zone: NgZone
+  ) {}
 
   ngOnDestroy(): void {
     this.unsubscribeEventListeners();
@@ -42,40 +53,87 @@ export class ResizeHandle implements OnDestroy {
   /**
    * @private
    */
-  @HostListener('touchstart', ['$event', '$event.touches[0].clientX', '$event.touches[0].clientY'])
+  @HostListener('touchstart', [
+    '$event',
+    '$event.touches[0].clientX',
+    '$event.touches[0].clientY'
+  ])
   @HostListener('mousedown', ['$event', '$event.clientX', '$event.clientY'])
-  onMousedown(event: any, mouseX: number, mouseY: number): void {
+  onMousedown(
+    event: MouseEvent | TouchEvent,
+    clientX: number,
+    clientY: number
+  ): void {
     event.preventDefault();
     this.zone.runOutsideAngular(() => {
       if (!this.eventListeners.touchmove) {
-        this.eventListeners.touchmove = this.renderer.listen(this.element.nativeElement, 'touchmove', (event: any) => {
-          this.onMousemove(event, event.targetTouches[0].clientX, event.targetTouches[0].clientY);
-        });
+        this.eventListeners.touchmove = this.renderer.listen(
+          this.element.nativeElement,
+          'touchmove',
+          (touchMoveEvent: TouchEvent) => {
+            this.onMousemove(
+              touchMoveEvent,
+              touchMoveEvent.targetTouches[0].clientX,
+              touchMoveEvent.targetTouches[0].clientY
+            );
+          }
+        );
       }
       if (!this.eventListeners.mousemove) {
-        this.eventListeners.mousemove = this.renderer.listen(this.element.nativeElement, 'mousemove', (event: any) => {
-          this.onMousemove(event, event.clientX, event.clientY);
-        });
+        this.eventListeners.mousemove = this.renderer.listen(
+          this.element.nativeElement,
+          'mousemove',
+          (mouseMoveEvent: MouseEvent) => {
+            this.onMousemove(
+              mouseMoveEvent,
+              mouseMoveEvent.clientX,
+              mouseMoveEvent.clientY
+            );
+          }
+        );
       }
-      this.resizable.mousedown.next({mouseX, mouseY, edges: this.resizeEdges});
+      this.resizable.mousedown.next({
+        clientX,
+        clientY,
+        edges: this.resizeEdges
+      });
     });
   }
 
   /**
    * @private
    */
-  @HostListener('touchend', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
-  @HostListener('touchcancel', ['$event.changedTouches[0].clientX', '$event.changedTouches[0].clientY'])
+  @HostListener('touchend', [
+    '$event.changedTouches[0].clientX',
+    '$event.changedTouches[0].clientY'
+  ])
+  @HostListener('touchcancel', [
+    '$event.changedTouches[0].clientX',
+    '$event.changedTouches[0].clientY'
+  ])
   @HostListener('mouseup', ['$event.clientX', '$event.clientY'])
-  onMouseup(mouseX: number, mouseY: number): void {
+  onMouseup(clientX: number, clientY: number): void {
     this.zone.runOutsideAngular(() => {
       this.unsubscribeEventListeners();
-      this.resizable.mouseup.next({mouseX, mouseY, edges: this.resizeEdges});
+      this.resizable.mouseup.next({
+        clientX,
+        clientY,
+        edges: this.resizeEdges
+      });
     });
   }
 
-  private onMousemove(event: any, mouseX: number, mouseY: number): void {
-    this.resizable.mousemove.next({mouseX, mouseY, edges: this.resizeEdges, event});
+  private onMousemove(
+    event: MouseEvent | TouchEvent,
+    clientX: number,
+    clientY: number
+  ): void {
+    this.resizable.mousemove.next({
+      clientX,
+      clientY,
+      edges: this.resizeEdges,
+      event
+    });
   }
 
   private unsubscribeEventListeners(): void {
@@ -84,5 +142,4 @@ export class ResizeHandle implements OnDestroy {
       delete this.eventListeners[type];
     });
   }
-
 }

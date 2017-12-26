@@ -12,11 +12,11 @@ import {
   OnDestroy,
   NgZone
 } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
-import {merge} from 'rxjs/observable/merge';
-import {interval} from 'rxjs/observable/interval';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import { merge } from 'rxjs/observable/merge';
+import { interval } from 'rxjs/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
@@ -25,9 +25,10 @@ import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/operator/share';
-import {ResizeHandle} from './resize-handle.directive';
-import {Edges} from './interfaces/edges.interface';
-import {BoundingRectangle} from './interfaces/bounding-rectangle.interface';
+import { ResizeHandleDirective } from './resize-handle.directive';
+import { Edges } from './interfaces/edges.interface';
+import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
+import { ResizeEvent } from './interfaces/resize-event.interface';
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -40,13 +41,21 @@ interface Coordinate {
   y: number;
 }
 
-function isNumberCloseTo(value1: number, value2: number, precision: number = 3): boolean {
+function isNumberCloseTo(
+  value1: number,
+  value2: number,
+  precision: number = 3
+): boolean {
   const diff: number = Math.abs(value1 - value2);
   return diff < precision;
 }
 
-function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, clientX: number, clientY: number): BoundingRectangle {
-
+function getNewBoundingRectangle(
+  startingRect: BoundingRectangle,
+  edges: Edges,
+  clientX: number,
+  clientY: number
+): BoundingRectangle {
   const newBoundingRect: BoundingRectangle = {
     top: startingRect.top,
     bottom: startingRect.bottom,
@@ -70,18 +79,22 @@ function getNewBoundingRectangle(startingRect: BoundingRectangle, edges: Edges, 
   newBoundingRect.width = newBoundingRect.right - newBoundingRect.left;
 
   return newBoundingRect;
-
 }
 
-function getElementRect(element: ElementRef, ghostElementPositioning: string): BoundingRectangle {
+function getElementRect(
+  element: ElementRef,
+  ghostElementPositioning: string
+): BoundingRectangle {
   if (ghostElementPositioning === 'absolute') {
     return {
       height: element.nativeElement.offsetHeight,
       width: element.nativeElement.offsetWidth,
       top: element.nativeElement.offsetTop,
-      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
+      bottom:
+        element.nativeElement.offsetHeight + element.nativeElement.offsetTop,
       left: element.nativeElement.offsetLeft,
-      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
+      right:
+        element.nativeElement.offsetWidth + element.nativeElement.offsetLeft
     };
   } else {
     const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
@@ -98,24 +111,46 @@ function getElementRect(element: ElementRef, ghostElementPositioning: string): B
   }
 }
 
-function isWithinBoundingY({clientY, rect}: {clientY: number, rect: ClientRect}): boolean {
+function isWithinBoundingY({
+  clientY,
+  rect
+}: {
+  clientY: number;
+  rect: ClientRect;
+}): boolean {
   return clientY >= rect.top && clientY <= rect.bottom;
 }
 
-function isWithinBoundingX({clientX, rect}: {clientX: number, rect: ClientRect}): boolean {
+function isWithinBoundingX({
+  clientX,
+  rect
+}: {
+  clientX: number;
+  rect: ClientRect;
+}): boolean {
   return clientX >= rect.left && clientX <= rect.right;
 }
 
-function getResizeEdges(
-  {clientX, clientY, elm, allowedEdges, cursorPrecision}:
-    {clientX: number, clientY: number, elm: ElementRef, allowedEdges: Edges, cursorPrecision: number}): Edges {
+function getResizeEdges({
+  clientX,
+  clientY,
+  elm,
+  allowedEdges,
+  cursorPrecision
+}: {
+  clientX: number;
+  clientY: number;
+  elm: ElementRef;
+  allowedEdges: Edges;
+  cursorPrecision: number;
+}): Edges {
   const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
   const edges: Edges = {};
 
   if (
     allowedEdges.left &&
     isNumberCloseTo(clientX, elmPosition.left, cursorPrecision) &&
-    isWithinBoundingY({clientY, rect: elmPosition})
+    isWithinBoundingY({ clientY, rect: elmPosition })
   ) {
     edges.left = true;
   }
@@ -123,7 +158,7 @@ function getResizeEdges(
   if (
     allowedEdges.right &&
     isNumberCloseTo(clientX, elmPosition.right, cursorPrecision) &&
-    isWithinBoundingY({clientY, rect: elmPosition})
+    isWithinBoundingY({ clientY, rect: elmPosition })
   ) {
     edges.right = true;
   }
@@ -131,7 +166,7 @@ function getResizeEdges(
   if (
     allowedEdges.top &&
     isNumberCloseTo(clientY, elmPosition.top, cursorPrecision) &&
-    isWithinBoundingX({clientX, rect: elmPosition})
+    isWithinBoundingX({ clientX, rect: elmPosition })
   ) {
     edges.top = true;
   }
@@ -139,7 +174,7 @@ function getResizeEdges(
   if (
     allowedEdges.bottom &&
     isNumberCloseTo(clientY, elmPosition.bottom, cursorPrecision) &&
-    isWithinBoundingX({clientX, rect: elmPosition})
+    isWithinBoundingX({ clientX, rect: elmPosition })
   ) {
     edges.bottom = true;
   }
@@ -183,15 +218,20 @@ function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
   }
 }
 
-function getEdgesDiff(
-  {edges, initialRectangle, newRectangle}: {edges: Edges, initialRectangle: BoundingRectangle, newRectangle: BoundingRectangle}): Edges {
-
+function getEdgesDiff({
+  edges,
+  initialRectangle,
+  newRectangle
+}: {
+  edges: Edges;
+  initialRectangle: BoundingRectangle;
+  newRectangle: BoundingRectangle;
+}): Edges {
   const edgesDiff: Edges = {};
   Object.keys(edges).forEach((edge: string) => {
     edgesDiff[edge] = newRectangle[edge] - initialRectangle[edge];
   });
   return edgesDiff;
-
 }
 
 const RESIZE_ACTIVE_CLASS: string = 'resize-active';
@@ -217,12 +257,11 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]'
 })
-export class Resizable implements OnInit, OnDestroy, AfterViewInit {
-
+export class ResizableDirective implements OnInit, OnDestroy, AfterViewInit {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
-  @Input() validateResize: Function;
+  @Input() validateResize: (resizeEvent: ResizeEvent) => boolean;
 
   /**
    * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
@@ -259,37 +298,51 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeStart: EventEmitter<Object> = new EventEmitter();
+  @Output() resizeStart = new EventEmitter<ResizeEvent>();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizing: EventEmitter<Object> = new EventEmitter();
+  @Output() resizing = new EventEmitter<ResizeEvent>();
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeEnd: EventEmitter<Object> = new EventEmitter();
+  @Output() resizeEnd = new EventEmitter<ResizeEvent>();
 
   /**
    * @hidden
    */
-  public mouseup: Subject<any> = new Subject();
+  public mouseup = new Subject<{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+  }>();
 
   /**
    * @hidden
    */
-  public mousedown: Subject<any> = new Subject();
+  public mousedown = new Subject<{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+  }>();
 
   /**
    * @hidden
    */
-  public mousemove: Subject<any> = new Subject();
+  public mousemove = new Subject<{
+    clientX: number;
+    clientY: number;
+    edges?: Edges;
+    event: MouseEvent | TouchEvent;
+  }>();
 
   /**
    * @hidden
    */
-  @ContentChildren(ResizeHandle) resizeHandles: QueryList<ResizeHandle>;
+  @ContentChildren(ResizeHandleDirective)
+  resizeHandles: QueryList<ResizeHandleDirective>;
 
   private pointerEventListeners: PointerEventListeners;
 
@@ -303,210 +356,327 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
     public elm: ElementRef,
     private zone: NgZone
   ) {
-    this.pointerEventListeners = PointerEventListeners.getInstance(renderer, zone);
+    this.pointerEventListeners = PointerEventListeners.getInstance(
+      renderer,
+      zone
+    );
   }
 
   /**
    * @hidden
    */
   ngOnInit(): void {
-
     // TODO - use some fancy Observable.merge's for this
-    this.pointerEventListenerSubscriptions.pointerDown = this.pointerEventListeners.pointerDown.subscribe(({clientX, clientY}) => {
-      this.mousedown.next({clientX, clientY});
-    });
+    this.pointerEventListenerSubscriptions.pointerDown = this.pointerEventListeners.pointerDown.subscribe(
+      ({ clientX, clientY }) => {
+        this.mousedown.next({ clientX, clientY });
+      }
+    );
 
-    this.pointerEventListenerSubscriptions.pointerMove = this.pointerEventListeners.pointerMove.subscribe(({clientX, clientY, event}) => {
-      this.mousemove.next({clientX, clientY, event});
-    });
+    this.pointerEventListenerSubscriptions.pointerMove = this.pointerEventListeners.pointerMove.subscribe(
+      ({ clientX, clientY, event }) => {
+        this.mousemove.next({ clientX, clientY, event });
+      }
+    );
 
-    this.pointerEventListenerSubscriptions.pointerUp =  this.pointerEventListeners.pointerUp.subscribe(({clientX, clientY}) => {
-      this.mouseup.next({clientX, clientY});
-    });
+    this.pointerEventListenerSubscriptions.pointerUp = this.pointerEventListeners.pointerUp.subscribe(
+      ({ clientX, clientY }) => {
+        this.mouseup.next({ clientX, clientY });
+      }
+    );
 
     let currentResize: {
-      edges: Edges,
-      startingRect: BoundingRectangle,
-      currentRect: BoundingRectangle,
-      clonedNode?: HTMLElement
+      edges: Edges;
+      startingRect: BoundingRectangle;
+      currentRect: BoundingRectangle;
+      clonedNode?: HTMLElement;
     };
 
-    const removeGhostElement: Function = (): void => {
+    const removeGhostElement = () => {
       if (currentResize.clonedNode) {
-        this.elm.nativeElement.parentElement.removeChild(currentResize.clonedNode);
+        this.elm.nativeElement.parentElement.removeChild(
+          currentResize.clonedNode
+        );
         this.renderer.setStyle(this.elm.nativeElement, 'visibility', 'inherit');
       }
     };
 
     const mouseMove: Observable<any> = this.mousemove.share();
 
+    mouseMove.filter(() => !!currentResize).subscribe(({ event }) => {
+      event.preventDefault();
+    });
+
     mouseMove
-      .filter(() => !!currentResize)
-      .subscribe(({event}) => {
-        event.preventDefault();
+      .throttle(val => interval(MOUSE_MOVE_THROTTLE_MS))
+      .subscribe(({ clientX, clientY }) => {
+        const resizeEdges: Edges = getResizeEdges({
+          clientX,
+          clientY,
+          elm: this.elm,
+          allowedEdges: this.resizeEdges,
+          cursorPrecision: this.resizeCursorPrecision
+        });
+        const resizeCursors: ResizeCursors = Object.assign(
+          {},
+          DEFAULT_RESIZE_CURSORS,
+          this.resizeCursors
+        );
+        const cursor: string = currentResize
+          ? ''
+          : getResizeCursor(resizeEdges, resizeCursors);
+
+        this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
+        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
+        this.setElementClass(
+          this.elm,
+          RESIZE_LEFT_HOVER_CLASS,
+          resizeEdges.left === true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_RIGHT_HOVER_CLASS,
+          resizeEdges.right === true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_TOP_HOVER_CLASS,
+          resizeEdges.top === true
+        );
+        this.setElementClass(
+          this.elm,
+          RESIZE_BOTTOM_HOVER_CLASS,
+          resizeEdges.bottom === true
+        );
       });
 
-    mouseMove.throttle(val => interval(MOUSE_MOVE_THROTTLE_MS)).subscribe(({clientX, clientY}) => {
+    const mousedrag: Observable<any> = this.mousedown
+      .flatMap(startCoords => {
+        function getDiff(moveCoords) {
+          return {
+            clientX: moveCoords.clientX - startCoords.clientX,
+            clientY: moveCoords.clientY - startCoords.clientY
+          };
+        }
 
-      const resizeEdges: Edges = getResizeEdges({
-        clientX, clientY,
-        elm: this.elm,
-        allowedEdges: this.resizeEdges,
-        cursorPrecision: this.resizeCursorPrecision
-      });
-      const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
-      const cursor: string = currentResize ? '' : getResizeCursor(resizeEdges, resizeCursors);
+        const getSnapGrid = () => {
+          const snapGrid: Coordinate = { x: 1, y: 1 };
 
-      this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
-      this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
-      this.setElementClass(this.elm, RESIZE_LEFT_HOVER_CLASS, resizeEdges.left === true);
-      this.setElementClass(this.elm, RESIZE_RIGHT_HOVER_CLASS, resizeEdges.right === true);
-      this.setElementClass(this.elm, RESIZE_TOP_HOVER_CLASS, resizeEdges.top === true);
-      this.setElementClass(this.elm, RESIZE_BOTTOM_HOVER_CLASS, resizeEdges.bottom === true);
+          if (currentResize) {
+            if (this.resizeSnapGrid.left && currentResize.edges.left) {
+              snapGrid.x = +this.resizeSnapGrid.left;
+            } else if (this.resizeSnapGrid.right && currentResize.edges.right) {
+              snapGrid.x = +this.resizeSnapGrid.right;
+            }
 
-    });
+            if (this.resizeSnapGrid.top && currentResize.edges.top) {
+              snapGrid.y = +this.resizeSnapGrid.top;
+            } else if (
+              this.resizeSnapGrid.bottom &&
+              currentResize.edges.bottom
+            ) {
+              snapGrid.y = +this.resizeSnapGrid.bottom;
+            }
+          }
 
-    const mousedrag: Observable<any> = this.mousedown.flatMap(startCoords => {
-
-      const getDiff: Function = moveCoords => {
-        return {
-          clientX: moveCoords.clientX - startCoords.clientX,
-          clientY: moveCoords.clientY - startCoords.clientY
+          return snapGrid;
         };
-      };
 
-      const getSnapGrid: Function = () => {
-        const snapGrid: Coordinate = {x: 1, y: 1};
+        function getGrid(coords, snapGrid) {
+          return {
+            x: Math.ceil(coords.clientX / snapGrid.x),
+            y: Math.ceil(coords.clientY / snapGrid.y)
+          };
+        }
 
+        return merge(
+          mouseMove.take(1).map(coords => [, coords]),
+          mouseMove.pairwise()
+        )
+          .map(([previousCoords, newCoords]) => {
+            return [
+              previousCoords ? getDiff(previousCoords) : previousCoords,
+              getDiff(newCoords)
+            ];
+          })
+          .filter(([previousCoords, newCoords]) => {
+            if (!previousCoords) {
+              return true;
+            }
+
+            const snapGrid: Coordinate = getSnapGrid();
+            const previousGrid: Coordinate = getGrid(previousCoords, snapGrid);
+            const newGrid: Coordinate = getGrid(newCoords, snapGrid);
+
+            return previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y;
+          })
+          .map(([, newCoords]) => {
+            const snapGrid: Coordinate = getSnapGrid();
+            return {
+              clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
+              clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+            };
+          })
+          .takeUntil(merge(this.mouseup, this.mousedown));
+      })
+      .filter(() => !!currentResize);
+
+    mousedrag
+      .map(({ clientX, clientY }) => {
+        return getNewBoundingRectangle(
+          currentResize.startingRect,
+          currentResize.edges,
+          clientX,
+          clientY
+        );
+      })
+      .filter((newBoundingRect: BoundingRectangle) => {
+        return newBoundingRect.height > 0 && newBoundingRect.width > 0;
+      })
+      .filter((newBoundingRect: BoundingRectangle) => {
+        return this.validateResize
+          ? this.validateResize({
+              rectangle: newBoundingRect,
+              edges: getEdgesDiff({
+                edges: currentResize.edges,
+                initialRectangle: currentResize.startingRect,
+                newRectangle: newBoundingRect
+              })
+            })
+          : true;
+      })
+      .subscribe((newBoundingRect: BoundingRectangle) => {
+        if (currentResize.clonedNode) {
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'height',
+            `${newBoundingRect.height}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'width',
+            `${newBoundingRect.width}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'top',
+            `${newBoundingRect.top}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'left',
+            `${newBoundingRect.left}px`
+          );
+        }
+
+        this.zone.run(() => {
+          this.resizing.emit({
+            edges: getEdgesDiff({
+              edges: currentResize.edges,
+              initialRectangle: currentResize.startingRect,
+              newRectangle: newBoundingRect
+            }),
+            rectangle: newBoundingRect
+          });
+        });
+
+        currentResize.currentRect = newBoundingRect;
+      });
+
+    this.mousedown
+      .map(({ clientX, clientY, edges }) => {
+        return (
+          edges ||
+          getResizeEdges({
+            clientX,
+            clientY,
+            elm: this.elm,
+            allowedEdges: this.resizeEdges,
+            cursorPrecision: this.resizeCursorPrecision
+          })
+        );
+      })
+      .filter((edges: Edges) => {
+        return Object.keys(edges).length > 0;
+      })
+      .subscribe((edges: Edges) => {
         if (currentResize) {
-          if (this.resizeSnapGrid.left && currentResize.edges.left) {
-            snapGrid.x = +this.resizeSnapGrid.left;
-          } else if (this.resizeSnapGrid.right && currentResize.edges.right) {
-            snapGrid.x = +this.resizeSnapGrid.right;
-          }
-
-          if (this.resizeSnapGrid.top && currentResize.edges.top) {
-            snapGrid.y = +this.resizeSnapGrid.top;
-          } else if (this.resizeSnapGrid.bottom && currentResize.edges.bottom) {
-            snapGrid.y = +this.resizeSnapGrid.bottom;
-          }
+          removeGhostElement();
         }
-
-        return snapGrid;
-      };
-
-      const getGrid: Function = (coords, snapGrid) => {
-        return {
-          x: Math.ceil(coords.clientX / snapGrid.x),
-          y: Math.ceil(coords.clientY / snapGrid.y)
+        const startingRect: BoundingRectangle = getElementRect(
+          this.elm,
+          this.ghostElementPositioning
+        );
+        currentResize = {
+          edges,
+          startingRect,
+          currentRect: startingRect
         };
-      };
-
-      return merge(
-        mouseMove.take(1).map(coords => [, coords]),
-        mouseMove.pairwise()
-      ).map(([previousCoords, newCoords]) => {
-        return [previousCoords ? getDiff(previousCoords) : previousCoords, getDiff(newCoords)];
-      }).filter(([previousCoords, newCoords]) => {
-
-        if (!previousCoords) {
-          return true;
+        if (this.enableGhostResize) {
+          currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
+          const resizeCursors: ResizeCursors = Object.assign(
+            {},
+            DEFAULT_RESIZE_CURSORS,
+            this.resizeCursors
+          );
+          this.elm.nativeElement.parentElement.appendChild(
+            currentResize.clonedNode
+          );
+          this.renderer.setStyle(
+            this.elm.nativeElement,
+            'visibility',
+            'hidden'
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'position',
+            this.ghostElementPositioning
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'left',
+            `${currentResize.startingRect.left}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'top',
+            `${currentResize.startingRect.top}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'height',
+            `${currentResize.startingRect.height}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'width',
+            `${currentResize.startingRect.width}px`
+          );
+          this.renderer.setStyle(
+            currentResize.clonedNode,
+            'cursor',
+            getResizeCursor(currentResize.edges, resizeCursors)
+          );
+          this.renderer.addClass(
+            currentResize.clonedNode,
+            RESIZE_GHOST_ELEMENT_CLASS
+          );
+          currentResize.clonedNode.scrollTop =
+            currentResize.startingRect.scrollTop;
+          currentResize.clonedNode.scrollLeft =
+            currentResize.startingRect.scrollLeft;
         }
-
-        const snapGrid: Coordinate = getSnapGrid();
-        const previousGrid: Coordinate = getGrid(previousCoords, snapGrid);
-        const newGrid: Coordinate = getGrid(newCoords, snapGrid);
-
-        return (previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y);
-
-      }).map(([, newCoords]) => {
-        const snapGrid: Coordinate = getSnapGrid();
-        return {
-          clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
-          clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
-        };
-      }).takeUntil(merge(this.mouseup, this.mousedown));
-
-    }).filter(() => !!currentResize);
-
-    mousedrag.map(({clientX, clientY}) => {
-      return getNewBoundingRectangle(currentResize.startingRect, currentResize.edges, clientX, clientY);
-    }).filter((newBoundingRect: BoundingRectangle) => {
-      return newBoundingRect.height > 0 && newBoundingRect.width > 0;
-    }).filter((newBoundingRect: BoundingRectangle) => {
-      return this.validateResize ? this.validateResize({
-        rectangle: newBoundingRect,
-        edges: getEdgesDiff({
-          edges: currentResize.edges,
-          initialRectangle: currentResize.startingRect,
-          newRectangle: newBoundingRect
-        })
-      }) : true;
-    }).subscribe((newBoundingRect: BoundingRectangle) => {
-
-      if (currentResize.clonedNode) {
-        this.renderer.setStyle(currentResize.clonedNode, 'height', `${newBoundingRect.height}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'width', `${newBoundingRect.width}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'top', `${newBoundingRect.top}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'left', `${newBoundingRect.left}px`);
-      }
-
-      this.zone.run(() => {
-        this.resizing.emit({
-          edges: getEdgesDiff({
-            edges: currentResize.edges,
-            initialRectangle: currentResize.startingRect,
-            newRectangle: newBoundingRect
-          }),
-          rectangle: newBoundingRect
+        this.zone.run(() => {
+          this.resizeStart.emit({
+            edges: getEdgesDiff({
+              edges,
+              initialRectangle: startingRect,
+              newRectangle: startingRect
+            }),
+            rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+          });
         });
       });
-
-      currentResize.currentRect = newBoundingRect;
-
-    });
-
-    this.mousedown.map(({clientX, clientY, edges}) => {
-      return edges || getResizeEdges({
-        clientX, clientY,
-        elm: this.elm,
-        allowedEdges: this.resizeEdges,
-        cursorPrecision: this.resizeCursorPrecision
-      });
-    }).filter((edges: Edges) => {
-      return Object.keys(edges).length > 0;
-    }).subscribe((edges: Edges) => {
-      if (currentResize) {
-        removeGhostElement();
-      }
-      const startingRect: BoundingRectangle = getElementRect(this.elm, this.ghostElementPositioning);
-      currentResize = {
-        edges,
-        startingRect,
-        currentRect: startingRect
-      };
-      if (this.enableGhostResize) {
-        currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
-        const resizeCursors: ResizeCursors = Object.assign({}, DEFAULT_RESIZE_CURSORS, this.resizeCursors);
-        this.elm.nativeElement.parentElement.appendChild(currentResize.clonedNode);
-        this.renderer.setStyle(this.elm.nativeElement, 'visibility', 'hidden');
-        this.renderer.setStyle(currentResize.clonedNode, 'position', this.ghostElementPositioning);
-        this.renderer.setStyle(currentResize.clonedNode, 'left', `${currentResize.startingRect.left}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'top', `${currentResize.startingRect.top}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'height', `${currentResize.startingRect.height}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'width', `${currentResize.startingRect.width}px`);
-        this.renderer.setStyle(currentResize.clonedNode, 'cursor', getResizeCursor(currentResize.edges, resizeCursors));
-        this.renderer.addClass(currentResize.clonedNode, RESIZE_GHOST_ELEMENT_CLASS);
-        currentResize.clonedNode.scrollTop = currentResize.startingRect.scrollTop;
-        currentResize.clonedNode.scrollLeft = currentResize.startingRect.scrollLeft;
-      }
-      this.zone.run(() => {
-        this.resizeStart.emit({
-          edges: getEdgesDiff({edges, initialRectangle: startingRect, newRectangle: startingRect}),
-          rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
-        });
-      });
-    });
 
     this.mouseup.subscribe(() => {
       if (currentResize) {
@@ -525,14 +695,13 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
         currentResize = null;
       }
     });
-
   }
 
   /**
    * @hidden
    */
   ngAfterViewInit(): void {
-    this.resizeHandles.forEach((handle: ResizeHandle) => {
+    this.resizeHandles.forEach((handle: ResizeHandleDirective) => {
       handle.resizable = this;
     });
   }
@@ -556,11 +725,9 @@ export class Resizable implements OnInit, OnDestroy, AfterViewInit {
       this.renderer.removeClass(elm.nativeElement, name);
     }
   }
-
 }
 
 class PointerEventListeners {
-
   public pointerDown: Observable<PointerEventCoordinate>;
 
   public pointerMove: Observable<PointerEventCoordinate>;
@@ -569,85 +736,146 @@ class PointerEventListeners {
 
   private static instance: PointerEventListeners; // tslint:disable-line
 
-  public static getInstance(renderer: Renderer2, zone: NgZone): PointerEventListeners {
+  public static getInstance(
+    renderer: Renderer2,
+    zone: NgZone
+  ): PointerEventListeners {
     if (!PointerEventListeners.instance) {
-      PointerEventListeners.instance = new PointerEventListeners(renderer, zone);
+      PointerEventListeners.instance = new PointerEventListeners(
+        renderer,
+        zone
+      );
     }
     return PointerEventListeners.instance;
   }
 
   constructor(renderer: Renderer2, zone: NgZone) {
+    this.pointerDown = new Observable(
+      (observer: Observer<PointerEventCoordinate>) => {
+        let unsubscribeMouseDown: () => void;
+        let unsubscribeTouchStart: () => void;
 
-    this.pointerDown = new Observable((observer: Observer<PointerEventCoordinate>) => {
+        zone.runOutsideAngular(() => {
+          unsubscribeMouseDown = renderer.listen(
+            'document',
+            'mousedown',
+            (event: MouseEvent) => {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
 
-      let unsubscribeMouseDown: Function, unsubscribeTouchStart: Function;
-
-      zone.runOutsideAngular(() => {
-        unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
+          unsubscribeTouchStart = renderer.listen(
+            'document',
+            'touchstart',
+            (event: TouchEvent) => {
+              observer.next({
+                clientX: event.touches[0].clientX,
+                clientY: event.touches[0].clientY,
+                event
+              });
+            }
+          );
         });
 
-        unsubscribeTouchStart = renderer.listen('document', 'touchstart', (event: TouchEvent) => {
-          observer.next({clientX: event.touches[0].clientX, clientY: event.touches[0].clientY, event});
-        });
-      });
+        return () => {
+          unsubscribeMouseDown();
+          unsubscribeTouchStart();
+        };
+      }
+    ).share();
 
-      return () => {
-        unsubscribeMouseDown();
-        unsubscribeTouchStart();
-      };
+    this.pointerMove = new Observable(
+      (observer: Observer<PointerEventCoordinate>) => {
+        let unsubscribeMouseMove: () => void;
+        let unsubscribeTouchMove: () => void;
 
-    }).share();
+        zone.runOutsideAngular(() => {
+          unsubscribeMouseMove = renderer.listen(
+            'document',
+            'mousemove',
+            (event: MouseEvent) => {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
 
-    this.pointerMove = new Observable((observer: Observer<PointerEventCoordinate>) => {
-
-      let unsubscribeMouseMove: Function, unsubscribeTouchMove: Function;
-
-      zone.runOutsideAngular(() => {
-
-        unsubscribeMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
-        });
-
-        unsubscribeTouchMove = renderer.listen('document', 'touchmove', (event: TouchEvent) => {
-          observer.next({clientX: event.targetTouches[0].clientX, clientY: event.targetTouches[0].clientY, event});
-        });
-
-      });
-
-      return () => {
-        unsubscribeMouseMove();
-        unsubscribeTouchMove();
-      };
-
-    }).share();
-
-    this.pointerUp = new Observable((observer: Observer<PointerEventCoordinate>) => {
-
-      let unsubscribeMouseUp: Function, unsubscribeTouchEnd: Function, unsubscribeTouchCancel: Function;
-
-      zone.runOutsideAngular(() => {
-        unsubscribeMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
-          observer.next({clientX: event.clientX, clientY: event.clientY, event});
+          unsubscribeTouchMove = renderer.listen(
+            'document',
+            'touchmove',
+            (event: TouchEvent) => {
+              observer.next({
+                clientX: event.targetTouches[0].clientX,
+                clientY: event.targetTouches[0].clientY,
+                event
+              });
+            }
+          );
         });
 
-        unsubscribeTouchEnd = renderer.listen('document', 'touchend', (event: TouchEvent) => {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
+        return () => {
+          unsubscribeMouseMove();
+          unsubscribeTouchMove();
+        };
+      }
+    ).share();
+
+    this.pointerUp = new Observable(
+      (observer: Observer<PointerEventCoordinate>) => {
+        let unsubscribeMouseUp: () => void;
+        let unsubscribeTouchEnd: () => void;
+        let unsubscribeTouchCancel: () => void;
+
+        zone.runOutsideAngular(() => {
+          unsubscribeMouseUp = renderer.listen(
+            'document',
+            'mouseup',
+            (event: MouseEvent) => {
+              observer.next({
+                clientX: event.clientX,
+                clientY: event.clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchEnd = renderer.listen(
+            'document',
+            'touchend',
+            (event: TouchEvent) => {
+              observer.next({
+                clientX: event.changedTouches[0].clientX,
+                clientY: event.changedTouches[0].clientY,
+                event
+              });
+            }
+          );
+
+          unsubscribeTouchCancel = renderer.listen(
+            'document',
+            'touchcancel',
+            (event: TouchEvent) => {
+              observer.next({
+                clientX: event.changedTouches[0].clientX,
+                clientY: event.changedTouches[0].clientY,
+                event
+              });
+            }
+          );
         });
 
-        unsubscribeTouchCancel = renderer.listen('document', 'touchcancel', (event: TouchEvent) => {
-          observer.next({clientX: event.changedTouches[0].clientX, clientY: event.changedTouches[0].clientY, event});
-        });
-      });
-
-      return () => {
-        unsubscribeMouseUp();
-        unsubscribeTouchEnd();
-        unsubscribeTouchCancel();
-      };
-
-    }).share();
-
+        return () => {
+          unsubscribeMouseUp();
+          unsubscribeTouchEnd();
+          unsubscribeTouchCancel();
+        };
+      }
+    ).share();
   }
-
 }

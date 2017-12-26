@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
-import {ResizeEvent} from './../src';
+import { Component } from '@angular/core';
+import { ResizeEvent } from './../src';
 
 @Component({
-  selector: 'demo-app',
-  styles: [`
+  selector: 'mwl-demo',
+  styles: [
+    `
     .rectangle {
       position: relative;
       top: 200px;
@@ -21,8 +22,10 @@ import {ResizeEvent} from './../src';
       position: absolute;
       bottom: 10px;
       right: 10px;
+      cursor: se-resize;
     }
-  `],
+  `
+  ],
   template: `
     <div class="text-center">
       <h1>Drag and pull the edges of the rectangle</h1>
@@ -44,13 +47,15 @@ import {ResizeEvent} from './../src';
     </div>
   `
 })
-export class Demo {
-
-  public style: Object = {};
+export class DemoComponent {
+  public style: object = {};
 
   validate(event: ResizeEvent): boolean {
     const MIN_DIMENSIONS_PX: number = 50;
-    if (event.rectangle.width < MIN_DIMENSIONS_PX || event.rectangle.height < MIN_DIMENSIONS_PX) {
+    if (
+      event.rectangle.width < MIN_DIMENSIONS_PX ||
+      event.rectangle.height < MIN_DIMENSIONS_PX
+    ) {
       return false;
     }
     return true;
@@ -65,5 +70,4 @@ export class Demo {
       height: `${event.rectangle.height}px`
     };
   }
-
 }

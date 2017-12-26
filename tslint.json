@@ -1,57 +1,7 @@
 {
+  "extends": "tslint-config-mwl",
   "rules": {
-    "class-name": true,
-    "curly": false,
-    "eofline": false,
-    "indent": "spaces",
-    "max-line-length": [
-      true,
-      140
-    ],
-    "member-ordering": [
-      true,
-      "public-before-private",
-      "static-before-instance",
-      "variables-before-functions"
-    ],
-    "no-arg": true,
-    "no-construct": true,
-    "no-duplicate-variable": true,
-    "no-empty": true,
-    "no-eval": true,
-    "no-trailing-whitespace": true,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "semicolon": true,
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "variable-name": false,
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
-    ],
-    "typedef": [
-      true,
-      "call-signature",
-      "parameter",
-      "property-declaration",
-      "variable-declaration",
-      "member-variable-declaration"
-    ]
+    "no-inferrable-types": false,
+    "no-unused-expression": false
   }
 }

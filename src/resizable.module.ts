@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {Resizable} from './resizable.directive';
-import {ResizeHandle} from './resize-handle.directive';
+import { NgModule } from '@angular/core';
+import { ResizableDirective } from './resizable.directive';
+import { ResizeHandleDirective } from './resize-handle.directive';
 
 @NgModule({
-  declarations: [Resizable, ResizeHandle],
-  exports: [Resizable, ResizeHandle]
+  declarations: [ResizableDirective, ResizeHandleDirective],
+  exports: [ResizableDirective, ResizeHandleDirective]
 })
 export class ResizableModule {}
