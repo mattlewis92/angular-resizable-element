@@ -32,8 +32,8 @@ npm install --save angular-resizable-element
 Then use it in your app like so:
 
 ```typescript
-import {Component} from '@angular/core';
-import {ResizeEvent} from 'angular-resizable-element';
+import { Component } from '@angular/core';
+import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
@@ -61,8 +61,8 @@ export class MyComponent {
 }
 
 // now use within your apps module
-import {NgModule} from '@angular/core';
-import {ResizableModule} from 'angular-resizable-element';
+import { NgModule } from '@angular/core';
+import { ResizableModule } from 'angular-resizable-element';
 
 @NgModule({
   declarations: [MyComponent],
