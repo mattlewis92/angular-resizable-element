@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.5...v2.0.0) (2017-12-26)
+
+
+### Features
+
+* export directives with Directive suffix ([0440bbd](https://github.com/mattlewis92/angular-resizable-element/commit/0440bbd))
+* upgrade to angular 5 ([5d6a576](https://github.com/mattlewis92/angular-resizable-element/commit/5d6a576))
+* use lettable rxjs operators ([af7abf7](https://github.com/mattlewis92/angular-resizable-element/commit/af7abf7))
+* use ng-packagr for bundling the package ([c4519a1](https://github.com/mattlewis92/angular-resizable-element/commit/c4519a1)), closes [#79](https://github.com/mattlewis92/angular-resizable-element/issues/79) [#80](https://github.com/mattlewis92/angular-resizable-element/issues/80)
+
+
+### BREAKING CHANGES
+
+* the global observable prototype is now no longer modified by this package, you must
+import rxjs operators yourself. Also rxjs 5.5 or higher is now required to use this library
+* The UMD entry point has changed from `angular-resizable-element/dist/umd/angular-resizable-element.js` to `angular-resizable-element/bundles/angular-resizable-element.umd.js`
+
+System.js users will need to update their configs
+* angular 5 or higher is now required to use this package
+* The Resizable import is now ResizableDirective and ResizeHandle is now
+ResizeHandleDirective
+
+
+
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.4...v1.2.5) (2017-12-26)
 
