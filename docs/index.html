@@ -381,15 +381,15 @@
 <li><a href="#installation">Installation</a></li>
 <li><a href="#documentation">Documentation</a></li>
 <li><a href="#development">Development</a></li>
-<li><a href="#licence">License</a></li>
+<li><a href="#license">License</a></li>
 </ul>
 <h2 id="about">About</h2>
-<p>An angular 4.0+ directive that allows an element to be dragged and resized</p>
+<p>An angular 5.0+ directive that allows an element to be dragged and resized</p>
 <h2 id="installation">Installation</h2>
 <p>Install through npm:</p>
 <pre class="line-numbers"><code class="language-none">npm install --save angular-resizable-element</code></pre><p>Then use it in your app like so:</p>
-<pre class="line-numbers"><code class="language-typescript">import {Component} from &#39;&#64;angular/core&#39;;
-import {ResizeEvent} from &#39;angular-resizable-element&#39;;
+<pre class="line-numbers"><code class="language-typescript">import { Component } from &#39;&#64;angular/core&#39;;
+import { ResizeEvent } from &#39;angular-resizable-element&#39;;
 
 &#64;Component({
   selector: &#39;demo-app&#39;,
@@ -417,8 +417,8 @@ export class MyComponent {
 }
 
 // now use within your apps module
-import {NgModule} from &#39;&#64;angular/core&#39;;
-import {ResizableModule} from &#39;angular-resizable-element&#39;;
+import { NgModule } from &#39;&#64;angular/core&#39;;
+import { ResizableModule } from &#39;angular-resizable-element&#39;;
 
 &#64;NgModule({
   declarations: [MyComponent],
@@ -426,11 +426,7 @@ import {ResizableModule} from &#39;angular-resizable-element&#39;;
   bootstrap: [MyComponent]
 })
 class MyModule {}</code></pre><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts">demo source</a>.</p>
-<h3 id="usage-without-a-module-bundler">Usage without a module bundler</h3>
-<pre class="line-numbers"><code class="language-none">&lt;script src=&quot;node_modules/angular-resizable-element/angular-resizable-element.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-    // everything is exported on the  angularResizableElement namespace
-&lt;/script&gt;</code></pre><h2 id="documentation">Documentation</h2>
+<h2 id="documentation">Documentation</h2>
 <p>All documentation is auto-generated from the source and can be viewed here:
 <a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
 <h2 id="development">Development</h2>

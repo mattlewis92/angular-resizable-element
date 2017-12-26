@@ -469,7 +469,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">src/resizable.directive.ts:193</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">src/resizable.directive.ts:205</a></div>
                                         </td>
                                     </tr>
 
@@ -502,7 +502,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">src/resizable.directive.ts:194</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="206" class="link-to-prism">src/resizable.directive.ts:206</a></div>
                                         </td>
                                     </tr>
 
@@ -535,7 +535,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">src/resizable.directive.ts:195</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">src/resizable.directive.ts:207</a></div>
                                         </td>
                                     </tr>
 
@@ -568,7 +568,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="191" class="link-to-prism">src/resizable.directive.ts:191</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="203" class="link-to-prism">src/resizable.directive.ts:203</a></div>
                                         </td>
                                     </tr>
 
@@ -601,7 +601,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="196" class="link-to-prism">src/resizable.directive.ts:196</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="208" class="link-to-prism">src/resizable.directive.ts:208</a></div>
                                         </td>
                                     </tr>
 
@@ -634,7 +634,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">src/resizable.directive.ts:192</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="204" class="link-to-prism">src/resizable.directive.ts:204</a></div>
                                         </td>
                                     </tr>
 
@@ -661,14 +661,14 @@ import { Observable } from &#x27;rxjs/Observable&#x27;;
 import { Observer } from &#x27;rxjs/Observer&#x27;;
 import { merge } from &#x27;rxjs/observable/merge&#x27;;
 import { interval } from &#x27;rxjs/observable/interval&#x27;;
-import &#x27;rxjs/add/operator/map&#x27;;
-import &#x27;rxjs/add/operator/mergeMap&#x27;;
-import &#x27;rxjs/add/operator/takeUntil&#x27;;
-import &#x27;rxjs/add/operator/filter&#x27;;
-import &#x27;rxjs/add/operator/pairwise&#x27;;
-import &#x27;rxjs/add/operator/take&#x27;;
-import &#x27;rxjs/add/operator/throttle&#x27;;
-import &#x27;rxjs/add/operator/share&#x27;;
+import { map } from &#x27;rxjs/operators/map&#x27;;
+import { mergeMap } from &#x27;rxjs/operators/mergeMap&#x27;;
+import { takeUntil } from &#x27;rxjs/operators/takeUntil&#x27;;
+import { filter } from &#x27;rxjs/operators/filter&#x27;;
+import { pairwise } from &#x27;rxjs/operators/pairwise&#x27;;
+import { take } from &#x27;rxjs/operators/take&#x27;;
+import { throttle } from &#x27;rxjs/operators/throttle&#x27;;
+import { share } from &#x27;rxjs/operators/share&#x27;;
 import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
 import { BoundingRectangle } from &#x27;./interfaces/bounding-rectangle.interface&#x27;;
 import { ResizeEvent } from &#x27;./interfaces/resize-event.interface&#x27;;
@@ -728,12 +728,18 @@ function getElementRect(
   element: ElementRef,
   ghostElementPositioning: string
 ): BoundingRectangle {
-
   let translateX &#x3D; 0;
   let translateY &#x3D; 0;
   const style &#x3D; element.nativeElement.style;
-  const transformProperties &#x3D; [&#x27;transform&#x27;, &#x27;-ms-transform&#x27;, &#x27;-moz-transform&#x27;, &#x27;-o-transform&#x27;];
-  const transform &#x3D; transformProperties.map(property &#x3D;&gt; style[property]).find(value &#x3D;&gt; !!value);
+  const transformProperties &#x3D; [
+    &#x27;transform&#x27;,
+    &#x27;-ms-transform&#x27;,
+    &#x27;-moz-transform&#x27;,
+    &#x27;-o-transform&#x27;
+  ];
+  const transform &#x3D; transformProperties
+    .map(property &#x3D;&gt; style[property])
+    .find(value &#x3D;&gt; !!value);
   if (transform &amp;&amp; transform.includes(&#x27;translate&#x27;)) {
     translateX &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$1&#x27;);
     translateY &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$2&#x27;);
@@ -744,9 +750,15 @@ function getElementRect(
       height: element.nativeElement.offsetHeight,
       width: element.nativeElement.offsetWidth,
       top: element.nativeElement.offsetTop - translateY,
-      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop - translateY,
+      bottom:
+        element.nativeElement.offsetHeight +
+        element.nativeElement.offsetTop -
+        translateY,
       left: element.nativeElement.offsetLeft - translateX,
-      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft - translateX
+      right:
+        element.nativeElement.offsetWidth +
+        element.nativeElement.offsetLeft -
+        translateX
     };
   } else {
     const boundingRect: BoundingRectangle &#x3D; element.nativeElement.getBoundingClientRect();
@@ -1047,14 +1059,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
       }
     };
 
-    const mouseMove: Observable&lt;any&gt; &#x3D; this.mousemove.share();
+    const mouseMove: Observable&lt;any&gt; &#x3D; this.mousemove.pipe(share());
 
-    mouseMove.filter(() &#x3D;&gt; !!currentResize).subscribe(({ event }) &#x3D;&gt; {
+    mouseMove.pipe(filter(() &#x3D;&gt; !!currentResize)).subscribe(({ event }) &#x3D;&gt; {
       event.preventDefault();
     });
 
     mouseMove
-      .throttle(() &#x3D;&gt; interval(MOUSE_MOVE_THROTTLE_MS))
+      .pipe(throttle(() &#x3D;&gt; interval(MOUSE_MOVE_THROTTLE_MS)))
       .subscribe(({ clientX, clientY }) &#x3D;&gt; {
         const resizeEdges: Edges &#x3D; getResizeEdges({
           clientX,
@@ -1102,108 +1114,132 @@ export class ResizableDirective implements OnInit, OnDestroy {
       });
 
     const mousedrag: Observable&lt;any&gt; &#x3D; this.mousedown
-      .flatMap(startCoords &#x3D;&gt; {
-        function getDiff(moveCoords: { clientX: number; clientY: number }) {
-          return {
-            clientX: moveCoords.clientX - startCoords.clientX,
-            clientY: moveCoords.clientY - startCoords.clientY
-          };
-        }
-
-        const getSnapGrid &#x3D; () &#x3D;&gt; {
-          const snapGrid: Coordinate &#x3D; { x: 1, y: 1 };
-
-          if (currentResize) {
-            if (this.resizeSnapGrid.left &amp;&amp; currentResize.edges.left) {
-              snapGrid.x &#x3D; +this.resizeSnapGrid.left;
-            } else if (this.resizeSnapGrid.right &amp;&amp; currentResize.edges.right) {
-              snapGrid.x &#x3D; +this.resizeSnapGrid.right;
-            }
-
-            if (this.resizeSnapGrid.top &amp;&amp; currentResize.edges.top) {
-              snapGrid.y &#x3D; +this.resizeSnapGrid.top;
-            } else if (
-              this.resizeSnapGrid.bottom &amp;&amp;
-              currentResize.edges.bottom
-            ) {
-              snapGrid.y &#x3D; +this.resizeSnapGrid.bottom;
-            }
+      .pipe(
+        mergeMap(startCoords &#x3D;&gt; {
+          function getDiff(moveCoords: { clientX: number; clientY: number }) {
+            return {
+              clientX: moveCoords.clientX - startCoords.clientX,
+              clientY: moveCoords.clientY - startCoords.clientY
+            };
           }
 
-          return snapGrid;
-        };
+          const getSnapGrid &#x3D; () &#x3D;&gt; {
+            const snapGrid: Coordinate &#x3D; { x: 1, y: 1 };
 
-        function getGrid(
-          coords: { clientX: number; clientY: number },
-          snapGrid: Coordinate
-        ) {
-          return {
-            x: Math.ceil(coords.clientX / snapGrid.x),
-            y: Math.ceil(coords.clientY / snapGrid.y)
-          };
-        }
+            if (currentResize) {
+              if (this.resizeSnapGrid.left &amp;&amp; currentResize.edges.left) {
+                snapGrid.x &#x3D; +this.resizeSnapGrid.left;
+              } else if (
+                this.resizeSnapGrid.right &amp;&amp;
+                currentResize.edges.right
+              ) {
+                snapGrid.x &#x3D; +this.resizeSnapGrid.right;
+              }
 
-        return merge(
-          mouseMove.take(1).map(coords &#x3D;&gt; [, coords]),
-          mouseMove.pairwise()
-        )
-          .map(([previousCoords, newCoords]) &#x3D;&gt; {
-            return [
-              previousCoords ? getDiff(previousCoords) : previousCoords,
-              getDiff(newCoords)
-            ];
-          })
-          .filter(([previousCoords, newCoords]) &#x3D;&gt; {
-            if (!previousCoords) {
-              return true;
+              if (this.resizeSnapGrid.top &amp;&amp; currentResize.edges.top) {
+                snapGrid.y &#x3D; +this.resizeSnapGrid.top;
+              } else if (
+                this.resizeSnapGrid.bottom &amp;&amp;
+                currentResize.edges.bottom
+              ) {
+                snapGrid.y &#x3D; +this.resizeSnapGrid.bottom;
+              }
             }
 
-            const snapGrid: Coordinate &#x3D; getSnapGrid();
-            const previousGrid: Coordinate &#x3D; getGrid(previousCoords, snapGrid);
-            const newGrid: Coordinate &#x3D; getGrid(newCoords, snapGrid);
+            return snapGrid;
+          };
 
-            return previousGrid.x !&#x3D;&#x3D; newGrid.x || previousGrid.y !&#x3D;&#x3D; newGrid.y;
-          })
-          .map(([, newCoords]) &#x3D;&gt; {
-            const snapGrid: Coordinate &#x3D; getSnapGrid();
+          function getGrid(
+            coords: { clientX: number; clientY: number },
+            snapGrid: Coordinate
+          ) {
             return {
-              clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
-              clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+              x: Math.ceil(coords.clientX / snapGrid.x),
+              y: Math.ceil(coords.clientY / snapGrid.y)
             };
-          })
-          .takeUntil(merge(this.mouseup, this.mousedown));
-      })
-      .filter(() &#x3D;&gt; !!currentResize);
+          }
+
+          return merge(
+            mouseMove.pipe(take(1)).pipe(map(coords &#x3D;&gt; [, coords])),
+            mouseMove.pipe(pairwise())
+          )
+            .pipe(
+              map(([previousCoords, newCoords]) &#x3D;&gt; {
+                return [
+                  previousCoords ? getDiff(previousCoords) : previousCoords,
+                  getDiff(newCoords)
+                ];
+              })
+            )
+            .pipe(
+              filter(([previousCoords, newCoords]) &#x3D;&gt; {
+                if (!previousCoords) {
+                  return true;
+                }
+
+                const snapGrid: Coordinate &#x3D; getSnapGrid();
+                const previousGrid: Coordinate &#x3D; getGrid(
+                  previousCoords,
+                  snapGrid
+                );
+                const newGrid: Coordinate &#x3D; getGrid(newCoords, snapGrid);
+
+                return (
+                  previousGrid.x !&#x3D;&#x3D; newGrid.x || previousGrid.y !&#x3D;&#x3D; newGrid.y
+                );
+              })
+            )
+            .pipe(
+              map(([, newCoords]) &#x3D;&gt; {
+                const snapGrid: Coordinate &#x3D; getSnapGrid();
+                return {
+                  clientX:
+                    Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
+                  clientY:
+                    Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+                };
+              })
+            )
+            .pipe(takeUntil(merge(this.mouseup, this.mousedown)));
+        })
+      )
+      .pipe(filter(() &#x3D;&gt; !!currentResize));
 
     mousedrag
-      .map(({ clientX, clientY }) &#x3D;&gt; {
-        return getNewBoundingRectangle(
-          currentResize!.startingRect,
-          currentResize!.edges,
-          clientX,
-          clientY
-        );
-      })
-      .filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-        return !!(
-          newBoundingRect.height &amp;&amp;
-          newBoundingRect.width &amp;&amp;
-          newBoundingRect.height &gt; 0 &amp;&amp;
-          newBoundingRect.width &gt; 0
-        );
-      })
-      .filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-        return this.validateResize
-          ? this.validateResize({
-              rectangle: newBoundingRect,
-              edges: getEdgesDiff({
-                edges: currentResize!.edges,
-                initialRectangle: currentResize!.startingRect,
-                newRectangle: newBoundingRect
+      .pipe(
+        map(({ clientX, clientY }) &#x3D;&gt; {
+          return getNewBoundingRectangle(
+            currentResize!.startingRect,
+            currentResize!.edges,
+            clientX,
+            clientY
+          );
+        })
+      )
+      .pipe(
+        filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
+          return !!(
+            newBoundingRect.height &amp;&amp;
+            newBoundingRect.width &amp;&amp;
+            newBoundingRect.height &gt; 0 &amp;&amp;
+            newBoundingRect.width &gt; 0
+          );
+        })
+      )
+      .pipe(
+        filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
+          return this.validateResize
+            ? this.validateResize({
+                rectangle: newBoundingRect,
+                edges: getEdgesDiff({
+                  edges: currentResize!.edges,
+                  initialRectangle: currentResize!.startingRect,
+                  newRectangle: newBoundingRect
+                })
               })
-            })
-          : true;
-      })
+            : true;
+        })
+      )
       .subscribe((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
         if (currentResize &amp;&amp; currentResize.clonedNode) {
           this.renderer.setStyle(
@@ -1243,21 +1279,25 @@ export class ResizableDirective implements OnInit, OnDestroy {
       });
 
     this.mousedown
-      .map(({ clientX, clientY, edges }) &#x3D;&gt; {
-        return (
-          edges ||
-          getResizeEdges({
-            clientX,
-            clientY,
-            elm: this.elm,
-            allowedEdges: this.resizeEdges,
-            cursorPrecision: this.resizeCursorPrecision
-          })
-        );
-      })
-      .filter((edges: Edges) &#x3D;&gt; {
-        return Object.keys(edges).length &gt; 0;
-      })
+      .pipe(
+        map(({ clientX, clientY, edges }) &#x3D;&gt; {
+          return (
+            edges ||
+            getResizeEdges({
+              clientX,
+              clientY,
+              elm: this.elm,
+              allowedEdges: this.resizeEdges,
+              cursorPrecision: this.resizeCursorPrecision
+            })
+          );
+        })
+      )
+      .pipe(
+        filter((edges: Edges) &#x3D;&gt; {
+          return Object.keys(edges).length &gt; 0;
+        })
+      )
       .subscribe((edges: Edges) &#x3D;&gt; {
         if (currentResize) {
           removeGhostElement();
@@ -1438,7 +1478,7 @@ class PointerEventListeners {
           unsubscribeTouchStart();
         };
       }
-    ).share();
+    ).pipe(share());
 
     this.pointerMove &#x3D; new Observable(
       (observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
@@ -1476,7 +1516,7 @@ class PointerEventListeners {
           unsubscribeTouchMove();
         };
       }
-    ).share();
+    ).pipe(share());
 
     this.pointerUp &#x3D; new Observable(
       (observer: Observer&lt;PointerEventCoordinate&gt;) &#x3D;&gt; {
@@ -1528,7 +1568,7 @@ class PointerEventListeners {
           unsubscribeTouchCancel();
         };
       }
-    ).share();
+    ).pipe(share());
   }
 }
 </code></pre>

@@ -367,6 +367,27 @@
 
 <h1 id="change-log">Change Log</h1>
 <p>All notable changes to this project will be documented in this file. See <a href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
+<p><a name="2.0.0"></a></p>
+<h1 id="-2-0-0-https-github-com-mattlewis92-angular-resizable-element-compare-v1-2-5-v2-0-0-2017-12-26-"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.5...v2.0.0">2.0.0</a> (2017-12-26)</h1>
+<h3 id="features">Features</h3>
+<ul>
+<li>export directives with Directive suffix (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/0440bbd">0440bbd</a>)</li>
+<li>upgrade to angular 5 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/5d6a576">5d6a576</a>)</li>
+<li>use lettable rxjs operators (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/af7abf7">af7abf7</a>)</li>
+<li>use ng-packagr for bundling the package (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/c4519a1">c4519a1</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/79">#79</a> <a href="https://github.com/mattlewis92/angular-resizable-element/issues/80">#80</a></li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li>the global observable prototype is now no longer modified by this package, you must
+import rxjs operators yourself. Also rxjs 5.5 or higher is now required to use this library</li>
+<li>The UMD entry point has changed from <code>angular-resizable-element/dist/umd/angular-resizable-element.js</code> to <code>angular-resizable-element/bundles/angular-resizable-element.umd.js</code></li>
+</ul>
+<p>System.js users will need to update their configs</p>
+<ul>
+<li>angular 5 or higher is now required to use this package</li>
+<li>The Resizable import is now ResizableDirective and ResizeHandle is now
+ResizeHandleDirective</li>
+</ul>
 <p><a name="1.2.5"></a></p>
 <h2 id="-1-2-5-https-github-com-mattlewis92-angular-resizable-element-compare-v1-2-4-v1-2-5-2017-12-26-"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.4...v1.2.5">1.2.5</a> (2017-12-26)</h2>
 <h3 id="bug-fixes">Bug Fixes</h3>
