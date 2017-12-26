@@ -25,9 +25,9 @@ import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/throttle';
 import 'rxjs/add/operator/share';
-import {ResizeHandle} from './resizeHandle.directive';
+import {ResizeHandle} from './resize-handle.directive';
 import {Edges} from './interfaces/edges.interface';
-import {BoundingRectangle} from './interfaces/boundingRectangle.interface';
+import {BoundingRectangle} from './interfaces/bounding-rectangle.interface';
 
 interface PointerEventCoordinate {
   clientX: number;

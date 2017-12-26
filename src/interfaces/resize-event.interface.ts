@@ -1,4 +1,4 @@
-import {BoundingRectangle} from './boundingRectangle.interface';
+import {BoundingRectangle} from './bounding-rectangle.interface';
 import {Edges} from './edges.interface';
 
 /**
