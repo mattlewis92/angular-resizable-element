@@ -1,7 +1,7 @@
 import * as webpack from 'webpack';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-export default function(config) {
+export default function(config: any) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -9,7 +9,7 @@ export default function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha'],
 
     // list of files / patterns to load in the browser
     files: [
