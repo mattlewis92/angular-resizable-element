@@ -204,12 +204,14 @@ const RESIZE_GHOST_ELEMENT_CLASS: string = 'resize-ghost-element';
 export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 
 /**
- * Place this on an element to make it resizable
+ * Place this on an element to make it resizable. For example:
  *
- * For example
- *
- * ```
- * &lt;div mwlResizable [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true"&gt;&lt;/div&gt;
+ * ```html
+ * <div
+ *   mwlResizable
+ *   [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+ *   [enableGhostResize]="true">
+ * </div>
  * ```
  */
 @Directive({

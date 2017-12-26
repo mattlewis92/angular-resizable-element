@@ -1,12 +1,5 @@
 {
-  "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": ["es2015", "dom"]
-  },
+  "extends": "./tsconfig.json",
   "files": [
     "src/resizable.directive.ts",
     "src/resize-handle.directive.ts",

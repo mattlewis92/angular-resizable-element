@@ -12,6 +12,5 @@
   },
   "exclude": [
     "node_modules"
-  ],
-  "compileOnSave": false
+  ]
 }

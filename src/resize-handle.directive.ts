@@ -7,10 +7,10 @@ import { Edges } from './interfaces/edges.interface';
  *
  * For example
  *
- * ```
- * &lt;div mwlResizable&gt;
- *   &lt;div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"&gt;&lt;/div&gt;
- * &lt;/div&gt;
+ * ```html
+ * <div mwlResizable>
+ *   <div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"></div>
+ * </div>
  * ```
  */
 @Directive({
