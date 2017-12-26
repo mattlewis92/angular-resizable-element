@@ -14,14 +14,14 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { merge } from 'rxjs/observable/merge';
 import { interval } from 'rxjs/observable/interval';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/pairwise';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/throttle';
-import 'rxjs/add/operator/share';
+import { map } from 'rxjs/operators/map';
+import { mergeMap } from 'rxjs/operators/mergeMap';
+import { takeUntil } from 'rxjs/operators/takeUntil';
+import { filter } from 'rxjs/operators/filter';
+import { pairwise } from 'rxjs/operators/pairwise';
+import { take } from 'rxjs/operators/take';
+import { throttle } from 'rxjs/operators/throttle';
+import { share } from 'rxjs/operators/share';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
@@ -81,12 +81,18 @@ function getElementRect(
   element: ElementRef,
   ghostElementPositioning: string
 ): BoundingRectangle {
-
   let translateX = 0;
   let translateY = 0;
   const style = element.nativeElement.style;
-  const transformProperties = ['transform', '-ms-transform', '-moz-transform', '-o-transform'];
-  const transform = transformProperties.map(property => style[property]).find(value => !!value);
+  const transformProperties = [
+    'transform',
+    '-ms-transform',
+    '-moz-transform',
+    '-o-transform'
+  ];
+  const transform = transformProperties
+    .map(property => style[property])
+    .find(value => !!value);
   if (transform && transform.includes('translate')) {
     translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
     translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
@@ -97,9 +103,15 @@ function getElementRect(
       height: element.nativeElement.offsetHeight,
       width: element.nativeElement.offsetWidth,
       top: element.nativeElement.offsetTop - translateY,
-      bottom: element.nativeElement.offsetHeight + element.nativeElement.offsetTop - translateY,
+      bottom:
+        element.nativeElement.offsetHeight +
+        element.nativeElement.offsetTop -
+        translateY,
       left: element.nativeElement.offsetLeft - translateX,
-      right: element.nativeElement.offsetWidth + element.nativeElement.offsetLeft - translateX
+      right:
+        element.nativeElement.offsetWidth +
+        element.nativeElement.offsetLeft -
+        translateX
     };
   } else {
     const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
@@ -400,14 +412,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
       }
     };
 
-    const mouseMove: Observable<any> = this.mousemove.share();
+    const mouseMove: Observable<any> = this.mousemove.pipe(share());
 
-    mouseMove.filter(() => !!currentResize).subscribe(({ event }) => {
+    mouseMove.pipe(filter(() => !!currentResize)).subscribe(({ event }) => {
       event.preventDefault();
     });
 
     mouseMove
-      .throttle(() => interval(MOUSE_MOVE_THROTTLE_MS))
+      .pipe(throttle(() => interval(MOUSE_MOVE_THROTTLE_MS)))
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
           clientX,
@@ -455,108 +467,132 @@ export class ResizableDirective implements OnInit, OnDestroy {
       });
 
     const mousedrag: Observable<any> = this.mousedown
-      .flatMap(startCoords => {
-        function getDiff(moveCoords: { clientX: number; clientY: number }) {
-          return {
-            clientX: moveCoords.clientX - startCoords.clientX,
-            clientY: moveCoords.clientY - startCoords.clientY
-          };
-        }
-
-        const getSnapGrid = () => {
-          const snapGrid: Coordinate = { x: 1, y: 1 };
-
-          if (currentResize) {
-            if (this.resizeSnapGrid.left && currentResize.edges.left) {
-              snapGrid.x = +this.resizeSnapGrid.left;
-            } else if (this.resizeSnapGrid.right && currentResize.edges.right) {
-              snapGrid.x = +this.resizeSnapGrid.right;
-            }
-
-            if (this.resizeSnapGrid.top && currentResize.edges.top) {
-              snapGrid.y = +this.resizeSnapGrid.top;
-            } else if (
-              this.resizeSnapGrid.bottom &&
-              currentResize.edges.bottom
-            ) {
-              snapGrid.y = +this.resizeSnapGrid.bottom;
-            }
+      .pipe(
+        mergeMap(startCoords => {
+          function getDiff(moveCoords: { clientX: number; clientY: number }) {
+            return {
+              clientX: moveCoords.clientX - startCoords.clientX,
+              clientY: moveCoords.clientY - startCoords.clientY
+            };
           }
 
-          return snapGrid;
-        };
+          const getSnapGrid = () => {
+            const snapGrid: Coordinate = { x: 1, y: 1 };
 
-        function getGrid(
-          coords: { clientX: number; clientY: number },
-          snapGrid: Coordinate
-        ) {
-          return {
-            x: Math.ceil(coords.clientX / snapGrid.x),
-            y: Math.ceil(coords.clientY / snapGrid.y)
-          };
-        }
+            if (currentResize) {
+              if (this.resizeSnapGrid.left && currentResize.edges.left) {
+                snapGrid.x = +this.resizeSnapGrid.left;
+              } else if (
+                this.resizeSnapGrid.right &&
+                currentResize.edges.right
+              ) {
+                snapGrid.x = +this.resizeSnapGrid.right;
+              }
 
-        return merge(
-          mouseMove.take(1).map(coords => [, coords]),
-          mouseMove.pairwise()
-        )
-          .map(([previousCoords, newCoords]) => {
-            return [
-              previousCoords ? getDiff(previousCoords) : previousCoords,
-              getDiff(newCoords)
-            ];
-          })
-          .filter(([previousCoords, newCoords]) => {
-            if (!previousCoords) {
-              return true;
+              if (this.resizeSnapGrid.top && currentResize.edges.top) {
+                snapGrid.y = +this.resizeSnapGrid.top;
+              } else if (
+                this.resizeSnapGrid.bottom &&
+                currentResize.edges.bottom
+              ) {
+                snapGrid.y = +this.resizeSnapGrid.bottom;
+              }
             }
 
-            const snapGrid: Coordinate = getSnapGrid();
-            const previousGrid: Coordinate = getGrid(previousCoords, snapGrid);
-            const newGrid: Coordinate = getGrid(newCoords, snapGrid);
+            return snapGrid;
+          };
 
-            return previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y;
-          })
-          .map(([, newCoords]) => {
-            const snapGrid: Coordinate = getSnapGrid();
+          function getGrid(
+            coords: { clientX: number; clientY: number },
+            snapGrid: Coordinate
+          ) {
             return {
-              clientX: Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
-              clientY: Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+              x: Math.ceil(coords.clientX / snapGrid.x),
+              y: Math.ceil(coords.clientY / snapGrid.y)
             };
-          })
-          .takeUntil(merge(this.mouseup, this.mousedown));
-      })
-      .filter(() => !!currentResize);
+          }
+
+          return merge(
+            mouseMove.pipe(take(1)).pipe(map(coords => [, coords])),
+            mouseMove.pipe(pairwise())
+          )
+            .pipe(
+              map(([previousCoords, newCoords]) => {
+                return [
+                  previousCoords ? getDiff(previousCoords) : previousCoords,
+                  getDiff(newCoords)
+                ];
+              })
+            )
+            .pipe(
+              filter(([previousCoords, newCoords]) => {
+                if (!previousCoords) {
+                  return true;
+                }
+
+                const snapGrid: Coordinate = getSnapGrid();
+                const previousGrid: Coordinate = getGrid(
+                  previousCoords,
+                  snapGrid
+                );
+                const newGrid: Coordinate = getGrid(newCoords, snapGrid);
+
+                return (
+                  previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y
+                );
+              })
+            )
+            .pipe(
+              map(([, newCoords]) => {
+                const snapGrid: Coordinate = getSnapGrid();
+                return {
+                  clientX:
+                    Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
+                  clientY:
+                    Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+                };
+              })
+            )
+            .pipe(takeUntil(merge(this.mouseup, this.mousedown)));
+        })
+      )
+      .pipe(filter(() => !!currentResize));
 
     mousedrag
-      .map(({ clientX, clientY }) => {
-        return getNewBoundingRectangle(
-          currentResize!.startingRect,
-          currentResize!.edges,
-          clientX,
-          clientY
-        );
-      })
-      .filter((newBoundingRect: BoundingRectangle) => {
-        return !!(
-          newBoundingRect.height &&
-          newBoundingRect.width &&
-          newBoundingRect.height > 0 &&
-          newBoundingRect.width > 0
-        );
-      })
-      .filter((newBoundingRect: BoundingRectangle) => {
-        return this.validateResize
-          ? this.validateResize({
-              rectangle: newBoundingRect,
-              edges: getEdgesDiff({
-                edges: currentResize!.edges,
-                initialRectangle: currentResize!.startingRect,
-                newRectangle: newBoundingRect
+      .pipe(
+        map(({ clientX, clientY }) => {
+          return getNewBoundingRectangle(
+            currentResize!.startingRect,
+            currentResize!.edges,
+            clientX,
+            clientY
+          );
+        })
+      )
+      .pipe(
+        filter((newBoundingRect: BoundingRectangle) => {
+          return !!(
+            newBoundingRect.height &&
+            newBoundingRect.width &&
+            newBoundingRect.height > 0 &&
+            newBoundingRect.width > 0
+          );
+        })
+      )
+      .pipe(
+        filter((newBoundingRect: BoundingRectangle) => {
+          return this.validateResize
+            ? this.validateResize({
+                rectangle: newBoundingRect,
+                edges: getEdgesDiff({
+                  edges: currentResize!.edges,
+                  initialRectangle: currentResize!.startingRect,
+                  newRectangle: newBoundingRect
+                })
               })
-            })
-          : true;
-      })
+            : true;
+        })
+      )
       .subscribe((newBoundingRect: BoundingRectangle) => {
         if (currentResize && currentResize.clonedNode) {
           this.renderer.setStyle(
@@ -596,21 +632,25 @@ export class ResizableDirective implements OnInit, OnDestroy {
       });
 
     this.mousedown
-      .map(({ clientX, clientY, edges }) => {
-        return (
-          edges ||
-          getResizeEdges({
-            clientX,
-            clientY,
-            elm: this.elm,
-            allowedEdges: this.resizeEdges,
-            cursorPrecision: this.resizeCursorPrecision
-          })
-        );
-      })
-      .filter((edges: Edges) => {
-        return Object.keys(edges).length > 0;
-      })
+      .pipe(
+        map(({ clientX, clientY, edges }) => {
+          return (
+            edges ||
+            getResizeEdges({
+              clientX,
+              clientY,
+              elm: this.elm,
+              allowedEdges: this.resizeEdges,
+              cursorPrecision: this.resizeCursorPrecision
+            })
+          );
+        })
+      )
+      .pipe(
+        filter((edges: Edges) => {
+          return Object.keys(edges).length > 0;
+        })
+      )
       .subscribe((edges: Edges) => {
         if (currentResize) {
           removeGhostElement();
@@ -791,7 +831,7 @@ class PointerEventListeners {
           unsubscribeTouchStart();
         };
       }
-    ).share();
+    ).pipe(share());
 
     this.pointerMove = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
@@ -829,7 +869,7 @@ class PointerEventListeners {
           unsubscribeTouchMove();
         };
       }
-    ).share();
+    ).pipe(share());
 
     this.pointerUp = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
@@ -881,6 +921,6 @@ class PointerEventListeners {
           unsubscribeTouchCancel();
         };
       }
-    ).share();
+    ).pipe(share());
   }
 }
