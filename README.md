@@ -16,11 +16,11 @@ https://mattlewis92.github.io/angular-resizable-element/demo/
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Development](#development)
-- [License](#licence)
+- [License](#license)
 
 ## About
 
-An angular 4.0+ directive that allows an element to be dragged and resized
+An angular 5.0+ directive that allows an element to be dragged and resized
 
 ## Installation
 
@@ -32,8 +32,8 @@ npm install --save angular-resizable-element
 Then use it in your app like so:
 
 ```typescript
-import {Component} from '@angular/core';
-import {ResizeEvent} from 'angular-resizable-element';
+import { Component } from '@angular/core';
+import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
@@ -61,8 +61,8 @@ export class MyComponent {
 }
 
 // now use within your apps module
-import {NgModule} from '@angular/core';
-import {ResizableModule} from 'angular-resizable-element';
+import { NgModule } from '@angular/core';
+import { ResizableModule } from 'angular-resizable-element';
 
 @NgModule({
   declarations: [MyComponent],
@@ -74,14 +74,6 @@ class MyModule {}
 ```
 
 You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts).
-
-### Usage without a module bundler
-```
-<script src="node_modules/angular-resizable-element/angular-resizable-element.js"></script>
-<script>
-    // everything is exported on the  angularResizableElement namespace
-</script>
-```
 
 ## Documentation
 All documentation is auto-generated from the source and can be viewed here:
