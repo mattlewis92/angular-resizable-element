@@ -33,7 +33,7 @@ export default {
   },
   plugins: [
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      /angular(\\|\/)core(\\|\/)esm5/,
       __dirname + '/src'
     )
   ]
