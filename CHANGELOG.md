@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.4...v1.2.5) (2017-12-26)
+
+
+### Bug Fixes
+
+* **resizeHandle:** allow handles to be dynamically shown ([34342aa](https://github.com/mattlewis92/angular-resizable-element/commit/34342aa)), closes [#68](https://github.com/mattlewis92/angular-resizable-element/issues/68)
+* resize elements that have css transforms ([f24a746](https://github.com/mattlewis92/angular-resizable-element/commit/f24a746)), closes [#72](https://github.com/mattlewis92/angular-resizable-element/issues/72)
+* set the resize cursor globally when resizing ([71d5a05](https://github.com/mattlewis92/angular-resizable-element/commit/71d5a05)), closes [#70](https://github.com/mattlewis92/angular-resizable-element/issues/70)
+
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.3...v1.2.4) (2017-10-21)
 
