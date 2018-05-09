@@ -20,6 +20,7 @@ export default function(config: any) {
     },
 
     webpack: {
+      mode: 'development',
       resolve: {
         extensions: ['.ts', '.js']
       },
@@ -48,6 +49,12 @@ export default function(config: any) {
             exclude: /(node_modules|\.spec\.ts$)/,
             loader: 'istanbul-instrumenter-loader',
             enforce: 'post'
+          },
+          {
+            test: /node_modules\/@angular\/core\/.+\/core\.js$/,
+            parser: {
+              system: true // disable `System.import() is deprecated and will be removed soon. Use import() instead.` warning
+            }
           }
         ]
       },
@@ -60,14 +67,17 @@ export default function(config: any) {
           /angular(\\|\/)core(\\|\/)esm5/,
           __dirname + '/src'
         ),
-        ...(config.singleRun
-          ? [new webpack.NoEmitOnErrorsPlugin()]
-          : [
+        ...(!config.singleRun
+          ? [
               new ForkTsCheckerWebpackPlugin({
                 watch: ['./src', './test']
               })
-            ])
-      ]
+            ]
+          : [])
+      ],
+      optimization: {
+        noEmitOnErrors: config.singleRun
+      }
     },
 
     coverageIstanbulReporter: {
