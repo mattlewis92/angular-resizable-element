@@ -20,19 +20,12 @@
     "postrelease": "npm run build:clean && npm run gh-pages",
     "commitmsg": "validate-commit-msg",
     "codecov": "cat coverage/lcov.info | codecov",
-    "prettier": "prettier --write",
-    "precommit": "lint-staged"
+    "precommit": "pretty-quick --staged"
   },
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts"
     }
-  },
-  "lint-staged": {
-    "{demo,src,test}/**/*.ts": [
-      "npm run prettier",
-      "git add"
-    ]
   },
   "repository": {
     "type": "git",
@@ -80,10 +73,10 @@
     "karma-mocha": "^1.3.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.0",
-    "lint-staged": "^7.1.0",
     "mocha": "^5.1.1",
     "ng-packagr": "^2.4.4",
     "prettier": "^1.12.1",
+    "pretty-quick": "^1.4.1",
     "rxjs": "^5.5.10",
     "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",

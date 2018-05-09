@@ -3,7 +3,6 @@ import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default function(config: any) {
   config.set({
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: './',
 
@@ -12,9 +11,7 @@ export default function(config: any) {
     frameworks: ['mocha'],
 
     // list of files / patterns to load in the browser
-    files: [
-      'test/entry.ts'
-    ],
+    files: ['test/entry.ts'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -27,28 +24,32 @@ export default function(config: any) {
         extensions: ['.ts', '.js']
       },
       module: {
-        rules: [{
-          test: /\.ts$/,
-          loader: 'tslint-loader',
-          exclude: /node_modules/,
-          enforce: 'pre',
-          options: {
-            emitErrors: config.singleRun,
-            failOnHint: config.singleRun
+        rules: [
+          {
+            test: /\.ts$/,
+            loader: 'tslint-loader',
+            exclude: /node_modules/,
+            enforce: 'pre',
+            options: {
+              emitErrors: config.singleRun,
+              failOnHint: config.singleRun
+            }
+          },
+          {
+            test: /\.ts$/,
+            loader: 'ts-loader',
+            exclude: /node_modules/,
+            options: {
+              transpileOnly: !config.singleRun
+            }
+          },
+          {
+            test: /src\/.+\.ts$/,
+            exclude: /(node_modules|\.spec\.ts$)/,
+            loader: 'istanbul-instrumenter-loader',
+            enforce: 'post'
           }
-        }, {
-          test: /\.ts$/,
-          loader: 'ts-loader',
-          exclude: /node_modules/,
-          options: {
-            transpileOnly: !config.singleRun
-          }
-        }, {
-          test: /src\/.+\.ts$/,
-          exclude: /(node_modules|\.spec\.ts$)/,
-          loader: 'istanbul-instrumenter-loader',
-          enforce: 'post'
-        }]
+        ]
       },
       plugins: [
         new webpack.SourceMapDevToolPlugin({
@@ -59,13 +60,13 @@ export default function(config: any) {
           /angular(\\|\/)core(\\|\/)esm5/,
           __dirname + '/src'
         ),
-        ...(config.singleRun ? [
-          new webpack.NoEmitOnErrorsPlugin()
-        ] : [
-          new ForkTsCheckerWebpackPlugin({
-            watch: ['./src', './test']
-          })
-        ])
+        ...(config.singleRun
+          ? [new webpack.NoEmitOnErrorsPlugin()]
+          : [
+              new ForkTsCheckerWebpackPlugin({
+                watch: ['./src', './test']
+              })
+            ])
       ]
     },
 
@@ -90,6 +91,5 @@ export default function(config: any) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['ChromeHeadless']
-
   });
-};
+}

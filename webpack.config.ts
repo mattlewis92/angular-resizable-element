@@ -10,19 +10,22 @@ export default {
     path: IS_PROD ? __dirname + '/demo' : __dirname
   },
   module: {
-    rules: [{
-      test: /\.ts$/,
-      loader: 'tslint-loader?emitErrors=false&failOnHint=false',
-      exclude: /node_modules/,
-      enforce: 'pre'
-    }, {
-      test: /\.ts$/,
-      loader: 'ts-loader',
-      exclude: /node_modules/,
-      options: {
-        transpileOnly: !IS_PROD
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'tslint-loader?emitErrors=false&failOnHint=false',
+        exclude: /node_modules/,
+        enforce: 'pre'
+      },
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          transpileOnly: !IS_PROD
+        }
       }
-    }]
+    ]
   },
   resolve: {
     extensions: ['.ts', '.js']
@@ -35,12 +38,14 @@ export default {
     contentBase: 'demo'
   },
   plugins: [
-    ...(IS_PROD ? [] : [
-      new webpack.HotModuleReplacementPlugin(),
-      new ForkTsCheckerWebpackPlugin({
-        watch: ['./src', './demo']
-      })
-    ]),
+    ...(IS_PROD
+      ? []
+      : [
+          new webpack.HotModuleReplacementPlugin(),
+          new ForkTsCheckerWebpackPlugin({
+            watch: ['./src', './demo']
+          })
+        ]),
     new webpack.DefinePlugin({
       ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
     }),
