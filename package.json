@@ -78,7 +78,7 @@
     "prettier": "^1.12.1",
     "pretty-quick": "^1.4.1",
     "rxjs": "^5.5.10",
-    "sinon": "^4.5.0",
+    "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",
     "standard-version": "^4.3.0",
     "ts-loader": "^4.3.0",

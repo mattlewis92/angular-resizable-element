@@ -628,7 +628,7 @@ describe('resizable directive', () => {
       clientY: 205
     });
     expect((elm.nextSibling as HTMLElement).style.width).to.equal('302px');
-    fixture.componentInstance.resizeEnd.reset();
+    fixture.componentInstance.resizeEnd.resetHistory();
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
       clientY: 205
@@ -724,7 +724,7 @@ describe('resizable directive', () => {
       clientX: 99,
       clientY: 200
     });
-    fixture.componentInstance.resizing.reset();
+    fixture.componentInstance.resizing.resetHistory();
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
       clientY: 199
@@ -796,8 +796,8 @@ describe('resizable directive', () => {
       firstResizeEvent
     );
     fixture.componentInstance.validate.returns(false);
-    fixture.componentInstance.validate.reset();
-    fixture.componentInstance.resizing.reset();
+    fixture.componentInstance.validate.resetHistory();
+    fixture.componentInstance.resizing.resetHistory();
     triggerDomEvent('mousemove', elm, {
       clientX: 98,
       clientY: 210
