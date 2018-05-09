@@ -1,28 +1,38 @@
 import * as webpack from 'webpack';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-const IS_PROD = process.argv.indexOf('-p') > -1;
+
+const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
 
 export default {
-  devtool: IS_PROD ? 'source-map' : 'eval',
+  mode: isDevServer ? 'development' : 'production',
   entry: __dirname + '/demo/entry.ts',
   output: {
     filename: 'demo.js',
-    path: IS_PROD ? __dirname + '/demo' : __dirname
+    path: isDevServer ? __dirname : __dirname + '/demo'
   },
   module: {
-    rules: [{
-      test: /\.ts$/,
-      loader: 'tslint-loader?emitErrors=false&failOnHint=false',
-      exclude: /node_modules/,
-      enforce: 'pre'
-    }, {
-      test: /\.ts$/,
-      loader: 'ts-loader',
-      exclude: /node_modules/,
-      options: {
-        transpileOnly: !IS_PROD
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'tslint-loader?emitErrors=false&failOnHint=false',
+        exclude: /node_modules/,
+        enforce: 'pre'
+      },
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          transpileOnly: isDevServer
+        }
+      },
+      {
+        test: /node_modules\/@angular\/core\/.+\/core\.js$/,
+        parser: {
+          system: true // disable `System.import() is deprecated and will be removed soon. Use import() instead.` warning
+        }
       }
-    }]
+    ]
   },
   resolve: {
     extensions: ['.ts', '.js']
@@ -35,17 +45,16 @@ export default {
     contentBase: 'demo'
   },
   plugins: [
-    ...(IS_PROD ? [] : [
-      new webpack.HotModuleReplacementPlugin(),
-      new ForkTsCheckerWebpackPlugin({
-        watch: ['./src', './demo']
-      })
-    ]),
-    new webpack.DefinePlugin({
-      ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
-    }),
+    ...(isDevServer
+      ? [
+          new webpack.HotModuleReplacementPlugin(),
+          new ForkTsCheckerWebpackPlugin({
+            watch: ['./src', './demo']
+          })
+        ]
+      : []),
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)esm5/,
+      /angular(\\|\/)core(\\|\/)fesm5/,
       __dirname + '/src'
     )
   ]

@@ -1,10 +1,10 @@
 {
   "name": "angular-resizable-element",
-  "version": "2.0.0",
-  "description": "An angular 5.0+ directive that allows an element to be dragged and resized",
+  "version": "3.0.0",
+  "description": "An angular 6.0+ directive that allows an element to be dragged and resized",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
-    "build:demo": "webpack -p",
+    "build:demo": "webpack",
     "build:dist": "ng-packagr -p package.json",
     "build:clean": "rm -rf dist",
     "test": "karma start --single-run && npm run build:dist && npm run build:clean",
@@ -20,19 +20,12 @@
     "postrelease": "npm run build:clean && npm run gh-pages",
     "commitmsg": "validate-commit-msg",
     "codecov": "cat coverage/lcov.info | codecov",
-    "prettier": "prettier --write",
-    "precommit": "lint-staged"
+    "precommit": "pretty-quick --staged"
   },
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts"
     }
-  },
-  "lint-staged": {
-    "{demo,src,test}/**/*.ts": [
-      "npm run prettier",
-      "git add"
-    ]
   },
   "repository": {
     "type": "git",
@@ -41,7 +34,7 @@
   "keywords": [
     "angular",
     "angular2",
-    "angular5",
+    "angular6",
     "resizable"
   ],
   "author": "Matt Lewis",
@@ -51,56 +44,57 @@
   },
   "homepage": "https://github.com/mattlewis92/angular-resizable-element#readme",
   "devDependencies": {
-    "@angular/common": "^5.1.2",
-    "@angular/compiler": "^5.1.2",
-    "@angular/compiler-cli": "^5.1.2",
-    "@angular/core": "^5.1.2",
-    "@angular/platform-browser": "^5.1.2",
-    "@angular/platform-browser-dynamic": "^5.1.2",
-    "@compodoc/compodoc": "^1.0.0-beta.8",
-    "@types/chai": "^4.0.10",
-    "@types/mocha": "^2.2.45",
-    "@types/sinon": "^4.1.2",
+    "@angular/common": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "@angular/platform-browser-dynamic": "^6.0.0",
+    "@compodoc/compodoc": "^1.1.2",
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.0",
+    "@types/sinon": "^4.3.1",
     "@types/sinon-chai": "^2.7.27",
-    "@types/webpack": "^3.8.1",
+    "@types/webpack": "^4.1.4",
     "chai": "^4.0.2",
     "codecov-lite": "^0.1.3",
-    "codelyzer": "^4.0.2",
+    "codelyzer": "^4.3.0",
     "commitizen": "^2.8.1",
     "concurrently": "^3.1.0",
-    "copyfiles": "^1.2.0",
-    "core-js": "^2.5.3",
+    "copyfiles": "^2.0.0",
+    "core-js": "^2.5.6",
     "cz-conventional-changelog": "^2.1.0",
-    "fork-ts-checker-webpack-plugin": "^0.2.10",
+    "fork-ts-checker-webpack-plugin": "^0.4.1",
     "husky": "^0.14.3",
-    "istanbul-instrumenter-loader": "^3.0.0",
-    "karma": "^2.0.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.1.1",
-    "karma-coverage-istanbul-reporter": "^1.3.3",
+    "karma-coverage-istanbul-reporter": "^1.4.2",
     "karma-mocha": "^1.3.0",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.9",
-    "lint-staged": "^6.0.0",
-    "mocha": "^4.0.1",
-    "ng-packagr": "2.0.0-rc.8",
-    "prettier": "^1.9.2",
-    "rxjs": "^5.5.6",
-    "sinon": "^4.1.3",
-    "sinon-chai": "^2.9.0",
-    "standard-version": "^4.0.0",
-    "ts-loader": "^3.2.0",
-    "ts-node": "^4.1.0",
-    "tslint": "^5.2.0",
-    "tslint-config-mwl": "^0.2.1",
-    "tslint-loader": "^3.3.0",
-    "typescript": "~2.5.3",
+    "karma-webpack": "^3.0.0",
+    "mocha": "^5.1.1",
+    "ng-packagr": "^3.0.0-rc.3",
+    "prettier": "^1.12.1",
+    "pretty-quick": "^1.4.1",
+    "rxjs": "^6.1.0",
+    "sinon": "^5.0.7",
+    "sinon-chai": "^3.0.0",
+    "standard-version": "^4.3.0",
+    "ts-loader": "^4.3.0",
+    "ts-node": "^6.0.3",
+    "tslint": "^5.10.0",
+    "tslint-config-mwl": "^0.4.1",
+    "tslint-loader": "^3.6.0",
+    "typescript": "^2.7.2",
     "validate-commit-msg": "^2.8.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
-    "zone.js": "^0.8.5"
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4",
+    "zone.js": "^0.8.26"
   },
   "peerDependencies": {
-    "@angular/core": ">=5.0.0 <7.0.0"
+    "@angular/core": ">=6.0.0 <8.0.0"
   },
   "config": {
     "commitizen": {
