@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v2.0.0...v3.0.0) (2018-05-09)
+
+
+### Features
+
+* upgrade to angular 6 ([c7e3de6](https://github.com/mattlewis92/angular-resizable-element/commit/c7e3de6))
+
+
+### BREAKING CHANGES
+
+* angular 6 and rxjs 6 or higher are now required to use this package
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.5...v2.0.0) (2017-12-26)
 
