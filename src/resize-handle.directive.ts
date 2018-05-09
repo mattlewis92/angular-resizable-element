@@ -33,6 +33,7 @@ export class ResizeHandleDirective implements OnDestroy {
   private eventListeners: {
     touchmove?: () => void;
     mousemove?: () => void;
+    [key: string]: (() => void) | undefined;
   } = {};
 
   constructor(
@@ -133,11 +134,9 @@ export class ResizeHandleDirective implements OnDestroy {
   }
 
   private unsubscribeEventListeners(): void {
-    Object.keys(this.eventListeners).forEach(
-      (type: 'touchmove' | 'mousemove') => {
-        (this as any).eventListeners[type]();
-        delete this.eventListeners[type];
-      }
-    );
+    Object.keys(this.eventListeners).forEach(type => {
+      (this as any).eventListeners[type]();
+      delete this.eventListeners[type];
+    });
   }
 }

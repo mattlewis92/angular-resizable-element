@@ -245,8 +245,8 @@ function getEdgesDiff({
   newRectangle: BoundingRectangle;
 }): Edges {
   const edgesDiff: Edges = {};
-  Object.keys(edges).forEach((edge: keyof Edges) => {
-    edgesDiff[edge] = newRectangle[edge] - initialRectangle[edge];
+  Object.keys(edges).forEach(edge => {
+    edgesDiff[edge] = (newRectangle[edge] || 0) - (initialRectangle[edge] || 0);
   });
   return edgesDiff;
 }

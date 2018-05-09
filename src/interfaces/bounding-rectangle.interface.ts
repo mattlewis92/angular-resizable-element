@@ -10,4 +10,5 @@ export interface BoundingRectangle {
   width?: number;
   scrollTop?: number;
   scrollLeft?: number;
+  [key: string]: number | undefined;
 }

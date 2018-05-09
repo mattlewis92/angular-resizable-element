@@ -6,4 +6,5 @@ export interface Edges {
   bottom?: boolean | number;
   left?: boolean | number;
   right?: boolean | number;
+  [key: string]: boolean | number | undefined;
 }
