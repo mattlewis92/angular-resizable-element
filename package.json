@@ -1,7 +1,7 @@
 {
   "name": "angular-resizable-element",
   "version": "2.0.0",
-  "description": "An angular 5.0+ directive that allows an element to be dragged and resized",
+  "description": "An angular 6.0+ directive that allows an element to be dragged and resized",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
     "build:demo": "webpack",
@@ -34,7 +34,7 @@
   "keywords": [
     "angular",
     "angular2",
-    "angular5",
+    "angular6",
     "resizable"
   ],
   "author": "Matt Lewis",
@@ -44,12 +44,12 @@
   },
   "homepage": "https://github.com/mattlewis92/angular-resizable-element#readme",
   "devDependencies": {
-    "@angular/common": "^5.2.10",
-    "@angular/compiler": "^5.2.10",
-    "@angular/compiler-cli": "^5.2.10",
-    "@angular/core": "^5.2.10",
-    "@angular/platform-browser": "^5.2.10",
-    "@angular/platform-browser-dynamic": "^5.2.10",
+    "@angular/common": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "@angular/platform-browser-dynamic": "^6.0.0",
     "@compodoc/compodoc": "^1.1.2",
     "@types/chai": "^4.1.3",
     "@types/mocha": "^5.2.0",
@@ -74,17 +74,17 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.0",
     "mocha": "^5.1.1",
-    "ng-packagr": "^2.4.4",
+    "ng-packagr": "^3.0.0-rc.3",
     "prettier": "^1.12.1",
     "pretty-quick": "^1.4.1",
-    "rxjs": "^5.5.10",
+    "rxjs": "^6.1.0",
     "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",
     "standard-version": "^4.3.0",
     "ts-loader": "^4.3.0",
     "ts-node": "^6.0.3",
     "tslint": "^5.10.0",
-    "tslint-config-mwl": "^0.2.2",
+    "tslint-config-mwl": "^0.4.1",
     "tslint-loader": "^3.6.0",
     "typescript": "^2.7.2",
     "validate-commit-msg": "^2.8.0",
@@ -94,7 +94,7 @@
     "zone.js": "^0.8.26"
   },
   "peerDependencies": {
-    "@angular/core": ">=5.0.0 <7.0.0"
+    "@angular/core": ">=6.0.0 <8.0.0"
   },
   "config": {
     "commitizen": {

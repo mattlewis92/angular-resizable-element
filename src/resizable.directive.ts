@@ -9,19 +9,17 @@ import {
   OnDestroy,
   NgZone
 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { merge } from 'rxjs/observable/merge';
-import { interval } from 'rxjs/observable/interval';
-import { map } from 'rxjs/operators/map';
-import { mergeMap } from 'rxjs/operators/mergeMap';
-import { takeUntil } from 'rxjs/operators/takeUntil';
-import { filter } from 'rxjs/operators/filter';
-import { pairwise } from 'rxjs/operators/pairwise';
-import { take } from 'rxjs/operators/take';
-import { throttle } from 'rxjs/operators/throttle';
-import { share } from 'rxjs/operators/share';
+import { Subject, Observable, Observer, merge, interval } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  takeUntil,
+  filter,
+  pairwise,
+  take,
+  throttle,
+  share
+} from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
