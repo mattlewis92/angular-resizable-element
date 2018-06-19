@@ -86,14 +86,14 @@
                         <a href="modules/ResizableModule.html" data-type="entity-link">ResizableModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-ResizableModule-cfc3c2ee-ccea-48b7-8cba-47223bad1132"
+                                        data-target="#xs-directives-links-module-ResizableModule-311257770967b12a6d30f8b2e560d117"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-ResizableModule-cfc3c2ee-ccea-48b7-8cba-47223bad1132"
+                                        id="xs-directives-links-module-ResizableModule-311257770967b12a6d30f8b2e560d117"
                                     >
                                         <li class="link">
                                             <a href="directives/ResizableDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">ResizableDirective</a>
@@ -266,14 +266,14 @@
                         <a href="modules/ResizableModule.html" data-type="entity-link">ResizableModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-ResizableModule-cfc3c2ee-ccea-48b7-8cba-47223bad1132"
+                                        data-target="#directives-links-module-ResizableModule-311257770967b12a6d30f8b2e560d117"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-ResizableModule-cfc3c2ee-ccea-48b7-8cba-47223bad1132"
+                                        id="directives-links-module-ResizableModule-311257770967b12a6d30f8b2e560d117"
 >
                                         <li class="link">
                                             <a href="directives/ResizableDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">ResizableDirective</a>
@@ -388,15 +388,12 @@
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active">
-        <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
-    </li>
-
-
-    <li>
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
-    </li>
-
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
 </ul>
 
 <div class="tab-content">
@@ -414,9 +411,9 @@
             <p class="comment">
                 <p>An element placed inside a <code>mwlResizable</code> directive to be used as a drag and resize handle</p>
 <p>For example</p>
-<pre class="line-numbers"><code class="language-html">&lt;div mwlResizable&gt;
+<div><pre class="line-numbers"><code class="language-html">&lt;div mwlResizable&gt;
    &lt;div mwlResizeHandle [resizeEdges]=&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/div&gt;</code></pre></div>
             </p>
 
             <p class="comment">
@@ -515,7 +512,7 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                    <td>renderer</td>
+                                                        <td>renderer</td>
                                                   
                                                         <td>
                                                                     <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
@@ -527,7 +524,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                    <td>element</td>
+                                                        <td>element</td>
                                                   
                                                         <td>
                                                                     <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
@@ -539,7 +536,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                    <td>zone</td>
+                                                        <td>zone</td>
                                                   
                                                         <td>
                                                                     <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
@@ -551,7 +548,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                    <td>resizable</td>
+                                                        <td>resizable</td>
                                                   
                                                         <td>
                                                                     <code>ResizableDirective</code>
@@ -634,6 +631,7 @@
                             </td>
                         </tr>
 
+
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -667,6 +665,7 @@
                             </td>
                         </tr>
 
+
             </tbody>
         </table>
 </section>
@@ -677,7 +676,7 @@
     </div>
 
 
-    <div class="tab-pane fade tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Directive,
   Input,
@@ -859,6 +858,7 @@ export class ResizeHandleDirective implements OnDestroy {
 
         <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
             var COMPODOC_CURRENT_PAGE_URL = 'ResizeHandleDirective.html';
         </script>
 
