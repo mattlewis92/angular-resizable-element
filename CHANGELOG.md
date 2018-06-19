@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/mattlewis92/angular-resizable-element/compare/v3.0.0...v3.1.0) (2018-06-19)
+
+
+### Features
+
+* improve default resize cursors ([37fc88e](https://github.com/mattlewis92/angular-resizable-element/commit/37fc88e))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v2.0.0...v3.0.0) (2018-05-09)
 

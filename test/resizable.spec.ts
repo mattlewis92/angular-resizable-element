@@ -111,14 +111,14 @@ describe('resizable directive', () => {
   describe('cursor changes', () => {
     let assertions: any[];
 
-    it('should change the cursor to the ns-resize when mousing over the top edge', () => {
+    it('should change the cursor to the row-resize when mousing over the top edge', () => {
       assertions = [
         {
           coords: {
             clientX: 150,
             clientY: 200
           },
-          cursor: 'ns-resize'
+          cursor: 'row-resize'
         }
       ];
     });
@@ -130,7 +130,7 @@ describe('resizable directive', () => {
             clientX: 150,
             clientY: 200
           },
-          cursor: 'ns-resize'
+          cursor: 'row-resize'
         },
         {
           coords: {
@@ -142,38 +142,38 @@ describe('resizable directive', () => {
       ];
     });
 
-    it('should change the cursor to the ns-resize when mousing over the bottom edge', () => {
+    it('should change the cursor to the row-resize when mousing over the bottom edge', () => {
       assertions = [
         {
           coords: {
             clientX: 150,
             clientY: 350
           },
-          cursor: 'ns-resize'
+          cursor: 'row-resize'
         }
       ];
     });
 
-    it('should change the cursor to the ew-resize when mousing over the left edge', () => {
+    it('should change the cursor to the col-resize when mousing over the left edge', () => {
       assertions = [
         {
           coords: {
             clientX: 100,
             clientY: 300
           },
-          cursor: 'ew-resize'
+          cursor: 'col-resize'
         }
       ];
     });
 
-    it('should change the cursor to the ew-resize when mousing over the right edge', () => {
+    it('should change the cursor to the col-resize when mousing over the right edge', () => {
       assertions = [
         {
           coords: {
             clientX: 400,
             clientY: 300
           },
-          cursor: 'ew-resize'
+          cursor: 'col-resize'
         }
       ];
     });
@@ -838,7 +838,7 @@ describe('resizable directive', () => {
       clientX: 100,
       clientY: 200
     });
-    expect(getComputedStyle(elm).cursor).to.equal('ew-resize');
+    expect(getComputedStyle(elm).cursor).to.equal('col-resize');
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
       clientY: 200
@@ -1131,7 +1131,7 @@ describe('resizable directive', () => {
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousemove', elm, { clientX: 96, clientY: 296 });
-    expect(elm.style.cursor).to.equal('ew-resize');
+    expect(elm.style.cursor).to.equal('col-resize');
     fixture.destroy();
   });
 

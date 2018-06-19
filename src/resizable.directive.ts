@@ -211,8 +211,8 @@ const DEFAULT_RESIZE_CURSORS: ResizeCursors = Object.freeze({
   topRight: 'ne-resize',
   bottomLeft: 'sw-resize',
   bottomRight: 'se-resize',
-  leftOrRight: 'ew-resize',
-  topOrBottom: 'ns-resize'
+  leftOrRight: 'col-resize',
+  topOrBottom: 'row-resize'
 });
 
 function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
