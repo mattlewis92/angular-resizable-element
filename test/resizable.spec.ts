@@ -1,3 +1,4 @@
+/* tslint:disable:max-inline-declarations enforce-component-selector */
 import { Component, ViewChild } from '@angular/core';
 import { ResizableDirective } from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
@@ -11,14 +12,14 @@ describe('resizable directive', () => {
   @Component({
     styles: [
       `
-      .rectangle {
-        position: relative;
-        top: 200px;
-        left: 100px;
-        width: 300px;
-        height: 150px;
-      }
-    `
+        .rectangle {
+          position: relative;
+          top: 200px;
+          left: 100px;
+          width: 300px;
+          height: 150px;
+        }
+      `
     ],
     template: `
       <div
