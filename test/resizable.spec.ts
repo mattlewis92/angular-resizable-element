@@ -1,3 +1,4 @@
+/* tslint:disable:max-inline-declarations enforce-component-selector */
 import { Component, ViewChild } from '@angular/core';
 import { ResizableDirective } from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
@@ -11,14 +12,14 @@ describe('resizable directive', () => {
   @Component({
     styles: [
       `
-      .rectangle {
-        position: relative;
-        top: 200px;
-        left: 100px;
-        width: 300px;
-        height: 150px;
-      }
-    `
+        .rectangle {
+          position: relative;
+          top: 200px;
+          left: 100px;
+          width: 300px;
+          height: 150px;
+        }
+      `
     ],
     template: `
       <div
@@ -32,6 +33,7 @@ describe('resizable directive', () => {
         [resizeCursors]="resizeCursors"
         [resizeCursorPrecision]="resizeCursorPrecision"
         [ghostElementPositioning]="ghostElementPositioning"
+        [allowNegativeResizes]="allowNegativeResizes"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)">
@@ -57,6 +59,7 @@ describe('resizable directive', () => {
     resizeCursorPrecision: number;
     ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
     showResizeHandle = false;
+    allowNegativeResizes = false;
   }
 
   function triggerDomEvent(
@@ -886,7 +889,7 @@ describe('resizable directive', () => {
     expect(fixture.componentInstance.resizeEnd).not.to.have.been.called;
   });
 
-  it('should support drag handles to resize the element', () => {
+  it('should support resize handles to resize the element', () => {
     const template: string = `
       <div
         class="rectangle"
@@ -1440,6 +1443,76 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
+        bottom: 350
+      }
+    });
+  });
+
+  it('should not allow negative resizes', () => {
+    const fixture: ComponentFixture<TestComponent> = createComponent();
+    const elm: HTMLElement =
+      fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 400,
+      clientY: 205
+    });
+    expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
+      edges: {
+        right: 0
+      },
+      rectangle: {
+        top: 200,
+        left: 100,
+        width: 300,
+        height: 150,
+        right: 400,
+        bottom: 350
+      }
+    });
+    triggerDomEvent('mousemove', elm, {
+      clientX: 50,
+      clientY: 205
+    });
+    expect(fixture.componentInstance.resizing).not.to.have.been.called;
+  });
+
+  it('should allow negative resizes', () => {
+    const fixture: ComponentFixture<TestComponent> = createComponent();
+    fixture.componentInstance.allowNegativeResizes = true;
+    fixture.detectChanges();
+    const elm: HTMLElement =
+      fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 400,
+      clientY: 205
+    });
+    expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
+      edges: {
+        right: 0
+      },
+      rectangle: {
+        top: 200,
+        left: 100,
+        width: 300,
+        height: 150,
+        right: 400,
+        bottom: 350
+      }
+    });
+    triggerDomEvent('mousemove', elm, {
+      clientX: 50,
+      clientY: 205
+    });
+    expect(fixture.componentInstance.resizing).to.have.been.calledWith({
+      edges: {
+        right: -350
+      },
+      rectangle: {
+        top: 200,
+        left: 100,
+        width: -50,
+        height: 150,
+        right: 50,
         bottom: 350
       }
     });

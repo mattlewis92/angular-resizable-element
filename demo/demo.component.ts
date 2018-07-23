@@ -1,3 +1,4 @@
+/* tslint:disable:max-inline-declarations */
 import { Component } from '@angular/core';
 import { ResizeEvent } from './../src';
 
@@ -5,26 +6,26 @@ import { ResizeEvent } from './../src';
   selector: 'mwl-demo',
   styles: [
     `
-    .rectangle {
-      position: relative;
-      top: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 300px;
-      height: 150px;
-      background-color: #FD4140;
-      border: solid 1px #121621;
-      color: #121621;
-      margin: auto;
-    }
-    .resize-handle {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      cursor: se-resize;
-    }
-  `
+      .rectangle {
+        position: relative;
+        top: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 150px;
+        background-color: #fd4140;
+        border: solid 1px #121621;
+        color: #121621;
+        margin: auto;
+      }
+      .resize-handle {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        cursor: se-resize;
+      }
+    `
   ],
   template: `
     <div class="text-center">
