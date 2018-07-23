@@ -476,7 +476,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="793" class="link-to-prism">src/resizable.directive.ts:793</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="801" class="link-to-prism">src/resizable.directive.ts:801</a></div>
                             </td>
                         </tr>
 
@@ -559,7 +559,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="774" class="link-to-prism">src/resizable.directive.ts:774</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="782" class="link-to-prism">src/resizable.directive.ts:782</a></div>
                             </td>
                         </tr>
 
@@ -594,7 +594,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="776" class="link-to-prism">src/resizable.directive.ts:776</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="784" class="link-to-prism">src/resizable.directive.ts:784</a></div>
                             </td>
                         </tr>
 
@@ -629,7 +629,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="778" class="link-to-prism">src/resizable.directive.ts:778</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="786" class="link-to-prism">src/resizable.directive.ts:786</a></div>
                             </td>
                         </tr>
 
@@ -667,7 +667,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="782" class="link-to-prism">src/resizable.directive.ts:782</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="790" class="link-to-prism">src/resizable.directive.ts:790</a></div>
                             </td>
                         </tr>
 
@@ -1050,6 +1050,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Input() ghostElementPositioning: &#x27;fixed&#x27; | &#x27;absolute&#x27; &#x3D; &#x27;fixed&#x27;;
 
   /**
+   * Allow elements to be resized to negative dimensions
+   */
+  @Input() allowNegativeResizes: boolean &#x3D; false;
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
   @Output() resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
@@ -1308,11 +1313,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-          return !!(
-            newBoundingRect.height &amp;&amp;
-            newBoundingRect.width &amp;&amp;
-            newBoundingRect.height &gt; 0 &amp;&amp;
-            newBoundingRect.width &gt; 0
+          return (
+            this.allowNegativeResizes ||
+            !!(
+              newBoundingRect.height &amp;&amp;
+              newBoundingRect.width &amp;&amp;
+              newBoundingRect.height &gt; 0 &amp;&amp;
+              newBoundingRect.width &gt; 0
+            )
           );
         })
       )

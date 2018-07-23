@@ -455,6 +455,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#allowNegativeResizes">allowNegativeResizes</a>
+                            </li>
+                            <li>
                                 <a href="#enableGhostResize">enableGhostResize</a>
                             </li>
                             <li>
@@ -509,6 +512,32 @@
 
             <section>
     <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="allowNegativeResizes"></a>
+                        <code>allowNegativeResizes</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>Allow elements to be resized to negative dimensions</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                            </p>
+                        <p>
+                            <em>Default value: </em><code>false</code>
+                        </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/resizable.directive.ts:316</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -708,7 +737,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="326" class="link-to-prism">src/resizable.directive.ts:326</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/resizable.directive.ts:331</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -729,7 +758,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/resizable.directive.ts:316</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">src/resizable.directive.ts:321</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -750,7 +779,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">src/resizable.directive.ts:321</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="326" class="link-to-prism">src/resizable.directive.ts:326</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1078,6 +1107,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Input() ghostElementPositioning: &#x27;fixed&#x27; | &#x27;absolute&#x27; &#x3D; &#x27;fixed&#x27;;
 
   /**
+   * Allow elements to be resized to negative dimensions
+   */
+  @Input() allowNegativeResizes: boolean &#x3D; false;
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
   @Output() resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
@@ -1336,11 +1370,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-          return !!(
-            newBoundingRect.height &amp;&amp;
-            newBoundingRect.width &amp;&amp;
-            newBoundingRect.height &gt; 0 &amp;&amp;
-            newBoundingRect.width &gt; 0
+          return (
+            this.allowNegativeResizes ||
+            !!(
+              newBoundingRect.height &amp;&amp;
+              newBoundingRect.width &amp;&amp;
+              newBoundingRect.height &gt; 0 &amp;&amp;
+              newBoundingRect.width &gt; 0
+            )
           );
         })
       )

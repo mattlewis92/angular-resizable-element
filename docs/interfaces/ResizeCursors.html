@@ -945,6 +945,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Input() ghostElementPositioning: &#x27;fixed&#x27; | &#x27;absolute&#x27; &#x3D; &#x27;fixed&#x27;;
 
   /**
+   * Allow elements to be resized to negative dimensions
+   */
+  @Input() allowNegativeResizes: boolean &#x3D; false;
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
   @Output() resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
@@ -1203,11 +1208,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
-          return !!(
-            newBoundingRect.height &amp;&amp;
-            newBoundingRect.width &amp;&amp;
-            newBoundingRect.height &gt; 0 &amp;&amp;
-            newBoundingRect.width &gt; 0
+          return (
+            this.allowNegativeResizes ||
+            !!(
+              newBoundingRect.height &amp;&amp;
+              newBoundingRect.width &amp;&amp;
+              newBoundingRect.height &gt; 0 &amp;&amp;
+              newBoundingRect.width &gt; 0
+            )
           );
         })
       )
