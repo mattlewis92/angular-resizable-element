@@ -9,7 +9,7 @@ import {
   OnDestroy,
   NgZone
 } from '@angular/core';
-import { Subject, Observable, Observer, merge, interval } from 'rxjs';
+import { Subject, Observable, Observer, merge } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -17,8 +17,8 @@ import {
   filter,
   pairwise,
   take,
-  throttle,
-  share
+  share,
+  auditTime
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
@@ -422,7 +422,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     });
 
     mouseMove
-      .pipe(throttle(() => interval(MOUSE_MOVE_THROTTLE_MS)))
+      .pipe(auditTime(MOUSE_MOVE_THROTTLE_MS))
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
           clientX,
