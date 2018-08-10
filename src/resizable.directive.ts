@@ -371,7 +371,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private pointerEventListeners: PointerEventListeners;
 
-  private subscriptions: Subscription = new Subscription();
+  private destroy$ = new Subject();
 
   /**
    * @hidden
@@ -392,27 +392,23 @@ export class ResizableDirective implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // TODO - use some fancy Observable.merge's for this
-    this.subscriptions.add(
-      this.pointerEventListeners.pointerDown.subscribe(
-        ({ clientX, clientY }) => {
-          this.mousedown.next({ clientX, clientY });
-        }
-      )
-    );
+    this.pointerEventListeners.pointerDown
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY }) => {
+        this.mousedown.next({ clientX, clientY });
+      });
 
-    this.subscriptions.add(
-      this.pointerEventListeners.pointerMove.subscribe(
-        ({ clientX, clientY, event }) => {
-          this.mousemove.next({ clientX, clientY, event });
-        }
-      )
-    );
+    this.pointerEventListeners.pointerMove
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY, event }) => {
+        this.mousemove.next({ clientX, clientY, event });
+      });
 
-    this.subscriptions.add(
-      this.pointerEventListeners.pointerUp.subscribe(({ clientX, clientY }) => {
+    this.pointerEventListeners.pointerUp
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY }) => {
         this.mouseup.next({ clientX, clientY });
-      })
-    );
+      });
 
     let currentResize: {
       edges: Edges;
@@ -779,7 +775,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-    this.subscriptions.unsubscribe();
+    this.destroy$.next();
   }
 
   private setElementClass(elm: ElementRef, name: string, add: boolean): void {
