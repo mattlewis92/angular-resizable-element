@@ -9,7 +9,7 @@ import {
   OnDestroy,
   NgZone
 } from '@angular/core';
-import { Subject, Observable, Observer, merge } from 'rxjs';
+import { Subject, Observable, Observer, merge, Subscription } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -276,59 +276,70 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
-  @Input() validateResize: (resizeEvent: ResizeEvent) => boolean;
+  @Input()
+  validateResize: (resizeEvent: ResizeEvent) => boolean;
 
   /**
    * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
    */
-  @Input() resizeEdges: Edges = {};
+  @Input()
+  resizeEdges: Edges = {};
 
   /**
    * Set to `true` to enable a temporary resizing effect of the element in between the `resizeStart` and `resizeEnd` events.
    */
-  @Input() enableGhostResize: boolean = false;
+  @Input()
+  enableGhostResize: boolean = false;
 
   /**
    * A snap grid that resize events will be locked to.
    *
    * e.g. to only allow the element to be resized every 10px set it to `{left: 10, right: 10}`
    */
-  @Input() resizeSnapGrid: Edges = {};
+  @Input()
+  resizeSnapGrid: Edges = {};
 
   /**
    * The mouse cursors that will be set on the resize edges
    */
-  @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
+  @Input()
+  resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
 
   /**
    * Mouse over thickness to active cursor.
    */
-  @Input() resizeCursorPrecision: number = 3;
+  @Input()
+  resizeCursorPrecision: number = 3;
 
   /**
    * Define the positioning of the ghost element (can be fixed or absolute)
    */
-  @Input() ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
+  @Input()
+  ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
 
   /**
    * Allow elements to be resized to negative dimensions
    */
-  @Input() allowNegativeResizes: boolean = false;
+  @Input()
+  allowNegativeResizes: boolean = false;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeStart = new EventEmitter<ResizeEvent>();
+  @Output()
+  resizeStart = new EventEmitter<ResizeEvent>();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizing = new EventEmitter<ResizeEvent>();
+  @Output()
+  resizing = new EventEmitter<ResizeEvent>();
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
    */
-  @Output() resizeEnd = new EventEmitter<ResizeEvent>();
+  @Output()
+  resizeEnd = new EventEmitter<ResizeEvent>();
 
   /**
    * @hidden
@@ -360,7 +371,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private pointerEventListeners: PointerEventListeners;
 
-  private pointerEventListenerSubscriptions: any = {};
+  private subscriptions: Subscription = new Subscription();
 
   /**
    * @hidden
@@ -381,22 +392,26 @@ export class ResizableDirective implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // TODO - use some fancy Observable.merge's for this
-    this.pointerEventListenerSubscriptions.pointerDown = this.pointerEventListeners.pointerDown.subscribe(
-      ({ clientX, clientY }) => {
-        this.mousedown.next({ clientX, clientY });
-      }
+    this.subscriptions.add(
+      this.pointerEventListeners.pointerDown.subscribe(
+        ({ clientX, clientY }) => {
+          this.mousedown.next({ clientX, clientY });
+        }
+      )
     );
 
-    this.pointerEventListenerSubscriptions.pointerMove = this.pointerEventListeners.pointerMove.subscribe(
-      ({ clientX, clientY, event }) => {
-        this.mousemove.next({ clientX, clientY, event });
-      }
+    this.subscriptions.add(
+      this.pointerEventListeners.pointerMove.subscribe(
+        ({ clientX, clientY, event }) => {
+          this.mousemove.next({ clientX, clientY, event });
+        }
+      )
     );
 
-    this.pointerEventListenerSubscriptions.pointerUp = this.pointerEventListeners.pointerUp.subscribe(
-      ({ clientX, clientY }) => {
+    this.subscriptions.add(
+      this.pointerEventListeners.pointerUp.subscribe(({ clientX, clientY }) => {
         this.mouseup.next({ clientX, clientY });
-      }
+      })
     );
 
     let currentResize: {
@@ -764,9 +779,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-    this.pointerEventListenerSubscriptions.pointerDown.unsubscribe();
-    this.pointerEventListenerSubscriptions.pointerMove.unsubscribe();
-    this.pointerEventListenerSubscriptions.pointerUp.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   private setElementClass(elm: ElementRef, name: string, add: boolean): void {
