@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.2"></a>
+## [3.2.2](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.1...v3.2.2) (2018-08-10)
+
+
+### Bug Fixes
+
+* don't throw errors when immediately destroying the host component ([56e463b](https://github.com/mattlewis92/angular-resizable-element/commit/56e463b))
+
+
+
 <a name="3.2.1"></a>
 ## [3.2.1](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.0...v3.2.1) (2018-08-03)
 
