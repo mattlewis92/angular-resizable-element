@@ -43,7 +43,8 @@ describe('resizable directive', () => {
     `
   })
   class TestComponent {
-    @ViewChild(ResizableDirective) resizable: ResizableDirective;
+    @ViewChild(ResizableDirective)
+    resizable: ResizableDirective;
     style: object = {};
     resizeStart: sinon.SinonSpy = sinon.spy();
     resizing: sinon.SinonSpy = sinon.spy();

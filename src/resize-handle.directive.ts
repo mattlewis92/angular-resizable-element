@@ -28,7 +28,8 @@ export class ResizeHandleDirective implements OnDestroy {
   /**
    * The `Edges` object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
-  @Input() resizeEdges: Edges = {};
+  @Input()
+  resizeEdges: Edges = {};
 
   private eventListeners: {
     touchmove?: () => void;
