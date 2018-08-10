@@ -1,5 +1,5 @@
 import * as webpack from 'webpack';
-import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
 
