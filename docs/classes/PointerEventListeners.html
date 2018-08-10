@@ -476,7 +476,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="801" class="link-to-prism">src/resizable.directive.ts:801</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="810" class="link-to-prism">src/resizable.directive.ts:810</a></div>
                             </td>
                         </tr>
 
@@ -559,7 +559,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="782" class="link-to-prism">src/resizable.directive.ts:782</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="791" class="link-to-prism">src/resizable.directive.ts:791</a></div>
                             </td>
                         </tr>
 
@@ -594,7 +594,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="784" class="link-to-prism">src/resizable.directive.ts:784</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="793" class="link-to-prism">src/resizable.directive.ts:793</a></div>
                             </td>
                         </tr>
 
@@ -629,7 +629,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="786" class="link-to-prism">src/resizable.directive.ts:786</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="795" class="link-to-prism">src/resizable.directive.ts:795</a></div>
                             </td>
                         </tr>
 
@@ -667,7 +667,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="790" class="link-to-prism">src/resizable.directive.ts:790</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="799" class="link-to-prism">src/resizable.directive.ts:799</a></div>
                             </td>
                         </tr>
 
@@ -748,7 +748,7 @@
   OnDestroy,
   NgZone
 } from &#x27;@angular/core&#x27;;
-import { Subject, Observable, Observer, merge } from &#x27;rxjs&#x27;;
+import { Subject, Observable, Observer, merge, Subscription } from &#x27;rxjs&#x27;;
 import {
   map,
   mergeMap,
@@ -1015,59 +1015,70 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * A function that will be called before each resize event. Return &#x60;true&#x60; to allow the resize event to propagate or &#x60;false&#x60; to cancel it
    */
-  @Input() validateResize: (resizeEvent: ResizeEvent) &#x3D;&gt; boolean;
+  @Input()
+  validateResize: (resizeEvent: ResizeEvent) &#x3D;&gt; boolean;
 
   /**
    * The edges that an element can be resized from. Pass an object like &#x60;{top: true, bottom: false}&#x60;. By default no edges can be resized.
    */
-  @Input() resizeEdges: Edges &#x3D; {};
+  @Input()
+  resizeEdges: Edges &#x3D; {};
 
   /**
    * Set to &#x60;true&#x60; to enable a temporary resizing effect of the element in between the &#x60;resizeStart&#x60; and &#x60;resizeEnd&#x60; events.
    */
-  @Input() enableGhostResize: boolean &#x3D; false;
+  @Input()
+  enableGhostResize: boolean &#x3D; false;
 
   /**
    * A snap grid that resize events will be locked to.
    *
    * e.g. to only allow the element to be resized every 10px set it to &#x60;{left: 10, right: 10}&#x60;
    */
-  @Input() resizeSnapGrid: Edges &#x3D; {};
+  @Input()
+  resizeSnapGrid: Edges &#x3D; {};
 
   /**
    * The mouse cursors that will be set on the resize edges
    */
-  @Input() resizeCursors: ResizeCursors &#x3D; DEFAULT_RESIZE_CURSORS;
+  @Input()
+  resizeCursors: ResizeCursors &#x3D; DEFAULT_RESIZE_CURSORS;
 
   /**
    * Mouse over thickness to active cursor.
    */
-  @Input() resizeCursorPrecision: number &#x3D; 3;
+  @Input()
+  resizeCursorPrecision: number &#x3D; 3;
 
   /**
    * Define the positioning of the ghost element (can be fixed or absolute)
    */
-  @Input() ghostElementPositioning: &#x27;fixed&#x27; | &#x27;absolute&#x27; &#x3D; &#x27;fixed&#x27;;
+  @Input()
+  ghostElementPositioning: &#x27;fixed&#x27; | &#x27;absolute&#x27; &#x3D; &#x27;fixed&#x27;;
 
   /**
    * Allow elements to be resized to negative dimensions
    */
-  @Input() allowNegativeResizes: boolean &#x3D; false;
+  @Input()
+  allowNegativeResizes: boolean &#x3D; false;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
+  @Output()
+  resizeStart &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizing &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
+  @Output()
+  resizing &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
    * Called after the mouse is released after a resize event. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
    */
-  @Output() resizeEnd &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
+  @Output()
+  resizeEnd &#x3D; new EventEmitter&lt;ResizeEvent&gt;();
 
   /**
    * @hidden
@@ -1099,7 +1110,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private pointerEventListeners: PointerEventListeners;
 
-  private pointerEventListenerSubscriptions: any &#x3D; {};
+  private destroy$ &#x3D; new Subject();
 
   /**
    * @hidden
@@ -1120,23 +1131,23 @@ export class ResizableDirective implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // TODO - use some fancy Observable.merge&#x27;s for this
-    this.pointerEventListenerSubscriptions.pointerDown &#x3D; this.pointerEventListeners.pointerDown.subscribe(
-      ({ clientX, clientY }) &#x3D;&gt; {
+    this.pointerEventListeners.pointerDown
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY }) &#x3D;&gt; {
         this.mousedown.next({ clientX, clientY });
-      }
-    );
+      });
 
-    this.pointerEventListenerSubscriptions.pointerMove &#x3D; this.pointerEventListeners.pointerMove.subscribe(
-      ({ clientX, clientY, event }) &#x3D;&gt; {
+    this.pointerEventListeners.pointerMove
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY, event }) &#x3D;&gt; {
         this.mousemove.next({ clientX, clientY, event });
-      }
-    );
+      });
 
-    this.pointerEventListenerSubscriptions.pointerUp &#x3D; this.pointerEventListeners.pointerUp.subscribe(
-      ({ clientX, clientY }) &#x3D;&gt; {
+    this.pointerEventListeners.pointerUp
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ clientX, clientY }) &#x3D;&gt; {
         this.mouseup.next({ clientX, clientY });
-      }
-    );
+      });
 
     let currentResize: {
       edges: Edges;
@@ -1503,9 +1514,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-    this.pointerEventListenerSubscriptions.pointerDown.unsubscribe();
-    this.pointerEventListenerSubscriptions.pointerMove.unsubscribe();
-    this.pointerEventListenerSubscriptions.pointerUp.unsubscribe();
+    this.destroy$.next();
   }
 
   private setElementClass(elm: ElementRef, name: string, add: boolean): void {
