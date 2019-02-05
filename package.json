@@ -18,9 +18,7 @@
     "release:npm": "npm run build:dist && npm run copyfiles && npm publish dist",
     "release": "npm run release:git && npm run release:npm",
     "postrelease": "npm run build:clean && npm run gh-pages",
-    "commitmsg": "validate-commit-msg",
-    "codecov": "cat coverage/lcov.info | codecov",
-    "precommit": "pretty-quick --staged"
+    "codecov": "cat coverage/lcov.info | codecov"
   },
   "ngPackage": {
     "lib": {
@@ -100,6 +98,12 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "validate-commit-msg",
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
