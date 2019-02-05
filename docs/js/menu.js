@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var processLink = function(link, url) {
         if (url.charAt(0) !== '.') {
-            let prefix = '';
+            var prefix = '';
             switch(COMPODOC_CURRENT_PAGE_DEPTH) {
                 case 5:
                     prefix = '../../../../../';
@@ -58,14 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var i = 0; i < links.length; i++) {
             var link = links[i];
             var linkHref = link.getAttribute('href');
-            if (linkHref.toLowerCase().indexOf(COMPODOC_CURRENT_PAGE_URL.toLowerCase()) !== -1 
-                && link.innerHTML.indexOf('Getting started') == -1 
-                && !dontAddClass
-                && linkHref.toLowerCase().indexOf(localContextInUrl.toLowerCase()) !== -1 ) {
-                link.classList.add('active');
+            if (linkHref) {
+                var linkHrefFile = linkHref.substr(linkHref.lastIndexOf('/') + 1, linkHref.length);
+                if (linkHrefFile.toLowerCase() === COMPODOC_CURRENT_PAGE_URL.toLowerCase()
+                    && link.innerHTML.indexOf('Getting started') == -1 
+                    && !dontAddClass
+                    && linkHref.toLowerCase().indexOf(localContextInUrl.toLowerCase()) !== -1 ) {
+                    link.classList.add('active');
+                }
+                processLink(link, linkHref);
             }
-            processLink(link, linkHref);
-
         }
     }
     var chapterLinks = document.querySelectorAll('[data-type="chapter-link"]');
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (entityLogo) {
                 var url = entityLogo.getAttribute('data-src');
                 if (url.charAt(0) !== '.') {
-                    let prefix = '';
+                    var prefix = '';
                     switch(COMPODOC_CURRENT_PAGE_DEPTH) {
                         case 5:
                             prefix = '../../../../../';
@@ -120,10 +122,21 @@ document.addEventListener('DOMContentLoaded', function() {
             menuCollapsed = !menuCollapsed;
         });
 
+        /**
+         * Native bootstrap doesn't wait DOMContentLoaded event to start his job, re do it here
+         */
+        var Collapses = document.querySelectorAll('[data-toggle="collapse"]');
+        for (var o = 0, cll = Collapses.length; o < cll; o++) {
+            var collapse = Collapses[o],
+                options = {};
+            options.duration = collapse.getAttribute('data-duration');
+            new Collapse(collapse, options);
+        }
+
         // collapse menu
         var classnameMenuToggler = document.getElementsByClassName('menu-toggler'),
-            faAngleUpClass = 'fa-angle-up',
-            faAngleDownClass = 'fa-angle-down',
+            faAngleUpClass = 'ion-ios-arrow-up',
+            faAngleDownClass = 'ion-ios-arrow-down',
             toggleItemMenu = function(e) {
                 var element = $(e.target),
                     parent = element[0].parentNode,
