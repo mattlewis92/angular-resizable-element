@@ -7,9 +7,11 @@ import {
   Input,
   EventEmitter,
   OnDestroy,
-  NgZone
+  NgZone,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
-import { Subject, Observable, Observer, merge, Subscription } from 'rxjs';
+import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -18,7 +20,9 @@ import {
   pairwise,
   take,
   share,
-  auditTime
+  auditTime,
+  switchMap,
+  startWith
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
@@ -272,74 +276,65 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]'
 })
-export class ResizableDirective implements OnInit, OnDestroy {
+export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
-  @Input()
-  validateResize: (resizeEvent: ResizeEvent) => boolean;
+  @Input() validateResize: (resizeEvent: ResizeEvent) => boolean;
 
   /**
    * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
+   * @deprecated use a resize handle instead that positions itself to the side of the element you would like to resize
    */
-  @Input()
-  resizeEdges: Edges = {};
+  @Input() resizeEdges: Edges = {};
 
   /**
    * Set to `true` to enable a temporary resizing effect of the element in between the `resizeStart` and `resizeEnd` events.
    */
-  @Input()
-  enableGhostResize: boolean = false;
+  @Input() enableGhostResize: boolean = false;
 
   /**
    * A snap grid that resize events will be locked to.
    *
    * e.g. to only allow the element to be resized every 10px set it to `{left: 10, right: 10}`
    */
-  @Input()
-  resizeSnapGrid: Edges = {};
+  @Input() resizeSnapGrid: Edges = {};
 
   /**
    * The mouse cursors that will be set on the resize edges
    */
-  @Input()
-  resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
+  @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
 
   /**
    * Mouse over thickness to active cursor.
+   * @deprecated invalid when you migrate to use resize handles instead of setting resizeEdges on the element
    */
-  @Input()
-  resizeCursorPrecision: number = 3;
+  @Input() resizeCursorPrecision: number = 3;
 
   /**
    * Define the positioning of the ghost element (can be fixed or absolute)
    */
-  @Input()
-  ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
+  @Input() ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
 
   /**
    * Allow elements to be resized to negative dimensions
    */
-  @Input()
-  allowNegativeResizes: boolean = false;
+  @Input() allowNegativeResizes: boolean = false;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
-  @Output()
-  resizeStart = new EventEmitter<ResizeEvent>();
+  @Output() resizeStart = new EventEmitter<ResizeEvent>();
 
   /**
    * Called as the mouse is dragged after a resize event has begun. `$event` is a `ResizeEvent` object.
    */
-  @Output()
-  resizing = new EventEmitter<ResizeEvent>();
+  @Output() resizing = new EventEmitter<ResizeEvent>();
 
   /**
    * Called after the mouse is released after a resize event. `$event` is a `ResizeEvent` object.
    */
-  @Output()
-  resizeEnd = new EventEmitter<ResizeEvent>();
+  @Output() resizeEnd = new EventEmitter<ResizeEvent>();
 
   /**
    * @hidden
@@ -371,7 +366,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private pointerEventListeners: PointerEventListeners;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
+
+  private resizeEdges$ = new Subject<Edges>();
 
   /**
    * @hidden
@@ -426,14 +423,33 @@ export class ResizableDirective implements OnInit, OnDestroy {
       }
     };
 
+    const getResizeCursors = (): ResizeCursors => {
+      return {
+        ...DEFAULT_RESIZE_CURSORS,
+        ...this.resizeCursors
+      };
+    };
+
     const mouseMove: Observable<any> = this.mousemove.pipe(share());
 
     mouseMove.pipe(filter(() => !!currentResize)).subscribe(({ event }) => {
       event.preventDefault();
     });
 
-    mouseMove
-      .pipe(auditTime(MOUSE_MOVE_THROTTLE_MS))
+    this.resizeEdges$
+      .pipe(
+        startWith(this.resizeEdges),
+        map(() => {
+          return (
+            this.resizeEdges &&
+            Object.keys(this.resizeEdges).some(edge => !!this.resizeEdges[edge])
+          );
+        }),
+        switchMap(legacyResizeEdgesEnabled =>
+          legacyResizeEdgesEnabled ? mouseMove : EMPTY
+        ),
+        auditTime(MOUSE_MOVE_THROTTLE_MS)
+      )
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
           clientX,
@@ -442,22 +458,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
           allowedEdges: this.resizeEdges,
           cursorPrecision: this.resizeCursorPrecision
         });
-        const resizeCursors: ResizeCursors = Object.assign(
-          {},
-          DEFAULT_RESIZE_CURSORS,
-          this.resizeCursors
-        );
-        if (currentResize) {
-          const cursor: string = getResizeCursor(
-            currentResize.edges,
-            resizeCursors
-          );
-          this.renderer.setStyle(document.body, 'cursor', cursor);
-        } else {
-          const cursor: string = getResizeCursor(resizeEdges, resizeCursors);
+        const resizeCursors = getResizeCursors();
+        if (!currentResize) {
+          const cursor = getResizeCursor(resizeEdges, resizeCursors);
           this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
         }
-        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
         this.setElementClass(
           this.elm,
           RESIZE_LEFT_HOVER_CLASS,
@@ -681,13 +686,12 @@ export class ResizableDirective implements OnInit, OnDestroy {
           startingRect,
           currentRect: startingRect
         };
+        const resizeCursors = getResizeCursors();
+        const cursor = getResizeCursor(currentResize.edges, resizeCursors);
+        this.renderer.setStyle(document.body, 'cursor', cursor);
+        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, true);
         if (this.enableGhostResize) {
           currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
-          const resizeCursors: ResizeCursors = Object.assign(
-            {},
-            DEFAULT_RESIZE_CURSORS,
-            this.resizeCursors
-          );
           this.elm.nativeElement.parentElement.appendChild(
             currentResize.clonedNode
           );
@@ -771,10 +775,21 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * @hidden
    */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.resizeEdges) {
+      this.resizeEdges$.next(this.resizeEdges);
+    }
+  }
+
+  /**
+   * @hidden
+   */
   ngOnDestroy(): void {
+    this.renderer.setStyle(document.body, 'cursor', '');
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
+    this.resizeEdges$.complete();
     this.destroy$.next();
   }
 

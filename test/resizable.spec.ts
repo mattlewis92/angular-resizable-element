@@ -38,13 +38,12 @@ describe('resizable directive', () => {
         [allowNegativeResizes]="allowNegativeResizes"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
-        (resizeEnd)="resizeEnd($event)">
-      </div>
+        (resizeEnd)="resizeEnd($event)"
+      ></div>
     `
   })
   class TestComponent {
-    @ViewChild(ResizableDirective)
-    resizable: ResizableDirective;
+    @ViewChild(ResizableDirective) resizable: ResizableDirective;
     style: object = {};
     resizeStart: sinon.SinonSpy = sinon.spy();
     resizing: sinon.SinonSpy = sinon.spy();

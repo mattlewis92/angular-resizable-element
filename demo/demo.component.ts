@@ -1,6 +1,6 @@
 /* tslint:disable:max-inline-declarations */
 import { Component } from '@angular/core';
-import { ResizeEvent } from './../src';
+import { ResizeEvent } from '../src';
 
 @Component({
   selector: 'mwl-demo',
@@ -19,11 +19,37 @@ import { ResizeEvent } from './../src';
         color: #121621;
         margin: auto;
       }
-      .resize-handle {
+
+      .resize-handle-top,
+      .resize-handle-bottom {
         position: absolute;
-        bottom: 10px;
-        right: 10px;
-        cursor: se-resize;
+        height: 5px;
+        cursor: row-resize;
+        width: 100%;
+      }
+
+      .resize-handle-top {
+        top: 0;
+      }
+
+      .resize-handle-bottom {
+        bottom: 0;
+      }
+
+      .resize-handle-left,
+      .resize-handle-right {
+        position: absolute;
+        height: 100%;
+        cursor: col-resize;
+        width: 5px;
+      }
+
+      .resize-handle-left {
+        left: 0;
+      }
+
+      .resize-handle-right {
+        right: 0;
       }
     `
   ],
@@ -35,15 +61,30 @@ import { ResizeEvent } from './../src';
         [ngStyle]="style"
         mwlResizable
         [validateResize]="validate"
-        [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
         [enableGhostResize]="true"
-        [resizeSnapGrid]="{left: 50, right: 50}"
-        (resizeEnd)="onResizeEnd($event)">
-        <img
-          src="http://i.imgur.com/eqzz2dl.gif"
-          class="resize-handle"
+        [resizeSnapGrid]="{ left: 50, right: 50 }"
+        (resizeEnd)="onResizeEnd($event)"
+      >
+        <div
+          class="resize-handle-top"
           mwlResizeHandle
-          [resizeEdges]="{bottom: true, right: true}">
+          [resizeEdges]="{ top: true }"
+        ></div>
+        <div
+          class="resize-handle-left"
+          mwlResizeHandle
+          [resizeEdges]="{ left: true }"
+        ></div>
+        <div
+          class="resize-handle-right"
+          mwlResizeHandle
+          [resizeEdges]="{ right: true }"
+        ></div>
+        <div
+          class="resize-handle-bottom"
+          mwlResizeHandle
+          [resizeEdges]="{ bottom: true }"
+        ></div>
       </div>
     </div>
   `

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.3"></a>
+## [3.2.3](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.2...v3.2.3) (2019-02-05)
+
+
+### Bug Fixes
+
+* allow angular 8 peer dependency ([94dc48d](https://github.com/mattlewis92/angular-resizable-element/commit/94dc48d))
+* deprecate the top level resizeEdges option in favour of resize handles ([2f6ac2d](https://github.com/mattlewis92/angular-resizable-element/commit/2f6ac2d))
+
+
+### Performance Improvements
+
+* remove mouse move listeners when only using resize handles ([1185f3a](https://github.com/mattlewis92/angular-resizable-element/commit/1185f3a))
+
+
+
 <a name="3.2.2"></a>
 ## [3.2.2](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.1...v3.2.2) (2018-08-10)
 
