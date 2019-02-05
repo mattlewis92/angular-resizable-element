@@ -417,6 +417,13 @@ export class ResizableDirective implements OnInit, OnDestroy {
       }
     };
 
+    const getResizeCursors = (): ResizeCursors => {
+      return {
+        ...DEFAULT_RESIZE_CURSORS,
+        ...this.resizeCursors
+      };
+    };
+
     const mouseMove: Observable<any> = this.mousemove.pipe(share());
 
     mouseMove.pipe(filter(() => !!currentResize)).subscribe(({ event }) => {
@@ -433,22 +440,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
           allowedEdges: this.resizeEdges,
           cursorPrecision: this.resizeCursorPrecision
         });
-        const resizeCursors: ResizeCursors = Object.assign(
-          {},
-          DEFAULT_RESIZE_CURSORS,
-          this.resizeCursors
-        );
-        if (currentResize) {
-          const cursor: string = getResizeCursor(
-            currentResize.edges,
-            resizeCursors
-          );
-          this.renderer.setStyle(document.body, 'cursor', cursor);
-        } else {
-          const cursor: string = getResizeCursor(resizeEdges, resizeCursors);
+        const resizeCursors = getResizeCursors();
+        if (!currentResize) {
+          const cursor = getResizeCursor(resizeEdges, resizeCursors);
           this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
         }
-        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, !!currentResize);
         this.setElementClass(
           this.elm,
           RESIZE_LEFT_HOVER_CLASS,
@@ -672,13 +668,12 @@ export class ResizableDirective implements OnInit, OnDestroy {
           startingRect,
           currentRect: startingRect
         };
+        const resizeCursors = getResizeCursors();
+        const cursor = getResizeCursor(currentResize.edges, resizeCursors);
+        this.renderer.setStyle(document.body, 'cursor', cursor);
+        this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, true);
         if (this.enableGhostResize) {
           currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
-          const resizeCursors: ResizeCursors = Object.assign(
-            {},
-            DEFAULT_RESIZE_CURSORS,
-            this.resizeCursors
-          );
           this.elm.nativeElement.parentElement.appendChild(
             currentResize.clonedNode
           );
@@ -763,6 +758,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
    * @hidden
    */
   ngOnDestroy(): void {
+    this.renderer.setStyle(document.body, 'cursor', '');
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
