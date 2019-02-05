@@ -281,6 +281,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   /**
    * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
+   * @deprecated use a resize handle instead that positions itself to the side of the element you would like to resize
    */
   @Input()
   resizeEdges: Edges = {};
@@ -307,6 +308,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   /**
    * Mouse over thickness to active cursor.
+   * @deprecated invalid when you migrate to use resize handles instead of setting resizeEdges on the element
    */
   @Input()
   resizeCursorPrecision: number = 3;
