@@ -7,9 +7,11 @@ import {
   Input,
   EventEmitter,
   OnDestroy,
-  NgZone
+  NgZone,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
-import { Subject, Observable, Observer, merge } from 'rxjs';
+import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -18,7 +20,9 @@ import {
   pairwise,
   take,
   share,
-  auditTime
+  auditTime,
+  switchMap,
+  startWith
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
@@ -272,7 +276,7 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]'
 })
-export class ResizableDirective implements OnInit, OnDestroy {
+export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
@@ -362,7 +366,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private pointerEventListeners: PointerEventListeners;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
+
+  private resizeEdges$ = new Subject<Edges>();
 
   /**
    * @hidden
@@ -430,8 +436,20 @@ export class ResizableDirective implements OnInit, OnDestroy {
       event.preventDefault();
     });
 
-    mouseMove
-      .pipe(auditTime(MOUSE_MOVE_THROTTLE_MS))
+    this.resizeEdges$
+      .pipe(
+        startWith(this.resizeEdges),
+        map(() => {
+          return (
+            this.resizeEdges &&
+            Object.keys(this.resizeEdges).some(edge => !!this.resizeEdges[edge])
+          );
+        }),
+        switchMap(legacyResizeEdgesEnabled =>
+          legacyResizeEdgesEnabled ? mouseMove : EMPTY
+        ),
+        auditTime(MOUSE_MOVE_THROTTLE_MS)
+      )
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
           clientX,
@@ -757,11 +775,21 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * @hidden
    */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.resizeEdges) {
+      this.resizeEdges$.next(this.resizeEdges);
+    }
+  }
+
+  /**
+   * @hidden
+   */
   ngOnDestroy(): void {
     this.renderer.setStyle(document.body, 'cursor', '');
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
+    this.resizeEdges$.complete();
     this.destroy$.next();
   }
 
