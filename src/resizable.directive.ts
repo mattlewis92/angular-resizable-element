@@ -692,10 +692,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         };
         const resizeCursors = getResizeCursors();
         const cursor = getResizeCursor(currentResize.edges, resizeCursors);
-        // browser check for angular universal, because it doesn't know what document is
-        if (isPlatformBrowser(this.platformId)) {
-          this.renderer.setStyle(document.body, 'cursor', cursor);
-        }
+        this.renderer.setStyle(document.body, 'cursor', cursor);
         this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, true);
         if (this.enableGhostResize) {
           currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
@@ -761,10 +758,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     this.mouseup.subscribe(() => {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
-        // browser check for angular universal, because it doesn't know what document is
-        if (isPlatformBrowser(this.platformId)) {
-          this.renderer.setStyle(document.body, 'cursor', '');
-        }
+        this.renderer.setStyle(document.body, 'cursor', '');
         this.renderer.setStyle(this.elm.nativeElement, 'cursor', '');
         this.zone.run(() => {
           this.resizeEnd.emit({
