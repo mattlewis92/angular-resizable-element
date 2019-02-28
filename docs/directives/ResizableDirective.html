@@ -188,7 +188,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="322" class="link-to-prism">src/resizable.directive.ts:322</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="325" class="link-to-prism">src/resizable.directive.ts:325</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -214,7 +214,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="294" class="link-to-prism">src/resizable.directive.ts:294</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="297" class="link-to-prism">src/resizable.directive.ts:297</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -240,7 +240,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="317" class="link-to-prism">src/resizable.directive.ts:317</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="320" class="link-to-prism">src/resizable.directive.ts:320</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -266,7 +266,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="312" class="link-to-prism">src/resizable.directive.ts:312</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/resizable.directive.ts:315</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -292,7 +292,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="306" class="link-to-prism">src/resizable.directive.ts:306</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/resizable.directive.ts:309</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -318,7 +318,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="289" class="link-to-prism">src/resizable.directive.ts:289</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="292" class="link-to-prism">src/resizable.directive.ts:292</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -345,7 +345,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">src/resizable.directive.ts:301</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="304" class="link-to-prism">src/resizable.directive.ts:304</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -368,7 +368,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="283" class="link-to-prism">src/resizable.directive.ts:283</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="286" class="link-to-prism">src/resizable.directive.ts:286</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -392,7 +392,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">src/resizable.directive.ts:337</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/resizable.directive.ts:340</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -413,7 +413,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="327" class="link-to-prism">src/resizable.directive.ts:327</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="330" class="link-to-prism">src/resizable.directive.ts:330</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -434,7 +434,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="332" class="link-to-prism">src/resizable.directive.ts:332</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="335" class="link-to-prism">src/resizable.directive.ts:335</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -460,8 +460,11 @@
   OnDestroy,
   NgZone,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Inject,
+  PLATFORM_ID
 } from &#x27;@angular/core&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
 import { Subject, Observable, Observer, merge, EMPTY } from &#x27;rxjs&#x27;;
 import {
   map,
@@ -825,6 +828,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
@@ -1236,7 +1240,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   ngOnDestroy(): void {
-    this.renderer.setStyle(document.body, &#x27;cursor&#x27;, &#x27;&#x27;);
+    // browser check for angular universal, because it doesn&#x27;t know what document is
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, &#x27;cursor&#x27;, &#x27;&#x27;);
+    }
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
