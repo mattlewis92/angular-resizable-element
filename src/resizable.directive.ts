@@ -377,7 +377,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
