@@ -9,8 +9,11 @@ import {
   OnDestroy,
   NgZone,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
 import {
   map,
@@ -374,6 +377,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
@@ -688,7 +692,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         };
         const resizeCursors = getResizeCursors();
         const cursor = getResizeCursor(currentResize.edges, resizeCursors);
-        this.renderer.setStyle(document.body, 'cursor', cursor);
+        // browser check for angular universal, because it doesn't know what document is
+        if (isPlatformBrowser(this.platformId)) {
+          this.renderer.setStyle(document.body, 'cursor', cursor);
+        }
         this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, true);
         if (this.enableGhostResize) {
           currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
@@ -754,7 +761,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     this.mouseup.subscribe(() => {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
-        this.renderer.setStyle(document.body, 'cursor', '');
+        // browser check for angular universal, because it doesn't know what document is
+        if (isPlatformBrowser(this.platformId)) {
+          this.renderer.setStyle(document.body, 'cursor', '');
+        }
         this.renderer.setStyle(this.elm.nativeElement, 'cursor', '');
         this.zone.run(() => {
           this.resizeEnd.emit({
@@ -785,7 +795,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   ngOnDestroy(): void {
-    this.renderer.setStyle(document.body, 'cursor', '');
+    // browser check for angular universal, because it doesn't know what document is
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'cursor', '');
+    }
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
