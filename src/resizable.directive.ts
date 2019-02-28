@@ -9,8 +9,11 @@ import {
   OnDestroy,
   NgZone,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
 import {
   map,
@@ -374,6 +377,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     private renderer: Renderer2,
     public elm: ElementRef,
     private zone: NgZone
@@ -785,7 +789,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   ngOnDestroy(): void {
-    this.renderer.setStyle(document.body, 'cursor', '');
+    // browser check for angular universal, because it doesn't know what document is
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'cursor', '');
+    }
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
