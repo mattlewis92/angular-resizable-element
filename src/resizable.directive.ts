@@ -98,7 +98,16 @@ function getElementRect(
   const transform = transformProperties
     .map(property => style[property])
     .find(value => !!value);
-  if (transform && transform.includes('translate')) {
+  if (transform && transform.includes('translate3d')) {
+    translateX = transform.replace(
+      /.*translate3d\((.*)px, (.*)px, (.*)px\).*/,
+      '$1'
+    );
+    translateY = transform.replace(
+      /.*translate3d\((.*)px, (.*)px, (.*)px\).*/,
+      '$2'
+    );
+  } else if (transform && transform.includes('translate')) {
     translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
     translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
   }
@@ -536,7 +545,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           }
 
           return merge(
-            mouseMove.pipe(take(1)).pipe(map(coords => [, coords])),
+            mouseMove.pipe(take(1)).pipe(map(coords => [coords])),
             mouseMove.pipe(pairwise())
           )
             .pipe(
