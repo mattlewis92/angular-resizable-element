@@ -14,11 +14,11 @@ https://mattlewis92.github.io/angular-resizable-element/demo/
 
 ## Table of contents
 
-* [About](#about)
-* [Installation](#installation)
-* [Documentation](#documentation)
-* [Development](#development)
-* [License](#license)
+- [About](#about)
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Development](#development)
+- [License](#license)
 
 ## About
 
@@ -43,18 +43,18 @@ import { ResizeEvent } from 'angular-resizable-element';
   // you should add some more styles to the element. See the demo folder for a more fleshed out example
   styles: [
     `
-    mwlResizable {
-      box-sizing: border-box; // required for the enableGhostResize option to work
-    }
-  `
+      mwlResizable {
+        box-sizing: border-box; // required for the enableGhostResize option to work
+      }
+    `
   ],
   template: `
     <div
       mwlResizable
       [enableGhostResize]="true"
-      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-      (resizeEnd)="onResizeEnd($event)">
-    </div>
+      [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+      (resizeEnd)="onResizeEnd($event)"
+    ></div>
   `
 })
 export class MyComponent {
@@ -86,8 +86,8 @@ https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ### Prepare your environment
 
-* Install [Node.js](http://nodejs.org/) and NPM (should come with)
-* Install local dev dependencies: `npm install` while current directory is this repo
+- Install [Node.js](http://nodejs.org/) and NPM (should come with)
+- Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
 
