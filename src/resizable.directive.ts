@@ -25,7 +25,8 @@ import {
   share,
   auditTime,
   switchMap,
-  startWith
+  startWith,
+  tap
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
@@ -392,24 +393,25 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   ngOnInit(): void {
-    // TODO - use some fancy Observable.merge's for this
-    this.pointerEventListeners.pointerDown
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY }) => {
-        this.mousedown.next({ clientX, clientY });
-      });
+    const mousedown$: Observable<{
+      clientX: number;
+      clientY: number;
+      edges?: Edges;
+    }> = merge(this.pointerEventListeners.pointerDown, this.mousedown);
 
-    this.pointerEventListeners.pointerMove
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY, event }) => {
-        this.mousemove.next({ clientX, clientY, event });
-      });
+    const mousemove$ = merge(
+      this.pointerEventListeners.pointerMove,
+      this.mousemove
+    ).pipe(
+      tap(({ event }) => {
+        if (currentResize) {
+          event.preventDefault();
+        }
+      }),
+      share()
+    );
 
-    this.pointerEventListeners.pointerUp
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY }) => {
-        this.mouseup.next({ clientX, clientY });
-      });
+    const mouseup$ = merge(this.pointerEventListeners.pointerUp, this.mouseup);
 
     let currentResize: {
       edges: Edges;
@@ -434,12 +436,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
       };
     };
 
-    const mouseMove: Observable<any> = this.mousemove.pipe(share());
-
-    mouseMove.pipe(filter(() => !!currentResize)).subscribe(({ event }) => {
-      event.preventDefault();
-    });
-
     this.resizeEdges$
       .pipe(
         startWith(this.resizeEdges),
@@ -450,9 +446,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           );
         }),
         switchMap(legacyResizeEdgesEnabled =>
-          legacyResizeEdgesEnabled ? mouseMove : EMPTY
+          legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
-        auditTime(MOUSE_MOVE_THROTTLE_MS)
+        auditTime(MOUSE_MOVE_THROTTLE_MS),
+        takeUntil(this.destroy$)
       )
       .subscribe(({ clientX, clientY }) => {
         const resizeEdges: Edges = getResizeEdges({
@@ -489,7 +486,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         );
       });
 
-    const mousedrag: Observable<any> = this.mousedown
+    const mousedrag: Observable<any> = mousedown$
       .pipe(
         mergeMap(startCoords => {
           function getDiff(moveCoords: { clientX: number; clientY: number }) {
@@ -535,10 +532,15 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
             };
           }
 
-          return merge(
-            mouseMove.pipe(take(1)).pipe(map(coords => [, coords])),
-            mouseMove.pipe(pairwise())
-          )
+          return (merge(
+            mousemove$.pipe(take(1)).pipe(map(coords => [, coords])),
+            mousemove$.pipe(pairwise())
+          ) as Observable<
+            [
+              { clientX: number; clientY: number },
+              { clientX: number; clientY: number }
+            ]
+          >)
             .pipe(
               map(([previousCoords, newCoords]) => {
                 return [
@@ -576,7 +578,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                 };
               })
             )
-            .pipe(takeUntil(merge(this.mouseup, this.mousedown)));
+            .pipe(takeUntil(merge(mouseup$, mousedown$)));
         })
       )
       .pipe(filter(() => !!currentResize));
@@ -617,7 +619,8 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                 })
               })
             : true;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((newBoundingRect: BoundingRectangle) => {
         if (currentResize && currentResize.clonedNode) {
@@ -657,7 +660,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         currentResize!.currentRect = newBoundingRect;
       });
 
-    this.mousedown
+    mousedown$
       .pipe(
         map(({ clientX, clientY, edges }) => {
           return (
@@ -675,7 +678,8 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
       .pipe(
         filter((edges: Edges) => {
           return Object.keys(edges).length > 0;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((edges: Edges) => {
         if (currentResize) {
@@ -755,7 +759,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         });
       });
 
-    this.mouseup.subscribe(() => {
+    mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
         this.renderer.setStyle(document.body, 'cursor', '');
