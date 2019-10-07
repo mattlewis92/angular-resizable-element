@@ -188,7 +188,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="325" class="link-to-prism">src/resizable.directive.ts:325</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="326" class="link-to-prism">src/resizable.directive.ts:326</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -214,7 +214,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="297" class="link-to-prism">src/resizable.directive.ts:297</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="298" class="link-to-prism">src/resizable.directive.ts:298</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -240,7 +240,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="320" class="link-to-prism">src/resizable.directive.ts:320</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">src/resizable.directive.ts:321</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -266,7 +266,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/resizable.directive.ts:315</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/resizable.directive.ts:316</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -292,7 +292,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/resizable.directive.ts:309</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="310" class="link-to-prism">src/resizable.directive.ts:310</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -318,7 +318,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="292" class="link-to-prism">src/resizable.directive.ts:292</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="293" class="link-to-prism">src/resizable.directive.ts:293</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -345,7 +345,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="304" class="link-to-prism">src/resizable.directive.ts:304</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="305" class="link-to-prism">src/resizable.directive.ts:305</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -368,7 +368,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="286" class="link-to-prism">src/resizable.directive.ts:286</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/resizable.directive.ts:287</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -392,7 +392,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/resizable.directive.ts:340</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="341" class="link-to-prism">src/resizable.directive.ts:341</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -413,7 +413,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="330" class="link-to-prism">src/resizable.directive.ts:330</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/resizable.directive.ts:331</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -434,7 +434,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="335" class="link-to-prism">src/resizable.directive.ts:335</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">src/resizable.directive.ts:336</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -476,7 +476,8 @@ import {
   share,
   auditTime,
   switchMap,
-  startWith
+  startWith,
+  tap
 } from &#x27;rxjs/operators&#x27;;
 import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
 import { BoundingRectangle } from &#x27;./interfaces/bounding-rectangle.interface&#x27;;
@@ -843,24 +844,25 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * @hidden
    */
   ngOnInit(): void {
-    // TODO - use some fancy Observable.merge&#x27;s for this
-    this.pointerEventListeners.pointerDown
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY }) &#x3D;&gt; {
-        this.mousedown.next({ clientX, clientY });
-      });
+    const mousedown$: Observable&lt;{
+      clientX: number;
+      clientY: number;
+      edges?: Edges;
+    }&gt; &#x3D; merge(this.pointerEventListeners.pointerDown, this.mousedown);
 
-    this.pointerEventListeners.pointerMove
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY, event }) &#x3D;&gt; {
-        this.mousemove.next({ clientX, clientY, event });
-      });
+    const mousemove$ &#x3D; merge(
+      this.pointerEventListeners.pointerMove,
+      this.mousemove
+    ).pipe(
+      tap(({ event }) &#x3D;&gt; {
+        if (currentResize) {
+          event.preventDefault();
+        }
+      }),
+      share()
+    );
 
-    this.pointerEventListeners.pointerUp
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ clientX, clientY }) &#x3D;&gt; {
-        this.mouseup.next({ clientX, clientY });
-      });
+    const mouseup$ &#x3D; merge(this.pointerEventListeners.pointerUp, this.mouseup);
 
     let currentResize: {
       edges: Edges;
@@ -885,12 +887,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
       };
     };
 
-    const mouseMove: Observable&lt;any&gt; &#x3D; this.mousemove.pipe(share());
-
-    mouseMove.pipe(filter(() &#x3D;&gt; !!currentResize)).subscribe(({ event }) &#x3D;&gt; {
-      event.preventDefault();
-    });
-
     this.resizeEdges$
       .pipe(
         startWith(this.resizeEdges),
@@ -901,9 +897,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           );
         }),
         switchMap(legacyResizeEdgesEnabled &#x3D;&gt;
-          legacyResizeEdgesEnabled ? mouseMove : EMPTY
+          legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
-        auditTime(MOUSE_MOVE_THROTTLE_MS)
+        auditTime(MOUSE_MOVE_THROTTLE_MS),
+        takeUntil(this.destroy$)
       )
       .subscribe(({ clientX, clientY }) &#x3D;&gt; {
         const resizeEdges: Edges &#x3D; getResizeEdges({
@@ -940,7 +937,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         );
       });
 
-    const mousedrag: Observable&lt;any&gt; &#x3D; this.mousedown
+    const mousedrag: Observable&lt;any&gt; &#x3D; mousedown$
       .pipe(
         mergeMap(startCoords &#x3D;&gt; {
           function getDiff(moveCoords: { clientX: number; clientY: number }) {
@@ -986,10 +983,15 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
             };
           }
 
-          return merge(
-            mouseMove.pipe(take(1)).pipe(map(coords &#x3D;&gt; [, coords])),
-            mouseMove.pipe(pairwise())
-          )
+          return (merge(
+            mousemove$.pipe(take(1)).pipe(map(coords &#x3D;&gt; [, coords])),
+            mousemove$.pipe(pairwise())
+          ) as Observable&lt;
+            [
+              { clientX: number; clientY: number },
+              { clientX: number; clientY: number }
+            ]
+          &gt;)
             .pipe(
               map(([previousCoords, newCoords]) &#x3D;&gt; {
                 return [
@@ -1027,7 +1029,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                 };
               })
             )
-            .pipe(takeUntil(merge(this.mouseup, this.mousedown)));
+            .pipe(takeUntil(merge(mouseup$, mousedown$)));
         })
       )
       .pipe(filter(() &#x3D;&gt; !!currentResize));
@@ -1068,7 +1070,8 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                 })
               })
             : true;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
         if (currentResize &amp;&amp; currentResize.clonedNode) {
@@ -1108,7 +1111,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         currentResize!.currentRect &#x3D; newBoundingRect;
       });
 
-    this.mousedown
+    mousedown$
       .pipe(
         map(({ clientX, clientY, edges }) &#x3D;&gt; {
           return (
@@ -1126,7 +1129,8 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
       .pipe(
         filter((edges: Edges) &#x3D;&gt; {
           return Object.keys(edges).length &gt; 0;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((edges: Edges) &#x3D;&gt; {
         if (currentResize) {
@@ -1206,7 +1210,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         });
       });
 
-    this.mouseup.subscribe(() &#x3D;&gt; {
+    mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() &#x3D;&gt; {
       if (currentResize) {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
         this.renderer.setStyle(document.body, &#x27;cursor&#x27;, &#x27;&#x27;);
