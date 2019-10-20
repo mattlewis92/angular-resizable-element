@@ -100,8 +100,8 @@ function getElementRect(
     .map(property => style[property])
     .find(value => !!value);
   if (transform && transform.includes('translate')) {
-    translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
-    translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
+    translateX = transform.match(/translate3?d?\(\s*([^ ,]+)\s*,\s*([^ ,]+)\s*(,\s*([^ )]+)\s*)?\)/)[1];
+    translateY = transform.match(/translate3?d?\(\s*([^ ,]+)\s*,\s*([^ ,]+)\s*(,\s*([^ )]+)\s*)?\)/)[2];
   }
 
   if (ghostElementPositioning === 'absolute') {
