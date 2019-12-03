@@ -48,7 +48,7 @@
     "@angular/core": "^7.2.3",
     "@angular/platform-browser": "^7.2.3",
     "@angular/platform-browser-dynamic": "^7.2.3",
-    "@compodoc/compodoc": "^1.1.7",
+    "@compodoc/compodoc": "^1.1.11",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "@types/sinon": "^7.0.5",
