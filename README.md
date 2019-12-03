@@ -1,11 +1,9 @@
 # angular resizable element
 
+[![Sponsorship](https://img.shields.io/badge/funding-github-%23EA4AAA)](https://github.com/users/mattlewis92/sponsorship)
 [![Build Status](https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-resizable-element)
 [![codecov](https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-resizable-element)
 [![npm version](https://badge.fury.io/js/angular-resizable-element.svg)](http://badge.fury.io/js/angular-resizable-element)
-[![devDependency Status](https://david-dm.org/mattlewis92/angular-resizable-element/dev-status.svg)](https://david-dm.org/mattlewis92/angular-resizable-element?type=dev)
-[![GitHub issues](https://img.shields.io/github/issues/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/issues)
-[![GitHub stars](https://img.shields.io/github/stars/mattlewis92/angular-resizable-element.svg)](https://github.com/mattlewis92/angular-resizable-element/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
 
 ## Demo
@@ -14,11 +12,11 @@ https://mattlewis92.github.io/angular-resizable-element/demo/
 
 ## Table of contents
 
-* [About](#about)
-* [Installation](#installation)
-* [Documentation](#documentation)
-* [Development](#development)
-* [License](#license)
+- [About](#about)
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Development](#development)
+- [License](#license)
 
 ## About
 
@@ -43,18 +41,18 @@ import { ResizeEvent } from 'angular-resizable-element';
   // you should add some more styles to the element. See the demo folder for a more fleshed out example
   styles: [
     `
-    mwlResizable {
-      box-sizing: border-box; // required for the enableGhostResize option to work
-    }
-  `
+      mwlResizable {
+        box-sizing: border-box; // required for the enableGhostResize option to work
+      }
+    `
   ],
   template: `
     <div
       mwlResizable
       [enableGhostResize]="true"
-      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-      (resizeEnd)="onResizeEnd($event)">
-    </div>
+      [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+      (resizeEnd)="onResizeEnd($event)"
+    ></div>
   `
 })
 export class MyComponent {
@@ -86,8 +84,8 @@ https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ### Prepare your environment
 
-* Install [Node.js](http://nodejs.org/) and NPM (should come with)
-* Install local dev dependencies: `npm install` while current directory is this repo
+- Install [Node.js](http://nodejs.org/) and NPM (should come with)
+- Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
 
