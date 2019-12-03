@@ -63,21 +63,25 @@
             </p>
             <p class="comment">
                 <p>Place this on an element to make it resizable. For example:</p>
-<div><pre class="line-numbers"><code class="language-html"> * &lt;div
- *   mwlResizable
- *   [resizeEdges]=&quot;{bottom: true, right: true, top: true, left: true}&quot;
- *   [enableGhostResize]=&quot;true&quot;&gt;
- * &lt;/div&gt;
- *</code></pre></div>
+<p>```html</p>
+<ul>
+<li>&lt;div</li>
+<li>mwlResizable</li>
+<li>[resizeEdges]=&quot;{bottom: true, right: true, top: true, left: true}&quot;</li>
+<li>[enableGhostResize]=&quot;true&quot;&gt;</li>
+<li></div></li>
+<li>```</li>
+</ul>
+
             </p>
 
             <p class="comment">
                 <h3>Implements</h3>
             </p>
             <p class="comment">
-                        <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
-                        <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
-                        <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
             </p>
 
 
@@ -170,20 +174,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="allowNegativeResizes"></a>
-                        <code>allowNegativeResizes</code>
+                        <b>allowNegativeResizes</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Allow elements to be resized to negative dimensions</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>false</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
                         <tr>
@@ -191,25 +195,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="326" class="link-to-prism">src/resizable.directive.ts:326</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Allow elements to be resized to negative dimensions</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="enableGhostResize"></a>
-                        <code>enableGhostResize</code>
+                        <b>enableGhostResize</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Set to <code>true</code> to enable a temporary resizing effect of the element in between the <code>resizeStart</code> and <code>resizeEnd</code> events.</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>false</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
                         <tr>
@@ -217,25 +227,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="298" class="link-to-prism">src/resizable.directive.ts:298</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Set to <code>true</code> to enable a temporary resizing effect of the element in between the <code>resizeStart</code> and <code>resizeEnd</code> events.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="ghostElementPositioning"></a>
-                        <code>ghostElementPositioning</code>
+                        <b>ghostElementPositioning</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Define the positioning of the ghost element (can be fixed or absolute)</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code>&quot;fixed&quot; | &quot;absolute&quot;</code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;fixed&quot; | &quot;absolute&quot;</code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>&#x27;fixed&#x27;</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;fixed&#x27;</code>
                     </td>
                 </tr>
                         <tr>
@@ -243,25 +259,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="321" class="link-to-prism">src/resizable.directive.ts:321</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Define the positioning of the ghost element (can be fixed or absolute)</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeCursorPrecision"></a>
-                        <code>resizeCursorPrecision</code>
+                        <b>resizeCursorPrecision</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Mouse over thickness to active cursor.</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>3</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>3</code>
                     </td>
                 </tr>
                         <tr>
@@ -269,25 +291,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/resizable.directive.ts:316</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Mouse over thickness to active cursor.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeCursors"></a>
-                        <code>resizeCursors</code>
+                        <b>resizeCursors</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>The mouse cursors that will be set on the resize edges</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="../interfaces/ResizeCursors.html" target="_self" >ResizeCursors</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ResizeCursors.html" target="_self" >ResizeCursors</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>DEFAULT_RESIZE_CURSORS</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>DEFAULT_RESIZE_CURSORS</code>
                     </td>
                 </tr>
                         <tr>
@@ -295,25 +323,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="310" class="link-to-prism">src/resizable.directive.ts:310</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The mouse cursors that will be set on the resize edges</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeEdges"></a>
-                        <code>resizeEdges</code>
+                        <b>resizeEdges</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>The edges that an element can be resized from. Pass an object like <code>{top: true, bottom: false}</code>. By default no edges can be resized.</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>{}</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
                     </td>
                 </tr>
                         <tr>
@@ -321,26 +355,31 @@
                                     <div class="io-line">Defined in <a href="" data-line="293" class="link-to-prism">src/resizable.directive.ts:293</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The edges that an element can be resized from. Pass an object like <code>{top: true, bottom: false}</code>. By default no edges can be resized.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeSnapGrid"></a>
-                        <code>resizeSnapGrid</code>
+                        <b>resizeSnapGrid</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>A snap grid that resize events will be locked to.</p>
-<p>e.g. to only allow the element to be resized every 10px set it to <code>{left: 10, right: 10}</code></p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
 
-                            </p>
-                        <p>
-                            <em>Default value : </em><code>{}</code>
-                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
                     </td>
                 </tr>
                         <tr>
@@ -348,22 +387,27 @@
                                     <div class="io-line">Defined in <a href="" data-line="305" class="link-to-prism">src/resizable.directive.ts:305</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A snap grid that resize events will be locked to.</p>
+<p>e.g. to only allow the element to be resized every 10px set it to <code>{left: 10, right: 10}</code></p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="validateResize"></a>
-                        <code>validateResize</code>
+                        <b>validateResize</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>A function that will be called before each resize event. Return <code>true</code> to allow the resize event to propagate or <code>false</code> to cancel it</p>
-</div>
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
-                            </p>
                     </td>
                 </tr>
                         <tr>
@@ -371,6 +415,12 @@
                                     <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/resizable.directive.ts:287</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A function that will be called before each resize event. Return <code>true</code> to allow the resize event to propagate or <code>false</code> to cancel it</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -379,14 +429,14 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeEnd"></a>
-                        <code>resizeEnd</code>
+                        <b>resizeEnd</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Called after the mouse is released after a resize event. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
-</div>
-                        <em><code>$event</code> Type:</em>    <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
 
                     </td>
                 </tr>
@@ -395,19 +445,25 @@
                                     <div class="io-line">Defined in <a href="" data-line="341" class="link-to-prism">src/resizable.directive.ts:341</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Called after the mouse is released after a resize event. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizeStart"></a>
-                        <code>resizeStart</code>
+                        <b>resizeStart</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Called when the mouse is pressed and a resize event is about to begin. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
-</div>
-                        <em><code>$event</code> Type:</em>    <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
 
                     </td>
                 </tr>
@@ -416,19 +472,25 @@
                                     <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/resizable.directive.ts:331</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Called when the mouse is pressed and a resize event is about to begin. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="resizing"></a>
-                        <code>resizing</code>
+                        <b>resizing</b>
                     </td>
-                    <td class="col-md-10">
-                        <div><p>Called as the mouse is dragged after a resize event has begun. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
-</div>
-                        <em><code>$event</code> Type:</em>    <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
 
                     </td>
                 </tr>
@@ -437,6 +499,12 @@
                                     <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">src/resizable.directive.ts:336</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Called as the mouse is dragged after a resize event has begun. <code>$event</code> is a <code>ResizeEvent</code> object.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -1428,6 +1496,7 @@ class PointerEventListeners {
 
 
 
+                   
 
 
 
@@ -1450,6 +1519,7 @@ class PointerEventListeners {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
             var COMPODOC_CURRENT_PAGE_URL = 'ResizableDirective.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
