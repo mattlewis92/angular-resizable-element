@@ -1,0 +1,499 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-resizable-element documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">angular-resizable-element documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="change-log">Change Log</h1>
+<p>All notable changes to this project will be documented in this file. See <a href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
+<p><a name="3.2.6"></a></p>
+<h2 id="326-2019-10-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.5...v3.2.6">3.2.6</a> (2019-10-11)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li>allow angular 9 peer dependency (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/86e366c">86e366c</a>)</li>
+</ul>
+<p><a name="3.2.5"></a></p>
+<h2 id="325-2019-10-07"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.4...v3.2.5">3.2.5</a> (2019-10-07)</h2>
+<h3 id="performance-improvements">Performance Improvements</h3>
+<ul>
+<li>lazily initialise all mousemove listeners until needed (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/81134ee">81134ee</a>)</li>
+</ul>
+<p><a name="3.2.4"></a></p>
+<h2 id="324-2019-02-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.3...v3.2.4">3.2.4</a> (2019-02-28)</h2>
+<h3 id="bug-fixes-1">Bug Fixes</h3>
+<ul>
+<li>restore compatibility with universal (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/210decc">210decc</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/83">#83</a></li>
+</ul>
+<p><a name="3.2.3"></a></p>
+<h2 id="323-2019-02-05"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.2...v3.2.3">3.2.3</a> (2019-02-05)</h2>
+<h3 id="bug-fixes-2">Bug Fixes</h3>
+<ul>
+<li>allow angular 8 peer dependency (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/94dc48d">94dc48d</a>)</li>
+<li>deprecate the top level resizeEdges option in favour of resize handles (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/2f6ac2d">2f6ac2d</a>)</li>
+</ul>
+<h3 id="performance-improvements-1">Performance Improvements</h3>
+<ul>
+<li>remove mouse move listeners when only using resize handles (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/1185f3a">1185f3a</a>)</li>
+</ul>
+<p><a name="3.2.2"></a></p>
+<h2 id="322-2018-08-10"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.1...v3.2.2">3.2.2</a> (2018-08-10)</h2>
+<h3 id="bug-fixes-3">Bug Fixes</h3>
+<ul>
+<li>don&#39;t throw errors when immediately destroying the host component (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/56e463b">56e463b</a>)</li>
+</ul>
+<p><a name="3.2.1"></a></p>
+<h2 id="321-2018-08-03"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.0...v3.2.1">3.2.1</a> (2018-08-03)</h2>
+<h3 id="bug-fixes-4">Bug Fixes</h3>
+<ul>
+<li>ensure all resizing events are always emitted (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/25d6fa3">25d6fa3</a>)</li>
+</ul>
+<p><a name="3.2.0"></a></p>
+<h1 id="320-2018-07-23"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.1.0...v3.2.0">3.2.0</a> (2018-07-23)</h1>
+<h3 id="features">Features</h3>
+<ul>
+<li>allow negative resizing of elements (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/560bcb1">560bcb1</a>)</li>
+</ul>
+<p><a name="3.1.0"></a></p>
+<h1 id="310-2018-06-19"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.0.0...v3.1.0">3.1.0</a> (2018-06-19)</h1>
+<h3 id="features-1">Features</h3>
+<ul>
+<li>improve default resize cursors (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/37fc88e">37fc88e</a>)</li>
+</ul>
+<p><a name="3.0.0"></a></p>
+<h1 id="300-2018-05-09"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v2.0.0...v3.0.0">3.0.0</a> (2018-05-09)</h1>
+<h3 id="features-2">Features</h3>
+<ul>
+<li>upgrade to angular 6 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/c7e3de6">c7e3de6</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li>angular 6 and rxjs 6 or higher are now required to use this package</li>
+</ul>
+<p><a name="2.0.0"></a></p>
+<h1 id="200-2017-12-26"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.5...v2.0.0">2.0.0</a> (2017-12-26)</h1>
+<h3 id="features-3">Features</h3>
+<ul>
+<li>export directives with Directive suffix (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/0440bbd">0440bbd</a>)</li>
+<li>upgrade to angular 5 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/5d6a576">5d6a576</a>)</li>
+<li>use lettable rxjs operators (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/af7abf7">af7abf7</a>)</li>
+<li>use ng-packagr for bundling the package (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/c4519a1">c4519a1</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/79">#79</a> <a href="https://github.com/mattlewis92/angular-resizable-element/issues/80">#80</a></li>
+</ul>
+<h3 id="breaking-changes-1">BREAKING CHANGES</h3>
+<ul>
+<li>the global observable prototype is now no longer modified by this package, you must
+import rxjs operators yourself. Also rxjs 5.5 or higher is now required to use this library</li>
+<li>The UMD entry point has changed from <code>angular-resizable-element/dist/umd/angular-resizable-element.js</code> to <code>angular-resizable-element/bundles/angular-resizable-element.umd.js</code></li>
+</ul>
+<p>System.js users will need to update their configs</p>
+<ul>
+<li>angular 5 or higher is now required to use this package</li>
+<li>The Resizable import is now ResizableDirective and ResizeHandle is now
+ResizeHandleDirective</li>
+</ul>
+<p><a name="1.2.5"></a></p>
+<h2 id="125-2017-12-26"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.4...v1.2.5">1.2.5</a> (2017-12-26)</h2>
+<h3 id="bug-fixes-5">Bug Fixes</h3>
+<ul>
+<li><strong>resizeHandle:</strong> allow handles to be dynamically shown (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/34342aa">34342aa</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/68">#68</a></li>
+<li>resize elements that have css transforms (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/f24a746">f24a746</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/72">#72</a></li>
+<li>set the resize cursor globally when resizing (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/71d5a05">71d5a05</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/70">#70</a></li>
+</ul>
+<p><a name="1.2.4"></a></p>
+<h2 id="124-2017-10-21"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.3...v1.2.4">1.2.4</a> (2017-10-21)</h2>
+<h3 id="bug-fixes-6">Bug Fixes</h3>
+<ul>
+<li>allow angular 5 peer dependency (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/25cfe50">25cfe50</a>)</li>
+</ul>
+<p><a name="1.2.3"></a></p>
+<h2 id="123-2017-09-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.2...v1.2.3">1.2.3</a> (2017-09-28)</h2>
+<h3 id="bug-fixes-7">Bug Fixes</h3>
+<ul>
+<li>Add startingRect scroll position to cloned node. (<a href="https://github.com/mattlewis92/angular-resizable-element/issues/66">#66</a>) (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/a056154">a056154</a>)</li>
+</ul>
+<p><a name="1.2.2"></a></p>
+<h2 id="122-2017-08-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.1...v1.2.2">1.2.2</a> (2017-08-28)</h2>
+<h3 id="bug-fixes-8">Bug Fixes</h3>
+<ul>
+<li>ensure mouse event handlers are triggers outside of the angular zone (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/23fc6e5">23fc6e5</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/65">#65</a></li>
+</ul>
+<p><a name="1.2.1"></a></p>
+<h2 id="121-2017-08-06"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.2.0...v1.2.1">1.2.1</a> (2017-08-06)</h2>
+<h3 id="bug-fixes-9">Bug Fixes</h3>
+<ul>
+<li><strong>cursor:</strong> change the cursor back to default on IE11 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/a0323e9">a0323e9</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/62">#62</a></li>
+</ul>
+<p><a name="1.2.0"></a></p>
+<h1 id="120-2017-06-12"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.2...v1.2.0">1.2.0</a> (2017-06-12)</h1>
+<h3 id="features-4">Features</h3>
+<ul>
+<li>export Edges and BoundingRectangle interfaces for use within applications (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/10051cd">10051cd</a>)</li>
+</ul>
+<p><a name="1.1.2"></a></p>
+<h2 id="112-2017-06-10"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.1...v1.1.2">1.1.2</a> (2017-06-10)</h2>
+<h3 id="bug-fixes-10">Bug Fixes</h3>
+<ul>
+<li><strong>dragHandle:</strong> fix drag handles on firefox (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/1d15bb4">1d15bb4</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/54">#54</a></li>
+</ul>
+<p><a name="1.1.1"></a></p>
+<h2 id="111-2017-05-21"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.1.0...v1.1.1">1.1.1</a> (2017-05-21)</h2>
+<h3 id="bug-fixes-11">Bug Fixes</h3>
+<ul>
+<li>set ghost element width and height on resize start (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/be5d727">be5d727</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/53">#53</a></li>
+</ul>
+<p><a name="1.1.0"></a></p>
+<h1 id="110-2017-05-12"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v1.0.0...v1.1.0">1.1.0</a> (2017-05-12)</h1>
+<h3 id="features-5">Features</h3>
+<ul>
+<li>add a class to the ghost element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/54be6b7">54be6b7</a>)</li>
+</ul>
+<p><a name="1.0.0"></a></p>
+<h1 id="100-2017-03-24"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.1...v1.0.0">1.0.0</a> (2017-03-24)</h1>
+<h3 id="features-6">Features</h3>
+<ul>
+<li><strong>ng4:</strong> upgrade to angular 4 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/4c665d2">4c665d2</a>)</li>
+</ul>
+<h3 id="breaking-changes-2">BREAKING CHANGES</h3>
+<ul>
+<li><strong>ng4:</strong> angular 4.0 or higher is now required to use this library. The
+<a href="http://angularjs.blogspot.co.uk/2017/03/angular-400-now-available.html">upgrade</a> should be seamless
+for most users.</li>
+</ul>
+<p><a name="0.8.1"></a></p>
+<h2 id="081-2017-03-23"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.8.0...v0.8.1">0.8.1</a> (2017-03-23)</h2>
+<h3 id="performance-improvements-2">Performance Improvements</h3>
+<ul>
+<li>throttle mousemove listener events (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/05f7f7e">05f7f7e</a>)</li>
+<li>use shared mouse event listeners across all resizable instances (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/2a4b102">2a4b102</a>)</li>
+</ul>
+<p><a name="0.8.0"></a></p>
+<h1 id="080-2017-03-16"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.2...v0.8.0">0.8.0</a> (2017-03-16)</h1>
+<h3 id="features-7">Features</h3>
+<ul>
+<li><strong>ghostElementPositioning:</strong> allow ghost element positioning to be configured (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/b77c9fc">b77c9fc</a>)</li>
+<li>expose Resizable and ResizeHandle directives (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/3633040">3633040</a>)</li>
+</ul>
+<p><a name="0.7.2"></a></p>
+<h2 id="072-2017-03-04"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.7.0...v0.7.2">0.7.2</a> (2017-03-04)</h2>
+<h3 id="bug-fixes-12">Bug Fixes</h3>
+<ul>
+<li>relax peer dependency warning to allow angular 4 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/8232e66">8232e66</a>)</li>
+</ul>
+<h3 id="performance-improvements-3">Performance Improvements</h3>
+<ul>
+<li>run all rezize events outside the angular zone (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/820612e">820612e</a>)</li>
+<li><strong>resizable:</strong> only register mouse move events when a rezize is active (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/a74f9e2">a74f9e2</a>)</li>
+<li><strong>resizeHandle:</strong> dynamically register mouse move event listener (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/4b20cde">4b20cde</a>)</li>
+</ul>
+<p><a name="0.7.0"></a></p>
+<h1 id="070-2017-02-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.1...v0.7.0">0.7.0</a> (2017-02-28)</h1>
+<h3 id="features-8">Features</h3>
+<ul>
+<li><strong>cssClasses:</strong> Gives classes to main element depend on state (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/8e3f108">8e3f108</a>)</li>
+<li><strong>cursorPrecision:</strong> allow cursor precision value to be edited (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/3ce508d">3ce508d</a>)</li>
+</ul>
+<p><a name="0.6.1"></a></p>
+<h2 id="061-2017-02-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.6.0...v0.6.1">0.6.1</a> (2017-02-11)</h2>
+<h3 id="bug-fixes-13">Bug Fixes</h3>
+<ul>
+<li><strong>universal:</strong> remove MouseEvent reference (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/520abce">520abce</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/41">#41</a></li>
+</ul>
+<p><a name="0.6.0"></a></p>
+<h1 id="060-2017-02-04"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.7...v0.6.0">0.6.0</a> (2017-02-04)</h1>
+<h3 id="features-9">Features</h3>
+<ul>
+<li><strong>resizeCursors:</strong> allow resize cursors to be customised (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/99d2f66">99d2f66</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/40">#40</a></li>
+</ul>
+<p><a name="0.5.7"></a></p>
+<h2 id="057-2017-01-30"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.6...v0.5.7">0.5.7</a> (2017-01-30)</h2>
+<h3 id="bug-fixes-14">Bug Fixes</h3>
+<ul>
+<li>use correct touch event properties (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/0ab7d40">0ab7d40</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/39">#39</a></li>
+</ul>
+<p><a name="0.5.6"></a></p>
+<h2 id="056-2017-01-25"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.5...v0.5.6">0.5.6</a> (2017-01-25)</h2>
+<h3 id="bug-fixes-15">Bug Fixes</h3>
+<ul>
+<li>element should resize on touch events (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/aa169c7">aa169c7</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/36">#36</a></li>
+</ul>
+<p><a name="0.5.5"></a></p>
+<h2 id="055-2017-01-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.4...v0.5.5">0.5.5</a> (2017-01-11)</h2>
+<h3 id="bug-fixes-16">Bug Fixes</h3>
+<ul>
+<li>add width and height to cloned node (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/75ce122">75ce122</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/31">#31</a></li>
+<li>keep cursor while resizing (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/93a5c4e">93a5c4e</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/33">#33</a></li>
+</ul>
+<p><a name="0.5.4"></a></p>
+<h2 id="054-2016-12-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.3...v0.5.4">0.5.4</a> (2016-12-11)</h2>
+<h3 id="bug-fixes-17">Bug Fixes</h3>
+<ul>
+<li><strong>cursor:</strong> reset the cursor instead of changing it to auto (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/514851f">514851f</a>)</li>
+</ul>
+<p><a name="0.5.3"></a></p>
+<h2 id="053-2016-11-19"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.2...v0.5.3">0.5.3</a> (2016-11-19)</h2>
+<h3 id="bug-fixes-18">Bug Fixes</h3>
+<ul>
+<li>unsubscribe all observables when the component is destroyed (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/d5ea756">d5ea756</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/27">#27</a></li>
+</ul>
+<p><a name="0.5.2"></a></p>
+<h2 id="052-2016-11-05"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.1...v0.5.2">0.5.2</a> (2016-11-05)</h2>
+<h3 id="bug-fixes-19">Bug Fixes</h3>
+<ul>
+<li><strong>aot:</strong> aot compatibility (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/9236e02">9236e02</a>)</li>
+</ul>
+<p><a name="0.5.1"></a></p>
+<h2 id="051-2016-11-03"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.5.0...v0.5.1">0.5.1</a> (2016-11-03)</h2>
+<h3 id="bug-fixes-20">Bug Fixes</h3>
+<ul>
+<li>dont change the cursor when resizing an element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/697c52c">697c52c</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/24">#24</a></li>
+</ul>
+<p><a name="0.5.0"></a></p>
+<h1 id="050-2016-10-29"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.4.1...v0.5.0">0.5.0</a> (2016-10-29)</h1>
+<h3 id="bug-fixes-21">Bug Fixes</h3>
+<ul>
+<li>fix resizing via a drag handle (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/5f7f468">5f7f468</a>)</li>
+<li>prevent text from being selected when resizing an element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/5571069">5571069</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/22">#22</a></li>
+</ul>
+<h3 id="features-10">Features</h3>
+<ul>
+<li>rename the library from angular2-resizable to angular-resizable-element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/927235e">927235e</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/21">#21</a></li>
+<li>rename the resize output to resizing (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/9597986">9597986</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/20">#20</a></li>
+</ul>
+<h3 id="breaking-changes-3">BREAKING CHANGES</h3>
+<ul>
+<li>The library has been renamed to <code>angular-resizable-element</code>.</li>
+</ul>
+<p>The UMD entry point has changed to</p>
+<div><pre class="line-numbers"><code class="language-none">node_modules/angular-resizable-element/dist/umd/angular-resizable-element.js</code></pre></div><ul>
+<li>Before<div><pre class="line-numbers"><code class="language-none">(resize)=&quot;onResize($event)&quot;</code></pre></div></li>
+</ul>
+<p>After:</p>
+<div><pre class="line-numbers"><code class="language-none">(resizing)=&quot;onResizing($event)&quot;</code></pre></div><p><a name="0.4.1"></a></p>
+<h2 id="041-2016-09-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.4.0...v0.4.1">0.4.1</a> (2016-09-28)</h2>
+<h3 id="bug-fixes-22">Bug Fixes</h3>
+<ul>
+<li><strong>typings:</strong> dont include reference to core-js (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/68dc84f">68dc84f</a>)</li>
+</ul>
+<p><a name="0.4.0"></a></p>
+<h1 id="040-2016-09-25"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.3.3...v0.4.0">0.4.0</a> (2016-09-25)</h1>
+<h3 id="features-11">Features</h3>
+<ul>
+<li><strong>build:</strong> support offline template compilation (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/f3fe12a">f3fe12a</a>)</li>
+</ul>
+<h3 id="breaking-changes-4">BREAKING CHANGES</h3>
+<ul>
+<li>build: For System.js users the path to the UMD files has changed:</li>
+</ul>
+<p>Before:</p>
+<div><pre class="line-numbers"><code class="language-none">node_modules/angular2-resizable/angular2-resizable.js</code></pre></div><p>After:</p>
+<div><pre class="line-numbers"><code class="language-none">node_modules/angular2-resizable/dist/umd/angular2-resizable.js</code></pre></div><p><a name="0.3.3"></a></p>
+<h2 id="033-2016-09-13"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.3.2...v0.3.3">0.3.3</a> (2016-09-13)</h2>
+<h3 id="bug-fixes-23">Bug Fixes</h3>
+<ul>
+<li><strong>peerDependencies:</strong> allow any versions of angular post RC5 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/cbe088f">cbe088f</a>)</li>
+</ul>
+<p><a name="0.3.2"></a></p>
+<h2 id="032-2016-09-03"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.3.1...v0.3.2">0.3.2</a> (2016-09-03)</h2>
+<h3 id="features-12">Features</h3>
+<ul>
+<li><strong>angular:</strong> support RC6 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/d5b18cc">d5b18cc</a>)</li>
+</ul>
+<p><a name="0.3.1"></a></p>
+<h2 id="031-2016-08-25"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.3.0...v0.3.1">0.3.1</a> (2016-08-25)</h2>
+<h3 id="bug-fixes-24">Bug Fixes</h3>
+<ul>
+<li><strong>rxjs:</strong> use correct rxjs operator imports in dist (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/858b3f8">858b3f8</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/16">#16</a></li>
+</ul>
+<p><a name="0.3.0"></a></p>
+<h1 id="030-2016-08-12"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.2.1...v0.3.0">0.3.0</a> (2016-08-12)</h1>
+<h3 id="features-13">Features</h3>
+<ul>
+<li><strong>events:</strong> rename all outputs to drop the on prefix (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/9c76aac">9c76aac</a>)</li>
+<li>directive selectors are now camel case instead of dash case (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/ffad2ca">ffad2ca</a>)</li>
+<li>upgrade to angular RC5 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/9557c0a">9557c0a</a>)</li>
+</ul>
+<h3 id="breaking-changes-5">BREAKING CHANGES</h3>
+<ul>
+<li><code>mwl-resizable</code> is now <code>mwlResizable</code> and <code>mwl-resize-handle</code> is now <code>mwlResizeHandle</code></li>
+<li>Angular RC5 is now required</li>
+</ul>
+<p>The Resizable and ResizeHandle directives are now no longer exported. Instead you must use the ResizableModule. See the readme or the demo app for an example of how to do this.</p>
+<ul>
+<li>events: The <code>onResizeStart</code> output has been renamed to <code>resizeStart</code></li>
+</ul>
+<p>The <code>onResize</code> output has been renamed to <code>resize</code></p>
+<p>The <code>onResizeEnd</code> output has been renamed to <code>resizeEnd</code></p>
+<p><a name="0.2.1"></a></p>
+<h2 id="021-2016-07-15"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.2.0...v0.2.1">0.2.1</a> (2016-07-15)</h2>
+<h3 id="bug-fixes-25">Bug Fixes</h3>
+<ul>
+<li><strong>demo:</strong> fix broken demo (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/0a5bf11">0a5bf11</a>)</li>
+</ul>
+<p><a name="0.2.0"></a></p>
+<h1 id="020-2016-07-15"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.1.0...v0.2.0">0.2.0</a> (2016-07-15)</h1>
+<h3 id="bug-fixes-26">Bug Fixes</h3>
+<ul>
+<li>create a clone of the ghost element instead of applying styling to the host (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/fa73345">fa73345</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/15">#15</a></li>
+<li>only resize when the cursor is within the bounding rectangle (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/dedc3bb">dedc3bb</a>)</li>
+</ul>
+<h3 id="breaking-changes-6">BREAKING CHANGES</h3>
+<ul>
+<li><code>enableResizeStyling</code> has been renamed to <code>enableGhostResize</code></li>
+</ul>
+<p><a name="0.1.0"></a></p>
+<h1 id="010-2016-06-26"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.0.3...v0.1.0">0.1.0</a> (2016-06-26)</h1>
+<h3 id="bug-fixes-27">Bug Fixes</h3>
+<ul>
+<li><strong>mousedrag:</strong> cancel the previous mousedrag observable when starting a new drag (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/149c1a4">149c1a4</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/9">#9</a></li>
+<li><strong>onResizeEnd:</strong> call with co-ordinates of last valid resize rather than where the mouse up event w (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/eb314fd">eb314fd</a>)</li>
+<li><strong>onResizeStart:</strong> ensure the starting rectangle is a POJO rather than a bounding rectangle (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/81fe0b4">81fe0b4</a>)</li>
+<li>cancel mousedrag event when either a mouseup or mousedown event fires (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/c76be59">c76be59</a>)</li>
+<li>disable dragging effects on resizable elements on webkit browsers (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/59078e2">59078e2</a>)</li>
+<li>renamed directive selector from mwl-resizeable to mwl-resizable (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/c60b3f5">c60b3f5</a>)</li>
+</ul>
+<h3 id="features-14">Features</h3>
+<ul>
+<li><strong>disableResize:</strong> support completely disabling resizing an element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/9f9c54a">9f9c54a</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/13">#13</a></li>
+<li>expose the amount each edge was resized on resize events (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/d664038">d664038</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/11">#11</a></li>
+<li><strong>enableResizeStyling:</strong> make temporary resizing of the element opt-in by default so users can con (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/4c59b05">4c59b05</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/5">#5</a></li>
+<li><strong>resizeEdges:</strong> allow the resize edges to be customised (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/60c2e08">60c2e08</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/8">#8</a></li>
+<li><strong>resizeHandles:</strong> add support for nesting resize handles inside the element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/1af705a">1af705a</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/10">#10</a></li>
+<li><strong>resizeSnapGrid:</strong> allow resizing to fit to a snap grid (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/74424ba">74424ba</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/3">#3</a></li>
+<li><strong>validate:</strong> provide a way for resize events to be validated (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/4da938d">4da938d</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/12">#12</a></li>
+</ul>
+<h3 id="breaking-changes-7">BREAKING CHANGES</h3>
+<ul>
+<li>enableResizeStyling: the element will no longer have its styles changed by default when dragging and
+resizing. You can now re-enable it by setting <code>[enableResizeStyling]=&quot;true&quot;</code> on the element.</li>
+<li>the <code>$event.edges</code> object values now contain numbers instead of booleans</li>
+<li><ul>
+<li>rename the directive from mwl-resizeable to mwl-resizable</li>
+</ul>
+</li>
+<li>resizeEdges: by default the element is no longer resizable.</li>
+</ul>
+<p>You must specify <code>[resizeEdges]={top: true, bottom: true, left: true, right: true}</code> to get the old behaviour back</p>
+<p><a name="0.0.3"></a></p>
+<h2 id="003-2016-06-13"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.0.2...v0.0.3">0.0.3</a> (2016-06-13)</h2>
+<h3 id="bug-fixes-28">Bug Fixes</h3>
+<ul>
+<li>import missing rxjs operators (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/300ac10">300ac10</a>)</li>
+</ul>
+<p><a name="0.0.2"></a></p>
+<h2 id="002-2016-06-13"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.0.1...v0.0.2">0.0.2</a> (2016-06-13)</h2>
+<h3 id="bug-fixes-29">Bug Fixes</h3>
+<ul>
+<li><strong>types:</strong> export Edges and BoundingRectangle types (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/fe49114">fe49114</a>)</li>
+<li>dont bundle rxjs with the library (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/7b1280e">7b1280e</a>)</li>
+</ul>
+<p><a name="0.0.1"></a></p>
+<h2 id="001-2016-06-13">0.0.1 (2016-06-13)</h2>
+<h3 id="bug-fixes-30">Bug Fixes</h3>
+<ul>
+<li>allow the element to be resized multiple times (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/bf497d2">bf497d2</a>)</li>
+<li><strong>drag:</strong> disable user dragging (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/053fb0e">053fb0e</a>)</li>
+<li>reset element styles on mousedown if there was a previous uncancelled resize (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/a8e5cd3">a8e5cd3</a>)</li>
+<li><strong>outputs:</strong> make outputs sync to prevent ui flicker (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/032ea5a">032ea5a</a>)</li>
+<li><strong>typescript:</strong> add missing types (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/e722a86">e722a86</a>)</li>
+</ul>
+<h3 id="features-15">Features</h3>
+<ul>
+<li>improve transforms, add resize events (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/0959a12">0959a12</a>)</li>
+<li>initial WIP resizable implementation (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/22af52f">22af52f</a>)</li>
+<li>show the cursor when mousing over the edge of the element (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/f440c87">f440c87</a>)</li>
+<li>support resizing from corners (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/bac87e3">bac87e3</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/4">#4</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
