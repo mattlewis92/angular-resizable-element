@@ -324,6 +324,11 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * Allow elements to be resized to negative dimensions
    */
   @Input() allowNegativeResizes: boolean = false;
+  
+  /**
+   * The mouse move throttle in milliseconds, default: 50 ms
+   */
+  @Input() mouseMoveThrottleMS: number = MOUSE_MOVE_THROTTLE_MS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
@@ -448,7 +453,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         switchMap(legacyResizeEdgesEnabled =>
           legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
-        auditTime(MOUSE_MOVE_THROTTLE_MS),
+        auditTime(this.mouseMoveThrottleMS),
         takeUntil(this.destroy$)
       )
       .subscribe(({ clientX, clientY }) => {
