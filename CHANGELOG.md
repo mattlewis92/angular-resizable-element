@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.6...v3.3.0) (2020-01-14)
+
+
+### Features
+
+* allow changing mouseMoveThrottleMS ([#106](https://github.com/mattlewis92/angular-resizable-element/issues/106)) ([fb5599b](https://github.com/mattlewis92/angular-resizable-element/commit/fb5599b))
+
+
+
 <a name="3.2.6"></a>
 ## [3.2.6](https://github.com/mattlewis92/angular-resizable-element/compare/v3.2.5...v3.2.6) (2019-10-11)
 
