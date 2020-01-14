@@ -123,6 +123,9 @@
                                 <a href="#ghostElementPositioning">ghostElementPositioning</a>
                             </li>
                             <li>
+                                <a href="#mouseMoveThrottleMS">mouseMoveThrottleMS</a>
+                            </li>
+                            <li>
                                 <a href="#resizeCursorPrecision">resizeCursorPrecision</a>
                             </li>
                             <li>
@@ -262,6 +265,38 @@
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Define the positioning of the ghost element (can be fixed or absolute)</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mouseMoveThrottleMS"></a>
+                        <b>mouseMoveThrottleMS</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>MOUSE_MOVE_THROTTLE_MS</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/resizable.directive.ts:331</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The mouse move throttle in milliseconds, default: 50 ms</p>
 </div>
                     </td>
                 </tr>
@@ -442,7 +477,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="341" class="link-to-prism">src/resizable.directive.ts:341</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="346" class="link-to-prism">src/resizable.directive.ts:346</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -469,7 +504,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/resizable.directive.ts:331</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">src/resizable.directive.ts:336</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -496,7 +531,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">src/resizable.directive.ts:336</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="341" class="link-to-prism">src/resizable.directive.ts:341</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -843,6 +878,11 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * Allow elements to be resized to negative dimensions
    */
   @Input() allowNegativeResizes: boolean &#x3D; false;
+  
+  /**
+   * The mouse move throttle in milliseconds, default: 50 ms
+   */
+  @Input() mouseMoveThrottleMS: number &#x3D; MOUSE_MOVE_THROTTLE_MS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
@@ -967,7 +1007,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         switchMap(legacyResizeEdgesEnabled &#x3D;&gt;
           legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
-        auditTime(MOUSE_MOVE_THROTTLE_MS),
+        auditTime(this.mouseMoveThrottleMS),
         takeUntil(this.destroy$)
       )
       .subscribe(({ clientX, clientY }) &#x3D;&gt; {

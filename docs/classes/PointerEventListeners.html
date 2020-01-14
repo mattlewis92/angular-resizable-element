@@ -130,7 +130,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="836" class="link-to-prism">src/resizable.directive.ts:836</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="841" class="link-to-prism">src/resizable.directive.ts:841</a></div>
                             </td>
                         </tr>
 
@@ -206,7 +206,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="817" class="link-to-prism">src/resizable.directive.ts:817</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="822" class="link-to-prism">src/resizable.directive.ts:822</a></div>
                             </td>
                         </tr>
 
@@ -234,7 +234,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="819" class="link-to-prism">src/resizable.directive.ts:819</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="824" class="link-to-prism">src/resizable.directive.ts:824</a></div>
                             </td>
                         </tr>
 
@@ -262,7 +262,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="821" class="link-to-prism">src/resizable.directive.ts:821</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="826" class="link-to-prism">src/resizable.directive.ts:826</a></div>
                             </td>
                         </tr>
 
@@ -300,8 +300,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="825"
-                            class="link-to-prism">src/resizable.directive.ts:825</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="830"
+                            class="link-to-prism">src/resizable.directive.ts:830</a></div>
                 </td>
             </tr>
 
@@ -696,6 +696,11 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * Allow elements to be resized to negative dimensions
    */
   @Input() allowNegativeResizes: boolean &#x3D; false;
+  
+  /**
+   * The mouse move throttle in milliseconds, default: 50 ms
+   */
+  @Input() mouseMoveThrottleMS: number &#x3D; MOUSE_MOVE_THROTTLE_MS;
 
   /**
    * Called when the mouse is pressed and a resize event is about to begin. &#x60;$event&#x60; is a &#x60;ResizeEvent&#x60; object.
@@ -820,7 +825,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         switchMap(legacyResizeEdgesEnabled &#x3D;&gt;
           legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
-        auditTime(MOUSE_MOVE_THROTTLE_MS),
+        auditTime(this.mouseMoveThrottleMS),
         takeUntil(this.destroy$)
       )
       .subscribe(({ clientX, clientY }) &#x3D;&gt; {
