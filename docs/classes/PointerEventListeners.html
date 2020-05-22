@@ -472,8 +472,8 @@ function getElementRect(
     .map(property &#x3D;&gt; style[property])
     .find(value &#x3D;&gt; !!value);
   if (transform &amp;&amp; transform.includes(&#x27;translate&#x27;)) {
-    translateX &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$1&#x27;);
-    translateY &#x3D; transform.replace(/.*translate\((.*)px, (.*)px\).*/, &#x27;$2&#x27;);
+    translateX &#x3D; transform.replace(/.*translate3?d?\(([0-9]*)px, ([0-9]*)px.*/, &#x27;$1&#x27;);
+    translateY &#x3D; transform.replace(/.*translate3?d?\(([0-9]*)px, ([0-9]*)px.*/, &#x27;$2&#x27;);
   }
 
   if (ghostElementPositioning &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
