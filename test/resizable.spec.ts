@@ -1444,6 +1444,31 @@ describe('resizable directive', () => {
     });
   });
 
+  it('should respect the css transform on the element with negative values', () => {
+    const fixture: ComponentFixture<TestComponent> = createComponent();
+    const elm: HTMLElement =
+      fixture.componentInstance.resizable.elm.nativeElement;
+    elm.style.transform = 'translate(-10px, -20px)';
+    triggerDomEvent('mousedown', elm, {
+      clientX: 90,
+      clientY: 180
+    });
+    expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
+      edges: {
+        left: 0,
+        top: 0
+      },
+      rectangle: {
+        top: 200,
+        left: 100,
+        width: 300,
+        height: 150,
+        right: 400,
+        bottom: 350
+      }
+    });
+  });
+
   it('should respect the css transform with 3d property translate on the element', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     const elm: HTMLElement =
