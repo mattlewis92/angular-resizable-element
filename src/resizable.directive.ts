@@ -100,8 +100,14 @@ function getElementRect(
     .map(property => style[property])
     .find(value => !!value);
   if (transform && transform.includes('translate')) {
-    translateX = transform.replace(/.*translate3?d?\(([0-9]*)px, ([0-9]*)px.*/, '$1');
-    translateY = transform.replace(/.*translate3?d?\(([0-9]*)px, ([0-9]*)px.*/, '$2');
+    translateX = transform.replace(
+      /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
+      '$1'
+    );
+    translateY = transform.replace(
+      /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
+      '$2'
+    );
   }
 
   if (ghostElementPositioning === 'absolute') {
@@ -324,7 +330,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * Allow elements to be resized to negative dimensions
    */
   @Input() allowNegativeResizes: boolean = false;
-  
+
   /**
    * The mouse move throttle in milliseconds, default: 50 ms
    */
