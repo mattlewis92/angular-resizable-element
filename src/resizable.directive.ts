@@ -337,6 +337,11 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   @Input() mouseMoveThrottleMS: number = MOUSE_MOVE_THROTTLE_MS;
 
   /**
+   * Pass `{ forbid: true }` to disable resizing for a particular element
+   */
+  @Input('mwlResizable') options = { forbid: false };
+
+  /**
    * Called when the mouse is pressed and a resize event is about to begin. `$event` is a `ResizeEvent` object.
    */
   @Output() resizeStart = new EventEmitter<ResizeEvent>();
@@ -403,7 +408,10 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
    * @hidden
    */
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    if (this.options.forbid) {
+      return;
+    }
     const mousedown$: Observable<{
       clientX: number;
       clientY: number;
