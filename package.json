@@ -1,6 +1,6 @@
 {
-  "name": "angular-resizable-element",
-  "version": "3.3.3",
+  "name": "angular-resizable-element-labworks",
+  "version": "3.3.3-1",
   "description": "An angular 6.0+ directive that allows an element to be dragged and resized",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",

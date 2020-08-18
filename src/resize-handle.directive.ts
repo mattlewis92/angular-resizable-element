@@ -43,6 +43,12 @@ export class ResizeHandleDirective implements OnDestroy {
     private resizable: ResizableDirective
   ) {}
 
+  ngAfterViewInit(): void {
+    if (this.resizable.options.forbid) {
+      this.unsubscribeEventListeners();
+    }
+  }
+
   ngOnDestroy(): void {
     this.unsubscribeEventListeners();
   }
