@@ -11,7 +11,8 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  AfterViewInit
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
@@ -286,7 +287,7 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]'
 })
-export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
+export class ResizableDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
