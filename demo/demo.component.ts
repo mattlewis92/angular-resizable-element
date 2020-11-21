@@ -20,6 +20,10 @@ import { ResizeEvent } from '../src';
         margin: auto;
       }
 
+      mwlResizable {
+        box-sizing: border-box; // required for the enableGhostResize option to work
+      }
+
       .resize-handle-top,
       .resize-handle-bottom {
         position: absolute;
