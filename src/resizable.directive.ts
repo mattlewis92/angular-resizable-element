@@ -657,17 +657,18 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           );
         }
 
-        this.zone.run(() => {
-          this.resizing.emit({
-            edges: getEdgesDiff({
-              edges: currentResize!.edges,
-              initialRectangle: currentResize!.startingRect,
-              newRectangle: newBoundingRect
-            }),
-            rectangle: newBoundingRect
+        if (this.resizing.observers.length > 0) {
+          this.zone.run(() => {
+            this.resizing.emit({
+              edges: getEdgesDiff({
+                edges: currentResize!.edges,
+                initialRectangle: currentResize!.startingRect,
+                newRectangle: newBoundingRect
+              }),
+              rectangle: newBoundingRect
+            });
           });
-        });
-
+        }
         currentResize!.currentRect = newBoundingRect;
       });
 
@@ -758,16 +759,18 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           currentResize.clonedNode!.scrollLeft = currentResize.startingRect
             .scrollLeft as number;
         }
-        this.zone.run(() => {
-          this.resizeStart.emit({
-            edges: getEdgesDiff({
-              edges,
-              initialRectangle: startingRect,
-              newRectangle: startingRect
-            }),
-            rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+        if (this.resizeStart.observers.length > 0) {
+          this.zone.run(() => {
+            this.resizeStart.emit({
+              edges: getEdgesDiff({
+                edges,
+                initialRectangle: startingRect,
+                newRectangle: startingRect
+              }),
+              rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+            });
           });
-        });
+        }
       });
 
     mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -775,16 +778,18 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         this.renderer.removeClass(this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
         this.renderer.setStyle(document.body, 'cursor', '');
         this.renderer.setStyle(this.elm.nativeElement, 'cursor', '');
-        this.zone.run(() => {
-          this.resizeEnd.emit({
-            edges: getEdgesDiff({
-              edges: currentResize!.edges,
-              initialRectangle: currentResize!.startingRect,
-              newRectangle: currentResize!.currentRect
-            }),
-            rectangle: currentResize!.currentRect
+        if (this.resizeEnd.observers.length > 0) {
+          this.zone.run(() => {
+            this.resizeEnd.emit({
+              edges: getEdgesDiff({
+                edges: currentResize!.edges,
+                initialRectangle: currentResize!.startingRect,
+                newRectangle: currentResize!.currentRect
+              }),
+              rectangle: currentResize!.currentRect
+            });
           });
-        });
+        }
         removeGhostElement();
         currentResize = null;
       }

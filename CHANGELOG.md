@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.4"></a>
+## [3.3.4](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.3...v3.3.4) (2020-11-21)
+
+
+### Performance Improvements
+
+* only trigger change detection if there are output subscribers ([930de54](https://github.com/mattlewis92/angular-resizable-element/commit/930de54))
+
+
+
 <a name="3.3.3"></a>
 ## [3.3.3](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.2...v3.3.3) (2020-07-24)
 

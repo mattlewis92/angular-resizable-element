@@ -18,6 +18,7 @@ import { ResizeEvent } from '../src';
         border: solid 1px #121621;
         color: #121621;
         margin: auto;
+        box-sizing: border-box; // required for the enableGhostResize option to work
       }
 
       .resize-handle-top,

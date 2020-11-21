@@ -38,21 +38,87 @@ import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
-  // you should add some more styles to the element. See the demo folder for a more fleshed out example
   styles: [
     `
+      .rectangle {
+        position: relative;
+        top: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 150px;
+        background-color: #fd4140;
+        border: solid 1px #121621;
+        color: #121621;
+        margin: auto;
+      }
+
       mwlResizable {
         box-sizing: border-box; // required for the enableGhostResize option to work
+      }
+
+      .resize-handle-top,
+      .resize-handle-bottom {
+        position: absolute;
+        height: 5px;
+        cursor: row-resize;
+        width: 100%;
+      }
+
+      .resize-handle-top {
+        top: 0;
+      }
+
+      .resize-handle-bottom {
+        bottom: 0;
+      }
+
+      .resize-handle-left,
+      .resize-handle-right {
+        position: absolute;
+        height: 100%;
+        cursor: col-resize;
+        width: 5px;
+      }
+
+      .resize-handle-left {
+        left: 0;
+      }
+
+      .resize-handle-right {
+        right: 0;
       }
     `
   ],
   template: `
     <div
+      class="rectangle"
       mwlResizable
       [enableGhostResize]="true"
-      [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
       (resizeEnd)="onResizeEnd($event)"
-    ></div>
+    >
+      <div
+        class="resize-handle-top"
+        mwlResizeHandle
+        [resizeEdges]="{ top: true }"
+      ></div>
+      <div
+        class="resize-handle-left"
+        mwlResizeHandle
+        [resizeEdges]="{ left: true }"
+      ></div>
+      <div
+        class="resize-handle-right"
+        mwlResizeHandle
+        [resizeEdges]="{ right: true }"
+      ></div>
+      <div
+        class="resize-handle-bottom"
+        mwlResizeHandle
+        [resizeEdges]="{ bottom: true }"
+      ></div>
+    </div>
   `
 })
 export class MyComponent {
