@@ -31,6 +31,7 @@ import {
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
+import { IS_TOUCH_DEVICE } from './is-touch-device';
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -855,7 +856,7 @@ class PointerEventListeners {
     this.pointerDown = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
         let unsubscribeMouseDown: () => void;
-        let unsubscribeTouchStart: () => void;
+        let unsubscribeTouchStart: (() => void) | undefined;
 
         zone.runOutsideAngular(() => {
           unsubscribeMouseDown = renderer.listen(
@@ -870,22 +871,26 @@ class PointerEventListeners {
             }
           );
 
-          unsubscribeTouchStart = renderer.listen(
-            'document',
-            'touchstart',
-            (event: TouchEvent) => {
-              observer.next({
-                clientX: event.touches[0].clientX,
-                clientY: event.touches[0].clientY,
-                event
-              });
-            }
-          );
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchStart = renderer.listen(
+              'document',
+              'touchstart',
+              (event: TouchEvent) => {
+                observer.next({
+                  clientX: event.touches[0].clientX,
+                  clientY: event.touches[0].clientY,
+                  event
+                });
+              }
+            );
+          }
         });
 
         return () => {
           unsubscribeMouseDown();
-          unsubscribeTouchStart();
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchStart!();
+          }
         };
       }
     ).pipe(share());
@@ -893,7 +898,7 @@ class PointerEventListeners {
     this.pointerMove = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
         let unsubscribeMouseMove: () => void;
-        let unsubscribeTouchMove: () => void;
+        let unsubscribeTouchMove: (() => void) | undefined;
 
         zone.runOutsideAngular(() => {
           unsubscribeMouseMove = renderer.listen(
@@ -908,22 +913,26 @@ class PointerEventListeners {
             }
           );
 
-          unsubscribeTouchMove = renderer.listen(
-            'document',
-            'touchmove',
-            (event: TouchEvent) => {
-              observer.next({
-                clientX: event.targetTouches[0].clientX,
-                clientY: event.targetTouches[0].clientY,
-                event
-              });
-            }
-          );
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchMove = renderer.listen(
+              'document',
+              'touchmove',
+              (event: TouchEvent) => {
+                observer.next({
+                  clientX: event.targetTouches[0].clientX,
+                  clientY: event.targetTouches[0].clientY,
+                  event
+                });
+              }
+            );
+          }
         });
 
         return () => {
           unsubscribeMouseMove();
-          unsubscribeTouchMove();
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchMove!();
+          }
         };
       }
     ).pipe(share());
@@ -931,8 +940,8 @@ class PointerEventListeners {
     this.pointerUp = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
         let unsubscribeMouseUp: () => void;
-        let unsubscribeTouchEnd: () => void;
-        let unsubscribeTouchCancel: () => void;
+        let unsubscribeTouchEnd: (() => void) | undefined;
+        let unsubscribeTouchCancel: (() => void) | undefined;
 
         zone.runOutsideAngular(() => {
           unsubscribeMouseUp = renderer.listen(
@@ -947,35 +956,39 @@ class PointerEventListeners {
             }
           );
 
-          unsubscribeTouchEnd = renderer.listen(
-            'document',
-            'touchend',
-            (event: TouchEvent) => {
-              observer.next({
-                clientX: event.changedTouches[0].clientX,
-                clientY: event.changedTouches[0].clientY,
-                event
-              });
-            }
-          );
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchEnd = renderer.listen(
+              'document',
+              'touchend',
+              (event: TouchEvent) => {
+                observer.next({
+                  clientX: event.changedTouches[0].clientX,
+                  clientY: event.changedTouches[0].clientY,
+                  event
+                });
+              }
+            );
 
-          unsubscribeTouchCancel = renderer.listen(
-            'document',
-            'touchcancel',
-            (event: TouchEvent) => {
-              observer.next({
-                clientX: event.changedTouches[0].clientX,
-                clientY: event.changedTouches[0].clientY,
-                event
-              });
-            }
-          );
+            unsubscribeTouchCancel = renderer.listen(
+              'document',
+              'touchcancel',
+              (event: TouchEvent) => {
+                observer.next({
+                  clientX: event.changedTouches[0].clientX,
+                  clientY: event.changedTouches[0].clientY,
+                  event
+                });
+              }
+            );
+          }
         });
 
         return () => {
           unsubscribeMouseUp();
-          unsubscribeTouchEnd();
-          unsubscribeTouchCancel();
+          if (IS_TOUCH_DEVICE) {
+            unsubscribeTouchEnd!();
+            unsubscribeTouchCancel!();
+          }
         };
       }
     ).pipe(share());
