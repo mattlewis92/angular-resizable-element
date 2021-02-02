@@ -74,6 +74,7 @@
                 <h3>Implements</h3>
             </p>
             <p class="comment">
+                        <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                         <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
             </p>
 
@@ -115,23 +116,6 @@
 
 
 
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>HostListeners</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                <a href="#touchend">touchend</a>
-                            </li>
-                            <li>
-                                <a href="#touchstart">touchstart</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
 
         </tbody>
     </table>
@@ -148,7 +132,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/resize-handle.directive.ts:37</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/resize-handle.directive.ts:42</a></div>
                             </td>
                         </tr>
 
@@ -245,7 +229,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/resize-handle.directive.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/resize-handle.directive.ts:34</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -253,76 +237,6 @@
 </section>
 
 
-            <section>
-    <h3>HostListeners</h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="touchend"></a>
-                        <span class="name">
-                            <b>
-                            touchend
-                            </b>
-                            <a href="#touchend"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Arguments : </i><code>'$event.changedTouches[0].clientX' '$event.changedTouches[0].clientY' </code>
-                        </td>
-                    </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>touchend(clientX: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clientY: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/resize-handle.directive.ts:112</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="touchstart"></a>
-                        <span class="name">
-                            <b>
-                            touchstart
-                            </b>
-                            <a href="#touchstart"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Arguments : </i><code>'$event' '$event.touches[0].clientX' '$event.touches[0].clientY' </code>
-                        </td>
-                    </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>touchstart(event: MouseEvent | TouchEvent, clientX: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clientY: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/resize-handle.directive.ts:59</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-</section>
 
 
 
@@ -334,14 +248,17 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Directive,
   Input,
-  HostListener,
   Renderer2,
   ElementRef,
+  OnInit,
   OnDestroy,
   NgZone
 } from &#x27;@angular/core&#x27;;
+import { fromEvent, merge, Subject } from &#x27;rxjs&#x27;;
+import { takeUntil } from &#x27;rxjs/operators&#x27;;
 import { ResizableDirective } from &#x27;./resizable.directive&#x27;;
 import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
+import { IS_TOUCH_DEVICE } from &#x27;./is-touch-device&#x27;;
 
 /**
  * An element placed inside a &#x60;mwlResizable&#x60; directive to be used as a drag and resize handle
@@ -357,7 +274,7 @@ import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
 @Directive({
   selector: &#x27;[mwlResizeHandle]&#x27;
 })
-export class ResizeHandleDirective implements OnDestroy {
+export class ResizeHandleDirective implements OnInit, OnDestroy {
   /**
    * The &#x60;Edges&#x60; object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
@@ -369,6 +286,8 @@ export class ResizeHandleDirective implements OnDestroy {
     [key: string]: (() &#x3D;&gt; void) | undefined;
   } &#x3D; {};
 
+  private destroy$ &#x3D; new Subject&lt;void&gt;();
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
@@ -376,80 +295,94 @@ export class ResizeHandleDirective implements OnDestroy {
     private resizable: ResizableDirective
   ) {}
 
+  ngOnInit(): void {
+    this.zone.runOutsideAngular(() &#x3D;&gt; {
+      this.listenOnTheHost&lt;MouseEvent&gt;(&#x27;mousedown&#x27;).subscribe(event &#x3D;&gt; {
+        this.onMousedown(event, event.clientX, event.clientY);
+      });
+
+      this.listenOnTheHost&lt;MouseEvent&gt;(&#x27;mouseup&#x27;).subscribe(event &#x3D;&gt; {
+        this.onMouseup(event.clientX, event.clientY);
+      });
+
+      if (IS_TOUCH_DEVICE) {
+        this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchstart&#x27;).subscribe(event &#x3D;&gt; {
+          this.onMousedown(
+            event,
+            event.touches[0].clientX,
+            event.touches[0].clientY
+          );
+        });
+
+        merge(
+          this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchend&#x27;),
+          this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchcancel&#x27;)
+        ).subscribe(event &#x3D;&gt; {
+          this.onMouseup(
+            event.changedTouches[0].clientX,
+            event.changedTouches[0].clientY
+          );
+        });
+      }
+    });
+  }
+
   ngOnDestroy(): void {
+    this.destroy$.next();
     this.unsubscribeEventListeners();
   }
 
   /**
    * @hidden
    */
-  @HostListener(&#x27;touchstart&#x27;, [
-    &#x27;$event&#x27;,
-    &#x27;$event.touches[0].clientX&#x27;,
-    &#x27;$event.touches[0].clientY&#x27;
-  ])
-  @HostListener(&#x27;mousedown&#x27;, [&#x27;$event&#x27;, &#x27;$event.clientX&#x27;, &#x27;$event.clientY&#x27;])
   onMousedown(
     event: MouseEvent | TouchEvent,
     clientX: number,
     clientY: number
   ): void {
     event.preventDefault();
-    this.zone.runOutsideAngular(() &#x3D;&gt; {
-      if (!this.eventListeners.touchmove) {
-        this.eventListeners.touchmove &#x3D; this.renderer.listen(
-          this.element.nativeElement,
-          &#x27;touchmove&#x27;,
-          (touchMoveEvent: TouchEvent) &#x3D;&gt; {
-            this.onMousemove(
-              touchMoveEvent,
-              touchMoveEvent.targetTouches[0].clientX,
-              touchMoveEvent.targetTouches[0].clientY
-            );
-          }
-        );
-      }
-      if (!this.eventListeners.mousemove) {
-        this.eventListeners.mousemove &#x3D; this.renderer.listen(
-          this.element.nativeElement,
-          &#x27;mousemove&#x27;,
-          (mouseMoveEvent: MouseEvent) &#x3D;&gt; {
-            this.onMousemove(
-              mouseMoveEvent,
-              mouseMoveEvent.clientX,
-              mouseMoveEvent.clientY
-            );
-          }
-        );
-      }
-      this.resizable.mousedown.next({
-        clientX,
-        clientY,
-        edges: this.resizeEdges
-      });
+    if (!this.eventListeners.touchmove) {
+      this.eventListeners.touchmove &#x3D; this.renderer.listen(
+        this.element.nativeElement,
+        &#x27;touchmove&#x27;,
+        (touchMoveEvent: TouchEvent) &#x3D;&gt; {
+          this.onMousemove(
+            touchMoveEvent,
+            touchMoveEvent.targetTouches[0].clientX,
+            touchMoveEvent.targetTouches[0].clientY
+          );
+        }
+      );
+    }
+    if (!this.eventListeners.mousemove) {
+      this.eventListeners.mousemove &#x3D; this.renderer.listen(
+        this.element.nativeElement,
+        &#x27;mousemove&#x27;,
+        (mouseMoveEvent: MouseEvent) &#x3D;&gt; {
+          this.onMousemove(
+            mouseMoveEvent,
+            mouseMoveEvent.clientX,
+            mouseMoveEvent.clientY
+          );
+        }
+      );
+    }
+    this.resizable.mousedown.next({
+      clientX,
+      clientY,
+      edges: this.resizeEdges
     });
   }
 
   /**
    * @hidden
    */
-  @HostListener(&#x27;touchend&#x27;, [
-    &#x27;$event.changedTouches[0].clientX&#x27;,
-    &#x27;$event.changedTouches[0].clientY&#x27;
-  ])
-  @HostListener(&#x27;touchcancel&#x27;, [
-    &#x27;$event.changedTouches[0].clientX&#x27;,
-    &#x27;$event.changedTouches[0].clientY&#x27;
-  ])
-  @HostListener(&#x27;mouseup&#x27;, [&#x27;$event.clientX&#x27;, &#x27;$event.clientY&#x27;])
   onMouseup(clientX: number, clientY: number): void {
-    this.zone.runOutsideAngular(() &#x3D;&gt; {
-      this.unsubscribeEventListeners();
-      this.resizable.mouseup.next({
-        clientX,
-        clientY,
-        edges: this.resizeEdges
-      });
+    this.unsubscribeEventListeners();
+    this.resizable.mouseup.next({
+      clientX,
+      clientY,
+      edges: this.resizeEdges
     });
   }
 
@@ -471,6 +404,12 @@ export class ResizeHandleDirective implements OnDestroy {
       (this as any).eventListeners[type]();
       delete this.eventListeners[type];
     });
+  }
+
+  private listenOnTheHost&lt;T extends Event&gt;(eventName: string) {
+    return fromEvent&lt;T&gt;(this.element.nativeElement, eventName).pipe(
+      takeUntil(this.destroy$)
+    );
   }
 }
 </code></pre>
