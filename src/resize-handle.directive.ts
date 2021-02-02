@@ -1,14 +1,17 @@
 import {
   Directive,
   Input,
-  HostListener,
   Renderer2,
   ElementRef,
+  OnInit,
   OnDestroy,
   NgZone
 } from '@angular/core';
+import { fromEvent, merge, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ResizableDirective } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
+import { IS_TOUCH_DEVICE } from './is-touch-device';
 
 /**
  * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
@@ -24,7 +27,7 @@ import { Edges } from './interfaces/edges.interface';
 @Directive({
   selector: '[mwlResizeHandle]'
 })
-export class ResizeHandleDirective implements OnDestroy {
+export class ResizeHandleDirective implements OnInit, OnDestroy {
   /**
    * The `Edges` object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
@@ -36,6 +39,8 @@ export class ResizeHandleDirective implements OnDestroy {
     [key: string]: (() => void) | undefined;
   } = {};
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
@@ -43,80 +48,94 @@ export class ResizeHandleDirective implements OnDestroy {
     private resizable: ResizableDirective
   ) {}
 
+  ngOnInit(): void {
+    this.zone.runOutsideAngular(() => {
+      this.listenOnTheHost<MouseEvent>('mousedown').subscribe(event => {
+        this.onMousedown(event, event.clientX, event.clientY);
+      });
+
+      this.listenOnTheHost<MouseEvent>('mouseup').subscribe(event => {
+        this.onMouseup(event.clientX, event.clientY);
+      });
+
+      if (IS_TOUCH_DEVICE) {
+        this.listenOnTheHost<TouchEvent>('touchstart').subscribe(event => {
+          this.onMousedown(
+            event,
+            event.touches[0].clientX,
+            event.touches[0].clientY
+          );
+        });
+
+        merge(
+          this.listenOnTheHost<TouchEvent>('touchend'),
+          this.listenOnTheHost<TouchEvent>('touchcancel')
+        ).subscribe(event => {
+          this.onMouseup(
+            event.changedTouches[0].clientX,
+            event.changedTouches[0].clientY
+          );
+        });
+      }
+    });
+  }
+
   ngOnDestroy(): void {
+    this.destroy$.next();
     this.unsubscribeEventListeners();
   }
 
   /**
    * @hidden
    */
-  @HostListener('touchstart', [
-    '$event',
-    '$event.touches[0].clientX',
-    '$event.touches[0].clientY'
-  ])
-  @HostListener('mousedown', ['$event', '$event.clientX', '$event.clientY'])
   onMousedown(
     event: MouseEvent | TouchEvent,
     clientX: number,
     clientY: number
   ): void {
     event.preventDefault();
-    this.zone.runOutsideAngular(() => {
-      if (!this.eventListeners.touchmove) {
-        this.eventListeners.touchmove = this.renderer.listen(
-          this.element.nativeElement,
-          'touchmove',
-          (touchMoveEvent: TouchEvent) => {
-            this.onMousemove(
-              touchMoveEvent,
-              touchMoveEvent.targetTouches[0].clientX,
-              touchMoveEvent.targetTouches[0].clientY
-            );
-          }
-        );
-      }
-      if (!this.eventListeners.mousemove) {
-        this.eventListeners.mousemove = this.renderer.listen(
-          this.element.nativeElement,
-          'mousemove',
-          (mouseMoveEvent: MouseEvent) => {
-            this.onMousemove(
-              mouseMoveEvent,
-              mouseMoveEvent.clientX,
-              mouseMoveEvent.clientY
-            );
-          }
-        );
-      }
-      this.resizable.mousedown.next({
-        clientX,
-        clientY,
-        edges: this.resizeEdges
-      });
+    if (!this.eventListeners.touchmove) {
+      this.eventListeners.touchmove = this.renderer.listen(
+        this.element.nativeElement,
+        'touchmove',
+        (touchMoveEvent: TouchEvent) => {
+          this.onMousemove(
+            touchMoveEvent,
+            touchMoveEvent.targetTouches[0].clientX,
+            touchMoveEvent.targetTouches[0].clientY
+          );
+        }
+      );
+    }
+    if (!this.eventListeners.mousemove) {
+      this.eventListeners.mousemove = this.renderer.listen(
+        this.element.nativeElement,
+        'mousemove',
+        (mouseMoveEvent: MouseEvent) => {
+          this.onMousemove(
+            mouseMoveEvent,
+            mouseMoveEvent.clientX,
+            mouseMoveEvent.clientY
+          );
+        }
+      );
+    }
+    this.resizable.mousedown.next({
+      clientX,
+      clientY,
+      edges: this.resizeEdges
     });
   }
 
   /**
    * @hidden
    */
-  @HostListener('touchend', [
-    '$event.changedTouches[0].clientX',
-    '$event.changedTouches[0].clientY'
-  ])
-  @HostListener('touchcancel', [
-    '$event.changedTouches[0].clientX',
-    '$event.changedTouches[0].clientY'
-  ])
-  @HostListener('mouseup', ['$event.clientX', '$event.clientY'])
   onMouseup(clientX: number, clientY: number): void {
-    this.zone.runOutsideAngular(() => {
-      this.unsubscribeEventListeners();
-      this.resizable.mouseup.next({
-        clientX,
-        clientY,
-        edges: this.resizeEdges
-      });
+    this.unsubscribeEventListeners();
+    this.resizable.mouseup.next({
+      clientX,
+      clientY,
+      edges: this.resizeEdges
     });
   }
 
@@ -138,5 +157,11 @@ export class ResizeHandleDirective implements OnDestroy {
       (this as any).eventListeners[type]();
       delete this.eventListeners[type];
     });
+  }
+
+  private listenOnTheHost<T extends Event>(eventName: string) {
+    return fromEvent<T>(this.element.nativeElement, eventName).pipe(
+      takeUntil(this.destroy$)
+    );
   }
 }
