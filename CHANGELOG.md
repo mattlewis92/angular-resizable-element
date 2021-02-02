@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.5"></a>
+## [3.3.5](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.4...v3.3.5) (2021-02-02)
+
+
+### Performance Improvements
+
+* listen to touch events only on touch devices ([#126](https://github.com/mattlewis92/angular-resizable-element/issues/126)) ([c85a28d](https://github.com/mattlewis92/angular-resizable-element/commit/c85a28d))
+
+
+
 <a name="3.3.4"></a>
 ## [3.3.4](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.3...v3.3.4) (2020-11-21)
 
