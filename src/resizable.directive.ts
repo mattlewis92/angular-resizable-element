@@ -271,6 +271,8 @@ const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
 const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
 const RESIZE_GHOST_ELEMENT_CLASS: string = 'resize-ghost-element';
 
+const MAST_HAVE_ATTRIBUT: string = 'ng-reflect-validate-resize';
+
 export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 
 /**
@@ -855,6 +857,17 @@ class PointerEventListeners {
     return PointerEventListeners.instance;
   }
 
+  private wasTargetElementСlicked(event: any) {
+    if (event && event.target) {
+      return (
+        !!event.target.attributes[MAST_HAVE_ATTRIBUT] ||
+        (event.target.parentElement &&
+          !!event.target.parentElement.attributes[MAST_HAVE_ATTRIBUT])
+      );
+    }
+    return false;
+  }
+
   constructor(renderer: Renderer2, zone: NgZone) {
     this.pointerDown = new Observable(
       (observer: Observer<PointerEventCoordinate>) => {
@@ -866,11 +879,13 @@ class PointerEventListeners {
             'document',
             'mousedown',
             (event: MouseEvent) => {
-              observer.next({
-                clientX: event.clientX,
-                clientY: event.clientY,
-                event
-              });
+              if (this.wasTargetElementСlicked(event)) {
+                observer.next({
+                  clientX: event.clientX,
+                  clientY: event.clientY,
+                  event
+                });
+              }
             }
           );
 
@@ -878,11 +893,13 @@ class PointerEventListeners {
             'document',
             'touchstart',
             (event: TouchEvent) => {
-              observer.next({
-                clientX: event.touches[0].clientX,
-                clientY: event.touches[0].clientY,
-                event
-              });
+              if (this.wasTargetElementСlicked(event)) {
+                observer.next({
+                  clientX: event.touches[0].clientX,
+                  clientY: event.touches[0].clientY,
+                  event
+                });
+              }
             }
           );
         });
