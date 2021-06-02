@@ -283,9 +283,15 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
  *   [enableGhostResize]="true">
  * </div>
  * ```
+ * Or in case they are sibling elements:
+ * ```html
+ * <div mwlResizable #resizableElement="mwlResizable"></div>
+ * <div mwlResizeHandle [resizableContainer]="resizableElement" [resizeEdges]="{bottom: true, right: true}"></div>
+ * ```
  */
 @Directive({
-  selector: '[mwlResizable]'
+  selector: '[mwlResizable]',
+  exportAs: 'mwlResizable'
 })
 export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
@@ -417,7 +423,12 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     ).pipe(
       tap(({ event }) => {
         if (currentResize) {
-          event.preventDefault();
+          try {
+            event.preventDefault();
+          } catch (e) {
+            // just adding try-catch not to see errors in console if there is a passive listener for same event somewhere
+            // browser does nothing except of writing errors to console
+          }
         }
       }),
       share()
