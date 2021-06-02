@@ -67,6 +67,9 @@
 <div><pre class="line-numbers"><code class="language-html"> * &lt;div mwlResizable&gt;
  *   &lt;div mwlResizeHandle [resizeEdges]=&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
  * &lt;/div&gt;
+ *</code></pre></div><p>Or in case they are sibling elements:</p>
+<div><pre class="line-numbers"><code class="language-html"> * &lt;div mwlResizable #resizableElement=&quot;mwlResizable&quot;&gt;&lt;/div&gt;
+ * &lt;div mwlResizeHandle [resizableContainer]=&quot;resizableElement&quot; [resizeEdges]=&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
  *</code></pre></div>
             </p>
 
@@ -108,6 +111,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#resizableContainer">resizableContainer</a>
+                            </li>
+                            <li>
                                 <a href="#resizeEdges">resizeEdges</a>
                             </li>
                         </ul>
@@ -127,12 +133,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, element: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>, zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, resizable: ResizableDirective)</code>
+<code>constructor(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, element: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>, zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, resizableDirective: ResizableDirective)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/resize-handle.directive.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/resize-handle.directive.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -186,7 +192,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>resizable</td>
+                                                        <td>resizableDirective</td>
                                                   
                                                         <td>
                                                                     <code>ResizableDirective</code>
@@ -212,6 +218,29 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
+                        <a name="resizableContainer"></a>
+                        <code>resizableContainer</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>Reference to ResizableDirective in case if handle is not located inside of element with ResizableDirective</p>
+</div>
+                            <p>
+                            <em>Type :</em>    <code>ResizableDirective</code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/resize-handle.directive.ts:44</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
                         <a name="resizeEdges"></a>
                         <code>resizeEdges</code>
                     </td>
@@ -229,7 +258,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/resize-handle.directive.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/resize-handle.directive.ts:40</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -252,7 +281,8 @@
   ElementRef,
   OnInit,
   OnDestroy,
-  NgZone
+  NgZone,
+  Optional
 } from &#x27;@angular/core&#x27;;
 import { fromEvent, merge, Subject } from &#x27;rxjs&#x27;;
 import { takeUntil } from &#x27;rxjs/operators&#x27;;
@@ -270,6 +300,11 @@ import { IS_TOUCH_DEVICE } from &#x27;./is-touch-device&#x27;;
  *   &lt;div mwlResizeHandle [resizeEdges]&#x3D;&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
  * &lt;/div&gt;
  * &#x60;&#x60;&#x60;
+ * Or in case they are sibling elements:
+ * &#x60;&#x60;&#x60;html
+ * &lt;div mwlResizable #resizableElement&#x3D;&quot;mwlResizable&quot;&gt;&lt;/div&gt;
+ * &lt;div mwlResizeHandle [resizableContainer]&#x3D;&quot;resizableElement&quot; [resizeEdges]&#x3D;&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
+ * &#x60;&#x60;&#x60;
  */
 @Directive({
   selector: &#x27;[mwlResizeHandle]&#x27;
@@ -279,6 +314,10 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
    * The &#x60;Edges&#x60; object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
   @Input() resizeEdges: Edges &#x3D; {};
+  /**
+   * Reference to ResizableDirective in case if handle is not located inside of element with ResizableDirective
+   */
+  @Input() resizableContainer: ResizableDirective;
 
   private eventListeners: {
     touchmove?: () &#x3D;&gt; void;
@@ -292,7 +331,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private element: ElementRef,
     private zone: NgZone,
-    private resizable: ResizableDirective
+    @Optional() private resizableDirective: ResizableDirective
   ) {}
 
   ngOnInit(): void {
@@ -384,6 +423,11 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
       clientY,
       edges: this.resizeEdges
     });
+  }
+
+  // directive might be passed from DI or as an input
+  private get resizable(): ResizableDirective {
+    return this.resizableDirective || this.resizableContainer;
   }
 
   private onMousemove(

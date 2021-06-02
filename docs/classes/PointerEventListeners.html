@@ -130,7 +130,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="853" class="link-to-prism">src/resizable.directive.ts:853</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="864" class="link-to-prism">src/resizable.directive.ts:864</a></div>
                             </td>
                         </tr>
 
@@ -213,7 +213,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="834" class="link-to-prism">src/resizable.directive.ts:834</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="845" class="link-to-prism">src/resizable.directive.ts:845</a></div>
                             </td>
                         </tr>
 
@@ -248,7 +248,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="836" class="link-to-prism">src/resizable.directive.ts:836</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="847" class="link-to-prism">src/resizable.directive.ts:847</a></div>
                             </td>
                         </tr>
 
@@ -283,7 +283,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="838" class="link-to-prism">src/resizable.directive.ts:838</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="849" class="link-to-prism">src/resizable.directive.ts:849</a></div>
                             </td>
                         </tr>
 
@@ -321,7 +321,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="842" class="link-to-prism">src/resizable.directive.ts:842</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="853" class="link-to-prism">src/resizable.directive.ts:853</a></div>
                             </td>
                         </tr>
 
@@ -676,9 +676,15 @@ export const MOUSE_MOVE_THROTTLE_MS: number &#x3D; 50;
  *   [enableGhostResize]&#x3D;&quot;true&quot;&gt;
  * &lt;/div&gt;
  * &#x60;&#x60;&#x60;
+ * Or in case they are sibling elements:
+ * &#x60;&#x60;&#x60;html
+ * &lt;div mwlResizable #resizableElement&#x3D;&quot;mwlResizable&quot;&gt;&lt;/div&gt;
+ * &lt;div mwlResizeHandle [resizableContainer]&#x3D;&quot;resizableElement&quot; [resizeEdges]&#x3D;&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
+ * &#x60;&#x60;&#x60;
  */
 @Directive({
-  selector: &#x27;[mwlResizable]&#x27;
+  selector: &#x27;[mwlResizable]&#x27;,
+  exportAs: &#x27;mwlResizable&#x27;
 })
 export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
@@ -810,7 +816,12 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     ).pipe(
       tap(({ event }) &#x3D;&gt; {
         if (currentResize) {
-          event.preventDefault();
+          try {
+            event.preventDefault();
+          } catch (e) {
+            // just adding try-catch not to see errors in console if there is a passive listener for same event somewhere
+            // browser does nothing except of writing errors to console
+          }
         }
       }),
       share()
