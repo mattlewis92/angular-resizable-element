@@ -1,8 +1,8 @@
 /* tslint:disable:max-inline-declarations enforce-component-selector */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ResizableDirective } from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
-import { ResizeEvent, ResizableModule } from '../src';
+import { ResizeEvent, ResizableModule, ResizeHandleDirective } from '../src';
 import { MOUSE_MOVE_THROTTLE_MS } from '../src/resizable.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
@@ -44,6 +44,7 @@ describe('resizable directive', () => {
   })
   class TestComponent {
     @ViewChild(ResizableDirective) resizable: ResizableDirective;
+    @ViewChild('handle') handle: ElementRef;
     style: object = {};
     resizeStart: sinon.SinonSpy = sinon.spy();
     resizing: sinon.SinonSpy = sinon.spy();
@@ -564,6 +565,72 @@ describe('resizable directive', () => {
           });
         }
       });
+      expect(
+        (fixture.componentInstance as any)[spyName]
+      ).to.have.been.calledWith(expectedEvent);
+    });
+  });
+
+  describe('handle outside of element', () => {
+    let domEvents: any[];
+    let spyName: string;
+    let expectedEvent: object;
+
+    it('should emit a starting resize event', () => {
+      domEvents = [
+        {
+          name: 'mousedown',
+          data: {
+            clientX: 150,
+            clientY: 200
+          }
+        }
+      ];
+      spyName = 'resizeStart';
+      expectedEvent = {
+        edges: {
+          right: 0
+        },
+        rectangle: {
+          top: 200,
+          left: 100,
+          width: 300,
+          height: 150,
+          right: 400,
+          bottom: 350
+        }
+      };
+    });
+
+    afterEach(() => {
+      const template: string = `
+      <div
+        class="rectangle"
+        [ngStyle]="style"
+        mwlResizable
+        #container='mwlResizable'
+        (resizeStart)="resizeStart($event)"
+      >
+      </div>
+       <span
+          style="width: 5px; height: 5px; position: absolute; bottom: 5px; right: 5px"
+          class="resize-handle"
+          mwlResizeHandle
+          #handle
+          [resizableContainer]='container'
+          [resizeEdges]="{right: true}">
+        </span>
+    `;
+      const fixture: ComponentFixture<TestComponent> = createComponent(
+        template
+      );
+      const handleElem: HTMLElement =
+        fixture.componentInstance.handle.nativeElement;
+
+      domEvents.forEach(event => {
+        triggerDomEvent(event.name, handleElem, event.data);
+      });
+
       expect(
         (fixture.componentInstance as any)[spyName]
       ).to.have.been.calledWith(expectedEvent);

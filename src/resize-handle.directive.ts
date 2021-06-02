@@ -5,7 +5,8 @@ import {
   ElementRef,
   OnInit,
   OnDestroy,
-  NgZone
+  NgZone,
+  Optional
 } from '@angular/core';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,6 +24,11 @@ import { IS_TOUCH_DEVICE } from './is-touch-device';
  *   <div mwlResizeHandle [resizeEdges]="{bottom: true, right: true}"></div>
  * </div>
  * ```
+ * Or in case they are sibling elements:
+ * ```html
+ * <div mwlResizable #resizableElement="mwlResizable"></div>
+ * <div mwlResizeHandle [resizableContainer]="resizableElement" [resizeEdges]="{bottom: true, right: true}"></div>
+ * ```
  */
 @Directive({
   selector: '[mwlResizeHandle]'
@@ -32,6 +38,10 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
    * The `Edges` object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
   @Input() resizeEdges: Edges = {};
+  /**
+   * Reference to ResizableDirective in case if handle is not located inside of element with ResizableDirective
+   */
+  @Input() resizableContainer: ResizableDirective;
 
   private eventListeners: {
     touchmove?: () => void;
@@ -45,7 +55,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private element: ElementRef,
     private zone: NgZone,
-    private resizable: ResizableDirective
+    @Optional() private resizableDirective: ResizableDirective
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +147,11 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
       clientY,
       edges: this.resizeEdges
     });
+  }
+
+  // directive might be passed from DI or as an input
+  private get resizable(): ResizableDirective {
+    return this.resizableDirective || this.resizableContainer;
   }
 
   private onMousemove(

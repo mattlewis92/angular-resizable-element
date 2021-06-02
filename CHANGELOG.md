@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.5...v3.4.0) (2021-06-02)
+
+
+### Features
+
+* **mwlResizeHandle:** add `resizableContainer` input ([862249f](https://github.com/mattlewis92/angular-resizable-element/commit/862249f))
+
+
+
 <a name="3.3.5"></a>
 ## [3.3.5](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.4...v3.3.5) (2021-02-02)
 
