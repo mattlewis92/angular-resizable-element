@@ -53,7 +53,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
-    public element: ElementRef,
+    private element: ElementRef,
     private zone: NgZone,
     @Optional() private resizableDirective: ResizableDirective
   ) {}

@@ -1,5 +1,5 @@
 /* tslint:disable:max-inline-declarations enforce-component-selector */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ResizableDirective } from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
 import { ResizeEvent, ResizableModule, ResizeHandleDirective } from '../src';
@@ -44,7 +44,7 @@ describe('resizable directive', () => {
   })
   class TestComponent {
     @ViewChild(ResizableDirective) resizable: ResizableDirective;
-    @ViewChild(ResizeHandleDirective) handle: ResizeHandleDirective;
+    @ViewChild('handle') handle: ElementRef;
     style: object = {};
     resizeStart: sinon.SinonSpy = sinon.spy();
     resizing: sinon.SinonSpy = sinon.spy();
@@ -616,7 +616,7 @@ describe('resizable directive', () => {
           style="width: 5px; height: 5px; position: absolute; bottom: 5px; right: 5px"
           class="resize-handle"
           mwlResizeHandle
-          id='handle'
+          #handle
           [resizableContainer]='container'
           [resizeEdges]="{right: true}">
         </span>
@@ -625,7 +625,7 @@ describe('resizable directive', () => {
         template
       );
       const handleElem: HTMLElement =
-        fixture.componentInstance.handle.element.nativeElement;
+        fixture.componentInstance.handle.nativeElement;
 
       domEvents.forEach(event => {
         triggerDomEvent(event.name, handleElem, event.data);
