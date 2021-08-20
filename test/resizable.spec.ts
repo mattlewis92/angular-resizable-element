@@ -1,9 +1,11 @@
 /* tslint:disable:max-inline-declarations enforce-component-selector */
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ResizableDirective } from '../src/resizable.directive';
+import { Component, DebugElement, ElementRef, ViewChild } from '@angular/core';
+import {
+  MOUSE_MOVE_THROTTLE_MS,
+  ResizableDirective
+} from '../src/resizable.directive';
 import { Edges } from '../src/interfaces/edges.interface';
-import { ResizeEvent, ResizableModule, ResizeHandleDirective } from '../src';
-import { MOUSE_MOVE_THROTTLE_MS } from '../src/resizable.directive';
+import { ResizableModule, ResizeEvent } from '../src';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -1629,5 +1631,35 @@ describe('resizable directive', () => {
         bottom: 350
       }
     });
+  });
+
+  it('should add canvas data to the ghost element', () => {
+    const template: string = `
+      <div
+       class="rectangle"
+        [ngStyle]="style"
+        mwlResizable
+        [resizeEdges]="resizeEdges"
+        [enableGhostResize]="enableGhostResize"
+      >
+        <canvas id="canvas"></canvas>
+      </div>
+    `;
+    const fixture: ComponentFixture<TestComponent> = createComponent(template);
+    const div = fixture.debugElement.childNodes[0] as DebugElement;
+    const canvas = div.nativeElement.children[0];
+    const ctx = canvas.getContext('2d');
+    ctx.fillText('Canvas text example', 0, 0);
+    const canvasData = canvas.toDataURL();
+
+    const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', elm, {
+      clientX: 100,
+      clientY: 200
+    });
+    const clonedDiv = elm.nextSibling as HTMLElement;
+    const clonedCanvas = clonedDiv.children[0] as HTMLCanvasElement;
+    const actualCanvasData = clonedCanvas.toDataURL();
+    expect(actualCanvasData).to.equal(canvasData);
   });
 });
