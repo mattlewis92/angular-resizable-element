@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
@@ -18,11 +18,6 @@ import { ResizeEvent } from 'angular-resizable-element';
         color: #121621;
         margin: auto;
         box-sizing: border-box; // required for the enableGhostResize option to work
-      }
-
-      canvas {
-        width: 150px;
-        height: 100px;
       }
 
       .resize-handle-top,
@@ -70,8 +65,6 @@ import { ResizeEvent } from 'angular-resizable-element';
         [resizeSnapGrid]="{ left: 50, right: 50 }"
         (resizeEnd)="onResizeEnd($event)"
       >
-        <div>HTML text example</div>
-        <canvas #canvas></canvas>
         <div
           class="resize-handle-top"
           mwlResizeHandle
@@ -96,10 +89,7 @@ import { ResizeEvent } from 'angular-resizable-element';
     </div>
   `,
 })
-export class DemoComponent implements AfterViewInit {
-  @ViewChild('canvas')
-  public canvas: ElementRef<HTMLCanvasElement>;
-
+export class DemoComponent {
   public style: object = {};
 
   validate(event: ResizeEvent): boolean {
@@ -123,20 +113,5 @@ export class DemoComponent implements AfterViewInit {
       width: `${event.rectangle.width}px`,
       height: `${event.rectangle.height}px`,
     };
-  }
-
-  drawCanvas(): void {
-    const ctx = this.canvas.nativeElement.getContext('2d');
-    if (ctx) {
-      ctx.font = '28px serif';
-      ctx.fillText('Canvas text example', 50, 50);
-      ctx.strokeStyle = 'green';
-      ctx.lineWidth = 5;
-      ctx.strokeRect(30, 10, 260, 60);
-    }
-  }
-
-  ngAfterViewInit(): void {
-    this.drawCanvas();
   }
 }
