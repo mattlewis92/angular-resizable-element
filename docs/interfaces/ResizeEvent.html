@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -43,7 +44,9 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>ResizeEvent</li>
+  <li
+  >
+  ResizeEvent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,8 +64,9 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/interfaces/resize-event.interface.ts</code>
+            <code>projects/angular-resizable-element/src/lib/interfaces/resize-event.interface.ts</code>
         </p>
+
 
             <p class="comment">
                 <h3>Description</h3>
@@ -86,10 +90,16 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#edges">edges</a>
+                                        <a href="#edges" 
+>
+                                            edges
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#rectangle">rectangle</a>
+                                        <a href="#rectangle" 
+>
+                                            rectangle
+                                        </a>
                                 </li>
                             </ul>
                         </td>
@@ -107,12 +117,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="edges"></a>
-                                        <span class="name"><b>edges</b><a href="#edges"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>edges</b>
+                                            <a href="#edges">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>edges:     <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
+                                        <code>edges:         <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -120,7 +134,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/Edges.html" target="_self" >Edges</a></code>
 
                                         </td>
                                     </tr>
@@ -136,12 +150,16 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="rectangle"></a>
-                                        <span class="name"><b>rectangle</b><a href="#rectangle"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>rectangle</b>
+                                            <a href="#rectangle">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>rectangle:     <code><a href="../interfaces/BoundingRectangle.html" target="_self" >BoundingRectangle</a></code>
+                                        <code>rectangle:         <code><a href="../interfaces/BoundingRectangle.html" target="_self" >BoundingRectangle</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -149,7 +167,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/BoundingRectangle.html" target="_self" >BoundingRectangle</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/BoundingRectangle.html" target="_self" >BoundingRectangle</a></code>
 
                                         </td>
                                     </tr>
@@ -180,6 +198,7 @@ export interface ResizeEvent {
 </div>
 
 
+                   
 
 
 
@@ -202,13 +221,14 @@ export interface ResizeEvent {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'ResizeEvent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

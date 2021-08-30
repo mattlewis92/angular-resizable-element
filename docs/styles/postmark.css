@@ -1,21 +1,24 @@
 .navbar-default {
-    background: #FFDE00;
+    background: #ffde00;
     border: none;
 }
+
 .navbar-default .navbar-brand {
     color: #333;
     font-weight: bold;
 }
+
 .menu {
     background: #333;
     color: #fcfcfc;
 }
+
 .menu ul.list li a {
     color: #333;
 }
 
 .menu ul.list li.title {
-    background: #FFDE00;
+    background: #ffde00;
     color: #333;
     padding-bottom: 5px;
 }
@@ -24,7 +27,8 @@
     margin-top: 0;
 }
 
-.menu ul.list li.chapter a, .menu ul.list li.chapter .simple {
+.menu ul.list li.chapter a,
+.menu ul.list li.chapter .simple {
     color: white;
     text-decoration: none;
 }
@@ -34,8 +38,10 @@
     text-transform: none;
     padding-left: 35px;
 }
-.menu ul.list li.chapter ul.links a:hover, .menu ul.list li.chapter ul.links a.active {
-    color: #FFDE00;
+
+.menu ul.list li.chapter ul.links a:hover,
+.menu ul.list li.chapter ul.links a.active {
+    color: #ffde00;
 }
 
 .menu ul.list li.chapter ul.links {
@@ -46,12 +52,15 @@
     background: rgba(255, 255, 255, 0.07);
 }
 
-#book-search-input input, #book-search-input input:focus, #book-search-input input:hover {
+#book-search-input input,
+#book-search-input input:focus,
+#book-search-input input:hover {
     color: #949494;
 }
 
 .copyright {
     color: #b3b3b3;
+    background: #272525;
 }
 
 .content {
@@ -59,18 +68,19 @@
 }
 
 .content a {
-    color: #007DCC;
+    color: #007dcc;
 }
+
 .content a:visited {
     color: #0165a5;
 }
-.copyright {
-    background: #272525;
-}
+
 .menu ul.list li:nth-last-child(2) {
     background: none;
 }
-.list-group-item:first-child, .list-group-item:last-child {
+
+.list-group-item:first-child,
+.list-group-item:last-child {
     border-radius: 0;
 }
 
@@ -78,27 +88,30 @@
     text-decoration: none;
     font-weight: bold;
 }
+
 .menu ul.list li.title a:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.breadcrumb>li+li:before {
-     content: "»\00a0"
+.breadcrumb > li + li:before {
+    content: '»\00a0';
 }
 
 .breadcrumb {
     padding-bottom: 15px;
     border-bottom: 1px solid #e1e4e5;
 }
+
 code {
     white-space: nowrap;
     max-width: 100%;
-    background: #F5F5F5;
+    background: #f5f5f5;
     padding: 2px 5px;
     color: #666666;
     overflow-x: auto;
     border-radius: 0;
 }
+
 pre {
     white-space: pre;
     margin: 0;
@@ -110,6 +123,7 @@ pre {
     color: #404040;
     background: #f3f3f3;
 }
+
 pre code.hljs {
     border: none;
     background: inherit;
@@ -133,23 +147,23 @@ hue-6-2: #c18401
 */
 
 .hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #383a42;
-  background: #fafafa;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #383a42;
+    background: #fafafa;
 }
 
 .hljs-comment,
 .hljs-quote {
-  color: #a0a1a7;
-  font-style: italic;
+    color: #a0a1a7;
+    font-style: italic;
 }
 
 .hljs-doctag,
 .hljs-keyword,
 .hljs-formula {
-  color: #a626a4;
+    color: #a626a4;
 }
 
 .hljs-section,
@@ -157,11 +171,11 @@ hue-6-2: #c18401
 .hljs-selector-tag,
 .hljs-deletion,
 .hljs-subst {
-  color: #e45649;
+    color: #e45649;
 }
 
 .hljs-literal {
-  color: #0184bb;
+    color: #0184bb;
 }
 
 .hljs-string,
@@ -169,12 +183,12 @@ hue-6-2: #c18401
 .hljs-addition,
 .hljs-attribute,
 .hljs-meta-string {
-  color: #50a14f;
+    color: #50a14f;
 }
 
 .hljs-built_in,
 .hljs-class .hljs-title {
-  color: #c18401;
+    color: #c18401;
 }
 
 .hljs-attr,
@@ -185,7 +199,7 @@ hue-6-2: #c18401
 .hljs-selector-attr,
 .hljs-selector-pseudo,
 .hljs-number {
-  color: #986801;
+    color: #986801;
 }
 
 .hljs-symbol,
@@ -194,17 +208,33 @@ hue-6-2: #c18401
 .hljs-meta,
 .hljs-selector-id,
 .hljs-title {
-  color: #4078f2;
+    color: #4078f2;
 }
 
 .hljs-emphasis {
-  font-style: italic;
+    font-style: italic;
 }
 
 .hljs-strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .hljs-link {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+    .content {
+        background: none;
+    }
+    code {
+        background: none;
+        color: #e09393;
+    }
+    .menu ul.list li.chapter a.active {
+        color: #ffde00;
+    }
+    .menu {
+        background: #272525;
+    }
 }
