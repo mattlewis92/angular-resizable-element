@@ -64,7 +64,7 @@
     "@typescript-eslint/parser": "4.28.2",
     "angular-cli-ghpages": "^1.0.0-rc.2",
     "chai": "^4.3.4",
-    "codecov-lite": "^2.0.0",
+    "codecov": "^3.8.3",
     "commitizen": "^4.2.4",
     "concurrently": "^6.2.1",
     "copyfiles": "^2.4.1",
