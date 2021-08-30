@@ -1,4 +1,3 @@
-/* tslint:disable:max-inline-declarations */
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 

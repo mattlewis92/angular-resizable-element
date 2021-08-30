@@ -854,7 +854,7 @@ class PointerEventListeners {
 
   public pointerUp: Observable<PointerEventCoordinate>;
 
-  private static instance: PointerEventListeners; // tslint:disable-line
+  private static instance: PointerEventListeners;
 
   public static getInstance(
     renderer: Renderer2,
