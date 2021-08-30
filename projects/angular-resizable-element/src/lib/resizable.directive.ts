@@ -11,7 +11,7 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
@@ -26,13 +26,13 @@ import {
   auditTime,
   switchMap,
   startWith,
-  tap
+  tap,
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
-import { IS_TOUCH_DEVICE } from './is-touch-device';
-import { deepCloneNode } from './clone-node';
+import { IS_TOUCH_DEVICE } from './util/is-touch-device';
+import { deepCloneNode } from './util/clone-node';
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -64,7 +64,7 @@ function getNewBoundingRectangle(
     top: startingRect.top,
     bottom: startingRect.bottom,
     left: startingRect.left,
-    right: startingRect.right
+    right: startingRect.right,
   };
 
   if (edges.top) {
@@ -96,11 +96,11 @@ function getElementRect(
     'transform',
     '-ms-transform',
     '-moz-transform',
-    '-o-transform'
+    '-o-transform',
   ];
   const transform = transformProperties
-    .map(property => style[property])
-    .find(value => !!value);
+    .map((property) => style[property])
+    .find((value) => !!value);
   if (transform && transform.includes('translate')) {
     translateX = transform.replace(
       /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
@@ -125,10 +125,11 @@ function getElementRect(
       right:
         element.nativeElement.offsetWidth +
         element.nativeElement.offsetLeft -
-        translateX
+        translateX,
     };
   } else {
-    const boundingRect: BoundingRectangle = element.nativeElement.getBoundingClientRect();
+    const boundingRect: BoundingRectangle =
+      element.nativeElement.getBoundingClientRect();
     return {
       height: boundingRect.height,
       width: boundingRect.width,
@@ -137,14 +138,14 @@ function getElementRect(
       left: boundingRect.left - translateX,
       right: boundingRect.right - translateX,
       scrollTop: element.nativeElement.scrollTop,
-      scrollLeft: element.nativeElement.scrollLeft
+      scrollLeft: element.nativeElement.scrollLeft,
     };
   }
 }
 
 function isWithinBoundingY({
   clientY,
-  rect
+  rect,
 }: {
   clientY: number;
   rect: ClientRect;
@@ -154,7 +155,7 @@ function isWithinBoundingY({
 
 function isWithinBoundingX({
   clientX,
-  rect
+  rect,
 }: {
   clientX: number;
   rect: ClientRect;
@@ -167,7 +168,7 @@ function getResizeEdges({
   clientY,
   elm,
   allowedEdges,
-  cursorPrecision
+  cursorPrecision,
 }: {
   clientX: number;
   clientY: number;
@@ -228,7 +229,7 @@ const DEFAULT_RESIZE_CURSORS: ResizeCursors = Object.freeze({
   bottomLeft: 'sw-resize',
   bottomRight: 'se-resize',
   leftOrRight: 'col-resize',
-  topOrBottom: 'row-resize'
+  topOrBottom: 'row-resize',
 });
 
 function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
@@ -252,14 +253,14 @@ function getResizeCursor(edges: Edges, cursors: ResizeCursors): string {
 function getEdgesDiff({
   edges,
   initialRectangle,
-  newRectangle
+  newRectangle,
 }: {
   edges: Edges;
   initialRectangle: BoundingRectangle;
   newRectangle: BoundingRectangle;
 }): Edges {
   const edgesDiff: Edges = {};
-  Object.keys(edges).forEach(edge => {
+  Object.keys(edges).forEach((edge) => {
     edgesDiff[edge] = (newRectangle[edge] || 0) - (initialRectangle[edge] || 0);
   });
   return edgesDiff;
@@ -292,7 +293,7 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
  */
 @Directive({
   selector: '[mwlResizable]',
-  exportAs: 'mwlResizable'
+  exportAs: 'mwlResizable',
 })
 export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
@@ -456,7 +457,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     const getResizeCursors = (): ResizeCursors => {
       return {
         ...DEFAULT_RESIZE_CURSORS,
-        ...this.resizeCursors
+        ...this.resizeCursors,
       };
     };
 
@@ -466,10 +467,12 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         map(() => {
           return (
             this.resizeEdges &&
-            Object.keys(this.resizeEdges).some(edge => !!this.resizeEdges[edge])
+            Object.keys(this.resizeEdges).some(
+              (edge) => !!this.resizeEdges[edge]
+            )
           );
         }),
-        switchMap(legacyResizeEdgesEnabled =>
+        switchMap((legacyResizeEdgesEnabled) =>
           legacyResizeEdgesEnabled ? mousemove$ : EMPTY
         ),
         auditTime(this.mouseMoveThrottleMS),
@@ -481,7 +484,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           clientY,
           elm: this.elm,
           allowedEdges: this.resizeEdges,
-          cursorPrecision: this.resizeCursorPrecision
+          cursorPrecision: this.resizeCursorPrecision,
         });
         const resizeCursors = getResizeCursors();
         if (!currentResize) {
@@ -512,11 +515,11 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
 
     const mousedrag: Observable<any> = mousedown$
       .pipe(
-        mergeMap(startCoords => {
+        mergeMap((startCoords) => {
           function getDiff(moveCoords: { clientX: number; clientY: number }) {
             return {
               clientX: moveCoords.clientX - startCoords.clientX,
-              clientY: moveCoords.clientY - startCoords.clientY
+              clientY: moveCoords.clientY - startCoords.clientY,
             };
           }
 
@@ -552,24 +555,26 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
           ) {
             return {
               x: Math.ceil(coords.clientX / snapGrid.x),
-              y: Math.ceil(coords.clientY / snapGrid.y)
+              y: Math.ceil(coords.clientY / snapGrid.y),
             };
           }
 
-          return (merge(
-            mousemove$.pipe(take(1)).pipe(map(coords => [, coords])),
-            mousemove$.pipe(pairwise())
-          ) as Observable<
-            [
-              { clientX: number; clientY: number },
-              { clientX: number; clientY: number }
-            ]
-          >)
+          return (
+            merge(
+              mousemove$.pipe(take(1)).pipe(map((coords) => [, coords])),
+              mousemove$.pipe(pairwise())
+            ) as Observable<
+              [
+                { clientX: number; clientY: number },
+                { clientX: number; clientY: number }
+              ]
+            >
+          )
             .pipe(
               map(([previousCoords, newCoords]) => {
                 return [
                   previousCoords ? getDiff(previousCoords) : previousCoords,
-                  getDiff(newCoords)
+                  getDiff(newCoords),
                 ];
               })
             )
@@ -598,7 +603,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                   clientX:
                     Math.round(newCoords.clientX / snapGrid.x) * snapGrid.x,
                   clientY:
-                    Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y
+                    Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y,
                 };
               })
             )
@@ -639,8 +644,8 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
                 edges: getEdgesDiff({
                   edges: currentResize!.edges,
                   initialRectangle: currentResize!.startingRect,
-                  newRectangle: newBoundingRect
-                })
+                  newRectangle: newBoundingRect,
+                }),
               })
             : true;
         }),
@@ -676,9 +681,9 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
               edges: getEdgesDiff({
                 edges: currentResize!.edges,
                 initialRectangle: currentResize!.startingRect,
-                newRectangle: newBoundingRect
+                newRectangle: newBoundingRect,
               }),
-              rectangle: newBoundingRect
+              rectangle: newBoundingRect,
             });
           });
         }
@@ -695,7 +700,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
               clientY,
               elm: this.elm,
               allowedEdges: this.resizeEdges,
-              cursorPrecision: this.resizeCursorPrecision
+              cursorPrecision: this.resizeCursorPrecision,
             })
           );
         })
@@ -717,7 +722,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         currentResize = {
           edges,
           startingRect,
-          currentRect: startingRect
+          currentRect: startingRect,
         };
         const resizeCursors = getResizeCursors();
         const cursor = getResizeCursor(currentResize.edges, resizeCursors);
@@ -778,9 +783,9 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
               edges: getEdgesDiff({
                 edges,
                 initialRectangle: startingRect,
-                newRectangle: startingRect
+                newRectangle: startingRect,
               }),
-              rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+              rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0),
             });
           });
         }
@@ -797,9 +802,9 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
               edges: getEdgesDiff({
                 edges: currentResize!.edges,
                 initialRectangle: currentResize!.startingRect,
-                newRectangle: currentResize!.currentRect
+                newRectangle: currentResize!.currentRect,
               }),
-              rectangle: currentResize!.currentRect
+              rectangle: currentResize!.currentRect,
             });
           });
         }
@@ -878,7 +883,7 @@ class PointerEventListeners {
               observer.next({
                 clientX: event.clientX,
                 clientY: event.clientY,
-                event
+                event,
               });
             }
           );
@@ -891,7 +896,7 @@ class PointerEventListeners {
                 observer.next({
                   clientX: event.touches[0].clientX,
                   clientY: event.touches[0].clientY,
-                  event
+                  event,
                 });
               }
             );
@@ -920,7 +925,7 @@ class PointerEventListeners {
               observer.next({
                 clientX: event.clientX,
                 clientY: event.clientY,
-                event
+                event,
               });
             }
           );
@@ -933,7 +938,7 @@ class PointerEventListeners {
                 observer.next({
                   clientX: event.targetTouches[0].clientX,
                   clientY: event.targetTouches[0].clientY,
-                  event
+                  event,
                 });
               }
             );
@@ -963,7 +968,7 @@ class PointerEventListeners {
               observer.next({
                 clientX: event.clientX,
                 clientY: event.clientY,
-                event
+                event,
               });
             }
           );
@@ -976,7 +981,7 @@ class PointerEventListeners {
                 observer.next({
                   clientX: event.changedTouches[0].clientX,
                   clientY: event.changedTouches[0].clientY,
-                  event
+                  event,
                 });
               }
             );
@@ -988,7 +993,7 @@ class PointerEventListeners {
                 observer.next({
                   clientX: event.changedTouches[0].clientX,
                   clientY: event.changedTouches[0].clientY,
-                  event
+                  event,
                 });
               }
             );

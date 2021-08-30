@@ -6,13 +6,13 @@ import {
   OnInit,
   OnDestroy,
   NgZone,
-  Optional
+  Optional,
 } from '@angular/core';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResizableDirective } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
-import { IS_TOUCH_DEVICE } from './is-touch-device';
+import { IS_TOUCH_DEVICE } from './util/is-touch-device';
 
 /**
  * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
@@ -31,7 +31,7 @@ import { IS_TOUCH_DEVICE } from './is-touch-device';
  * ```
  */
 @Directive({
-  selector: '[mwlResizeHandle]'
+  selector: '[mwlResizeHandle]',
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
   /**
@@ -60,16 +60,16 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
-      this.listenOnTheHost<MouseEvent>('mousedown').subscribe(event => {
+      this.listenOnTheHost<MouseEvent>('mousedown').subscribe((event) => {
         this.onMousedown(event, event.clientX, event.clientY);
       });
 
-      this.listenOnTheHost<MouseEvent>('mouseup').subscribe(event => {
+      this.listenOnTheHost<MouseEvent>('mouseup').subscribe((event) => {
         this.onMouseup(event.clientX, event.clientY);
       });
 
       if (IS_TOUCH_DEVICE) {
-        this.listenOnTheHost<TouchEvent>('touchstart').subscribe(event => {
+        this.listenOnTheHost<TouchEvent>('touchstart').subscribe((event) => {
           this.onMousedown(
             event,
             event.touches[0].clientX,
@@ -80,7 +80,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
         merge(
           this.listenOnTheHost<TouchEvent>('touchend'),
           this.listenOnTheHost<TouchEvent>('touchcancel')
-        ).subscribe(event => {
+        ).subscribe((event) => {
           this.onMouseup(
             event.changedTouches[0].clientX,
             event.changedTouches[0].clientY
@@ -133,7 +133,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     this.resizable.mousedown.next({
       clientX,
       clientY,
-      edges: this.resizeEdges
+      edges: this.resizeEdges,
     });
   }
 
@@ -145,7 +145,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     this.resizable.mouseup.next({
       clientX,
       clientY,
-      edges: this.resizeEdges
+      edges: this.resizeEdges,
     });
   }
 
@@ -163,12 +163,12 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
       clientX,
       clientY,
       edges: this.resizeEdges,
-      event
+      event,
     });
   }
 
   private unsubscribeEventListeners(): void {
-    Object.keys(this.eventListeners).forEach(type => {
+    Object.keys(this.eventListeners).forEach((type) => {
       (this as any).eventListeners[type]();
       delete this.eventListeners[type];
     });

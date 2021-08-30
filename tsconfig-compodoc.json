@@ -1,11 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "files": [
-    "src/resizable.directive.ts",
-    "src/resize-handle.directive.ts",
-    "src/resizable.module.ts",
-    "src/interfaces/bounding-rectangle.interface.ts",
-    "src/interfaces/edges.interface.ts",
-    "src/interfaces/resize-event.interface.ts"
+    "projects/angular-resizable-element/src/lib/resizable.directive.ts",
+    "projects/angular-resizable-element/src/lib/resize-handle.directive.ts",
+    "projects/angular-resizable-element/src/lib/resizable.module.ts",
+    "projects/angular-resizable-element/src/lib/interfaces/bounding-rectangle.interface.ts",
+    "projects/angular-resizable-element/src/lib/interfaces/edges.interface.ts",
+    "projects/angular-resizable-element/src/lib/interfaces/resize-event.interface.ts"
   ]
 }

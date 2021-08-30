@@ -8,7 +8,7 @@
 
 ## Demo
 
-https://mattlewis92.github.io/angular-resizable-element/demo/
+https://mattlewis92.github.io/angular-resizable-element/
 
 ## Table of contents
 
@@ -20,7 +20,7 @@ https://mattlewis92.github.io/angular-resizable-element/demo/
 
 ## About
 
-An angular 6.0+ directive that allows an element to be dragged and resized
+An angular 10.0+ directive that allows an element to be dragged and resized
 
 ## Installation
 
@@ -89,7 +89,7 @@ import { ResizeEvent } from 'angular-resizable-element';
       .resize-handle-right {
         right: 0;
       }
-    `
+    `,
   ],
   template: `
     <div
@@ -119,7 +119,7 @@ import { ResizeEvent } from 'angular-resizable-element';
         [resizeEdges]="{ bottom: true }"
       ></div>
     </div>
-  `
+  `,
 })
 export class MyComponent {
   onResizeEnd(event: ResizeEvent): void {
@@ -134,7 +134,7 @@ import { ResizableModule } from 'angular-resizable-element';
 @NgModule({
   declarations: [MyComponent],
   imports: [ResizableModule],
-  bootstrap: [MyComponent]
+  bootstrap: [MyComponent],
 })
 class MyModule {}
 ```

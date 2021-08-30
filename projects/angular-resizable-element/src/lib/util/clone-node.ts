@@ -7,7 +7,7 @@ export function deepCloneNode(node: HTMLElement): HTMLElement {
   // Remove the `id` to avoid having multiple elements with the same id on the page.
   clone.removeAttribute('id');
 
-  descendantsWithId.forEach(descendant => {
+  descendantsWithId.forEach((descendant) => {
     descendant.removeAttribute('id');
   });
 
