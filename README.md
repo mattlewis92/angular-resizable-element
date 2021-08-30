@@ -27,7 +27,7 @@ An angular 6.0+ directive that allows an element to be dragged and resized
 Install through npm:
 
 ```
-npm install --save angular-resizable-element
+npm install angular-resizable-element
 ```
 
 Then use it in your app like so:
