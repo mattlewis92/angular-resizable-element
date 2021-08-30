@@ -32,6 +32,7 @@ import { Edges } from './interfaces/edges.interface';
 import { BoundingRectangle } from './interfaces/bounding-rectangle.interface';
 import { ResizeEvent } from './interfaces/resize-event.interface';
 import { IS_TOUCH_DEVICE } from './is-touch-device';
+import { deepCloneNode } from './clone-node';
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -723,7 +724,7 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         this.renderer.setStyle(document.body, 'cursor', cursor);
         this.setElementClass(this.elm, RESIZE_ACTIVE_CLASS, true);
         if (this.enableGhostResize) {
-          currentResize.clonedNode = this.elm.nativeElement.cloneNode(true);
+          currentResize.clonedNode = deepCloneNode(this.elm.nativeElement);
           this.elm.nativeElement.parentElement.appendChild(
             currentResize.clonedNode
           );
