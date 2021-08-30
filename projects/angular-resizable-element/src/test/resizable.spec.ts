@@ -1,4 +1,3 @@
-/* tslint:disable:max-inline-declarations enforce-component-selector */
 import { Component, DebugElement, ElementRef, ViewChild } from '@angular/core';
 import {
   MOUSE_MOVE_THROTTLE_MS,
