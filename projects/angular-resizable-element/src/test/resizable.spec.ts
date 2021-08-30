@@ -22,6 +22,38 @@ describe('resizable directive', () => {
           width: 300px;
           height: 150px;
         }
+
+        .resize-handle-top,
+        .resize-handle-bottom {
+          position: absolute;
+          height: 5px;
+          cursor: row-resize;
+          width: 100%;
+        }
+
+        .resize-handle-top {
+          top: 0;
+        }
+
+        .resize-handle-bottom {
+          bottom: 0;
+        }
+
+        .resize-handle-left,
+        .resize-handle-right {
+          position: absolute;
+          height: 100%;
+          cursor: col-resize;
+          width: 5px;
+        }
+
+        .resize-handle-left {
+          left: 0;
+        }
+
+        .resize-handle-right {
+          right: 0;
+        }
       `,
     ],
     template: `
@@ -30,17 +62,40 @@ describe('resizable directive', () => {
         [ngStyle]="style"
         mwlResizable
         [validateResize]="validate"
-        [resizeEdges]="resizeEdges"
         [enableGhostResize]="enableGhostResize"
         [resizeSnapGrid]="resizeSnapGrid"
         [resizeCursors]="resizeCursors"
-        [resizeCursorPrecision]="resizeCursorPrecision"
         [ghostElementPositioning]="ghostElementPositioning"
         [allowNegativeResizes]="allowNegativeResizes"
         (resizeStart)="resizeStart($event)"
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)"
-      ></div>
+      >
+        <div
+          *ngIf="resizeEdges.top"
+          class="resize-handle-top"
+          mwlResizeHandle
+          [resizeEdges]="{ top: true }"
+        ></div>
+        <div
+          *ngIf="resizeEdges.left"
+          class="resize-handle-left"
+          mwlResizeHandle
+          [resizeEdges]="{ left: true }"
+        ></div>
+        <div
+          *ngIf="resizeEdges.right"
+          class="resize-handle-right"
+          mwlResizeHandle
+          [resizeEdges]="{ right: true }"
+        ></div>
+        <div
+          *ngIf="resizeEdges.bottom"
+          class="resize-handle-bottom"
+          mwlResizeHandle
+          [resizeEdges]="{ bottom: true }"
+        ></div>
+      </div>
     `,
   })
   class TestComponent {
@@ -60,7 +115,6 @@ describe('resizable directive', () => {
     enableGhostResize: boolean = true;
     resizeSnapGrid: object = {};
     resizeCursors: object = {};
-    resizeCursorPrecision: number;
     ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
     showResizeHandle = false;
     allowNegativeResizes = false;
@@ -114,142 +168,17 @@ describe('resizable directive', () => {
     }
   });
 
-  describe('cursor changes', () => {
-    let assertions: any[];
-
-    it('should change the cursor to the row-resize when mousing over the top edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 150,
-            clientY: 200,
-          },
-          cursor: 'row-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor back to auto when moving away from the edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 150,
-            clientY: 200,
-          },
-          cursor: 'row-resize',
-        },
-        {
-          coords: {
-            clientX: 150,
-            clientY: 197,
-          },
-          cursor: '',
-        },
-      ];
-    });
-
-    it('should change the cursor to the row-resize when mousing over the bottom edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 150,
-            clientY: 350,
-          },
-          cursor: 'row-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the col-resize when mousing over the left edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 100,
-            clientY: 300,
-          },
-          cursor: 'col-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the col-resize when mousing over the right edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 400,
-            clientY: 300,
-          },
-          cursor: 'col-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the nw-resize when mousing over the top left edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 100,
-            clientY: 200,
-          },
-          cursor: 'nw-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the ne-resize when mousing over the top right edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 400,
-            clientY: 200,
-          },
-          cursor: 'ne-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the sw-resize when mousing over the bottom left edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 100,
-            clientY: 350,
-          },
-          cursor: 'sw-resize',
-        },
-      ];
-    });
-
-    it('should change the cursor to the se-resize when mousing over the bottom right edge', () => {
-      assertions = [
-        {
-          coords: {
-            clientX: 400,
-            clientY: 350,
-          },
-          cursor: 'se-resize',
-        },
-      ];
-    });
-
-    afterEach(async () => {
-      const fixture: ComponentFixture<TestComponent> = createComponent();
-      const elm: HTMLElement =
-        fixture.componentInstance.resizable.elm.nativeElement;
-
-      for (const assertion of assertions) {
-        const { coords, cursor } = assertion;
-        triggerDomEvent('mousemove', elm, coords);
-        await delay(MOUSE_MOVE_THROTTLE_MS);
-        expect(elm.style.cursor).to.equal(cursor);
-      }
-    });
-  });
-
   describe('resize events', () => {
-    let domEvents: any[];
+    let domEvents: Array<{
+      name: string;
+      data: { clientX: number; clientY: number };
+      style?: Record<string, string>;
+    }>;
     let spyName: string;
-    let expectedEvent: object;
+    let expectedEvent: {
+      edges: Record<string, number>;
+      rectangle: Record<string, number>;
+    };
 
     it('should emit a starting resize event', () => {
       domEvents = [
@@ -551,7 +480,10 @@ describe('resizable directive', () => {
       const elm: HTMLElement =
         fixture.componentInstance.resizable.elm.nativeElement;
       domEvents.forEach((event) => {
-        triggerDomEvent(event.name, elm, event.data);
+        const element = fixture.nativeElement.querySelector(
+          '.resize-handle-' + Object.keys(expectedEvent.edges)[0]
+        );
+        triggerDomEvent(event.name, element, event.data);
         if (event.name !== 'mouseup') {
           expect((elm.nextSibling as HTMLElement).style.position).to.equal(
             'fixed'
@@ -560,7 +492,7 @@ describe('resizable directive', () => {
         if (event.style) {
           Object.keys(event.style).forEach((styleKey) => {
             expect((elm.nextSibling as any).style[styleKey]).to.equal(
-              event.style[styleKey]
+              event.style?.[styleKey]
             );
           });
         }
@@ -572,7 +504,11 @@ describe('resizable directive', () => {
   });
 
   describe('handle outside of element', () => {
-    let domEvents: any[];
+    let domEvents: Array<{
+      name: string;
+      data: { clientX: number; clientY: number };
+      style?: Record<string, string>;
+    }>;
     let spyName: string;
     let expectedEvent: object;
 
@@ -665,7 +601,11 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+
+    const leftHandle = fixture.nativeElement.querySelector(
+      '.resize-handle-left'
+    );
+    triggerDomEvent('mousedown', leftHandle, {
       clientX: 100,
       clientY: 205,
     });
@@ -682,17 +622,17 @@ describe('resizable directive', () => {
         bottom: 350,
       },
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', leftHandle, {
       clientX: 99,
       clientY: 205,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', leftHandle, {
       clientX: 98,
       clientY: 205,
     });
     expect((elm.nextSibling as HTMLElement).style.width).to.equal('302px');
     fixture.componentInstance.resizeEnd.resetHistory();
-    triggerDomEvent('mousedown', elm, {
+    triggerDomEvent('mousedown', leftHandle, {
       clientX: 100,
       clientY: 205,
     });
@@ -710,11 +650,11 @@ describe('resizable directive', () => {
         bottom: 350,
       },
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', leftHandle, {
       clientX: 101,
       clientY: 205,
     });
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', leftHandle, {
       clientX: 101,
       clientY: 205,
     });
@@ -737,7 +677,8 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-top');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
@@ -749,21 +690,22 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-top');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 200,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 199,
     });
     let elmStyle: CSSStyleDeclaration = getComputedStyle(elm);
     expect(elmStyle.visibility).to.equal('hidden');
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 99,
       clientY: 199,
     });
@@ -773,22 +715,21 @@ describe('resizable directive', () => {
 
   it('should cancel the mousedrag observable when the mouseup event fires', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-top');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 200,
     });
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 99,
       clientY: 200,
     });
     fixture.componentInstance.resizing.resetHistory();
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 199,
     });
@@ -797,17 +738,16 @@ describe('resizable directive', () => {
 
   it('should fire the resize end event with the last valid bounding rectangle', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 210,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 210,
     });
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 500,
       clientY: 210,
     });
@@ -828,14 +768,13 @@ describe('resizable directive', () => {
 
   it('should allow invalidating of resize events', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 210,
     });
     fixture.componentInstance.validate.returns(true);
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 210,
     });
@@ -861,7 +800,7 @@ describe('resizable directive', () => {
     fixture.componentInstance.validate.returns(false);
     fixture.componentInstance.validate.resetHistory();
     fixture.componentInstance.resizing.resetHistory();
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 98,
       clientY: 210,
     });
@@ -882,7 +821,7 @@ describe('resizable directive', () => {
       secondResizeEvent
     );
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 98,
       clientY: 210,
     });
@@ -893,17 +832,15 @@ describe('resizable directive', () => {
 
   it('should only allow resizing of the element along the left side', async () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
     fixture.componentInstance.resizeEdges = { left: true };
     fixture.detectChanges();
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 100,
       clientY: 200,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(getComputedStyle(elm).cursor).to.equal('col-resize');
-    triggerDomEvent('mousedown', elm, {
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
@@ -924,26 +861,24 @@ describe('resizable directive', () => {
 
   it('should disable resizing of the element', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
     fixture.componentInstance.resizeEdges = {};
     fixture.detectChanges();
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 100,
       clientY: 210,
     });
-    expect(getComputedStyle(elm).cursor).to.equal('auto');
-    triggerDomEvent('mousedown', elm, {
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 210,
     });
     expect(fixture.componentInstance.resizeStart).not.to.have.been.called;
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 101,
       clientY: 210,
     });
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 101,
       clientY: 210,
     });
@@ -1032,11 +967,12 @@ describe('resizable directive', () => {
     fixture.detectChanges();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 201,
     });
@@ -1052,13 +988,12 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     fixture.componentInstance.resizeSnapGrid = { left: 10 };
     fixture.detectChanges();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 205,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 205,
     });
@@ -1075,12 +1010,12 @@ describe('resizable directive', () => {
         bottom: 350,
       },
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 95,
       clientY: 205,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledOnce;
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 89,
       clientY: 205,
     });
@@ -1098,7 +1033,7 @@ describe('resizable directive', () => {
       },
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledTwice;
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 89,
       clientY: 205,
     });
@@ -1122,11 +1057,12 @@ describe('resizable directive', () => {
     fixture.detectChanges();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 100,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 99,
       clientY: 101,
     });
@@ -1177,81 +1113,42 @@ describe('resizable directive', () => {
     expect(onComplete).to.have.been.calledOnce;
   });
 
-  it('should allow the resize cursor to be customised', async () => {
-    const fixture: ComponentFixture<TestComponent> = createComponent();
-    fixture.componentInstance.resizeCursors = { leftOrRight: 'col-resize' };
-    fixture.detectChanges();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousemove', elm, { clientX: 100, clientY: 300 });
-    await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(elm.style.cursor).to.equal('col-resize');
-    fixture.destroy();
-  });
-
-  it('should allow the cursor precision to be customised', async () => {
-    const fixture: ComponentFixture<TestComponent> = createComponent();
-    fixture.componentInstance.resizeCursorPrecision = 5;
-    fixture.detectChanges();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousemove', elm, { clientX: 96, clientY: 296 });
-    await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(elm.style.cursor).to.equal('col-resize');
-    fixture.destroy();
-  });
-
   it('should set the resize active class', async () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     fixture.detectChanges();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousemove', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousemove', handle, {
       clientX: 100,
       clientY: 210,
     });
     expect(elm.classList.contains('resize-active')).to.be.false;
     await delay(MOUSE_MOVE_THROTTLE_MS);
-    triggerDomEvent('mousedown', elm, {
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 210,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 101,
       clientY: 210,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
     expect(elm.classList.contains('resize-active')).to.be.true;
-    triggerDomEvent('mouseup', elm, {
+    triggerDomEvent('mouseup', handle, {
       clientX: 101,
       clientY: 210,
     });
     expect(elm.classList.contains('resize-active')).to.be.false;
   });
 
-  it('should set the resize edge classes', async () => {
-    const fixture: ComponentFixture<TestComponent> = createComponent();
-    fixture.detectChanges();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousemove', elm, { clientX: 100, clientY: 300 });
-    await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(elm.classList.contains('resize-left-hover')).to.be.true;
-    expect(elm.classList.contains('resize-top-hover')).to.be.false;
-    expect(elm.classList.contains('resize-right-hover')).to.be.false;
-    expect(elm.classList.contains('resize-bottom-hover')).to.be.false;
-    triggerDomEvent('mousemove', elm, { clientX: 50, clientY: 300 });
-    await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(elm.classList.contains('resize-left-hover')).to.be.false;
-    fixture.destroy();
-  });
-
   it('should add a class to the ghost element', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     fixture.detectChanges();
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
@@ -1264,12 +1161,18 @@ describe('resizable directive', () => {
   });
 
   describe('absolute positioning', () => {
-    let domEvents: any[];
+    let domEvents: Array<{
+      name: string;
+      data: { clientX: number; clientY: number };
+      style?: Record<string, string>;
+    }>;
+    let edge: string;
     beforeEach(() => {
       domEvents = [];
     });
 
     it('should have the same top/left/height when resize from the right', () => {
+      edge = 'right';
       domEvents.push({
         name: 'mousedown',
         data: {
@@ -1292,6 +1195,7 @@ describe('resizable directive', () => {
     });
 
     it('should have the same top/height when resize from the left', () => {
+      edge = 'left';
       domEvents.push({
         name: 'mousedown',
         data: {
@@ -1313,6 +1217,7 @@ describe('resizable directive', () => {
     });
 
     it('should have the same left/width when resize from the top', () => {
+      edge = 'top';
       domEvents.push({
         name: 'mousedown',
         data: {
@@ -1334,6 +1239,7 @@ describe('resizable directive', () => {
     });
 
     it('should have the same top/left/width when resize from the bottom', () => {
+      edge = 'bottom';
       domEvents.push({
         name: 'mousedown',
         data: {
@@ -1356,40 +1262,94 @@ describe('resizable directive', () => {
     });
 
     afterEach(() => {
-      const template: string = `
+      const template = `
         <div class="container">
          <div
           class="rectangle"
           [ngStyle]="style"
           mwlResizable
           [validateResize]="validate"
-          [resizeEdges]="resizeEdges"
           [enableGhostResize]="enableGhostResize"
           [resizeSnapGrid]="resizeSnapGrid"
           [resizeCursors]="resizeCursors"
-          [resizeCursorPrecision]="resizeCursorPrecision"
           [ghostElementPositioning]="ghostElementPositioning"
           (resizeStart)="resizeStart($event)"
           (resizing)="resizing($event)"
           (resizeEnd)="resizeEnd($event)">
-          </div>
+          <div
+            *ngIf="resizeEdges.top"
+            class="resize-handle-top"
+            mwlResizeHandle
+            [resizeEdges]="{ top: true }"
+          ></div>
+          <div
+            *ngIf="resizeEdges.left"
+            class="resize-handle-left"
+            mwlResizeHandle
+            [resizeEdges]="{ left: true }"
+          ></div>
+          <div
+            *ngIf="resizeEdges.right"
+            class="resize-handle-right"
+            mwlResizeHandle
+            [resizeEdges]="{ right: true }"
+          ></div>
+          <div
+            *ngIf="resizeEdges.bottom"
+            class="resize-handle-bottom"
+            mwlResizeHandle
+            [resizeEdges]="{ bottom: true }"
+          ></div>
+        </div>
       </div>
     `;
-      const styles: string[] = [
+      const styles = [
         `
-              .container {
-                -webkit-transform: scale3d(1, 1, 1);
-                position: relative;
-                top: 200px;
-                left: 200px;
-              }
-              .rectangle {
-                position: absolute;
-                top: 200px;
-                left: 100px;
-                width: 300px;
-                height: 150px;
-              }
+          .container {
+            -webkit-transform: scale3d(1, 1, 1);
+            position: relative;
+            top: 200px;
+            left: 200px;
+          }
+          .rectangle {
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            width: 300px;
+            height: 150px;
+          }
+
+          .resize-handle-top,
+          .resize-handle-bottom {
+            position: absolute;
+            height: 5px;
+            cursor: row-resize;
+            width: 100%;
+          }
+
+          .resize-handle-top {
+            top: 0;
+          }
+
+          .resize-handle-bottom {
+            bottom: 0;
+          }
+
+          .resize-handle-left,
+          .resize-handle-right {
+            position: absolute;
+            height: 100%;
+            cursor: col-resize;
+            width: 5px;
+          }
+
+          .resize-handle-left {
+            left: 0;
+          }
+
+          .resize-handle-right {
+            right: 0;
+          }
       `,
       ];
 
@@ -1403,7 +1363,10 @@ describe('resizable directive', () => {
       const elm: HTMLElement =
         fixture.componentInstance.resizable.elm.nativeElement;
       domEvents.forEach((event) => {
-        triggerDomEvent(event.name, elm, event.data);
+        const handleElem: HTMLElement = fixture.nativeElement.querySelector(
+          '.resize-handle-' + edge
+        );
+        triggerDomEvent(event.name, handleElem, event.data);
 
         const clonedNode: HTMLElement = (elm.parentElement as HTMLElement)
           .children[1] as HTMLElement;
@@ -1413,7 +1376,7 @@ describe('resizable directive', () => {
         if (event.style) {
           Object.keys(event.style).forEach((styleKey) => {
             expect((clonedNode['style'] as any)[styleKey]).to.equal(
-              event.style[styleKey]
+              event.style?.[styleKey]
             );
           });
         }
@@ -1441,7 +1404,7 @@ describe('resizable directive', () => {
     `;
     const fixture: ComponentFixture<TestComponent> = createComponent(template);
 
-    const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
+    const elm = fixture.componentInstance.resizable.elm.nativeElement;
     fixture.componentInstance.showResizeHandle = true;
     fixture.detectChanges();
     triggerDomEvent('mousedown', elm.querySelector('.resize-handle'), {
@@ -1468,17 +1431,18 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 101,
       clientY: 200,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
-    expect(document.body.style.cursor).to.equal('nw-resize');
-    triggerDomEvent('mouseup', elm, {
+    expect(document.body.style.cursor).to.equal('col-resize');
+    triggerDomEvent('mouseup', handle, {
       clientX: 101,
       clientY: 200,
     });
@@ -1490,14 +1454,14 @@ describe('resizable directive', () => {
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
     elm.style.transform = 'translate(10px, 20px)';
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 110,
       clientY: 220,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1515,14 +1479,14 @@ describe('resizable directive', () => {
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
     elm.style.transform = 'translate(-10px, -20px)';
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 90,
       clientY: 180,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1540,14 +1504,14 @@ describe('resizable directive', () => {
     const elm: HTMLElement =
       fixture.componentInstance.resizable.elm.nativeElement;
     elm.style.transform = 'translate3d(10px, 20px, 0px)';
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    triggerDomEvent('mousedown', handle, {
       clientX: 110,
       clientY: 220,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1562,9 +1526,8 @@ describe('resizable directive', () => {
 
   it('should not allow negative resizes', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-right');
+    triggerDomEvent('mousedown', handle, {
       clientX: 400,
       clientY: 205,
     });
@@ -1581,7 +1544,7 @@ describe('resizable directive', () => {
         bottom: 350,
       },
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 50,
       clientY: 205,
     });
@@ -1592,9 +1555,8 @@ describe('resizable directive', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
     fixture.componentInstance.allowNegativeResizes = true;
     fixture.detectChanges();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const handle = fixture.nativeElement.querySelector('.resize-handle-right');
+    triggerDomEvent('mousedown', handle, {
       clientX: 400,
       clientY: 205,
     });
@@ -1611,7 +1573,7 @@ describe('resizable directive', () => {
         bottom: 350,
       },
     });
-    triggerDomEvent('mousemove', elm, {
+    triggerDomEvent('mousemove', handle, {
       clientX: 50,
       clientY: 205,
     });
@@ -1636,21 +1598,26 @@ describe('resizable directive', () => {
        class="rectangle"
         [ngStyle]="style"
         mwlResizable
-        [resizeEdges]="resizeEdges"
         [enableGhostResize]="enableGhostResize"
       >
         <canvas id="canvas"></canvas>
+        <div
+          class="resize-handle-left"
+          mwlResizeHandle
+          [resizeEdges]="{ left: true }"
+        ></div>
       </div>
     `;
+
     const fixture: ComponentFixture<TestComponent> = createComponent(template);
-    const div = fixture.debugElement.childNodes[0] as DebugElement;
-    const canvas = div.nativeElement.children[0];
+    const handle = fixture.nativeElement.querySelector('.resize-handle-left');
+    const canvas = fixture.nativeElement.querySelector('#canvas');
     const ctx = canvas.getContext('2d');
     ctx.fillText('Canvas text example', 0, 0);
     const canvasData = canvas.toDataURL();
 
-    const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
-    triggerDomEvent('mousedown', elm, {
+    const elm = fixture.componentInstance.resizable.elm.nativeElement;
+    triggerDomEvent('mousedown', handle, {
       clientX: 100,
       clientY: 200,
     });

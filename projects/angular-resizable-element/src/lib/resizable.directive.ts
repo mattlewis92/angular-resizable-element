@@ -8,13 +8,11 @@ import {
   EventEmitter,
   OnDestroy,
   NgZone,
-  OnChanges,
-  SimpleChanges,
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Subject, Observable, Observer, merge, EMPTY } from 'rxjs';
+import { Subject, Observable, Observer, merge } from 'rxjs';
 import {
   map,
   mergeMap,
@@ -23,9 +21,6 @@ import {
   pairwise,
   take,
   share,
-  auditTime,
-  switchMap,
-  startWith,
   tap,
 } from 'rxjs/operators';
 import { Edges } from './interfaces/edges.interface';
@@ -43,15 +38,6 @@ interface PointerEventCoordinate {
 interface Coordinate {
   x: number;
   y: number;
-}
-
-function isNumberCloseTo(
-  value1: number,
-  value2: number,
-  precision: number = 3
-): boolean {
-  const diff: number = Math.abs(value1 - value2);
-  return diff < precision;
 }
 
 function getNewBoundingRectangle(
@@ -143,77 +129,6 @@ function getElementRect(
   }
 }
 
-function isWithinBoundingY({
-  clientY,
-  rect,
-}: {
-  clientY: number;
-  rect: ClientRect;
-}): boolean {
-  return clientY >= rect.top && clientY <= rect.bottom;
-}
-
-function isWithinBoundingX({
-  clientX,
-  rect,
-}: {
-  clientX: number;
-  rect: ClientRect;
-}): boolean {
-  return clientX >= rect.left && clientX <= rect.right;
-}
-
-function getResizeEdges({
-  clientX,
-  clientY,
-  elm,
-  allowedEdges,
-  cursorPrecision,
-}: {
-  clientX: number;
-  clientY: number;
-  elm: ElementRef;
-  allowedEdges: Edges;
-  cursorPrecision: number;
-}): Edges {
-  const elmPosition: ClientRect = elm.nativeElement.getBoundingClientRect();
-  const edges: Edges = {};
-
-  if (
-    allowedEdges.left &&
-    isNumberCloseTo(clientX, elmPosition.left, cursorPrecision) &&
-    isWithinBoundingY({ clientY, rect: elmPosition })
-  ) {
-    edges.left = true;
-  }
-
-  if (
-    allowedEdges.right &&
-    isNumberCloseTo(clientX, elmPosition.right, cursorPrecision) &&
-    isWithinBoundingY({ clientY, rect: elmPosition })
-  ) {
-    edges.right = true;
-  }
-
-  if (
-    allowedEdges.top &&
-    isNumberCloseTo(clientY, elmPosition.top, cursorPrecision) &&
-    isWithinBoundingX({ clientX, rect: elmPosition })
-  ) {
-    edges.top = true;
-  }
-
-  if (
-    allowedEdges.bottom &&
-    isNumberCloseTo(clientY, elmPosition.bottom, cursorPrecision) &&
-    isWithinBoundingX({ clientX, rect: elmPosition })
-  ) {
-    edges.bottom = true;
-  }
-
-  return edges;
-}
-
 export interface ResizeCursors {
   topLeft: string;
   topRight: string;
@@ -267,10 +182,6 @@ function getEdgesDiff({
 }
 
 const RESIZE_ACTIVE_CLASS: string = 'resize-active';
-const RESIZE_LEFT_HOVER_CLASS: string = 'resize-left-hover';
-const RESIZE_RIGHT_HOVER_CLASS: string = 'resize-right-hover';
-const RESIZE_TOP_HOVER_CLASS: string = 'resize-top-hover';
-const RESIZE_BOTTOM_HOVER_CLASS: string = 'resize-bottom-hover';
 const RESIZE_GHOST_ELEMENT_CLASS: string = 'resize-ghost-element';
 
 export const MOUSE_MOVE_THROTTLE_MS: number = 50;
@@ -295,17 +206,11 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
   selector: '[mwlResizable]',
   exportAs: 'mwlResizable',
 })
-export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
+export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * A function that will be called before each resize event. Return `true` to allow the resize event to propagate or `false` to cancel it
    */
   @Input() validateResize: (resizeEvent: ResizeEvent) => boolean;
-
-  /**
-   * The edges that an element can be resized from. Pass an object like `{top: true, bottom: false}`. By default no edges can be resized.
-   * @deprecated use a resize handle instead that positions itself to the side of the element you would like to resize
-   */
-  @Input() resizeEdges: Edges = {};
 
   /**
    * Set to `true` to enable a temporary resizing effect of the element in between the `resizeStart` and `resizeEnd` events.
@@ -323,12 +228,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
    * The mouse cursors that will be set on the resize edges
    */
   @Input() resizeCursors: ResizeCursors = DEFAULT_RESIZE_CURSORS;
-
-  /**
-   * Mouse over thickness to active cursor.
-   * @deprecated invalid when you migrate to use resize handles instead of setting resizeEdges on the element
-   */
-  @Input() resizeCursorPrecision: number = 3;
 
   /**
    * Define the positioning of the ghost element (can be fixed or absolute)
@@ -391,8 +290,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   private pointerEventListeners: PointerEventListeners;
 
   private destroy$ = new Subject<void>();
-
-  private resizeEdges$ = new Subject<Edges>();
 
   /**
    * @hidden
@@ -460,58 +357,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
         ...this.resizeCursors,
       };
     };
-
-    this.resizeEdges$
-      .pipe(
-        startWith(this.resizeEdges),
-        map(() => {
-          return (
-            this.resizeEdges &&
-            Object.keys(this.resizeEdges).some(
-              (edge) => !!this.resizeEdges[edge]
-            )
-          );
-        }),
-        switchMap((legacyResizeEdgesEnabled) =>
-          legacyResizeEdgesEnabled ? mousemove$ : EMPTY
-        ),
-        auditTime(this.mouseMoveThrottleMS),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(({ clientX, clientY }) => {
-        const resizeEdges: Edges = getResizeEdges({
-          clientX,
-          clientY,
-          elm: this.elm,
-          allowedEdges: this.resizeEdges,
-          cursorPrecision: this.resizeCursorPrecision,
-        });
-        const resizeCursors = getResizeCursors();
-        if (!currentResize) {
-          const cursor = getResizeCursor(resizeEdges, resizeCursors);
-          this.renderer.setStyle(this.elm.nativeElement, 'cursor', cursor);
-        }
-        this.setElementClass(
-          this.elm,
-          RESIZE_LEFT_HOVER_CLASS,
-          resizeEdges.left === true
-        );
-        this.setElementClass(
-          this.elm,
-          RESIZE_RIGHT_HOVER_CLASS,
-          resizeEdges.right === true
-        );
-        this.setElementClass(
-          this.elm,
-          RESIZE_TOP_HOVER_CLASS,
-          resizeEdges.top === true
-        );
-        this.setElementClass(
-          this.elm,
-          RESIZE_BOTTOM_HOVER_CLASS,
-          resizeEdges.bottom === true
-        );
-      });
 
     const mousedrag: Observable<any> = mousedown$
       .pipe(
@@ -692,20 +537,9 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
 
     mousedown$
       .pipe(
-        map(({ clientX, clientY, edges }) => {
-          return (
-            edges ||
-            getResizeEdges({
-              clientX,
-              clientY,
-              elm: this.elm,
-              allowedEdges: this.resizeEdges,
-              cursorPrecision: this.resizeCursorPrecision,
-            })
-          );
-        })
-      )
-      .pipe(
+        map(({ edges }) => {
+          return edges || {};
+        }),
         filter((edges: Edges) => {
           return Object.keys(edges).length > 0;
         }),
@@ -817,15 +651,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
   /**
    * @hidden
    */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.resizeEdges) {
-      this.resizeEdges$.next(this.resizeEdges);
-    }
-  }
-
-  /**
-   * @hidden
-   */
   ngOnDestroy(): void {
     // browser check for angular universal, because it doesn't know what document is
     if (isPlatformBrowser(this.platformId)) {
@@ -834,7 +659,6 @@ export class ResizableDirective implements OnInit, OnChanges, OnDestroy {
     this.mousedown.complete();
     this.mouseup.complete();
     this.mousemove.complete();
-    this.resizeEdges$.complete();
     this.destroy$.next();
   }
 
