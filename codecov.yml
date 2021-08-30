@@ -1,0 +1,3 @@
+ignore:
+  - 'projects/angular-resizable-element/src/test.ts'
+  - 'projects/angular-resizable-element/src/test/polyfills.ts'
