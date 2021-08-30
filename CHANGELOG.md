@@ -1,6 +1,30 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [4.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v3.4.0...v4.0.0) (2021-08-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **mwlResizable:** the `resizeEdges` and `resizeCursorPrecision` inputs have been removed from the `mwlResizable` directive.
+
+To migrate, please use the `mwlResizeHandle` directive instead (see the readme for a full example)
+* angular 10 or higher is now required to use this package
+
+### Features
+
+* **mwlResizable:** remove deprecated `resizeEdges` and `resizeCursorPrecision` inputs ([58c954e](https://github.com/mattlewis92/angular-resizable-element/commit/58c954ed6013ea169e637592a571e17913fd56ed))
+
+
+### Bug Fixes
+
+* copy canvas when using `enableGhostResize` ([#129](https://github.com/mattlewis92/angular-resizable-element/issues/129)) ([d65c257](https://github.com/mattlewis92/angular-resizable-element/commit/d65c2572681cb05cbfc55a1fbf4b1bca2a0e93a4))
+
+
+### build
+
+* migrate to the angular cli ([21eca11](https://github.com/mattlewis92/angular-resizable-element/commit/21eca1101ad063c223599cf016124f50110353a1)), closes [#125](https://github.com/mattlewis92/angular-resizable-element/issues/125)
 
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/mattlewis92/angular-resizable-element/compare/v3.3.5...v3.4.0) (2021-06-02)
