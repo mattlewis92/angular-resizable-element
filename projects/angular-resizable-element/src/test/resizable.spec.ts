@@ -2,15 +2,15 @@
 import { Component, DebugElement, ElementRef, ViewChild } from '@angular/core';
 import {
   MOUSE_MOVE_THROTTLE_MS,
-  ResizableDirective
-} from '../src/resizable.directive';
-import { Edges } from '../src/interfaces/edges.interface';
-import { ResizableModule, ResizeEvent } from '../src';
+  ResizableDirective,
+} from '../lib/resizable.directive';
+import { Edges } from '../lib/interfaces/edges.interface';
+import { ResizableModule, ResizeEvent } from '../public-api';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('resizable directive', () => {
   @Component({
@@ -23,7 +23,7 @@ describe('resizable directive', () => {
           width: 300px;
           height: 150px;
         }
-      `
+      `,
     ],
     template: `
       <div
@@ -42,7 +42,7 @@ describe('resizable directive', () => {
         (resizing)="resizing($event)"
         (resizeEnd)="resizeEnd($event)"
       ></div>
-    `
+    `,
   })
   class TestComponent {
     @ViewChild(ResizableDirective) resizable: ResizableDirective;
@@ -56,7 +56,7 @@ describe('resizable directive', () => {
       top: true,
       bottom: true,
       left: true,
-      right: true
+      right: true,
     };
     enableGhostResize: boolean = true;
     resizeSnapGrid: object = {};
@@ -81,7 +81,7 @@ describe('resizable directive', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ResizableModule],
-      declarations: [TestComponent]
+      declarations: [TestComponent],
     });
   });
 
@@ -99,11 +99,10 @@ describe('resizable directive', () => {
       if (styles) {
         TestBed.overrideComponent(TestComponent, { set: { styles } });
       }
-      const fixture: ComponentFixture<TestComponent> = TestBed.createComponent(
-        TestComponent
-      );
+      const fixture: ComponentFixture<TestComponent> =
+        TestBed.createComponent(TestComponent);
       fixture.detectChanges();
-      document.body.appendChild(fixture.nativeElement.children[0]);
+      document.body.appendChild(fixture.nativeElement);
       component = fixture;
       return fixture;
     };
@@ -124,10 +123,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 150,
-            clientY: 200
+            clientY: 200,
           },
-          cursor: 'row-resize'
-        }
+          cursor: 'row-resize',
+        },
       ];
     });
 
@@ -136,17 +135,17 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 150,
-            clientY: 200
+            clientY: 200,
           },
-          cursor: 'row-resize'
+          cursor: 'row-resize',
         },
         {
           coords: {
             clientX: 150,
-            clientY: 197
+            clientY: 197,
           },
-          cursor: ''
-        }
+          cursor: '',
+        },
       ];
     });
 
@@ -155,10 +154,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 150,
-            clientY: 350
+            clientY: 350,
           },
-          cursor: 'row-resize'
-        }
+          cursor: 'row-resize',
+        },
       ];
     });
 
@@ -167,10 +166,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 100,
-            clientY: 300
+            clientY: 300,
           },
-          cursor: 'col-resize'
-        }
+          cursor: 'col-resize',
+        },
       ];
     });
 
@@ -179,10 +178,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 400,
-            clientY: 300
+            clientY: 300,
           },
-          cursor: 'col-resize'
-        }
+          cursor: 'col-resize',
+        },
       ];
     });
 
@@ -191,10 +190,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 100,
-            clientY: 200
+            clientY: 200,
           },
-          cursor: 'nw-resize'
-        }
+          cursor: 'nw-resize',
+        },
       ];
     });
 
@@ -203,10 +202,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 400,
-            clientY: 200
+            clientY: 200,
           },
-          cursor: 'ne-resize'
-        }
+          cursor: 'ne-resize',
+        },
       ];
     });
 
@@ -215,10 +214,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 100,
-            clientY: 350
+            clientY: 350,
           },
-          cursor: 'sw-resize'
-        }
+          cursor: 'sw-resize',
+        },
       ];
     });
 
@@ -227,10 +226,10 @@ describe('resizable directive', () => {
         {
           coords: {
             clientX: 400,
-            clientY: 350
+            clientY: 350,
           },
-          cursor: 'se-resize'
-        }
+          cursor: 'se-resize',
+        },
       ];
     });
 
@@ -259,14 +258,14 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 150,
-            clientY: 200
-          }
-        }
+            clientY: 200,
+          },
+        },
       ];
       spyName = 'resizeStart';
       expectedEvent = {
         edges: {
-          top: 0
+          top: 0,
         },
         rectangle: {
           top: 200,
@@ -274,8 +273,8 @@ describe('resizable directive', () => {
           width: 300,
           height: 150,
           right: 400,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -285,21 +284,21 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 150,
-            clientY: 200
-          }
+            clientY: 200,
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 150,
-            clientY: 199
-          }
-        }
+            clientY: 199,
+          },
+        },
       ];
       spyName = 'resizing';
       expectedEvent = {
         edges: {
-          top: -1
+          top: -1,
         },
         rectangle: {
           top: 199,
@@ -307,8 +306,8 @@ describe('resizable directive', () => {
           width: 300,
           height: 151,
           right: 400,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -318,47 +317,47 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 150,
-            clientY: 200
-          }
+            clientY: 200,
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 150,
-            clientY: 199
+            clientY: 199,
           },
           style: {
             top: '199px',
             left: '100px',
             width: '300px',
-            height: '151px'
-          }
+            height: '151px',
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 150,
-            clientY: 198
+            clientY: 198,
           },
           style: {
             top: '198px',
             left: '100px',
             width: '300px',
-            height: '152px'
-          }
+            height: '152px',
+          },
         },
         {
           name: 'mouseup',
           data: {
             clientX: 150,
-            clientY: 198
-          }
-        }
+            clientY: 198,
+          },
+        },
       ];
       spyName = 'resizeEnd';
       expectedEvent = {
         edges: {
-          top: -2
+          top: -2,
         },
         rectangle: {
           top: 198,
@@ -366,8 +365,8 @@ describe('resizable directive', () => {
           width: 300,
           height: 152,
           right: 400,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -377,47 +376,47 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 100,
-            clientY: 205
-          }
+            clientY: 205,
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 99,
-            clientY: 205
+            clientY: 205,
           },
           style: {
             top: '200px',
             left: '99px',
             width: '301px',
-            height: '150px'
-          }
+            height: '150px',
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 98,
-            clientY: 205
+            clientY: 205,
           },
           style: {
             top: '200px',
             left: '98px',
             width: '302px',
-            height: '150px'
-          }
+            height: '150px',
+          },
         },
         {
           name: 'mouseup',
           data: {
             clientX: 98,
-            clientY: 205
-          }
-        }
+            clientY: 205,
+          },
+        },
       ];
       spyName = 'resizeEnd';
       expectedEvent = {
         edges: {
-          left: -2
+          left: -2,
         },
         rectangle: {
           top: 200,
@@ -425,8 +424,8 @@ describe('resizable directive', () => {
           width: 302,
           height: 150,
           right: 400,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -436,47 +435,47 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 150,
-            clientY: 350
-          }
+            clientY: 350,
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 150,
-            clientY: 351
+            clientY: 351,
           },
           style: {
             top: '200px',
             left: '100px',
             width: '300px',
-            height: '151px'
-          }
+            height: '151px',
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 150,
-            clientY: 352
+            clientY: 352,
           },
           style: {
             top: '200px',
             left: '100px',
             width: '300px',
-            height: '152px'
-          }
+            height: '152px',
+          },
         },
         {
           name: 'mouseup',
           data: {
             clientX: 150,
-            clientY: 352
-          }
-        }
+            clientY: 352,
+          },
+        },
       ];
       spyName = 'resizeEnd';
       expectedEvent = {
         edges: {
-          bottom: 2
+          bottom: 2,
         },
         rectangle: {
           top: 200,
@@ -484,8 +483,8 @@ describe('resizable directive', () => {
           width: 300,
           height: 152,
           right: 400,
-          bottom: 352
-        }
+          bottom: 352,
+        },
       };
     });
 
@@ -495,47 +494,47 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 400,
-            clientY: 205
-          }
+            clientY: 205,
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 401,
-            clientY: 205
+            clientY: 205,
           },
           style: {
             top: '200px',
             left: '100px',
             width: '301px',
-            height: '150px'
-          }
+            height: '150px',
+          },
         },
         {
           name: 'mousemove',
           data: {
             clientX: 402,
-            clientY: 205
+            clientY: 205,
           },
           style: {
             top: '200px',
             left: '100px',
             width: '302px',
-            height: '150px'
-          }
+            height: '150px',
+          },
         },
         {
           name: 'mouseup',
           data: {
             clientX: 402,
-            clientY: 205
-          }
-        }
+            clientY: 205,
+          },
+        },
       ];
       spyName = 'resizeEnd';
       expectedEvent = {
         edges: {
-          right: 2
+          right: 2,
         },
         rectangle: {
           top: 200,
@@ -543,8 +542,8 @@ describe('resizable directive', () => {
           width: 302,
           height: 150,
           right: 402,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -552,7 +551,7 @@ describe('resizable directive', () => {
       const fixture: ComponentFixture<TestComponent> = createComponent();
       const elm: HTMLElement =
         fixture.componentInstance.resizable.elm.nativeElement;
-      domEvents.forEach(event => {
+      domEvents.forEach((event) => {
         triggerDomEvent(event.name, elm, event.data);
         if (event.name !== 'mouseup') {
           expect((elm.nextSibling as HTMLElement).style.position).to.equal(
@@ -560,7 +559,7 @@ describe('resizable directive', () => {
           );
         }
         if (event.style) {
-          Object.keys(event.style).forEach(styleKey => {
+          Object.keys(event.style).forEach((styleKey) => {
             expect((elm.nextSibling as any).style[styleKey]).to.equal(
               event.style[styleKey]
             );
@@ -584,14 +583,14 @@ describe('resizable directive', () => {
           name: 'mousedown',
           data: {
             clientX: 150,
-            clientY: 200
-          }
-        }
+            clientY: 200,
+          },
+        },
       ];
       spyName = 'resizeStart';
       expectedEvent = {
         edges: {
-          right: 0
+          right: 0,
         },
         rectangle: {
           top: 200,
@@ -599,8 +598,8 @@ describe('resizable directive', () => {
           width: 300,
           height: 150,
           right: 400,
-          bottom: 350
-        }
+          bottom: 350,
+        },
       };
     });
 
@@ -623,13 +622,12 @@ describe('resizable directive', () => {
           [resizeEdges]="{right: true}">
         </span>
     `;
-      const fixture: ComponentFixture<TestComponent> = createComponent(
-        template
-      );
+      const fixture: ComponentFixture<TestComponent> =
+        createComponent(template);
       const handleElem: HTMLElement =
         fixture.componentInstance.handle.nativeElement;
 
-      domEvents.forEach(event => {
+      domEvents.forEach((event) => {
         triggerDomEvent(event.name, handleElem, event.data);
       });
 
@@ -645,19 +643,19 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 10,
-      clientY: 20
+      clientY: 20,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 11,
-      clientY: 20
+      clientY: 20,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 12,
-      clientY: 20
+      clientY: 20,
     });
     triggerDomEvent('mouseup', elm, {
       clientX: 12,
-      clientY: 20
+      clientY: 20,
     });
     expect(fixture.componentInstance.resizeStart).not.to.have.been.called;
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
@@ -670,11 +668,11 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
-        left: 0
+        left: 0,
       },
       rectangle: {
         top: 200,
@@ -682,27 +680,27 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 205
+      clientY: 205,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 98,
-      clientY: 205
+      clientY: 205,
     });
     expect((elm.nextSibling as HTMLElement).style.width).to.equal('302px');
     fixture.componentInstance.resizeEnd.resetHistory();
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeEnd).not.to.have.been.called;
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
-        left: 0
+        left: 0,
       },
       rectangle: {
         top: 200,
@@ -710,20 +708,20 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 101,
-      clientY: 205
+      clientY: 205,
     });
     triggerDomEvent('mouseup', elm, {
       clientX: 101,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeEnd).to.have.been.calledWith({
       edges: {
-        left: 1
+        left: 1,
       },
       rectangle: {
         top: 200,
@@ -731,8 +729,8 @@ describe('resizable directive', () => {
         width: 299,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -742,7 +740,7 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     expect((elm.nextSibling as HTMLElement).style.width).to.equal('300px');
     expect((elm.nextSibling as HTMLElement).style.height).to.equal('150px');
@@ -754,21 +752,21 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 199
+      clientY: 199,
     });
     let elmStyle: CSSStyleDeclaration = getComputedStyle(elm);
     expect(elmStyle.visibility).to.equal('hidden');
     triggerDomEvent('mouseup', elm, {
       clientX: 99,
-      clientY: 199
+      clientY: 199,
     });
     elmStyle = getComputedStyle(elm);
     expect(elmStyle.visibility).to.equal('visible');
@@ -780,20 +778,20 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mouseup', elm, {
       clientX: 99,
-      clientY: 200
+      clientY: 200,
     });
     fixture.componentInstance.resizing.resetHistory();
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 199
+      clientY: 199,
     });
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
   });
@@ -804,19 +802,19 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 210
+      clientY: 210,
     });
     triggerDomEvent('mouseup', elm, {
       clientX: 500,
-      clientY: 210
+      clientY: 210,
     });
     expect(fixture.componentInstance.resizeEnd).to.have.been.calledWith({
       edges: {
-        left: -1
+        left: -1,
       },
       rectangle: {
         top: 200,
@@ -824,8 +822,8 @@ describe('resizable directive', () => {
         width: 301,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -835,16 +833,16 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     fixture.componentInstance.validate.returns(true);
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 210
+      clientY: 210,
     });
     const firstResizeEvent: ResizeEvent = {
       edges: {
-        left: -1
+        left: -1,
       },
       rectangle: {
         top: 200,
@@ -852,8 +850,8 @@ describe('resizable directive', () => {
         width: 301,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     };
     expect(fixture.componentInstance.validate).to.have.been.calledWith(
       firstResizeEvent
@@ -866,11 +864,11 @@ describe('resizable directive', () => {
     fixture.componentInstance.resizing.resetHistory();
     triggerDomEvent('mousemove', elm, {
       clientX: 98,
-      clientY: 210
+      clientY: 210,
     });
     const secondResizeEvent: ResizeEvent = {
       edges: {
-        left: -2
+        left: -2,
       },
       rectangle: {
         top: 200,
@@ -878,8 +876,8 @@ describe('resizable directive', () => {
         width: 302,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     };
     expect(fixture.componentInstance.validate).to.have.been.calledWith(
       secondResizeEvent
@@ -887,7 +885,7 @@ describe('resizable directive', () => {
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
     triggerDomEvent('mouseup', elm, {
       clientX: 98,
-      clientY: 210
+      clientY: 210,
     });
     expect(fixture.componentInstance.resizeEnd).to.have.been.calledWith(
       firstResizeEvent
@@ -902,17 +900,17 @@ describe('resizable directive', () => {
     fixture.detectChanges();
     triggerDomEvent('mousemove', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
     expect(getComputedStyle(elm).cursor).to.equal('col-resize');
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
-        left: 0
+        left: 0,
       },
       rectangle: {
         top: 200,
@@ -920,8 +918,8 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -933,22 +931,22 @@ describe('resizable directive', () => {
     fixture.detectChanges();
     triggerDomEvent('mousemove', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     expect(getComputedStyle(elm).cursor).to.equal('auto');
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     expect(fixture.componentInstance.resizeStart).not.to.have.been.called;
     triggerDomEvent('mousemove', elm, {
       clientX: 101,
-      clientY: 210
+      clientY: 210,
     });
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
     triggerDomEvent('mouseup', elm, {
       clientX: 101,
-      clientY: 210
+      clientY: 210,
     });
     expect(fixture.componentInstance.resizeEnd).not.to.have.been.called;
   });
@@ -975,12 +973,12 @@ describe('resizable directive', () => {
     const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm.querySelector('.resize-handle'), {
       clientX: 395,
-      clientY: 345
+      clientY: 345,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         bottom: 0,
-        right: 0
+        right: 0,
       },
       rectangle: {
         top: 200,
@@ -988,17 +986,17 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm.querySelector('.resize-handle'), {
       clientX: 396,
-      clientY: 345
+      clientY: 345,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledWith({
       edges: {
         bottom: 0,
-        right: 1
+        right: 1,
       },
       rectangle: {
         top: 200,
@@ -1006,17 +1004,17 @@ describe('resizable directive', () => {
         width: 301,
         height: 150,
         right: 401,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mouseup', elm.querySelector('.resize-handle'), {
       clientX: 396,
-      clientY: 345
+      clientY: 345,
     });
     expect(fixture.componentInstance.resizeEnd).to.have.been.calledWith({
       edges: {
         bottom: 0,
-        right: 1
+        right: 1,
       },
       rectangle: {
         top: 200,
@@ -1024,8 +1022,8 @@ describe('resizable directive', () => {
         width: 301,
         height: 150,
         right: 401,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1037,11 +1035,11 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 201
+      clientY: 201,
     });
     const style: CSSStyleDeclaration = getComputedStyle(elm);
     expect(style.position).to.equal('relative');
@@ -1059,15 +1057,15 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 205
+      clientY: 205,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledWith({
       edges: {
-        left: 0
+        left: 0,
       },
       rectangle: {
         top: 200,
@@ -1075,21 +1073,21 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 95,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledOnce;
     triggerDomEvent('mousemove', elm, {
       clientX: 89,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledWith({
       edges: {
-        left: -10
+        left: -10,
       },
       rectangle: {
         top: 200,
@@ -1097,17 +1095,17 @@ describe('resizable directive', () => {
         width: 310,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledTwice;
     triggerDomEvent('mouseup', elm, {
       clientX: 89,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeEnd).to.have.been.calledWith({
       edges: {
-        left: -10
+        left: -10,
       },
       rectangle: {
         top: 200,
@@ -1115,8 +1113,8 @@ describe('resizable directive', () => {
         width: 310,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1127,11 +1125,11 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 100
+      clientY: 100,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 99,
-      clientY: 101
+      clientY: 101,
     });
     const style: CSSStyleDeclaration = getComputedStyle(elm);
     expect(style.position).to.equal('relative');
@@ -1211,23 +1209,23 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousemove', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     expect(elm.classList.contains('resize-active')).to.be.false;
     await delay(MOUSE_MOVE_THROTTLE_MS);
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 210
+      clientY: 210,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 101,
-      clientY: 210
+      clientY: 210,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
     expect(elm.classList.contains('resize-active')).to.be.true;
     triggerDomEvent('mouseup', elm, {
       clientX: 101,
-      clientY: 210
+      clientY: 210,
     });
     expect(elm.classList.contains('resize-active')).to.be.false;
   });
@@ -1256,7 +1254,7 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     expect(elm.classList.contains('resize-ghost-element')).to.be.false;
     expect(
@@ -1277,20 +1275,20 @@ describe('resizable directive', () => {
         name: 'mousedown',
         data: {
           clientX: 600,
-          clientY: 405
-        }
+          clientY: 405,
+        },
       });
       domEvents.push({
         name: 'mousemove',
         data: {
           clientX: 620,
-          clientY: 405
+          clientY: 405,
         },
         style: {
           top: '200px',
           left: '100px',
-          height: '150px'
-        }
+          height: '150px',
+        },
       });
     });
 
@@ -1299,19 +1297,19 @@ describe('resizable directive', () => {
         name: 'mousedown',
         data: {
           clientX: 300,
-          clientY: 405
-        }
+          clientY: 405,
+        },
       });
       domEvents.push({
         name: 'mousemove',
         data: {
           clientX: 280,
-          clientY: 405
+          clientY: 405,
         },
         style: {
           top: '200px',
-          height: '150px'
-        }
+          height: '150px',
+        },
       });
     });
 
@@ -1320,19 +1318,19 @@ describe('resizable directive', () => {
         name: 'mousedown',
         data: {
           clientX: 400,
-          clientY: 400
-        }
+          clientY: 400,
+        },
       });
       domEvents.push({
         name: 'mousemove',
         data: {
           clientX: 400,
-          clientY: 280
+          clientY: 280,
         },
         style: {
           left: '100px',
-          width: '300px'
-        }
+          width: '300px',
+        },
       });
     });
 
@@ -1341,20 +1339,20 @@ describe('resizable directive', () => {
         name: 'mousedown',
         data: {
           clientX: 400,
-          clientY: 550
-        }
+          clientY: 550,
+        },
       });
       domEvents.push({
         name: 'mousemove',
         data: {
           clientX: 400,
-          clientY: 570
+          clientY: 570,
         },
         style: {
           top: '200px',
           left: '100px',
-          width: '300px'
-        }
+          width: '300px',
+        },
       });
     });
 
@@ -1393,7 +1391,7 @@ describe('resizable directive', () => {
                 width: 300px;
                 height: 150px;
               }
-      `
+      `,
       ];
 
       const fixture: ComponentFixture<TestComponent> = createComponent(
@@ -1405,7 +1403,7 @@ describe('resizable directive', () => {
 
       const elm: HTMLElement =
         fixture.componentInstance.resizable.elm.nativeElement;
-      domEvents.forEach(event => {
+      domEvents.forEach((event) => {
         triggerDomEvent(event.name, elm, event.data);
 
         const clonedNode: HTMLElement = (elm.parentElement as HTMLElement)
@@ -1414,7 +1412,7 @@ describe('resizable directive', () => {
           expect(clonedNode['style'].position).to.equal('absolute');
         }
         if (event.style) {
-          Object.keys(event.style).forEach(styleKey => {
+          Object.keys(event.style).forEach((styleKey) => {
             expect((clonedNode['style'] as any)[styleKey]).to.equal(
               event.style[styleKey]
             );
@@ -1449,12 +1447,12 @@ describe('resizable directive', () => {
     fixture.detectChanges();
     triggerDomEvent('mousedown', elm.querySelector('.resize-handle'), {
       clientX: 395,
-      clientY: 345
+      clientY: 345,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         bottom: 0,
-        right: 0
+        right: 0,
       },
       rectangle: {
         top: 200,
@@ -1462,8 +1460,8 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1473,17 +1471,17 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 101,
-      clientY: 200
+      clientY: 200,
     });
     await delay(MOUSE_MOVE_THROTTLE_MS);
     expect(document.body.style.cursor).to.equal('nw-resize');
     triggerDomEvent('mouseup', elm, {
       clientX: 101,
-      clientY: 200
+      clientY: 200,
     });
     expect(document.body.style.cursor).to.equal('');
   });
@@ -1495,12 +1493,12 @@ describe('resizable directive', () => {
     elm.style.transform = 'translate(10px, 20px)';
     triggerDomEvent('mousedown', elm, {
       clientX: 110,
-      clientY: 220
+      clientY: 220,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0
+        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1508,8 +1506,8 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1520,12 +1518,12 @@ describe('resizable directive', () => {
     elm.style.transform = 'translate(-10px, -20px)';
     triggerDomEvent('mousedown', elm, {
       clientX: 90,
-      clientY: 180
+      clientY: 180,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0
+        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1533,8 +1531,8 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1545,12 +1543,12 @@ describe('resizable directive', () => {
     elm.style.transform = 'translate3d(10px, 20px, 0px)';
     triggerDomEvent('mousedown', elm, {
       clientX: 110,
-      clientY: 220
+      clientY: 220,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
         left: 0,
-        top: 0
+        top: 0,
       },
       rectangle: {
         top: 200,
@@ -1558,8 +1556,8 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1569,11 +1567,11 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 400,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
-        right: 0
+        right: 0,
       },
       rectangle: {
         top: 200,
@@ -1581,12 +1579,12 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 50,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizing).not.to.have.been.called;
   });
@@ -1599,11 +1597,11 @@ describe('resizable directive', () => {
       fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 400,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizeStart).to.have.been.calledWith({
       edges: {
-        right: 0
+        right: 0,
       },
       rectangle: {
         top: 200,
@@ -1611,16 +1609,16 @@ describe('resizable directive', () => {
         width: 300,
         height: 150,
         right: 400,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
     triggerDomEvent('mousemove', elm, {
       clientX: 50,
-      clientY: 205
+      clientY: 205,
     });
     expect(fixture.componentInstance.resizing).to.have.been.calledWith({
       edges: {
-        right: -350
+        right: -350,
       },
       rectangle: {
         top: 200,
@@ -1628,8 +1626,8 @@ describe('resizable directive', () => {
         width: -50,
         height: 150,
         right: 50,
-        bottom: 350
-      }
+        bottom: 350,
+      },
     });
   });
 
@@ -1655,7 +1653,7 @@ describe('resizable directive', () => {
     const elm: any = fixture.componentInstance.resizable.elm.nativeElement;
     triggerDomEvent('mousedown', elm, {
       clientX: 100,
-      clientY: 200
+      clientY: 200,
     });
     const clonedDiv = elm.nextSibling as HTMLElement;
     const clonedCanvas = clonedDiv.children[0] as HTMLCanvasElement;

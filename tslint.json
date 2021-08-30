@@ -1,7 +1,0 @@
-{
-  "extends": "tslint-config-mwl",
-  "rules": {
-    "no-inferrable-types": false,
-    "no-unused-expression": false
-  }
-}

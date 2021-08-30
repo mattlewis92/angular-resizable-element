@@ -4,6 +4,6 @@ import { ResizeHandleDirective } from './resize-handle.directive';
 
 @NgModule({
   declarations: [ResizableDirective, ResizeHandleDirective],
-  exports: [ResizableDirective, ResizeHandleDirective]
+  exports: [ResizableDirective, ResizeHandleDirective],
 })
 export class ResizableModule {}

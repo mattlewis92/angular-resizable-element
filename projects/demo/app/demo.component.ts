@@ -1,6 +1,6 @@
 /* tslint:disable:max-inline-declarations */
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ResizeEvent } from '../src';
+import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'mwl-demo',
@@ -57,7 +57,7 @@ import { ResizeEvent } from '../src';
       .resize-handle-right {
         right: 0;
       }
-    `
+    `,
   ],
   template: `
     <div class="text-center">
@@ -95,7 +95,7 @@ import { ResizeEvent } from '../src';
         ></div>
       </div>
     </div>
-  `
+  `,
 })
 export class DemoComponent implements AfterViewInit {
   @ViewChild('canvas')
@@ -122,7 +122,7 @@ export class DemoComponent implements AfterViewInit {
       left: `${event.rectangle.left}px`,
       top: `${event.rectangle.top}px`,
       width: `${event.rectangle.width}px`,
-      height: `${event.rectangle.height}px`
+      height: `${event.rectangle.height}px`,
     };
   }
 
