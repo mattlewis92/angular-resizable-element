@@ -20,7 +20,7 @@ https://mattlewis92.github.io/angular-resizable-element/
 
 ## About
 
-An angular 10.0+ directive that allows an element to be dragged and resized
+An angular 12.0+ directive that allows an element to be dragged and resized
 
 ## Installation
 
