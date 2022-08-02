@@ -54,6 +54,9 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@commitlint/prompt": "^17.0.3",
     "@compodoc/compodoc": "^1.1.19",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
@@ -68,7 +71,6 @@
     "commitizen": "^4.2.5",
     "concurrently": "^7.3.0",
     "copyfiles": "^2.4.1",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.18.0",
     "husky": "^8.0.1",
     "karma": "^6.4.0",
@@ -86,7 +88,6 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "typescript": "~4.6.4",
-    "validate-commit-msg": "^2.14.0",
     "zone.js": "^0.11.7"
   },
   "peerDependencies": {
@@ -94,7 +95,12 @@
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "@commitlint/prompt"
     }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
