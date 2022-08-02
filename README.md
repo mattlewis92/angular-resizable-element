@@ -2,9 +2,9 @@
 
 [![Sponsorship](https://img.shields.io/badge/funding-github-%23EA4AAA)](https://github.com/users/mattlewis92/sponsorship)
 [![Build Status](https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml/badge.svg)](https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-resizable-element)
+[![codecov](https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/main/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-resizable-element)
 [![npm version](https://badge.fury.io/js/angular-resizable-element.svg)](http://badge.fury.io/js/angular-resizable-element)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/main/LICENSE)
 
 ## Demo
 
@@ -139,7 +139,7 @@ import { ResizableModule } from 'angular-resizable-element';
 class MyModule {}
 ```
 
-You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/master/demo/demo.component.ts).
+You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/main/projects/demo/app/demo.component.ts).
 
 ## Documentation
 
