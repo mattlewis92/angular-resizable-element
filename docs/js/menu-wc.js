@@ -1,6 +1,5 @@
 'use strict';
 
-
 customElements.define('compodoc-menu', class extends HTMLElement {
     constructor() {
         super();
@@ -49,6 +48,11 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <span class="icon ion-ios-list"></span>Dependencies
                                     </a>
                                 </li>
+                                <li class="link">
+                                    <a href="properties.html" data-type="chapter-link">
+                                        <span class="icon ion-ios-apps"></span>Properties
+                                    </a>
+                                </li>
                     </ul>
                 </li>
                     <li class="chapter modules">
@@ -65,13 +69,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/ResizableModule.html" data-type="entity-link" >ResizableModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-ResizableModule-1740ab20dbdc0b7f5391a6eb8412cc97"' : 'data-target="#xs-directives-links-module-ResizableModule-1740ab20dbdc0b7f5391a6eb8412cc97"' }>
+                                        'data-target="#directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' : 'data-target="#xs-directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-ResizableModule-1740ab20dbdc0b7f5391a6eb8412cc97"' :
-                                        'id="xs-directives-links-module-ResizableModule-1740ab20dbdc0b7f5391a6eb8412cc97"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' :
+                                        'id="xs-directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' }>
                                         <li class="link">
                                             <a href="directives/ResizableDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ResizableDirective</a>
                                         </li>

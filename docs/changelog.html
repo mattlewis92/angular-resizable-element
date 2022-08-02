@@ -9,7 +9,7 @@
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 	   <link rel="stylesheet" href="./styles/style.css">
-        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
 
@@ -33,8 +33,17 @@
 
 <h1 id="changelog">Changelog</h1>
 <p>All notable changes to this project will be documented in this file. See <a href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
-<h2 id="500-2021-12-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v4.0.0...v5.0.0">5.0.0</a> (2021-12-11)</h2>
+<h2 id="600-2022-08-02"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v5.0.0...v6.0.0">6.0.0</a> (2022-08-02)</h2>
 <h3 id="⚠-breaking-changes">⚠ BREAKING CHANGES</h3>
+<ul>
+<li>angular 14 or higher is now required to use this package</li>
+</ul>
+<h3 id="build">build</h3>
+<ul>
+<li>upgrade to angular 14 (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/180ab353b475962a2f932bf7ff67049cd5262e08">180ab35</a>)</li>
+</ul>
+<h2 id="500-2021-12-11"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v4.0.0...v5.0.0">5.0.0</a> (2021-12-11)</h2>
+<h3 id="⚠-breaking-changes-1">⚠ BREAKING CHANGES</h3>
 <ul>
 <li>angular 12 or higher is now required to use this package</li>
 </ul>
@@ -43,7 +52,7 @@
 <li>publish package in ivy partial compilation mode (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/d9ad08ce55ca92d2235584a14d950a160e43d48a">d9ad08c</a>)</li>
 </ul>
 <h2 id="400-2021-08-30"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v3.4.0...v4.0.0">4.0.0</a> (2021-08-30)</h2>
-<h3 id="⚠-breaking-changes-1">⚠ BREAKING CHANGES</h3>
+<h3 id="⚠-breaking-changes-2">⚠ BREAKING CHANGES</h3>
 <ul>
 <li><strong>mwlResizable:</strong> the <code>resizeEdges</code> and <code>resizeCursorPrecision</code> inputs have been removed from the <code>mwlResizable</code> directive.</li>
 </ul>
@@ -59,7 +68,7 @@
 <ul>
 <li>copy canvas when using <code>enableGhostResize</code> (<a href="https://github.com/mattlewis92/angular-resizable-element/issues/129">#129</a>) (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/d65c2572681cb05cbfc55a1fbf4b1bca2a0e93a4">d65c257</a>)</li>
 </ul>
-<h3 id="build">build</h3>
+<h3 id="build-1">build</h3>
 <ul>
 <li>migrate to the angular cli (<a href="https://github.com/mattlewis92/angular-resizable-element/commit/21eca1101ad063c223599cf016124f50110353a1">21eca11</a>), closes <a href="https://github.com/mattlewis92/angular-resizable-element/issues/125">#125</a></li>
 </ul>
@@ -363,9 +372,9 @@ for most users.</li>
 </ul>
 <p>The UMD entry point has changed to</p>
 <div><pre class="line-numbers"><code class="language-none">node_modules/angular-resizable-element/dist/umd/angular-resizable-element.js</code></pre></div><ul>
-<li>Before<div><pre class="line-numbers"><code class="language-none">(resize)=&quot;onResize($event)&quot;</code></pre></div></li>
+<li>Before</li>
 </ul>
-<p>After:</p>
+<div><pre class="line-numbers"><code class="language-none">(resize)=&quot;onResize($event)&quot;</code></pre></div><p>After:</p>
 <div><pre class="line-numbers"><code class="language-none">(resizing)=&quot;onResizing($event)&quot;</code></pre></div><p><a name="0.4.1"></a></p>
 <h2 id="041-2016-09-28"><a href="https://github.com/mattlewis92/angular-resizable-element/compare/v0.4.0...v0.4.1">0.4.1</a> (2016-09-28)</h2>
 <h3 id="bug-fixes-26">Bug Fixes</h3>
@@ -515,14 +524,16 @@ resizing. You can now re-enable it by setting <code>[enableResizeStyling]=&quot;
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -534,6 +545,15 @@ resizing. You can now re-enable it by setting <code>[enableResizeStyling]=&quot;
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
@@ -543,8 +563,8 @@ resizing. You can now re-enable it by setting <code>[enableResizeStyling]=&quot;
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       
-       <script type="module" src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/menu-wc.js" defer></script>
        <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
