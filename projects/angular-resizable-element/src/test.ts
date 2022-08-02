@@ -3,7 +3,6 @@
 import 'zone.js';
 import 'zone.js/testing';
 import 'zone.js/plugins/mocha-patch';
-import './test/polyfills';
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
