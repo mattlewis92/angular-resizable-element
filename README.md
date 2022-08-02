@@ -1,7 +1,7 @@
 # angular resizable element
 
 [![Sponsorship](https://img.shields.io/badge/funding-github-%23EA4AAA)](https://github.com/users/mattlewis92/sponsorship)
-[![Build Status](https://travis-ci.org/mattlewis92/angular-resizable-element.svg?branch=master)](https://travis-ci.org/mattlewis92/angular-resizable-element)
+[![Build Status](https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml/badge.svg)](https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/angular-resizable-element)
 [![npm version](https://badge.fury.io/js/angular-resizable-element.svg)](http://badge.fury.io/js/angular-resizable-element)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/master/LICENSE)
