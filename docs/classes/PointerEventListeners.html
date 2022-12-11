@@ -598,7 +598,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * The mouse cursors that will be set on the resize edges
    */
-  @Input() resizeCursors: ResizeCursors &#x3D; DEFAULT_RESIZE_CURSORS;
+  @Input() resizeCursors: Partial&lt;ResizeCursors&gt; &#x3D; DEFAULT_RESIZE_CURSORS;
 
   /**
    * Define the positioning of the ghost element (can be fixed or absolute)
