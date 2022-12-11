@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v6.0.2...v7.0.0) (2022-12-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* angular 15 or higher is now required to use this package
+
+### build
+
+* upgrade to angular 15 ([3c2c930](https://github.com/mattlewis92/angular-resizable-element/commit/3c2c930bae9757fb1ce55bc25059c1a9ed50ab98))
+
 ### [6.0.2](https://github.com/mattlewis92/angular-resizable-element/compare/v6.0.1...v6.0.2) (2022-12-11)
 
 
