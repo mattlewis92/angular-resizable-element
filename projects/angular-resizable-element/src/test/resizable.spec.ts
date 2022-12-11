@@ -9,118 +9,118 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-describe('resizable directive', () => {
-  @Component({
-    styles: [
-      `
-        .rectangle {
-          position: relative;
-          top: 200px;
-          left: 100px;
-          width: 300px;
-          height: 150px;
-        }
+@Component({
+  styles: [
+    `
+      .rectangle {
+        position: relative;
+        top: 200px;
+        left: 100px;
+        width: 300px;
+        height: 150px;
+      }
 
-        .resize-handle-top,
-        .resize-handle-bottom {
-          position: absolute;
-          height: 5px;
-          cursor: row-resize;
-          width: 100%;
-        }
+      .resize-handle-top,
+      .resize-handle-bottom {
+        position: absolute;
+        height: 5px;
+        cursor: row-resize;
+        width: 100%;
+      }
 
-        .resize-handle-top {
-          top: 0;
-        }
+      .resize-handle-top {
+        top: 0;
+      }
 
-        .resize-handle-bottom {
-          bottom: 0;
-        }
+      .resize-handle-bottom {
+        bottom: 0;
+      }
 
-        .resize-handle-left,
-        .resize-handle-right {
-          position: absolute;
-          height: 100%;
-          cursor: col-resize;
-          width: 5px;
-        }
+      .resize-handle-left,
+      .resize-handle-right {
+        position: absolute;
+        height: 100%;
+        cursor: col-resize;
+        width: 5px;
+      }
 
-        .resize-handle-left {
-          left: 0;
-        }
+      .resize-handle-left {
+        left: 0;
+      }
 
-        .resize-handle-right {
-          right: 0;
-        }
-      `,
-    ],
-    template: `
-      <div
-        class="rectangle"
-        [ngStyle]="style"
-        mwlResizable
-        [validateResize]="validate"
-        [enableGhostResize]="enableGhostResize"
-        [resizeSnapGrid]="resizeSnapGrid"
-        [resizeCursors]="resizeCursors"
-        [ghostElementPositioning]="ghostElementPositioning"
-        [allowNegativeResizes]="allowNegativeResizes"
-        (resizeStart)="resizeStart($event)"
-        (resizing)="resizing($event)"
-        (resizeEnd)="resizeEnd($event)"
-      >
-        <div
-          *ngIf="resizeEdges.top"
-          class="resize-handle-top"
-          mwlResizeHandle
-          [resizeEdges]="{ top: true }"
-        ></div>
-
-        <div
-          *ngIf="resizeEdges.left"
-          class="resize-handle-left"
-          mwlResizeHandle
-          [resizeEdges]="{ left: true }"
-        ></div>
-
-        <div
-          *ngIf="resizeEdges.right"
-          class="resize-handle-right"
-          mwlResizeHandle
-          [resizeEdges]="{ right: true }"
-        ></div>
-
-        <div
-          *ngIf="resizeEdges.bottom"
-          class="resize-handle-bottom"
-          mwlResizeHandle
-          [resizeEdges]="{ bottom: true }"
-        ></div>
-      </div>
+      .resize-handle-right {
+        right: 0;
+      }
     `,
-  })
-  class TestComponent {
-    @ViewChild(ResizableDirective) resizable: ResizableDirective;
-    @ViewChild('handle') handle: ElementRef;
-    style: object = {};
-    resizeStart: sinon.SinonSpy = sinon.spy();
-    resizing: sinon.SinonSpy = sinon.spy();
-    resizeEnd: sinon.SinonSpy = sinon.spy();
-    validate: sinon.SinonStub = sinon.stub().returns(true);
-    resizeEdges: Edges = {
-      top: true,
-      bottom: true,
-      left: true,
-      right: true,
-    };
-    enableGhostResize: boolean = true;
-    resizeSnapGrid: object = {};
-    resizeCursors: object = {};
-    ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
-    showResizeHandle = false;
-    allowNegativeResizes = false;
-  }
+  ],
+  template: `
+    <div
+      class="rectangle"
+      [ngStyle]="style"
+      mwlResizable
+      [validateResize]="validate"
+      [enableGhostResize]="enableGhostResize"
+      [resizeSnapGrid]="resizeSnapGrid"
+      [resizeCursors]="resizeCursors"
+      [ghostElementPositioning]="ghostElementPositioning"
+      [allowNegativeResizes]="allowNegativeResizes"
+      (resizeStart)="resizeStart($event)"
+      (resizing)="resizing($event)"
+      (resizeEnd)="resizeEnd($event)"
+    >
+      <div
+        *ngIf="resizeEdges.top"
+        class="resize-handle-top"
+        mwlResizeHandle
+        [resizeEdges]="{ top: true }"
+      ></div>
 
+      <div
+        *ngIf="resizeEdges.left"
+        class="resize-handle-left"
+        mwlResizeHandle
+        [resizeEdges]="{ left: true }"
+      ></div>
+
+      <div
+        *ngIf="resizeEdges.right"
+        class="resize-handle-right"
+        mwlResizeHandle
+        [resizeEdges]="{ right: true }"
+      ></div>
+
+      <div
+        *ngIf="resizeEdges.bottom"
+        class="resize-handle-bottom"
+        mwlResizeHandle
+        [resizeEdges]="{ bottom: true }"
+      ></div>
+    </div>
+  `,
+})
+class TestComponent {
+  @ViewChild(ResizableDirective) resizable: ResizableDirective;
+  @ViewChild('handle') handle: ElementRef;
+  style: object = {};
+  resizeStart: sinon.SinonSpy = sinon.spy();
+  resizing: sinon.SinonSpy = sinon.spy();
+  resizeEnd: sinon.SinonSpy = sinon.spy();
+  validate: sinon.SinonStub = sinon.stub().returns(true);
+  resizeEdges: Edges = {
+    top: true,
+    bottom: true,
+    left: true,
+    right: true,
+  };
+  enableGhostResize: boolean = true;
+  resizeSnapGrid: object = {};
+  resizeCursors: object = {};
+  ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
+  showResizeHandle = false;
+  allowNegativeResizes = false;
+}
+
+describe('resizable directive', () => {
   function triggerDomEvent(
     eventType: string,
     target: HTMLElement | Element,
