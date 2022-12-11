@@ -48,7 +48,7 @@
 <li><a href="#license">License</a></li>
 </ul>
 <h2 id="about">About</h2>
-<p>An angular 14.0+ directive that allows an element to be dragged and resized</p>
+<p>An angular 15.0+ directive that allows an element to be dragged and resized</p>
 <h2 id="installation">Installation</h2>
 <p>Install through npm:</p>
 <div><pre class="line-numbers"><code class="language-none">npm install angular-resizable-element</code></pre></div><p>Then use it in your app like so:</p>
@@ -162,15 +162,16 @@ class MyModule {}</code></pre></div><p>You may also find it useful to view the <
 <h2 id="development">Development</h2>
 <h3 id="prepare-your-environment">Prepare your environment</h3>
 <ul>
-<li>Install <a href="http://nodejs.org/">Node.js</a> and NPM (should come with)</li>
-<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
+<li>Install <a href="http://nodejs.org/">Node.js (&gt;=14.19.0 or &gt;=16.9.0)</a></li>
+<li>Install pnpm: <code>corepack enable</code></li>
+<li>Install local dev dependencies: <code>pnpm install</code> while current directory is this repo</li>
 </ul>
 <h3 id="development-server">Development server</h3>
-<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
+<p>Run <code>pnpm start</code> to start a development server on port 8000 with auto reload + tests.</p>
 <h3 id="testing">Testing</h3>
-<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
+<p>Run <code>pnpm test</code> to run tests once or <code>pnpm test:watch</code> to continually run tests.</p>
 <h3 id="release">Release</h3>
-<div><pre class="line-numbers"><code class="language-bash">npm run release</code></pre></div><h2 id="license">License</h2>
+<div><pre class="line-numbers"><code class="language-bash">pnpm release</code></pre></div><h2 id="license">License</h2>
 <p>MIT</p>
 
 
