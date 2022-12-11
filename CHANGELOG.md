@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.1](https://github.com/mattlewis92/angular-resizable-element/compare/v6.0.0...v6.0.1) (2022-12-11)
+
+
+### Bug Fixes
+
+* expose ResizeCursors interface as part of the public api ([767bd1b](https://github.com/mattlewis92/angular-resizable-element/commit/767bd1bb00c85651fcd80449e191fa75cd056621))
+
 ## [6.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v5.0.0...v6.0.0) (2022-08-02)
 
 
