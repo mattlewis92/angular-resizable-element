@@ -150,21 +150,22 @@ https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ### Prepare your environment
 
-- Install [Node.js](http://nodejs.org/) and NPM (should come with)
-- Install local dev dependencies: `npm install` while current directory is this repo
+- Install [Node.js (>=14.19.0 or >=16.9.0)](http://nodejs.org/)
+- Install pnpm: `corepack enable`
+- Install local dev dependencies: `pnpm install` while current directory is this repo
 
 ### Development server
 
-Run `npm start` to start a development server on port 8000 with auto reload + tests.
+Run `pnpm start` to start a development server on port 8000 with auto reload + tests.
 
 ### Testing
 
-Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
+Run `pnpm test` to run tests once or `pnpm test:watch` to continually run tests.
 
 ### Release
 
 ```bash
-npm run release
+pnpm release
 ```
 
 ## License

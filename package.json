@@ -3,22 +3,22 @@
   "version": "6.0.2",
   "description": "An angular 14.0+ directive that allows an element to be dragged and resized",
   "scripts": {
-    "start": "concurrently --raw \"ng serve --open\" \"npm run test:watch\"",
+    "start": "concurrently --raw \"ng serve --open\" \"pnpm test:watch\"",
     "build:demo": "ng build --configuration production",
-    "build:lib": "copyfiles package.json projects/angular-resizable-element && ng build angular-resizable-element --configuration production && npm run copyfiles",
+    "build:lib": "copyfiles package.json projects/angular-resizable-element && ng build angular-resizable-element --configuration production && pnpm copyfiles",
     "build:clean": "rm -rf dist",
     "copyfiles": "copyfiles CHANGELOG.md README.md LICENSE dist/angular-resizable-element",
-    "test": "npm run lint && ng test angular-resizable-element --watch=false --code-coverage && npm run build:lib && npm run build:clean",
+    "test": "pnpm lint && ng test angular-resizable-element --watch=false --code-coverage && pnpm build:lib && pnpm build:clean",
     "test:watch": "ng test angular-resizable-element",
     "lint": "ng lint",
     "commit": "git-cz",
     "compodoc": "compodoc -p tsconfig-compodoc.json -d dist/demo/docs --disableGraph --disableCoverage --disablePrivate --disableInternal --disableLifeCycleHooks --disableProtected",
-    "prerelease": "npm test",
+    "prerelease": "pnpm test",
     "release:git": "standard-version && git push --follow-tags origin main",
-    "release:npm": "npm run build:lib && npm publish dist/angular-resizable-element",
-    "release": "npm run release:git && npm run release:npm",
-    "postrelease": "npm run gh-pages",
-    "gh-pages": "npm run build:clean && npm run build:demo && npm run compodoc && ng deploy && npm run build:clean",
+    "release:npm": "pnpm build:lib && pnpm publish dist/angular-resizable-element",
+    "release": "pnpm release:git && pnpm release:npm",
+    "postrelease": "pnpm gh-pages",
+    "gh-pages": "pnpm build:clean && pnpm build:demo && pnpm compodoc && ng deploy && pnpm build:clean",
     "prepare": "husky install"
   },
   "repository": {
@@ -91,14 +91,17 @@
   "peerDependencies": {
     "@angular/core": ">=14.0.0"
   },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/prompt"
-    }
-  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "packageManager": "pnpm@7.18.1",
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@angular-devkit/*"
+      ]
+    }
   }
 }
