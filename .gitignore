@@ -46,4 +46,3 @@ projects/angular-resizable-element/package.json
 .DS_Store
 Thumbs.db
 package-lock.json
-.gitignore
