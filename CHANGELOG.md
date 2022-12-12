@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1](https://github.com/mattlewis92/angular-resizable-element/compare/v7.0.0...v7.0.1) (2022-12-12)
+
+
+### Bug Fixes
+
+* check if event is cancelable before calling preventDefault ([#132](https://github.com/mattlewis92/angular-resizable-element/issues/132)) ([10bfc51](https://github.com/mattlewis92/angular-resizable-element/commit/10bfc512a03219119d4211ad7cfe6d4da4f9f692))
+
 ## [7.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v6.0.2...v7.0.0) (2022-12-11)
 
 
