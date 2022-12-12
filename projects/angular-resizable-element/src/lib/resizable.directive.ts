@@ -322,12 +322,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     ).pipe(
       tap(({ event }) => {
         if (currentResize && event.cancelable) {
-          try {
-            event.preventDefault();
-          } catch (e) {
-            // just adding try-catch not to see errors in console if there is a passive listener for same event somewhere
-            // browser does nothing except of writing errors to console
-          }
+          event.preventDefault();
         }
       }),
       share()
