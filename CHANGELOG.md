@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.2](https://github.com/mattlewis92/angular-resizable-element/compare/v7.0.1...v7.0.2) (2022-12-13)
+
+
+### Bug Fixes
+
+* check onMouseDown event is cancelable before calling event.preventDefault() ([#133](https://github.com/mattlewis92/angular-resizable-element/issues/133)) ([4438bab](https://github.com/mattlewis92/angular-resizable-element/commit/4438babaf8fcdf5b036d4c135cd47dee80373fce))
+
 ### [7.0.1](https://github.com/mattlewis92/angular-resizable-element/compare/v7.0.0...v7.0.1) (2022-12-12)
 
 
