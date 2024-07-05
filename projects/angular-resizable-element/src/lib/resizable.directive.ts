@@ -225,6 +225,13 @@ export class ResizableDirective implements OnInit, OnDestroy {
   @Input() resizeSnapGrid: Edges = {};
 
   /**
+   * An aspect ratio that is enforced on resize.
+   *
+   * e.g. to maintain a 16:9 aspect ratio set it to `[16, 9]`
+   */
+  @Input() enforceAspectRatio: [number, number] | undefined = undefined;
+
+  /**
    * The mouse cursors that will be set on the resize edges
    */
   @Input() resizeCursors: Partial<ResizeCursors> = DEFAULT_RESIZE_CURSORS;
@@ -464,6 +471,64 @@ export class ResizableDirective implements OnInit, OnDestroy {
         })
       )
       .pipe(
+        map((newBoundingRect: BoundingRectangle) => {
+          const enforceAspectRatio = (newBoundingRect: BoundingRectangle) => {
+            if (
+              !this.enforceAspectRatio ||
+              this.enforceAspectRatio[0] <= 0 ||
+              this.enforceAspectRatio[1] <= 0 ||
+              newBoundingRect.height === undefined ||
+              newBoundingRect.width === undefined
+            )
+              return newBoundingRect;
+
+            const ratio =
+              this.enforceAspectRatio[0] / this.enforceAspectRatio[1];
+
+            const edges = getEdgesDiff({
+              edges: currentResize!.edges,
+              initialRectangle: currentResize!.startingRect,
+              newRectangle: newBoundingRect,
+            });
+
+            const leftDelta = (edges.left as number) ?? 0;
+            const rightDelta = (edges.right as number) ?? 0;
+            const topDelta = (edges.top as number) ?? 0;
+            const bottomDelta = (edges.bottom as number) ?? 0;
+            const widthDelta = leftDelta + rightDelta;
+            const heightDelta = topDelta + bottomDelta;
+
+            if (Math.abs(widthDelta) > Math.abs(heightDelta)) {
+              newBoundingRect.height = Math.round(
+                newBoundingRect.width / ratio
+              );
+              if (topDelta) {
+                newBoundingRect.top =
+                  newBoundingRect.bottom - newBoundingRect.height;
+              } else {
+                newBoundingRect.bottom =
+                  newBoundingRect.top + newBoundingRect.height;
+              }
+            } else {
+              newBoundingRect.width = Math.round(
+                newBoundingRect.height * ratio
+              );
+              if (leftDelta) {
+                newBoundingRect.left =
+                  newBoundingRect.right - newBoundingRect.width;
+              } else {
+                newBoundingRect.right =
+                  newBoundingRect.left + newBoundingRect.width;
+              }
+            }
+
+            return newBoundingRect;
+          };
+
+          return enforceAspectRatio(newBoundingRect);
+        })
+      )
+      .pipe(
         filter((newBoundingRect: BoundingRectangle) => {
           return (
             this.allowNegativeResizes ||
@@ -533,6 +598,25 @@ export class ResizableDirective implements OnInit, OnDestroy {
     mousedown$
       .pipe(
         map(({ edges }) => {
+          if (
+            edges &&
+            this.enforceAspectRatio &&
+            this.enforceAspectRatio[0] > 0 &&
+            this.enforceAspectRatio[1] > 0
+          ) {
+            const xyEdges = {
+              ...edges,
+            };
+
+            if (!edges?.left && !edges?.right) {
+              xyEdges.right = true;
+            }
+            if (!edges?.top && !edges?.bottom) {
+              xyEdges.bottom = true;
+            }
+            return xyEdges;
+          }
+
           return edges || {};
         }),
         filter((edges: Edges) => {
