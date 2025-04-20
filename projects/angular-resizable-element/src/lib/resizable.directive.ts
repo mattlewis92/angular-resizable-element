@@ -338,7 +338,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     } | null;
 
     const removeGhostElement = () => {
-      if (currentResize && currentResize.clonedNode) {
+      if (currentResize && currentResize.clonedNode &&  this.elm.nativeElement.parentElement) {
         this.elm.nativeElement.parentElement.removeChild(
           currentResize.clonedNode
         );
