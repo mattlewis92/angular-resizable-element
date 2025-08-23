@@ -57,8 +57,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                 </li>
                     <li class="chapter modules">
                         <a data-type="chapter-link" href="modules.html">
-                            <div class="menu-toggler linked" data-toggle="collapse" ${ isNormalMode ?
-                                'data-target="#modules-links"' : 'data-target="#xs-modules-links"' }>
+                            <div class="menu-toggler linked" data-bs-toggle="collapse" ${ isNormalMode ?
+                                'data-bs-target="#modules-links"' : 'data-bs-target="#xs-modules-links"' }>
                                 <span class="icon ion-ios-archive"></span>
                                 <span class="link-name">Modules</span>
                                 <span class="icon ion-ios-arrow-down"></span>
@@ -66,16 +66,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </a>
                         <ul class="links collapse " ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
                             <li class="link">
-                                <a href="modules/ResizableModule.html" data-type="entity-link" >ResizableModule</a>
+                                <a href="modules/ResizableModule.html" data-type="entity-link" class="deprecated-name">ResizableModule</a>
                                 <li class="chapter inner">
-                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' : 'data-target="#xs-directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' }>
+                                    <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
+                                        'data-bs-target="#directives-links-module-ResizableModule-774580dc5bffc8112fc13ba6650c3f0118b32f8c97e615d1356e1c1cdb8c0044675a46fa2cfab73fec616b619c0a53bf1e17c4e567f38a0821375b90520aa652"' : 'data-bs-target="#xs-directives-links-module-ResizableModule-774580dc5bffc8112fc13ba6650c3f0118b32f8c97e615d1356e1c1cdb8c0044675a46fa2cfab73fec616b619c0a53bf1e17c4e567f38a0821375b90520aa652"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' :
-                                        'id="xs-directives-links-module-ResizableModule-5893a1bc5666433e79acb5ef4d385bfdbca6627636fe07e335662b6c0168e2979667ae54b18b9104cab5bb75ffa6a94f38bb79b03888276b2ed594682e180f4e"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-ResizableModule-774580dc5bffc8112fc13ba6650c3f0118b32f8c97e615d1356e1c1cdb8c0044675a46fa2cfab73fec616b619c0a53bf1e17c4e567f38a0821375b90520aa652"' :
+                                        'id="xs-directives-links-module-ResizableModule-774580dc5bffc8112fc13ba6650c3f0118b32f8c97e615d1356e1c1cdb8c0044675a46fa2cfab73fec616b619c0a53bf1e17c4e567f38a0821375b90520aa652"' }>
                                         <li class="link">
                                             <a href="directives/ResizableDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ResizableDirective</a>
                                         </li>
@@ -87,9 +87,25 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                 </ul>
                 </li>
+                        <li class="chapter">
+                            <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#directives-links"' :
+                                'data-bs-target="#xs-directives-links"' }>
+                                <span class="icon ion-md-code-working"></span>
+                                <span>Directives</span>
+                                <span class="icon ion-ios-arrow-down"></span>
+                            </div>
+                            <ul class="links collapse " ${ isNormalMode ? 'id="directives-links"' : 'id="xs-directives-links"' }>
+                                <li class="link">
+                                    <a href="directives/ResizableDirective.html" data-type="entity-link" >ResizableDirective</a>
+                                </li>
+                                <li class="link">
+                                    <a href="directives/ResizeHandleDirective.html" data-type="entity-link" >ResizeHandleDirective</a>
+                                </li>
+                            </ul>
+                        </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#classes-links"' :
-                            'data-target="#xs-classes-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#classes-links"' :
+                            'data-bs-target="#xs-classes-links"' }>
                             <span class="icon ion-ios-paper"></span>
                             <span>Classes</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -101,8 +117,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interfaces-links"' :
-                            'data-target="#xs-interfaces-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#interfaces-links"' :
+                            'data-bs-target="#xs-interfaces-links"' }>
                             <span class="icon ion-md-information-circle-outline"></span>
                             <span>Interfaces</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -129,8 +145,8 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#miscellaneous-links"'
-                            : 'data-target="#xs-miscellaneous-links"' }>
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#miscellaneous-links"'
+                            : 'data-bs-target="#xs-miscellaneous-links"' }>
                             <span class="icon ion-ios-cube"></span>
                             <span>Miscellaneous</span>
                             <span class="icon ion-ios-arrow-down"></span>
@@ -146,7 +162,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="divider"></li>
                     <li class="copyright">
-                        Documentation generated using <a href="https://compodoc.app/" target="_blank">
+                        Documentation generated using <a href="https://compodoc.app/" target="_blank" rel="noopener noreferrer">
                             <img data-src="images/compodoc-vectorise.png" class="img-responsive" data-type="compodoc-logo">
                         </a>
                     </li>

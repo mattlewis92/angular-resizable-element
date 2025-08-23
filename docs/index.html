@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">angular-resizable-element documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">angular-resizable-element documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,22 +75,22 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="angular-resizable-element">angular resizable element</h1>
+<h1>angular resizable element</h1>
 <p><a href="https://github.com/users/mattlewis92/sponsorship"><img src="https://img.shields.io/badge/funding-github-%23EA4AAA" alt="Sponsorship" class="img-responsive"></a>
 <a href="https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml"><img src="https://github.com/mattlewis92/angular-resizable-element/actions/workflows/ci.yml/badge.svg" alt="Build Status" class="img-responsive"></a>
 <a href="https://codecov.io/gh/mattlewis92/angular-resizable-element"><img src="https://codecov.io/gh/mattlewis92/angular-resizable-element/branch/main/graph/badge.svg" alt="codecov" class="img-responsive"></a>
 <a href="http://badge.fury.io/js/angular-resizable-element"><img src="https://badge.fury.io/js/angular-resizable-element.svg" alt="npm version" class="img-responsive"></a>
 <a href="https://raw.githubusercontent.com/mattlewis92/angular-resizable-element/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" class="img-responsive"></a></p>
-<h2 id="demo">Demo</h2>
+<h2>Demo</h2>
 <p><a href="https://mattlewis92.github.io/angular-resizable-element/">https://mattlewis92.github.io/angular-resizable-element/</a></p>
-<h2 id="table-of-contents">Table of contents</h2>
+<h2>Table of contents</h2>
 <ul>
 <li><a href="#about">About</a></li>
 <li><a href="#installation">Installation</a></li>
@@ -47,16 +98,17 @@
 <li><a href="#development">Development</a></li>
 <li><a href="#license">License</a></li>
 </ul>
-<h2 id="about">About</h2>
-<p>An angular 15.0+ directive that allows an element to be dragged and resized</p>
-<h2 id="installation">Installation</h2>
+<h2>About</h2>
+<p>An angular 20.0+ directive that allows an element to be dragged and resized</p>
+<h2>Installation</h2>
 <p>Install through npm:</p>
-<div><pre class="line-numbers"><code class="language-none">npm install angular-resizable-element</code></pre></div><p>Then use it in your app like so:</p>
-<div><pre class="line-numbers"><code class="language-typescript">import { Component } from &#39;&#64;angular/core&#39;;
-import { ResizeEvent } from &#39;angular-resizable-element&#39;;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">npm install angular-resizable-element</code></pre></div><p>Then use it in your app like so:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">import { Component } from &#39;&#64;angular/core&#39;;
+import { ResizeEvent, ResizableDirective, ResizeHandleDirective } from &#39;angular-resizable-element&#39;;
 
 &#64;Component({
   selector: &#39;demo-app&#39;,
+  imports: [ResizableDirective, ResizeHandleDirective],
   styles: [
     `
       .rectangle {
@@ -111,32 +163,11 @@ import { ResizeEvent } from &#39;angular-resizable-element&#39;;
     `,
   ],
   template: `
-    &lt;div
-      class=&quot;rectangle&quot;
-      mwlResizable
-      [enableGhostResize]=&quot;true&quot;
-      (resizeEnd)=&quot;onResizeEnd($event)&quot;
-    &gt;
-      &lt;div
-        class=&quot;resize-handle-top&quot;
-        mwlResizeHandle
-        [resizeEdges]=&quot;{ top: true }&quot;
-      &gt;&lt;/div&gt;
-      &lt;div
-        class=&quot;resize-handle-left&quot;
-        mwlResizeHandle
-        [resizeEdges]=&quot;{ left: true }&quot;
-      &gt;&lt;/div&gt;
-      &lt;div
-        class=&quot;resize-handle-right&quot;
-        mwlResizeHandle
-        [resizeEdges]=&quot;{ right: true }&quot;
-      &gt;&lt;/div&gt;
-      &lt;div
-        class=&quot;resize-handle-bottom&quot;
-        mwlResizeHandle
-        [resizeEdges]=&quot;{ bottom: true }&quot;
-      &gt;&lt;/div&gt;
+    &lt;div class=&quot;rectangle&quot; mwlResizable [enableGhostResize]=&quot;true&quot; (resizeEnd)=&quot;onResizeEnd($event)&quot;&gt;
+      &lt;div class=&quot;resize-handle-top&quot; mwlResizeHandle [resizeEdges]=&quot;{ top: true }&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;resize-handle-left&quot; mwlResizeHandle [resizeEdges]=&quot;{ left: true }&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;resize-handle-right&quot; mwlResizeHandle [resizeEdges]=&quot;{ right: true }&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;resize-handle-bottom&quot; mwlResizeHandle [resizeEdges]=&quot;{ bottom: true }&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
   `,
 })
@@ -144,34 +175,23 @@ export class MyComponent {
   onResizeEnd(event: ResizeEvent): void {
     console.log(&#39;Element was resized&#39;, event);
   }
-}
-
-// now use within your apps module
-import { NgModule } from &#39;&#64;angular/core&#39;;
-import { ResizableModule } from &#39;angular-resizable-element&#39;;
-
-&#64;NgModule({
-  declarations: [MyComponent],
-  imports: [ResizableModule],
-  bootstrap: [MyComponent],
-})
-class MyModule {}</code></pre></div><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/main/projects/demo/app/demo.component.ts">demo source</a>.</p>
-<h2 id="documentation">Documentation</h2>
+}</code></pre></div><p>You may also find it useful to view the <a href="https://github.com/mattlewis92/angular-resizable-element/blob/main/projects/demo/app/demo.component.ts">demo source</a>.</p>
+<h2>Documentation</h2>
 <p>All documentation is auto-generated from the source and can be viewed here:
 <a href="https://mattlewis92.github.io/angular-resizable-element/docs/">https://mattlewis92.github.io/angular-resizable-element/docs/</a></p>
-<h2 id="development">Development</h2>
-<h3 id="prepare-your-environment">Prepare your environment</h3>
+<h2>Development</h2>
+<h3>Prepare your environment</h3>
 <ul>
-<li>Install <a href="http://nodejs.org/">Node.js (&gt;=14.19.0 or &gt;=16.9.0)</a></li>
+<li>Install <a href="http://nodejs.org/">Node.js (&gt;=24.5.0)</a></li>
 <li>Install pnpm: <code>corepack enable</code></li>
 <li>Install local dev dependencies: <code>pnpm install</code> while current directory is this repo</li>
 </ul>
-<h3 id="development-server">Development server</h3>
+<h3>Development server</h3>
 <p>Run <code>pnpm start</code> to start a development server on port 8000 with auto reload + tests.</p>
-<h3 id="testing">Testing</h3>
+<h3>Testing</h3>
 <p>Run <code>pnpm test</code> to run tests once or <code>pnpm test:watch</code> to continually run tests.</p>
-<h3 id="release">Release</h3>
-<div><pre class="line-numbers"><code class="language-bash">pnpm release</code></pre></div><h2 id="license">License</h2>
+<h3>Release</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm release</code></pre></div><h2>License</h2>
 <p>MIT</p>
 
 
@@ -224,6 +244,19 @@ class MyModule {}</code></pre></div><p>You may also find it useful to view the <
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
 
@@ -235,7 +268,6 @@ class MyModule {}</code></pre></div><p>You may also find it useful to view the <
        <script src="./js/libs/es6-shim.min.js"></script>
        <script src="./js/libs/EventDispatcher.js"></script>
        <script src="./js/libs/promise.min.js"></script>
-       <script src="./js/libs/zepto.min.js"></script>
 
        <script src="./js/compodoc.js"></script>
 

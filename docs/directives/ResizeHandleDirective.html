@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">angular-resizable-element documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">angular-resizable-element documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -38,21 +89,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Directives</li>
-  <li >ResizeHandleDirective</li>
+  <li class="breadcrumb-item">Directives</li>
+  <li class="breadcrumb-item" >ResizeHandleDirective</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -67,10 +124,10 @@
             <p class="comment">
                 <p>An element placed inside a <code>mwlResizable</code> directive to be used as a drag and resize handle</p>
 <p>For example</p>
-<div><pre class="line-numbers"><code class="language-html">&lt;div mwlResizable&gt;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;div mwlResizable&gt;
   &lt;div mwlResizeHandle [resizeEdges]=&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre></div><p>Or in case they are sibling elements:</p>
-<div><pre class="line-numbers"><code class="language-html">&lt;div mwlResizable #resizableElement=&quot;mwlResizable&quot;&gt;&lt;/div&gt;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;div mwlResizable #resizableElement=&quot;mwlResizable&quot;&gt;&lt;/div&gt;
 &lt;div mwlResizeHandle [resizableContainer]=&quot;resizableElement&quot; [resizeEdges]=&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;</code></pre></div>
             </p>
 
@@ -79,12 +136,12 @@
                 <h3>Implements</h3>
             </p>
             <p class="comment">
-                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
-                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                        <code>OnInit</code>
+                        <code>OnDestroy</code>
             </p>
 
 
-        <section>
+        <section data-compodoc="block-metadata">
             <h3>Metadata</h3>
             <table class="table table-sm table-hover metadata">
                 <tbody>
@@ -94,11 +151,14 @@
                         <td class="col-md-9"><code>[mwlResizeHandle]</code></td>
                     </tr>
 
+
+
+
                 </tbody>
             </table>
         </section>
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -129,92 +189,8 @@
     </table>
 </section>
 
-            <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, element: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>, zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, resizableDirective: <a href="../directives/ResizableDirective.html" target="_self">ResizableDirective</a>)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:52</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>renderer</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>element</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>zone</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>resizableDirective</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../directives/ResizableDirective.html" target="_self" >ResizableDirective</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</section>
-
-            <section>
+            <section data-compodoc="block-inputs">
     <h3 id="inputs">Inputs</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -232,7 +208,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:47</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -264,7 +240,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:40</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:43</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -285,7 +261,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Directive,
   Input,
@@ -294,7 +270,7 @@
   OnInit,
   OnDestroy,
   NgZone,
-  Optional,
+  inject,
 } from &#x27;@angular/core&#x27;;
 import { fromEvent, merge, Subject } from &#x27;rxjs&#x27;;
 import { takeUntil } from &#x27;rxjs/operators&#x27;;
@@ -318,10 +294,13 @@ import { IS_TOUCH_DEVICE } from &#x27;./util/is-touch-device&#x27;;
  * &lt;div mwlResizeHandle [resizableContainer]&#x3D;&quot;resizableElement&quot; [resizeEdges]&#x3D;&quot;{bottom: true, right: true}&quot;&gt;&lt;/div&gt;
  * &#x60;&#x60;&#x60;
  */
-@Directive({
-  selector: &#x27;[mwlResizeHandle]&#x27;,
-})
+@Directive({ selector: &#x27;[mwlResizeHandle]&#x27; })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
+  private renderer &#x3D; inject(Renderer2);
+  private element &#x3D; inject(ElementRef);
+  private zone &#x3D; inject(NgZone);
+  private resizableDirective &#x3D; inject(ResizableDirective, { optional: true });
+
   /**
    * The &#x60;Edges&#x60; object that contains the edges of the parent element that dragging the handle will trigger a resize on
    */
@@ -339,13 +318,6 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
   private destroy$ &#x3D; new Subject&lt;void&gt;();
 
-  constructor(
-    private renderer: Renderer2,
-    private element: ElementRef,
-    private zone: NgZone,
-    @Optional() private resizableDirective: ResizableDirective
-  ) {}
-
   ngOnInit(): void {
     this.zone.runOutsideAngular(() &#x3D;&gt; {
       this.listenOnTheHost&lt;MouseEvent&gt;(&#x27;mousedown&#x27;).subscribe((event) &#x3D;&gt; {
@@ -361,17 +333,17 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
           this.onMousedown(
             event,
             event.touches[0].clientX,
-            event.touches[0].clientY
+            event.touches[0].clientY,
           );
         });
 
         merge(
           this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchend&#x27;),
-          this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchcancel&#x27;)
+          this.listenOnTheHost&lt;TouchEvent&gt;(&#x27;touchcancel&#x27;),
         ).subscribe((event) &#x3D;&gt; {
           this.onMouseup(
             event.changedTouches[0].clientX,
-            event.changedTouches[0].clientY
+            event.changedTouches[0].clientY,
           );
         });
       }
@@ -389,7 +361,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   onMousedown(
     event: MouseEvent | TouchEvent,
     clientX: number,
-    clientY: number
+    clientY: number,
   ): void {
     if (event.cancelable) {
       event.preventDefault();
@@ -402,9 +374,9 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
           this.onMousemove(
             touchMoveEvent,
             touchMoveEvent.targetTouches[0].clientX,
-            touchMoveEvent.targetTouches[0].clientY
+            touchMoveEvent.targetTouches[0].clientY,
           );
-        }
+        },
       );
     }
     if (!this.eventListeners.mousemove) {
@@ -415,9 +387,9 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
           this.onMousemove(
             mouseMoveEvent,
             mouseMoveEvent.clientX,
-            mouseMoveEvent.clientY
+            mouseMoveEvent.clientY,
           );
-        }
+        },
       );
     }
     this.resizable.mousedown.next({
@@ -447,7 +419,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   private onMousemove(
     event: MouseEvent | TouchEvent,
     clientX: number,
-    clientY: number
+    clientY: number,
   ): void {
     this.resizable.mousemove.next({
       clientX,
@@ -466,7 +438,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
   private listenOnTheHost&lt;T extends Event&gt;(eventName: string) {
     return fromEvent&lt;T&gt;(this.element.nativeElement, eventName).pipe(
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     );
   }
 }
@@ -518,6 +490,19 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
 
@@ -529,7 +514,6 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">angular-resizable-element documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">angular-resizable-element documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -43,21 +94,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >PointerEventListeners</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >PointerEventListeners</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +127,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -122,18 +179,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>)</code>
+<code>constructor(renderer: Renderer2, zone: NgZone)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="689" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:689</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="692" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:692</a></div>
                             </td>
                         </tr>
 
@@ -154,7 +211,7 @@
                                                         <td>renderer</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
+                                                                    <code>Renderer2</code>
                                                         </td>
                                                   
                                                     <td>
@@ -166,7 +223,7 @@
                                                         <td>zone</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
+                                                                    <code>NgZone</code>
                                                         </td>
                                                   
                                                     <td>
@@ -183,7 +240,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
@@ -208,7 +265,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="670" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:670</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="673" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:673</a></div>
                         </td>
                     </tr>
 
@@ -235,7 +292,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="672" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:672</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="675" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:675</a></div>
                         </td>
                     </tr>
 
@@ -262,7 +319,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="674" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:674</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="677" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:677</a></div>
                         </td>
                     </tr>
 
@@ -271,7 +328,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -282,7 +339,7 @@
                 <td class="col-md-4">
                     <a name="getInstance"></a>
                     <span class="name">
-                        <span class="modifier">Static</span>
+                            <span class="modifier">Static</span>
                         <span ><b>getInstance</b></span>
                         <a href="#getInstance"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -290,71 +347,69 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getInstance(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getInstance(renderer: Renderer2, zone: NgZone)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="678"
-                            class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:678</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="681"
+                                    class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:681</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>renderer</td>
-                                    <td>
-                                                <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>renderer</td>
+                                            <td>
+                                                        <code>Renderer2</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>zone</td>
-                                    <td>
-                                                <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/PointerEventListeners.html" target="_self" >PointerEventListeners</a></code>
+                                        </tr>
+                                        <tr>
+                                                <td>zone</td>
+                                            <td>
+                                                        <code>NgZone</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/PointerEventListeners.html" target="_self" >PointerEventListeners</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -368,7 +423,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Directive,
   Renderer2,
@@ -379,8 +434,8 @@
   EventEmitter,
   OnDestroy,
   NgZone,
-  Inject,
   PLATFORM_ID,
+  inject,
 } from &#x27;@angular/core&#x27;;
 import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
 import { Subject, Observable, Observer, merge } from &#x27;rxjs&#x27;;
@@ -415,7 +470,7 @@ function getNewBoundingRectangle(
   startingRect: BoundingRectangle,
   edges: Edges,
   clientX: number,
-  clientY: number
+  clientY: number,
 ): BoundingRectangle {
   const newBoundingRect: BoundingRectangle &#x3D; {
     top: startingRect.top,
@@ -444,7 +499,7 @@ function getNewBoundingRectangle(
 
 function getElementRect(
   element: ElementRef,
-  ghostElementPositioning: string
+  ghostElementPositioning: string,
 ): BoundingRectangle {
   let translateX &#x3D; 0;
   let translateY &#x3D; 0;
@@ -461,11 +516,11 @@ function getElementRect(
   if (transform &amp;&amp; transform.includes(&#x27;translate&#x27;)) {
     translateX &#x3D; transform.replace(
       /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
-      &#x27;$1&#x27;
+      &#x27;$1&#x27;,
     );
     translateY &#x3D; transform.replace(
       /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
-      &#x27;$2&#x27;
+      &#x27;$2&#x27;,
     );
   }
 
@@ -662,18 +717,21 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private destroy$ &#x3D; new Subject&lt;void&gt;();
 
+  private platformId &#x3D; inject(PLATFORM_ID);
+
+  private renderer &#x3D; inject(Renderer2);
+
+  private elm &#x3D; inject(ElementRef);
+
+  private zone &#x3D; inject(NgZone);
+
   /**
    * @hidden
    */
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
-    private renderer: Renderer2,
-    public elm: ElementRef,
-    private zone: NgZone
-  ) {
+  constructor() {
     this.pointerEventListeners &#x3D; PointerEventListeners.getInstance(
-      renderer,
-      zone
+      this.renderer,
+      this.zone,
     );
   }
 
@@ -689,14 +747,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     const mousemove$ &#x3D; merge(
       this.pointerEventListeners.pointerMove,
-      this.mousemove
+      this.mousemove,
     ).pipe(
       tap(({ event }) &#x3D;&gt; {
         if (currentResize &amp;&amp; event.cancelable) {
           event.preventDefault();
         }
       }),
-      share()
+      share(),
     );
 
     const mouseup$ &#x3D; merge(this.pointerEventListeners.pointerUp, this.mouseup);
@@ -711,7 +769,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     const removeGhostElement &#x3D; () &#x3D;&gt; {
       if (currentResize &amp;&amp; currentResize.clonedNode) {
         this.elm.nativeElement.parentElement.removeChild(
-          currentResize.clonedNode
+          currentResize.clonedNode,
         );
         this.renderer.setStyle(this.elm.nativeElement, &#x27;visibility&#x27;, &#x27;inherit&#x27;);
       }
@@ -762,7 +820,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
           function getGrid(
             coords: { clientX: number; clientY: number },
-            snapGrid: Coordinate
+            snapGrid: Coordinate,
           ) {
             return {
               x: Math.ceil(coords.clientX / snapGrid.x),
@@ -773,11 +831,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
           return (
             merge(
               mousemove$.pipe(take(1)).pipe(map((coords) &#x3D;&gt; [, coords])),
-              mousemove$.pipe(pairwise())
+              mousemove$.pipe(pairwise()),
             ) as Observable&lt;
               [
                 { clientX: number; clientY: number },
-                { clientX: number; clientY: number }
+                { clientX: number; clientY: number },
               ]
             &gt;
           )
@@ -787,7 +845,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
                   previousCoords ? getDiff(previousCoords) : previousCoords,
                   getDiff(newCoords),
                 ];
-              })
+              }),
             )
             .pipe(
               filter(([previousCoords, newCoords]) &#x3D;&gt; {
@@ -798,14 +856,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 const snapGrid: Coordinate &#x3D; getSnapGrid();
                 const previousGrid: Coordinate &#x3D; getGrid(
                   previousCoords,
-                  snapGrid
+                  snapGrid,
                 );
                 const newGrid: Coordinate &#x3D; getGrid(newCoords, snapGrid);
 
                 return (
                   previousGrid.x !&#x3D;&#x3D; newGrid.x || previousGrid.y !&#x3D;&#x3D; newGrid.y
                 );
-              })
+              }),
             )
             .pipe(
               map(([, newCoords]) &#x3D;&gt; {
@@ -816,10 +874,10 @@ export class ResizableDirective implements OnInit, OnDestroy {
                   clientY:
                     Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y,
                 };
-              })
+              }),
             )
             .pipe(takeUntil(merge(mouseup$, mousedown$)));
-        })
+        }),
       )
       .pipe(filter(() &#x3D;&gt; !!currentResize));
 
@@ -830,9 +888,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
             currentResize!.startingRect,
             currentResize!.edges,
             clientX,
-            clientY
+            clientY,
           );
-        })
+        }),
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
@@ -845,7 +903,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
               newBoundingRect.width &gt; 0
             )
           );
-        })
+        }),
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
@@ -860,29 +918,29 @@ export class ResizableDirective implements OnInit, OnDestroy {
               })
             : true;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((newBoundingRect: BoundingRectangle) &#x3D;&gt; {
         if (currentResize &amp;&amp; currentResize.clonedNode) {
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;height&#x27;,
-            &#x60;${newBoundingRect.height}px&#x60;
+            &#x60;${newBoundingRect.height}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;width&#x27;,
-            &#x60;${newBoundingRect.width}px&#x60;
+            &#x60;${newBoundingRect.width}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;top&#x27;,
-            &#x60;${newBoundingRect.top}px&#x60;
+            &#x60;${newBoundingRect.top}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;left&#x27;,
-            &#x60;${newBoundingRect.left}px&#x60;
+            &#x60;${newBoundingRect.left}px&#x60;,
           );
         }
 
@@ -909,7 +967,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         filter((edges: Edges) &#x3D;&gt; {
           return Object.keys(edges).length &gt; 0;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((edges: Edges) &#x3D;&gt; {
         if (currentResize) {
@@ -917,7 +975,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         }
         const startingRect: BoundingRectangle &#x3D; getElementRect(
           this.elm,
-          this.ghostElementPositioning
+          this.ghostElementPositioning,
         );
         currentResize &#x3D; {
           edges,
@@ -931,46 +989,46 @@ export class ResizableDirective implements OnInit, OnDestroy {
         if (this.enableGhostResize) {
           currentResize.clonedNode &#x3D; deepCloneNode(this.elm.nativeElement);
           this.elm.nativeElement.parentElement.appendChild(
-            currentResize.clonedNode
+            currentResize.clonedNode,
           );
           this.renderer.setStyle(
             this.elm.nativeElement,
             &#x27;visibility&#x27;,
-            &#x27;hidden&#x27;
+            &#x27;hidden&#x27;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;position&#x27;,
-            this.ghostElementPositioning
+            this.ghostElementPositioning,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;left&#x27;,
-            &#x60;${currentResize.startingRect.left}px&#x60;
+            &#x60;${currentResize.startingRect.left}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;top&#x27;,
-            &#x60;${currentResize.startingRect.top}px&#x60;
+            &#x60;${currentResize.startingRect.top}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;height&#x27;,
-            &#x60;${currentResize.startingRect.height}px&#x60;
+            &#x60;${currentResize.startingRect.height}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;width&#x27;,
-            &#x60;${currentResize.startingRect.width}px&#x60;
+            &#x60;${currentResize.startingRect.width}px&#x60;,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             &#x27;cursor&#x27;,
-            getResizeCursor(currentResize.edges, resizeCursors)
+            getResizeCursor(currentResize.edges, resizeCursors),
           );
           this.renderer.addClass(
             currentResize.clonedNode,
-            RESIZE_GHOST_ELEMENT_CLASS
+            RESIZE_GHOST_ELEMENT_CLASS,
           );
           currentResize.clonedNode!.scrollTop &#x3D; currentResize.startingRect
             .scrollTop as number;
@@ -1048,12 +1106,12 @@ class PointerEventListeners {
 
   public static getInstance(
     renderer: Renderer2,
-    zone: NgZone
+    zone: NgZone,
   ): PointerEventListeners {
     if (!PointerEventListeners.instance) {
       PointerEventListeners.instance &#x3D; new PointerEventListeners(
         renderer,
-        zone
+        zone,
       );
     }
     return PointerEventListeners.instance;
@@ -1075,7 +1133,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -1088,7 +1146,7 @@ class PointerEventListeners {
                   clientY: event.touches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -1099,7 +1157,7 @@ class PointerEventListeners {
             unsubscribeTouchStart!();
           }
         };
-      }
+      },
     ).pipe(share());
 
     this.pointerMove &#x3D; new Observable(
@@ -1117,7 +1175,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -1130,7 +1188,7 @@ class PointerEventListeners {
                   clientY: event.targetTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -1141,7 +1199,7 @@ class PointerEventListeners {
             unsubscribeTouchMove!();
           }
         };
-      }
+      },
     ).pipe(share());
 
     this.pointerUp &#x3D; new Observable(
@@ -1160,7 +1218,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -1173,7 +1231,7 @@ class PointerEventListeners {
                   clientY: event.changedTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
 
             unsubscribeTouchCancel &#x3D; renderer.listen(
@@ -1185,7 +1243,7 @@ class PointerEventListeners {
                   clientY: event.changedTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -1197,7 +1255,7 @@ class PointerEventListeners {
             unsubscribeTouchCancel!();
           }
         };
-      }
+      },
     ).pipe(share());
   }
 }
@@ -1243,6 +1301,19 @@ class PointerEventListeners {
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
 
@@ -1254,7 +1325,6 @@ class PointerEventListeners {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 
