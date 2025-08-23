@@ -21,7 +21,8 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/demo"
+              "base": "dist/demo",
+              "browser": ""
             },
             "index": "projects/demo/index.html",
             "polyfills": [
@@ -85,8 +86,8 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "noSilent": true,
-            "noBuild": true
+            "noBuild": true,
+            "dir": "dist/demo"
           }
         },
         "lint": {

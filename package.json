@@ -64,7 +64,7 @@
     "@types/sinon-chai": "^3.2.9",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
-    "angular-cli-ghpages": "^1.0.5",
+    "angular-cli-ghpages": "^2.0.3",
     "chai": "^4.3.7",
     "commitizen": "^4.2.6",
     "concurrently": "^7.6.0",
