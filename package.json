@@ -1,6 +1,6 @@
 {
   "name": "angular-resizable-element",
-  "version": "7.0.2",
+  "version": "8.0.0",
   "description": "An angular 20.0+ directive that allows an element to be dragged and resized",
   "scripts": {
     "start": "concurrently --raw \"ng serve --open\" \"pnpm test:watch\"",
