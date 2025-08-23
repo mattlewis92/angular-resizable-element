@@ -10,7 +10,7 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 import { use } from 'chai';
-import * as sinonChai from 'sinon-chai';
+import sinonChai from 'sinon-chai';
 
 use(sinonChai);
 

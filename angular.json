@@ -18,12 +18,15 @@
       "prefix": "mwl",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo",
+            "outputPath": {
+              "base": "dist/demo"
+            },
             "index": "projects/demo/index.html",
-            "main": "projects/demo/main.ts",
-            "polyfills": "projects/demo/polyfills.ts",
+            "polyfills": [
+              "projects/demo/polyfills.ts"
+            ],
             "tsConfig": "projects/demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,7 +36,8 @@
             "styles": [
               "projects/demo/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/demo/main.ts"
           },
           "configurations": {
             "production": {
@@ -58,9 +62,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
