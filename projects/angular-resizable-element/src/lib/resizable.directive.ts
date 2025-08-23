@@ -8,8 +8,8 @@ import {
   EventEmitter,
   OnDestroy,
   NgZone,
-  Inject,
   PLATFORM_ID,
+  inject,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge } from 'rxjs';
@@ -44,7 +44,7 @@ function getNewBoundingRectangle(
   startingRect: BoundingRectangle,
   edges: Edges,
   clientX: number,
-  clientY: number
+  clientY: number,
 ): BoundingRectangle {
   const newBoundingRect: BoundingRectangle = {
     top: startingRect.top,
@@ -73,7 +73,7 @@ function getNewBoundingRectangle(
 
 function getElementRect(
   element: ElementRef,
-  ghostElementPositioning: string
+  ghostElementPositioning: string,
 ): BoundingRectangle {
   let translateX = 0;
   let translateY = 0;
@@ -90,11 +90,11 @@ function getElementRect(
   if (transform && transform.includes('translate')) {
     translateX = transform.replace(
       /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
-      '$1'
+      '$1',
     );
     translateY = transform.replace(
       /.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/,
-      '$2'
+      '$2',
     );
   }
 
@@ -292,18 +292,21 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  private platformId = inject(PLATFORM_ID);
+
+  private renderer = inject(Renderer2);
+
+  private elm = inject(ElementRef);
+
+  private zone = inject(NgZone);
+
   /**
    * @hidden
    */
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
-    private renderer: Renderer2,
-    public elm: ElementRef,
-    private zone: NgZone
-  ) {
+  constructor() {
     this.pointerEventListeners = PointerEventListeners.getInstance(
-      renderer,
-      zone
+      this.renderer,
+      this.zone,
     );
   }
 
@@ -319,14 +322,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     const mousemove$ = merge(
       this.pointerEventListeners.pointerMove,
-      this.mousemove
+      this.mousemove,
     ).pipe(
       tap(({ event }) => {
         if (currentResize && event.cancelable) {
           event.preventDefault();
         }
       }),
-      share()
+      share(),
     );
 
     const mouseup$ = merge(this.pointerEventListeners.pointerUp, this.mouseup);
@@ -341,7 +344,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     const removeGhostElement = () => {
       if (currentResize && currentResize.clonedNode) {
         this.elm.nativeElement.parentElement.removeChild(
-          currentResize.clonedNode
+          currentResize.clonedNode,
         );
         this.renderer.setStyle(this.elm.nativeElement, 'visibility', 'inherit');
       }
@@ -392,7 +395,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
           function getGrid(
             coords: { clientX: number; clientY: number },
-            snapGrid: Coordinate
+            snapGrid: Coordinate,
           ) {
             return {
               x: Math.ceil(coords.clientX / snapGrid.x),
@@ -403,11 +406,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
           return (
             merge(
               mousemove$.pipe(take(1)).pipe(map((coords) => [, coords])),
-              mousemove$.pipe(pairwise())
+              mousemove$.pipe(pairwise()),
             ) as Observable<
               [
                 { clientX: number; clientY: number },
-                { clientX: number; clientY: number }
+                { clientX: number; clientY: number },
               ]
             >
           )
@@ -417,7 +420,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
                   previousCoords ? getDiff(previousCoords) : previousCoords,
                   getDiff(newCoords),
                 ];
-              })
+              }),
             )
             .pipe(
               filter(([previousCoords, newCoords]) => {
@@ -428,14 +431,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 const snapGrid: Coordinate = getSnapGrid();
                 const previousGrid: Coordinate = getGrid(
                   previousCoords,
-                  snapGrid
+                  snapGrid,
                 );
                 const newGrid: Coordinate = getGrid(newCoords, snapGrid);
 
                 return (
                   previousGrid.x !== newGrid.x || previousGrid.y !== newGrid.y
                 );
-              })
+              }),
             )
             .pipe(
               map(([, newCoords]) => {
@@ -446,10 +449,10 @@ export class ResizableDirective implements OnInit, OnDestroy {
                   clientY:
                     Math.round(newCoords.clientY / snapGrid.y) * snapGrid.y,
                 };
-              })
+              }),
             )
             .pipe(takeUntil(merge(mouseup$, mousedown$)));
-        })
+        }),
       )
       .pipe(filter(() => !!currentResize));
 
@@ -460,9 +463,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
             currentResize!.startingRect,
             currentResize!.edges,
             clientX,
-            clientY
+            clientY,
           );
-        })
+        }),
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) => {
@@ -475,7 +478,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
               newBoundingRect.width > 0
             )
           );
-        })
+        }),
       )
       .pipe(
         filter((newBoundingRect: BoundingRectangle) => {
@@ -490,29 +493,29 @@ export class ResizableDirective implements OnInit, OnDestroy {
               })
             : true;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((newBoundingRect: BoundingRectangle) => {
         if (currentResize && currentResize.clonedNode) {
           this.renderer.setStyle(
             currentResize.clonedNode,
             'height',
-            `${newBoundingRect.height}px`
+            `${newBoundingRect.height}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'width',
-            `${newBoundingRect.width}px`
+            `${newBoundingRect.width}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'top',
-            `${newBoundingRect.top}px`
+            `${newBoundingRect.top}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'left',
-            `${newBoundingRect.left}px`
+            `${newBoundingRect.left}px`,
           );
         }
 
@@ -539,7 +542,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         filter((edges: Edges) => {
           return Object.keys(edges).length > 0;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((edges: Edges) => {
         if (currentResize) {
@@ -547,7 +550,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         }
         const startingRect: BoundingRectangle = getElementRect(
           this.elm,
-          this.ghostElementPositioning
+          this.ghostElementPositioning,
         );
         currentResize = {
           edges,
@@ -561,46 +564,46 @@ export class ResizableDirective implements OnInit, OnDestroy {
         if (this.enableGhostResize) {
           currentResize.clonedNode = deepCloneNode(this.elm.nativeElement);
           this.elm.nativeElement.parentElement.appendChild(
-            currentResize.clonedNode
+            currentResize.clonedNode,
           );
           this.renderer.setStyle(
             this.elm.nativeElement,
             'visibility',
-            'hidden'
+            'hidden',
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'position',
-            this.ghostElementPositioning
+            this.ghostElementPositioning,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'left',
-            `${currentResize.startingRect.left}px`
+            `${currentResize.startingRect.left}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'top',
-            `${currentResize.startingRect.top}px`
+            `${currentResize.startingRect.top}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'height',
-            `${currentResize.startingRect.height}px`
+            `${currentResize.startingRect.height}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'width',
-            `${currentResize.startingRect.width}px`
+            `${currentResize.startingRect.width}px`,
           );
           this.renderer.setStyle(
             currentResize.clonedNode,
             'cursor',
-            getResizeCursor(currentResize.edges, resizeCursors)
+            getResizeCursor(currentResize.edges, resizeCursors),
           );
           this.renderer.addClass(
             currentResize.clonedNode,
-            RESIZE_GHOST_ELEMENT_CLASS
+            RESIZE_GHOST_ELEMENT_CLASS,
           );
           currentResize.clonedNode!.scrollTop = currentResize.startingRect
             .scrollTop as number;
@@ -678,12 +681,12 @@ class PointerEventListeners {
 
   public static getInstance(
     renderer: Renderer2,
-    zone: NgZone
+    zone: NgZone,
   ): PointerEventListeners {
     if (!PointerEventListeners.instance) {
       PointerEventListeners.instance = new PointerEventListeners(
         renderer,
-        zone
+        zone,
       );
     }
     return PointerEventListeners.instance;
@@ -705,7 +708,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -718,7 +721,7 @@ class PointerEventListeners {
                   clientY: event.touches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -729,7 +732,7 @@ class PointerEventListeners {
             unsubscribeTouchStart!();
           }
         };
-      }
+      },
     ).pipe(share());
 
     this.pointerMove = new Observable(
@@ -747,7 +750,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -760,7 +763,7 @@ class PointerEventListeners {
                   clientY: event.targetTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -771,7 +774,7 @@ class PointerEventListeners {
             unsubscribeTouchMove!();
           }
         };
-      }
+      },
     ).pipe(share());
 
     this.pointerUp = new Observable(
@@ -790,7 +793,7 @@ class PointerEventListeners {
                 clientY: event.clientY,
                 event,
               });
-            }
+            },
           );
 
           if (IS_TOUCH_DEVICE) {
@@ -803,7 +806,7 @@ class PointerEventListeners {
                   clientY: event.changedTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
 
             unsubscribeTouchCancel = renderer.listen(
@@ -815,7 +818,7 @@ class PointerEventListeners {
                   clientY: event.changedTouches[0].clientY,
                   event,
                 });
-              }
+              },
             );
           }
         });
@@ -827,7 +830,7 @@ class PointerEventListeners {
             unsubscribeTouchCancel!();
           }
         };
-      }
+      },
     ).pipe(share());
   }
 }

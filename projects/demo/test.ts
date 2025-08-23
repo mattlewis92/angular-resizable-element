@@ -11,7 +11,7 @@ declare const require: {
   context(
     path: string,
     deep?: boolean,
-    filter?: RegExp
+    filter?: RegExp,
   ): {
     keys(): string[];
     <T>(id: string): T;
@@ -22,7 +22,7 @@ declare const require: {
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: true } }
+  { teardown: { destroyAfterEach: true } },
 );
 
 // Then we find all the tests.

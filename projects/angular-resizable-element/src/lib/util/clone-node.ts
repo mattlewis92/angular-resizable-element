@@ -31,7 +31,7 @@ function transferData<T extends Element>(
   selector: string,
   node: HTMLElement,
   clone: HTMLElement,
-  callback: (source: T, clone: T) => void
+  callback: (source: T, clone: T) => void,
 ) {
   const descendantElements = node.querySelectorAll<T>(selector);
 
@@ -50,7 +50,7 @@ let cloneUniqueId = 0;
 /** Transfers the data of one input element to another. */
 function transferInputData(
   source: Element & { value: string },
-  clone: Element & { value: string; name: string; type: string }
+  clone: Element & { value: string; name: string; type: string },
 ) {
   // Browsers throw an error when assigning the value of a file input programmatically.
   if (clone.type !== 'file') {
@@ -68,7 +68,7 @@ function transferInputData(
 /** Transfers the data of one canvas element to another. */
 function transferCanvasData(
   source: HTMLCanvasElement,
-  clone: HTMLCanvasElement
+  clone: HTMLCanvasElement,
 ) {
   const context = clone.getContext('2d');
 

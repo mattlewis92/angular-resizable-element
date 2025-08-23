@@ -20,7 +20,7 @@ https://mattlewis92.github.io/angular-resizable-element/
 
 ## About
 
-An angular 15.0+ directive that allows an element to be dragged and resized
+An angular 20.0+ directive that allows an element to be dragged and resized
 
 ## Installation
 
@@ -92,32 +92,11 @@ import { ResizeEvent } from 'angular-resizable-element';
     `,
   ],
   template: `
-    <div
-      class="rectangle"
-      mwlResizable
-      [enableGhostResize]="true"
-      (resizeEnd)="onResizeEnd($event)"
-    >
-      <div
-        class="resize-handle-top"
-        mwlResizeHandle
-        [resizeEdges]="{ top: true }"
-      ></div>
-      <div
-        class="resize-handle-left"
-        mwlResizeHandle
-        [resizeEdges]="{ left: true }"
-      ></div>
-      <div
-        class="resize-handle-right"
-        mwlResizeHandle
-        [resizeEdges]="{ right: true }"
-      ></div>
-      <div
-        class="resize-handle-bottom"
-        mwlResizeHandle
-        [resizeEdges]="{ bottom: true }"
-      ></div>
+    <div class="rectangle" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event)">
+      <div class="resize-handle-top" mwlResizeHandle [resizeEdges]="{ top: true }"></div>
+      <div class="resize-handle-left" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
+      <div class="resize-handle-right" mwlResizeHandle [resizeEdges]="{ right: true }"></div>
+      <div class="resize-handle-bottom" mwlResizeHandle [resizeEdges]="{ bottom: true }"></div>
     </div>
   `,
 })
