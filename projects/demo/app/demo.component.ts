@@ -88,6 +88,7 @@ import { ResizeEvent } from 'angular-resizable-element';
       </div>
     </div>
   `,
+  standalone: false,
 })
 export class DemoComponent {
   public style: object = {};

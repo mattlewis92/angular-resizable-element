@@ -205,6 +205,7 @@ export const MOUSE_MOVE_THROTTLE_MS: number = 50;
 @Directive({
   selector: '[mwlResizable]',
   exportAs: 'mwlResizable',
+  standalone: false,
 })
 export class ResizableDirective implements OnInit, OnDestroy {
   /**

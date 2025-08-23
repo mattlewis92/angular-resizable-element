@@ -97,6 +97,7 @@ import * as sinon from 'sinon';
       ></div>
     </div>
   `,
+  standalone: false,
 })
 class TestComponent {
   @ViewChild(ResizableDirective) resizable: ResizableDirective;
