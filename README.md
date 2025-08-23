@@ -34,10 +34,11 @@ Then use it in your app like so:
 
 ```typescript
 import { Component } from '@angular/core';
-import { ResizeEvent } from 'angular-resizable-element';
+import { ResizeEvent, ResizableDirective, ResizeHandleDirective } from 'angular-resizable-element';
 
 @Component({
   selector: 'demo-app',
+  imports: [ResizableDirective, ResizeHandleDirective],
   styles: [
     `
       .rectangle {
@@ -105,17 +106,6 @@ export class MyComponent {
     console.log('Element was resized', event);
   }
 }
-
-// now use within your apps module
-import { NgModule } from '@angular/core';
-import { ResizableModule } from 'angular-resizable-element';
-
-@NgModule({
-  declarations: [MyComponent],
-  imports: [ResizableModule],
-  bootstrap: [MyComponent],
-})
-class MyModule {}
 ```
 
 You may also find it useful to view the [demo source](https://github.com/mattlewis92/angular-resizable-element/blob/main/projects/demo/app/demo.component.ts).
@@ -129,7 +119,7 @@ https://mattlewis92.github.io/angular-resizable-element/docs/
 
 ### Prepare your environment
 
-- Install [Node.js (>=14.19.0 or >=16.9.0)](http://nodejs.org/)
+- Install [Node.js (>=24.5.0)](http://nodejs.org/)
 - Install pnpm: `corepack enable`
 - Install local dev dependencies: `pnpm install` while current directory is this repo
 

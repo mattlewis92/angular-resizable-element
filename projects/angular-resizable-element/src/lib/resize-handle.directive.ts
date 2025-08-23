@@ -30,10 +30,7 @@ import { IS_TOUCH_DEVICE } from './util/is-touch-device';
  * <div mwlResizeHandle [resizableContainer]="resizableElement" [resizeEdges]="{bottom: true, right: true}"></div>
  * ```
  */
-@Directive({
-  selector: '[mwlResizeHandle]',
-  standalone: false,
-})
+@Directive({ selector: '[mwlResizeHandle]' })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
   private element = inject(ElementRef);

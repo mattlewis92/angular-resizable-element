@@ -1,10 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ResizableDirective } from '../lib/resizable.directive';
-import { Edges } from '../lib/interfaces/edges.interface';
-import { ResizableModule, ResizeEvent } from '../public-api';
+import {
+  ResizableDirective,
+  Edges,
+  ResizeEvent,
+  ResizeHandleDirective,
+} from 'angular-resizable-element';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { NgStyle } from '@angular/common';
 
 @Component({
   styles: [
@@ -95,7 +99,7 @@ import * as sinon from 'sinon';
       }
     </div>
   `,
-  standalone: false,
+  imports: [NgStyle, ResizableDirective, ResizeHandleDirective],
 })
 class TestComponent {
   @ViewChild(ResizableDirective) resizable: ResizableDirective;
@@ -112,7 +116,7 @@ class TestComponent {
     right: true,
   };
   enableGhostResize: boolean = true;
-  resizeSnapGrid: object = {};
+  resizeSnapGrid: Edges = {};
   resizeCursors: object = {};
   ghostElementPositioning: 'fixed' | 'absolute' = 'fixed';
   showResizeHandle = false;
@@ -133,8 +137,7 @@ describe('resizable directive', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ResizableModule],
-      declarations: [TestComponent],
+      imports: [TestComponent],
     });
   });
 
@@ -1431,8 +1434,6 @@ describe('resizable directive', () => {
 
   it('should set the resize cursor on the body when resizing', () => {
     const fixture: ComponentFixture<TestComponent> = createComponent();
-    const elm: HTMLElement =
-      fixture.componentInstance.resizable['elm'].nativeElement;
     const handle = fixture.nativeElement.querySelector('.resize-handle-left');
     triggerDomEvent('mousedown', handle, {
       clientX: 100,

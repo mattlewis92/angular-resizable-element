@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
-import { ResizeEvent } from 'angular-resizable-element';
+import {
+  ResizeEvent,
+  ResizableDirective,
+  ResizeHandleDirective,
+} from 'angular-resizable-element';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'mwl-demo',
+  imports: [NgStyle, ResizableDirective, ResizeHandleDirective],
   styles: [
     `
       .rectangle {
@@ -88,7 +94,6 @@ import { ResizeEvent } from 'angular-resizable-element';
       </div>
     </div>
   `,
-  standalone: false,
 })
 export class DemoComponent {
   public style: object = {};
