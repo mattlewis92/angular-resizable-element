@@ -96,12 +96,18 @@
       "@commitlint/config-conventional"
     ]
   },
-  "packageManager": "pnpm@7.18.1",
+  "packageManager": "pnpm@10.15.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
         "@angular-devkit/*"
       ]
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@compodoc/compodoc",
+      "@parcel/watcher",
+      "esbuild",
+      "nice-napi"
+    ]
   }
 }
