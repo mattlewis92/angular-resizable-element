@@ -303,7 +303,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
    * @hidden
    */
   constructor() {
-    this.pointerEventListeners = PointerEventListeners.getInstance(
+    this.pointerEventListeners = new PointerEventListeners(
       this.renderer,
       this.zone,
     );
@@ -675,21 +675,6 @@ class PointerEventListeners {
   public pointerMove: Observable<PointerEventCoordinate>;
 
   public pointerUp: Observable<PointerEventCoordinate>;
-
-  private static instance: PointerEventListeners;
-
-  public static getInstance(
-    renderer: Renderer2,
-    zone: NgZone,
-  ): PointerEventListeners {
-    if (!PointerEventListeners.instance) {
-      PointerEventListeners.instance = new PointerEventListeners(
-        renderer,
-        zone,
-      );
-    }
-    return PointerEventListeners.instance;
-  }
 
   constructor(renderer: Renderer2, zone: NgZone) {
     this.pointerDown = new Observable(
