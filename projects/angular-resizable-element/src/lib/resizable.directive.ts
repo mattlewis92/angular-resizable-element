@@ -10,8 +10,10 @@ import {
   NgZone,
   PLATFORM_ID,
   inject,
+  PLATFORM_ID,
+  RendererFactory2
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import { Subject, Observable, Observer, merge } from 'rxjs';
 import {
   map,
@@ -302,10 +304,21 @@ export class ResizableDirective implements OnInit, OnDestroy {
   /**
    * @hidden
    */
-  constructor() {
-    this.pointerEventListeners = new PointerEventListeners(
-      this.renderer,
-      this.zone,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private renderer: Renderer2,
+    public elm: ElementRef,
+    private zone: NgZone,
+    rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) document: Document
+  ) {
+    // Create singleton instance of PointerEventListeners to avoid creating
+    // multiple instances of the same listener. Pass it a renderer for the
+    // document to avoid renderer for the host element of this directive
+    // instance.
+    this.pointerEventListeners = PointerEventListeners.getInstance(
+      rendererFactory.createRenderer(document, null),
+      zone
     );
   }
 
@@ -675,6 +688,21 @@ class PointerEventListeners {
   public pointerMove: Observable<PointerEventCoordinate>;
 
   public pointerUp: Observable<PointerEventCoordinate>;
+
+  private static instance: PointerEventListeners; // tslint:disable-line
+
+  public static getInstance(
+    renderer: Renderer2,
+    zone: NgZone
+  ): PointerEventListeners {
+    if (!PointerEventListeners.instance) {
+      PointerEventListeners.instance = new PointerEventListeners(
+        renderer,
+        zone
+      );
+    }
+    return PointerEventListeners.instance;
+  }
 
   constructor(renderer: Renderer2, zone: NgZone) {
     this.pointerDown = new Observable(
