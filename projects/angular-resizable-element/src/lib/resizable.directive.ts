@@ -10,9 +10,9 @@ import {
   NgZone,
   PLATFORM_ID,
   inject,
-  RendererFactory2
+  RendererFactory2,
 } from '@angular/core';
-import {DOCUMENT, isPlatformBrowser} from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge } from 'rxjs';
 import {
   map,
@@ -314,7 +314,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     // instance.
     this.pointerEventListeners = PointerEventListeners.getInstance(
       this.rendererFactory.createRenderer(this.document, null),
-      zone
+      this.zone,
     );
   }
 
@@ -689,12 +689,12 @@ class PointerEventListeners {
 
   public static getInstance(
     renderer: Renderer2,
-    zone: NgZone
+    zone: NgZone,
   ): PointerEventListeners {
     if (!PointerEventListeners.instance) {
       PointerEventListeners.instance = new PointerEventListeners(
         renderer,
-        zone
+        zone,
       );
     }
     return PointerEventListeners.instance;
