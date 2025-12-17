@@ -10,8 +10,9 @@ import {
   NgZone,
   PLATFORM_ID,
   inject,
+  RendererFactory2,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Subject, Observable, Observer, merge } from 'rxjs';
 import {
   map,
@@ -299,12 +300,20 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private zone = inject(NgZone);
 
+  private rendererFactory = inject(RendererFactory2);
+
+  private document = inject(DOCUMENT);
+
   /**
    * @hidden
    */
   constructor() {
+    // Create singleton instance of PointerEventListeners to avoid creating
+    // multiple instances of the same listener. Pass it a renderer for the
+    // document to avoid renderer for the host element of this directive
+    // instance.
     this.pointerEventListeners = PointerEventListeners.getInstance(
-      this.renderer,
+      this.rendererFactory.createRenderer(this.document, null),
       this.zone,
     );
   }
