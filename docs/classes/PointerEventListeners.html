@@ -190,7 +190,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="692" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:692</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="701" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:701</a></div>
                             </td>
                         </tr>
 
@@ -265,7 +265,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="673" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:673</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="682" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:682</a></div>
                         </td>
                     </tr>
 
@@ -292,7 +292,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="675" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:675</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="684" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:684</a></div>
                         </td>
                     </tr>
 
@@ -319,7 +319,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="677" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:677</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="686" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:686</a></div>
                         </td>
                     </tr>
 
@@ -355,8 +355,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="681"
-                                    class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:681</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="690"
+                                    class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:690</a></div>
                         </td>
                     </tr>
 
@@ -436,8 +436,9 @@
   NgZone,
   PLATFORM_ID,
   inject,
+  RendererFactory2,
 } from &#x27;@angular/core&#x27;;
-import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { DOCUMENT, isPlatformBrowser } from &#x27;@angular/common&#x27;;
 import { Subject, Observable, Observer, merge } from &#x27;rxjs&#x27;;
 import {
   map,
@@ -725,12 +726,20 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private zone &#x3D; inject(NgZone);
 
+  private rendererFactory &#x3D; inject(RendererFactory2);
+
+  private document &#x3D; inject(DOCUMENT);
+
   /**
    * @hidden
    */
   constructor() {
+    // Create singleton instance of PointerEventListeners to avoid creating
+    // multiple instances of the same listener. Pass it a renderer for the
+    // document to avoid renderer for the host element of this directive
+    // instance.
     this.pointerEventListeners &#x3D; PointerEventListeners.getInstance(
-      this.renderer,
+      this.rendererFactory.createRenderer(this.document, null),
       this.zone,
     );
   }
