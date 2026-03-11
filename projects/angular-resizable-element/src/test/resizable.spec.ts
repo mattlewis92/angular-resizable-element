@@ -5,6 +5,7 @@ import {
   ResizeEvent,
   ResizeHandleDirective,
 } from 'angular-resizable-element';
+import { getListenOptions } from '../lib/util/get-listen-options';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -507,25 +508,16 @@ describe('resizable directive', () => {
   });
 
   describe('touch event listeners', () => {
-    it('should use passive: false for touch events so preventDefault can be called', () => {
-      const fixture = createComponent();
-      const handle = fixture.nativeElement.querySelector('.resize-handle-top');
-      const touch = new Touch({
-        identifier: 1,
-        target: handle,
-        clientX: 150,
-        clientY: 200,
-        radiusX: 2,
-        radiusY: 2,
-        rotationAngle: 0,
-        force: 1,
+    ['touchstart', 'touchend', 'touchcancel'].forEach((eventName) => {
+      it(`when eventName is ${eventName}, getListenOptions returns passive: false so fromEvent is called with passive: false`, () => {
+        expect(getListenOptions(eventName)).to.deep.equal({ passive: false });
       });
-      const touchEvent = new TouchEvent('touchstart', {
-        cancelable: true,
-        bubbles: true,
-        touches: [touch],
+    });
+
+    ['mousedown', 'mouseup'].forEach((eventName) => {
+      it(`when eventName is ${eventName}, getListenOptions returns empty options`, () => {
+        expect(getListenOptions(eventName)).to.deep.equal({});
       });
-      expect(() => handle.dispatchEvent(touchEvent)).not.to.throw();
     });
   });
 

@@ -12,6 +12,7 @@ import { fromEvent, merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResizableDirective } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
+import { getListenOptions } from './util/get-listen-options';
 import { IS_TOUCH_DEVICE } from './util/is-touch-device';
 
 /**
@@ -173,13 +174,10 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   }
 
   private listenOnTheHost<T extends Event>(eventName: string) {
-    const isTouchEvent =
-      eventName === 'touchstart' ||
-      eventName === 'touchend' ||
-      eventName === 'touchcancel';
-    const source$ = isTouchEvent
-      ? fromEvent<T>(this.element.nativeElement, eventName, { passive: false })
-      : fromEvent<T>(this.element.nativeElement, eventName);
-    return source$.pipe(takeUntil(this.destroy$));
+    return fromEvent<T>(
+      this.element.nativeElement,
+      eventName,
+      getListenOptions(eventName),
+    ).pipe(takeUntil(this.destroy$));
   }
 }
