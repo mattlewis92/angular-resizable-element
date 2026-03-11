@@ -208,7 +208,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:47</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:48</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -240,7 +240,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/angular-resizable-element/src/lib/resize-handle.directive.ts:44</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -276,6 +276,7 @@ import { fromEvent, merge, Subject } from &#x27;rxjs&#x27;;
 import { takeUntil } from &#x27;rxjs/operators&#x27;;
 import { ResizableDirective } from &#x27;./resizable.directive&#x27;;
 import { Edges } from &#x27;./interfaces/edges.interface&#x27;;
+import { getListenOptions } from &#x27;./util/get-listen-options&#x27;;
 import { IS_TOUCH_DEVICE } from &#x27;./util/is-touch-device&#x27;;
 
 /**
@@ -437,9 +438,11 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   }
 
   private listenOnTheHost&lt;T extends Event&gt;(eventName: string) {
-    return fromEvent&lt;T&gt;(this.element.nativeElement, eventName).pipe(
-      takeUntil(this.destroy$),
-    );
+    return fromEvent&lt;T&gt;(
+      this.element.nativeElement,
+      eventName,
+      getListenOptions(eventName),
+    ).pipe(takeUntil(this.destroy$));
   }
 }
 </code></pre>
