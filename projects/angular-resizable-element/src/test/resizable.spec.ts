@@ -506,6 +506,29 @@ describe('resizable directive', () => {
     });
   });
 
+  describe('touch event listeners', () => {
+    it('should use passive: false for touch events so preventDefault can be called', () => {
+      const fixture = createComponent();
+      const handle = fixture.nativeElement.querySelector('.resize-handle-top');
+      const touch = new Touch({
+        identifier: 1,
+        target: handle,
+        clientX: 150,
+        clientY: 200,
+        radiusX: 2,
+        radiusY: 2,
+        rotationAngle: 0,
+        force: 1,
+      });
+      const touchEvent = new TouchEvent('touchstart', {
+        cancelable: true,
+        bubbles: true,
+        touches: [touch],
+      });
+      expect(() => handle.dispatchEvent(touchEvent)).not.to.throw();
+    });
+  });
+
   describe('handle outside of element', () => {
     let domEvents: Array<{
       name: string;
