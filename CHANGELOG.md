@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.2](https://github.com/mattlewis92/angular-resizable-element/compare/v8.0.1...v8.0.2) (2026-03-11)
+
+
+### Bug Fixes
+
+* pass passive false for touch events in listenOnTheHost ([#137](https://github.com/mattlewis92/angular-resizable-element/issues/137)) ([f31aaeb](https://github.com/mattlewis92/angular-resizable-element/commit/f31aaeb26fe3ade59c2cb7485d15c8aba33367a1))
+
 ### [8.0.1](https://github.com/mattlewis92/angular-resizable-element/compare/v8.0.0...v8.0.1) (2025-12-17)
 
 ## [8.0.0](https://github.com/mattlewis92/angular-resizable-element/compare/v7.0.2...v8.0.0) (2025-08-23)
