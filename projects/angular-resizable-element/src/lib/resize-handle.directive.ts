@@ -173,8 +173,13 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   }
 
   private listenOnTheHost<T extends Event>(eventName: string) {
-    return fromEvent<T>(this.element.nativeElement, eventName).pipe(
-      takeUntil(this.destroy$),
-    );
+    const isTouchEvent =
+      eventName === 'touchstart' ||
+      eventName === 'touchend' ||
+      eventName === 'touchcancel';
+    const source$ = isTouchEvent
+      ? fromEvent<T>(this.element.nativeElement, eventName, { passive: false })
+      : fromEvent<T>(this.element.nativeElement, eventName);
+    return source$.pipe(takeUntil(this.destroy$));
   }
 }
