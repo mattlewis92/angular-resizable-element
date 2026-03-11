@@ -5,6 +5,7 @@ import {
   ResizeEvent,
   ResizeHandleDirective,
 } from 'angular-resizable-element';
+import { getListenOptions } from '../lib/util/get-listen-options';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -503,6 +504,20 @@ describe('resizable directive', () => {
       expect(
         (fixture.componentInstance as any)[spyName],
       ).to.have.been.calledWith(expectedEvent);
+    });
+  });
+
+  describe('touch event listeners', () => {
+    ['touchstart', 'touchend', 'touchcancel'].forEach((eventName) => {
+      it(`when eventName is ${eventName}, getListenOptions returns passive: false so fromEvent is called with passive: false`, () => {
+        expect(getListenOptions(eventName)).to.deep.equal({ passive: false });
+      });
+    });
+
+    ['mousedown', 'mouseup'].forEach((eventName) => {
+      it(`when eventName is ${eventName}, getListenOptions returns empty options`, () => {
+        expect(getListenOptions(eventName)).to.deep.equal({});
+      });
     });
   });
 
