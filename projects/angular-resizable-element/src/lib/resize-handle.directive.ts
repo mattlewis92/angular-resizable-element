@@ -12,8 +12,8 @@ import { fromEvent, merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResizableDirective } from './resizable.directive';
 import { Edges } from './interfaces/edges.interface';
-import { getListenOptions } from './util/get-listen-options';
 import { IS_TOUCH_DEVICE } from './util/is-touch-device';
+import { isTouchEvent } from './util/is-touch-event';
 
 /**
  * An element placed inside a `mwlResizable` directive to be used as a drag and resize handle
@@ -100,7 +100,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     clientX: number,
     clientY: number,
   ): void {
-    if (event.cancelable) {
+    if (event.cancelable && !isTouchEvent(event)) {
       event.preventDefault();
     }
     if (!this.eventListeners.touchmove) {
@@ -174,10 +174,8 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   }
 
   private listenOnTheHost<T extends Event>(eventName: string) {
-    return fromEvent<T>(
-      this.element.nativeElement,
-      eventName,
-      getListenOptions(eventName),
-    ).pipe(takeUntil(this.destroy$));
+    return fromEvent<T>(this.element.nativeElement, eventName).pipe(
+      takeUntil(this.destroy$),
+    );
   }
 }

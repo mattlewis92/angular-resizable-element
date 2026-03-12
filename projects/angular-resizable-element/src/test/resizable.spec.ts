@@ -5,7 +5,6 @@ import {
   ResizeEvent,
   ResizeHandleDirective,
 } from 'angular-resizable-element';
-import { getListenOptions } from '../lib/util/get-listen-options';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -104,6 +103,7 @@ import { NgStyle } from '@angular/common';
 })
 class TestComponent {
   @ViewChild(ResizableDirective) resizable: ResizableDirective;
+  @ViewChild(ResizeHandleDirective) handleDirective: ResizeHandleDirective;
   @ViewChild('handle') handle: ElementRef;
   style: object = {};
   resizeStart: sinon.SinonSpy = sinon.spy();
@@ -508,16 +508,34 @@ describe('resizable directive', () => {
   });
 
   describe('touch event listeners', () => {
-    ['touchstart', 'touchend', 'touchcancel'].forEach((eventName) => {
-      it(`when eventName is ${eventName}, getListenOptions returns passive: false so fromEvent is called with passive: false`, () => {
-        expect(getListenOptions(eventName)).to.deep.equal({ passive: false });
-      });
+    it('should not call preventDefault for touch events when cancelable', () => {
+      const fixture: ComponentFixture<TestComponent> = createComponent();
+      const touchEvent = {
+        type: 'touchstart',
+        cancelable: true,
+        preventDefault: sinon.spy(),
+      } as unknown as TouchEvent;
+      fixture.componentInstance.handleDirective.onMousedown(
+        touchEvent,
+        100,
+        200,
+      );
+      expect(touchEvent.preventDefault).not.to.have.been.called;
     });
 
-    ['mousedown', 'mouseup'].forEach((eventName) => {
-      it(`when eventName is ${eventName}, getListenOptions returns empty options`, () => {
-        expect(getListenOptions(eventName)).to.deep.equal({});
-      });
+    it('should call preventDefault for mouse events when cancelable', () => {
+      const fixture: ComponentFixture<TestComponent> = createComponent();
+      const mouseEvent = {
+        type: 'mousedown',
+        cancelable: true,
+        preventDefault: sinon.spy(),
+      } as unknown as MouseEvent;
+      fixture.componentInstance.handleDirective.onMousedown(
+        mouseEvent,
+        100,
+        200,
+      );
+      expect(mouseEvent.preventDefault).to.have.been.calledOnce;
     });
   });
 
