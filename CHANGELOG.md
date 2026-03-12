@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.3](https://github.com/mattlewis92/angular-resizable-element/compare/v8.0.2...v8.0.3) (2026-03-12)
+
+
+### Bug Fixes
+
+* additional check for touch event before calling preventDefault ([#138](https://github.com/mattlewis92/angular-resizable-element/issues/138)) ([8fbcd06](https://github.com/mattlewis92/angular-resizable-element/commit/8fbcd062cc11a3af3f9ed98273cd2fb05e99ce41))
+
 ### [8.0.2](https://github.com/mattlewis92/angular-resizable-element/compare/v8.0.1...v8.0.2) (2026-03-11)
 
 
