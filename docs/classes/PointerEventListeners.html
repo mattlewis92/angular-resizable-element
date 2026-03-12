@@ -190,7 +190,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="701" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:701</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="702" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:702</a></div>
                             </td>
                         </tr>
 
@@ -265,7 +265,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="682" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:682</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="683" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:683</a></div>
                         </td>
                     </tr>
 
@@ -292,7 +292,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="684" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:684</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="685" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:685</a></div>
                         </td>
                     </tr>
 
@@ -319,7 +319,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="686" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:686</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="687" class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:687</a></div>
                         </td>
                     </tr>
 
@@ -355,8 +355,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="690"
-                                    class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:690</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="691"
+                                    class="link-to-prism">projects/angular-resizable-element/src/lib/resizable.directive.ts:691</a></div>
                         </td>
                     </tr>
 
@@ -455,6 +455,7 @@ import { BoundingRectangle } from &#x27;./interfaces/bounding-rectangle.interfac
 import { ResizeEvent } from &#x27;./interfaces/resize-event.interface&#x27;;
 import { IS_TOUCH_DEVICE } from &#x27;./util/is-touch-device&#x27;;
 import { deepCloneNode } from &#x27;./util/clone-node&#x27;;
+import { isTouchEvent } from &#x27;./util/is-touch-event&#x27;;
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -759,7 +760,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
       this.mousemove,
     ).pipe(
       tap(({ event }) &#x3D;&gt; {
-        if (currentResize &amp;&amp; event.cancelable) {
+        if (currentResize &amp;&amp; event.cancelable &amp;&amp; !isTouchEvent(event)) {
           event.preventDefault();
         }
       }),

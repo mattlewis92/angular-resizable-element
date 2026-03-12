@@ -421,6 +421,7 @@ import { BoundingRectangle } from &#x27;./interfaces/bounding-rectangle.interfac
 import { ResizeEvent } from &#x27;./interfaces/resize-event.interface&#x27;;
 import { IS_TOUCH_DEVICE } from &#x27;./util/is-touch-device&#x27;;
 import { deepCloneNode } from &#x27;./util/clone-node&#x27;;
+import { isTouchEvent } from &#x27;./util/is-touch-event&#x27;;
 
 interface PointerEventCoordinate {
   clientX: number;
@@ -725,7 +726,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
       this.mousemove,
     ).pipe(
       tap(({ event }) &#x3D;&gt; {
-        if (currentResize &amp;&amp; event.cancelable) {
+        if (currentResize &amp;&amp; event.cancelable &amp;&amp; !isTouchEvent(event)) {
           event.preventDefault();
         }
       }),
